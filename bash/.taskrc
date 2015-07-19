@@ -1,0 +1,68 @@
+# [Created by task 2.2.0 2/14/2015 11:52:09]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
+# 'man task-tutorial', 'man task-color', 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.task
+
+# Color theme (uncomment one to use)
+#include /usr/share/task/light-16.theme
+#include /usr/share/task/light-256.theme
+#include /usr/share/task/dark-16.theme
+#include /usr/share/task/dark-256.theme
+#include /usr/share/task/dark-red-256.theme
+#include /usr/share/task/dark-green-256.theme
+#include /usr/share/task/dark-blue-256.theme
+#include /usr/share/task/dark-violets-256.theme
+#include /usr/share/task/dark-yellow-green.theme
+#include /usr/share/task/dark-gray-256.theme
+#include /usr/share/task/solarized-dark-256.theme
+
+include ~/task-2.4.0/themes/solarTheme.theme
+
+taskd.trust=ignore hostname
+
+taskd.certificate=\/home\/tj\/.task\/freecinc_9e14ed01.cert.pem
+taskd.key=\/home\/tj\/.task\/freecinc_9e14ed01.key.pem
+taskd.ca=\/home\/tj\/.task\/freecinc_9e14ed01.ca.pem
+taskd.server=freecinc.com:53589
+taskd.credentials=FreeCinc\/freecinc_9e14ed01\/701c8115-7004-4d1a-925d-88bacdba8edd
+
+
+# GTD Stuff
+# urgency.user.tag.in.coefficient=15.0
+
+# GTD Report for inbox
+report.in.columns		= id,description
+report.in.description	= Inbox
+report.in.filter		= status:pending limit:page (+in)
+report.in.labels		= ID,Description
+
+report.tagsonly.columns		= tags
+report.tagsonly.description	= Tags
+report.tagsonly.filter		= status:pending
+report.tagsonly.labels		= TagName
+
+report.next.description	= Most urgent tasks
+report.next.columns		= id,start.age,entry.age,urgency,depends,priority,project,tags,recur,scheduled.countdown,due.remaining,until.remaining,description.truncated_count,brainpower
+report.next.filter		= status:pending and +next and -no and -rnr 
+report.next.labels		= ID,Active,Age,Urgency,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Brainpower
+report.next.sort		= priority-,urgency-
+
+# UDA's
+uda.brainpower.type=string
+uda.brainpower.label=Brainpower
+uda.brainpower.values=H,M,L,S
+uda.brainpower.default=M
+
+uda.estimate.type=numeric
+uda.estimate.label=Estimate
+uda.estimate.default=9993
