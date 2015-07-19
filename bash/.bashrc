@@ -1,4 +1,8 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
+
+# This was made by TJ DeVries
+# First completed on July 19
+
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -81,9 +85,9 @@ set_bash_prompt()
         C11='\[\e[1;32m\]'
         C13='\[\e[1;34m\]'
         export GIT_PS1_SHOWCOLORHINTS=1
-        PS1="${debian_chroot:+($debian_chroot)}$C11\u@\h$RESET $C13\w$RESET$(__git_ps1 ' (%s)')$RESET\$ "
+        PS1="$(task +in +PENDING count) ${debian_chroot:+($debian_chroot)}$C11\u@\h$RESET $C13\w$RESET$(__git_ps1 ' (%s)')$RESET\$ "
     else
-        PS1="${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 ':(%s)')\$ "
+        PS1="$(task +in +PENDING count) ${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 ':(%s)')\$ "
     fi
 }
 
@@ -140,8 +144,6 @@ fi
 
 # -------------------------------- From Server -------------------------------
 
-
-export PS1='$(task +in +PENDING count) '$PS1
 
 
 
