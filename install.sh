@@ -7,6 +7,11 @@ install_bash () {
 	cp ./bash/.bashrc ~/.bashrc -v
 }
 
+install_vim () {
+    # Copy VIM file
+    cp ./vim/.vimrc ~/.vimrc -v
+}
+
 
 if [ $1 == '-h' ]
 then
@@ -17,6 +22,7 @@ then
 elif [ $1 == '-a' ]
 then
 	install_bash
+    install_vim
 fi
 
 
