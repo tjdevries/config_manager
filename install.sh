@@ -8,6 +8,32 @@ install_bash () {
 }
 
 install_vim () {
+    # Check to see if VIM is installed
+    if [ ! $(which vim) ]
+    then
+        # Install VIM
+        echo "VIM: Begin Installation"
+        sudo apt-get install vim
+        echo "VIM: Installed Succesfully"
+        echo ""
+    fi
+
+    # Check to see if pathogen is installed
+    if [ ! -d ~/.vim/autoload ]
+    then
+        # Install Dependencies
+        echo "Pathogen: Install Dependencies"
+        sudo apt-get install curl > /dev/null
+        echo "Pathogen: Dependencies Installed"
+
+        echo "Pathogen: Begin Installation"
+        # Install Pathogen
+        # Directions from https://github.com/tpope/vim-pathogen
+        mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+        curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+        echo "Pathogen: Installed Successfully"
+    fi
+    
     # Copy VIM file
     cp ./vim/.vimrc ~/.vimrc -v
 }
