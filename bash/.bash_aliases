@@ -29,6 +29,8 @@ alias rcams='vim ~/.more_bash_aliases && source ~/.bash_aliases'
 alias ll='ls -al'
 alias la='ls -A'
 alias l='ls -CF'
+alias ldr='ls --color --group-directories-first'
+alias ldl='ls --color -l --group-directories-first'
 
 # Editting Aliases
 alias s='source ~/.bashrc'

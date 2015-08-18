@@ -29,7 +29,7 @@ filetype plugin indent on
 " ----- Tab things -----
 " Want auto indents automatically
 set autoindent
-set smartindent
+set cindent
 set wrap
 
 " Set the width of the tab to 4 wid
@@ -49,16 +49,21 @@ set expandtab
 
 " ----- Syntastic Things -----
 "  Really not sure what these things do yet
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wg = 0
+"  For now going to use flake8 instead of syntastic.
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wg = 0
 
 "  Sets the python checker to look for Python 3
-let g:syntastic_python_python_exec = '/usr/bin/python3'
+" let g:syntastic_python_python_exec = '/usr/bin/python3'
 
 "  Disables style messages as error messages in our linters
-let g:syntastic_quiet_messages = { "type": "style" }
+" let g:syntastic_quiet_messages = { "type": "style" }
+
+" ----- Flake8 Things -----
+" Run flake8() whenever a python file is written
+autocmd BufWritePost *.py call Flake8()
 
 " ----- Color Things -----
 
