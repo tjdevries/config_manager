@@ -3,7 +3,14 @@
 printf "This script will install the updated scripts\n"
 
 install_bash () {
-	# Copy bashrc file
+    # Install Dependencies
+    echo "Bash: Installing Task"
+    sudo apt-get install task
+    echo "Bash: Installed Task"
+
+    echo -e "yes\n" > task 
+
+    # Copy bashrc file
 	cp ./bash/.bashrc ~/.bashrc -v
 }
 
