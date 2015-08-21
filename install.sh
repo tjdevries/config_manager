@@ -9,7 +9,7 @@ install_bash () {
         echo "Bash: Installing Task"
         sudo apt-get install task
         echo "Bash: Installed Task"
-        echo -e "yes\n" > task 
+        echo -e "yes\n" | task 
     fi
 
     # Copy bashrc file

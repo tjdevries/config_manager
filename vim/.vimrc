@@ -26,6 +26,10 @@ set number
 " Also enables plugins?
 filetype plugin indent on
 
+" Useability
+" Enable smart autocompletion for programs
+set omnifunc=syntaxcomplete#Complete
+
 " ----- Tab things -----
 " Want auto indents automatically
 set autoindent
