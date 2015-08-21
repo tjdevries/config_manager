@@ -61,6 +61,17 @@ set expandtab
 "  Disables style messages as error messages in our linters
 " let g:syntastic_quiet_messages = { "type": "style" }
 
+" ----- Markdown Things -----
+let g:vim_markdown_folding_disabled=1
+
+augroup markdown
+    au! 
+    au FileType mkd.markdown exec 'inoremap \| \|<C-O>:TableFormat<CR><C-O>f\|<right>'
+    au FileType mkd.markdown exec 'inoremap <C-\> <C-O>:TableFormat<CR>'
+    au FileType mkd.markdown exec 'noremap <silent> <C-\> :TableFormat<CR>'
+augroup END 
+
+
 " ----- Flake8 Things -----
 " Run flake8() whenever a python file is written
 autocmd BufWritePost *.py call Flake8()
