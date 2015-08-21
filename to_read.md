@@ -16,3 +16,5 @@ This file contains things that I consider useful to read. It often contains idea
         - `:set complete`                           Shows list of current auto complete options
         - `:set complete+=k`                        Adds dictionary scnanning
         - `:set dictionary=/usr/share/dict/words`   Add a personal dictionary
+- http://vim.wikia.com/wiki/Omni_completioni
+    - This document talks exclusively about `Omni Completion`
