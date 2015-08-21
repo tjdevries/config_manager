@@ -55,6 +55,8 @@ install_vim () {
         echo -e "[flake8]\nmax-line-length = 140" > ~/.config/flake8
     fi
 
+    ./vim/install_vim.sh
+
     # Copy VIM file
     cp ./vim/.vimrc ~/.vimrc -v
 }
