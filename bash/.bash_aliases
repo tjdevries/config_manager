@@ -51,14 +51,15 @@ alias offcampus='ssh tjd33@cs-ssh.calvin.edu'
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Tools ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-alias ack='ack-grep'
+# alias ack='ack-grep'
 
-alias make='wrap_make'
-alias dts='wrap_dts'
-alias dtb='wrap_dtb'
-alias copy='wrap_copy'
-alias bt='wrap_bt'
-alias df='wrap_df'
+# From Karl, forgot to make these myself
+# alias make='wrap_make'
+# alias dts='wrap_dts'
+# alias dtb='wrap_dtb'
+# alias copy='wrap_copy'
+# alias bt='wrap_bt'
+# alias df='wrap_df'
 
 alias agi='sudo apt-get install '
 alias agu='sudo apt-get update && sudo apt-get upgrade'
