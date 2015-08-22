@@ -21,7 +21,7 @@ install_bash () {
 
 install_vim () {
     # Check to see if VIM is installed
-    if [ ! $(which vim) ]
+    if [ ! "$(which vim)" ]
     then
         # Install VIM
         echo "VIM: Begin Installation"
@@ -63,7 +63,7 @@ install_vim () {
 
 install_git () {
     # Check to see if git is installed
-    if [ ! $(which git) ]
+    if [ ! "$(which git)" ]
     then
         # Install Git
         echo "Git: Begin Installation"
@@ -77,16 +77,16 @@ install_git () {
 }
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-echo $DIR
+echo "$DIR"
 
 
-if [ $1 == '-h' ]
+if [ "$1" == '-h' ]
 then
 	printf "This is the help command\n"
 	printf "Command options: \n"
 	echo -e '-a | --all \tInstall all the configuration tools'
 	echo -e "-b | --bash\tInstall the bash tools only"
-elif [ $1 == '-a' ]
+elif [ "$1" == '-a' ]
 then
 	install_bash
     install_vim
