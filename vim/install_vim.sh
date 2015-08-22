@@ -6,8 +6,14 @@ if [ ! -d ~/.vim/autoload ]; then
         curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 fi
 
+# Install syntastic
+if [ ! -d ~/.vim/bundle/syntastic ]; then
+    git clone https://github.com/scrooloose/syntastic   ~/.vim/bundle/syntastic
+fi
+
+
 # Install vim-sensible
-if [ ! -d ~/.vim/bundle ]; then
+if [ ! -d ~/.vim/bundle/vim-sensible ]; then
     git clone git://github.com/tpope/vim-sensible.git ~/.vim/bundle/vim-sensible 
 fi
 
