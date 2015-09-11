@@ -67,3 +67,4 @@ uda.brainpower.default=M
 uda.estimate.type=numeric
 uda.estimate.label=Estimate
 uda.estimate.default=9993
+--force=log \/var\/taskd.log
