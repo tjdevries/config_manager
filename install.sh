@@ -13,8 +13,13 @@ install_bash () {
     fi
 
     # Copy bashrc file
-	cp ./bash/.bashrc ~/.bashrc -v
-    cp ./bash/.bash_aliases ~/.bash_aliases
+	cp ./bash/.bash_aliases  ~/ -v
+    cp ./bash.bash_functions  ~/ -v
+    cp ./bash/.bash_logout   ~/ -v
+    cp ./bash/.bashrc   ~/ -v
+    cp ./bash/.bash_taskwarrior  ~/ -v 
+    cp ./bash/.bash_welcome   ~/ -v
+    cp ./bash/.taskrc ~/ -v
 
     source ~/.bashrc
 }

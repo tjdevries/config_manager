@@ -85,7 +85,11 @@ set_bash_prompt()
         C11='\[\e[1;32m\]'
         C13='\[\e[1;34m\]'
         export GIT_PS1_SHOWCOLORHINTS=1
-        PS1="$(task +in +PENDING count) ${debian_chroot:+($debian_chroot)}$C11\u@\h$RESET $C13\w$RESET$(__git_ps1 ' (%s)')$RESET\$ "
+        if [ "$(which task)"] ; then
+            PS1="$(task +in +PENDING count) ${debian_chroot:+($debian_chroot)}$C11\u@\h$RESET $C13\w$RESET$(__git_ps1 ' (%s)')$RESET\$ "
+        else
+            PS1="${debian_chroot:+($debian_chroot)}$C11\u@\h$RESET $C13\w$RESET$(__git_ps1 ' (%s)')$RESET\$ "
+        fi
     else
         PS1="$(task +in +PENDING count) ${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 ':(%s)')\$ "
     fi

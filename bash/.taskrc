@@ -26,7 +26,8 @@ data.location=~/.task
 #include /usr/share/task/dark-gray-256.theme
 #include /usr/share/task/solarized-dark-256.theme
 
-include ~/task-2.4.0/themes/solarTheme.theme
+# Need to find out how to get the themes thing
+#include ~/task-2.4.0/themes/solarTheme.theme
 
 taskd.trust=ignore hostname
 

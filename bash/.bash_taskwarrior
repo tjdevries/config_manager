@@ -6,11 +6,18 @@ alias rnd='task add +rnd +next +@computer +@online'
 alias rnrw=read_and_review
 alias in='task add +in'
 alias tls='task +next list'
-
+alias hw='task list +homework'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~ Functions ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ### My own functions:
+
+# School function. Useful for quickly adding and viewing current homework
+
+school_add() {
+    task add +homework project:$2 $1 due:$3
+}
+
 
 update_task() {
     LATEST=$(curl http://tasktools.org/latest -s)
