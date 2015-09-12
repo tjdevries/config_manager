@@ -7,14 +7,30 @@ install_bash () {
     if [[ ! $(which task) ]]
     then
         echo "Bash: Installing Task"
-        sudo apt-get install task
+        sudo apt-get install task -y
         echo "Bash: Installed Task"
         echo -e "yes\n" | task 
     fi
 
+    if [ ! "$(which weather)" ]
+    then
+        echo "Bash: Installing weather"
+        sudo apt-get install weather-util -y
+        echo "Bash: Installed weather"
+    fi
+
+    # If the git is installed, we...
+    if [ "$(which git)" ]
+    then
+        if [[ -f '/usr/lib/git-core/git-sh-prompt' ]]
+        then
+            source /usr/lib/git-core/git-sh-prompt
+        fi
+    fi
+
     # Copy bashrc file
 	cp ./bash/.bash_aliases  ~/ -v
-    cp ./bash.bash_functions  ~/ -v
+    cp ./bash/.bash_functions  ~/ -v
     cp ./bash/.bash_logout   ~/ -v
     cp ./bash/.bashrc   ~/ -v
     cp ./bash/.bash_taskwarrior  ~/ -v 
