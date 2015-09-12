@@ -80,6 +80,11 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 
 set_bash_prompt()
 {
+    if [[ -f "/usr/lib/git-core/git-sh-prompt" ]]
+    then
+        source /usr/lib/git-core/git-sh-prompt
+    fi
+
     if [ "$color_prompt" = yes ]; then
         RESET='\[\e[0m\]'
         C11='\[\e[1;32m\]'
