@@ -8,7 +8,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias plex_scanner='/usr/lib/plexmediaserver/Plex\ Media\ Scanner'
 alias TV='/media/TV/Media/TV'
 alias Movies='/media/Movies/Media/Movies'
-
+alias school='cd ~/Dropbox/calvin'
 
 # Environment Variables
 # Maybe at some point I should make this vim
