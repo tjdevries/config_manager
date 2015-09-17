@@ -32,6 +32,12 @@ if [ ! -d ~/.vim/bundle/vim-markdown ]; then
     git clone https://github.com/plasticboy/vim-markdown    ~/.vim/bundle/vim-markdown
 fi
 
+# Install vim-autoclose
+if [ ! -d ~/.vim/bundle/vim-autoclose ]; then
+    git clone git://github.com/Townk/vim-autoclose  ~/.vim/bundle/vim-autoclose
+fi
+
+
 # The python one doesn't work any more
 # sudo pip3 install powerline-status
 
