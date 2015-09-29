@@ -20,3 +20,8 @@
   - https://www.quora.com/What-should-I-know-from-CLRS-3rd-edition-book-if-my-aim-is-to-get-into-Google/answer/Jimmy-Saade?srid=TAJ1&share=1
   - Notes:
     - Bought the book, so this will be a useful resource as I am reading through it 
+
+- Open source projects
+  - https://www.quora.com/What-are-some-good-beginner-level-open-source-projects-online-that-I-can-involve-myself-in
+  - Notes:
+    - A few links that contain help for starting to contribute to open source projects 
