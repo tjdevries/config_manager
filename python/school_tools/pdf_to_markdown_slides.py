@@ -26,10 +26,15 @@ parser.add_argument('--output_md_folder', dest='output_md_folder', default=None,
         help='Where the markdown document will be stored')
 parser.add_argument('--name_md', dest='name_md',
         help='The name of the markdown document')
-parser.add_argument('--slides_per_page', dest='slides_per_page', default=1,
-        help='How many slides are on each pdf page')
-praser.add_argument('--horizontal_slides', dest='horizon')
+parser.add_argument('--columns', dest='columns', default=1,
+        help='How many columns you want to split each page into')
+parser.add_argument('--rows', dest='rows', default=1,
+        help='How many rows you want to split each page into')
+parser.add_argument('-v', dest='verbose', default=False, action='store_true',
+        help='Enable verbose output')
 args = parser.parse_args()
+
+verbose = args.verbose
 
 # TODO: Replace '~' with '/home/username/'
 # folders = [args.input_folder, args.output_jpeg_folder, args.output_md_folder]
@@ -52,19 +57,63 @@ full_output_jpeg = args.output_jpeg_folder + jpeg_name
 input_pdf = PdfFileReader(open(full_input, "rb"))
 num_pages = input_pdf.getNumPages()
 
+if verbose:
+    print('Input PDF is `{0}` \n\tand is {1} pages long'.format(input_pdf, num_pages)) 
+
 # Open the file of the pdf that we want.
 #   Then we print all the pages into separate jpgs.
 # TODO: Add resizing options here.
 
+# Rename the columns and rows to shorter names
+try:
+    columns = int(args.columns)
+except TypeError:
+    print('Please input an integer number for columns.')
+    exit(1)
+
+try:
+    rows = int(args.rows)
+except TypeError:
+    print('Please input an integer number for rows.')
+
+# Set the number of slides to zero. This will be incremented up
+slide_number = 0
 image_names = []
+
+# Get each individual page of the document using {filename}[page_number] format of the imagemagick package
 for current_page in range(num_pages):
+    # Open the document and interact with it as `img`.
     with Image(filename='{0}[{1}]'.format(full_input, current_page)) as img:
-        # Save the image as a good nam
+        # Get the image size to know where we need to split it
+        width = img.size[0]
+        height = img.size[1]
+
+        if verbose:
+            print('Width: {0}\nHeight: {1}'.format(width, height))
+
+        # Split the image into the correct number of columns and rows
+        #
+        #   First cycle through the rows and the columns
+        for row in range(rows):
+            for column in range(columns):
+                # Image pixels of img[left:right, top:bottom]
+                left = int(column * width/columns)
+                right = int((column + 1) * width/columns)
+                top = int(row * height/rows)
+                bottom = int((row + 1) * height/rows)
+                with img[left:right, top:bottom] as cropped:
+                    if verbose:
+                        print('\tCropped image pixels are {0}:{1}, {2}:{3}'.format(left, right, top, bottom))
+                        print('\tCropped image size is: {0}'.format(cropped.size))
+        
+        # Save the image as a unique name. 
+        # It will be 
         f_name = '{0}-{1}.jpg'.format(full_output_jpeg, current_page)
         img.save(filename=f_name)
 
-        # Append the name to the list of names
+        # Append the name to the list of names, and increment the counter
         image_names.append(f_name)
+        slide_number += 1
 
 # Now we have all of the images that we want
 #   So we want to insert them into a pretty markdown document
