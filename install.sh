@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 printf "This script will install the updated scripts\n"
 
 install_bash () {

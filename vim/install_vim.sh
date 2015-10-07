@@ -37,6 +37,10 @@ if [ ! -d ~/.vim/bundle/vim-autoclose ]; then
     git clone git://github.com/Townk/vim-autoclose  ~/.vim/bundle/vim-autoclose
 fi
 
+# Install color schemes
+if [ ! -d ~/.vim/bundle/vim-colors-solarized  ]; then
+    git clone git://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle/vim-colors-solarized
+fi
 
 # The python one doesn't work any more
 # sudo pip3 install powerline-status
