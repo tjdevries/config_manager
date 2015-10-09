@@ -1,6 +1,7 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # This was made by TJ DeVries
+#   Thanks to my friend Karl Apsite for the help!
 # First completed on July 19
 
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -73,13 +74,24 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# If git isn't installed yet... these may fail
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
+# If git isn't installed yet... these should not fail
+if [ "$(which git)" ]; then
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWSTASHSTATE=1
+    export GIT_PS1_SHOWUNTRACKEDFILES=1
+fi
 
 set_bash_prompt()
 {
+    # If this is an xterm set the title to user (dir)
+    case "$TERM" in
+        xterm*|rxvt*)
+            echo -ne "\033]0;${USER} ( ${PWD} )\007"
+            ;;
+        *)
+            ;;
+    esac
+
     if [[ -f "/usr/lib/git-core/git-sh-prompt" ]]
     then
         source /usr/lib/git-core/git-sh-prompt
@@ -96,7 +108,11 @@ set_bash_prompt()
             PS1="${debian_chroot:+($debian_chroot)}$C11\u@\h$RESET $C13\w$RESET$(__git_ps1 ' (%s)')$RESET\$ "
         fi
     else
-        PS1="$(task +in +PENDING count) ${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 ':(%s)')\$ "
+        if [ "$(which task)" ] ; then
+            PS1="$(task +in +PENDING count) ${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 ':(%s)')\$ "
+        else
+            PS1="${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 ':(%s)')\$ "
+        fi
     fi
 }
 
@@ -104,14 +120,6 @@ set_bash_prompt()
 # __git_ps1 could be outputting color codes
 PROMPT_COMMAND=set_bash_prompt
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
