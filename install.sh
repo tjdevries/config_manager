@@ -101,16 +101,17 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 echo "$DIR"
 
 
-if [ "$1" == '-h' ]
-then
+if [ "$1" == '-h' ]; then
 	printf "This is the help command\n"
 	printf "Command options: \n"
 	echo -e '-a | --all \tInstall all the configuration tools'
 	echo -e "-b | --bash\tInstall the bash tools only"
-elif [ "$1" == '-a' ]
-then
+elif [ "$1" == '-a' ]; then
 	install_bash
     install_vim
+    install_git
+elif [ "$1" == '-b' ]; then
+    install_bash
 fi
 
 
