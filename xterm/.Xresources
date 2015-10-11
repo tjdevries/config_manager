@@ -1,0 +1,8 @@
+! This is my Xresouces file
+!   To get the file to be read do the following command
+!   $ xrdb ~/.Xresources
+
+! To reread your .Xresources file, and keep your old resources:
+!   $ xrdb -merge ~/.Xresources
+
+
