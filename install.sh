@@ -97,6 +97,13 @@ install_git () {
     
 }
 
+install_tips () {
+    # Installs our custom tips into the config folder
+    mkdir -p ~/.config/
+
+    cp -Rv ./tips/ ~/.config/tips 
+}
+
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 echo "$DIR"
 
@@ -110,6 +117,7 @@ elif [ "$1" == '-a' ]; then
 	install_bash
     install_vim
     install_git
+    install_tips
 elif [ "$1" == '-b' ]; then
     install_bash
 fi

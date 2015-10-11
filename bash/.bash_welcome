@@ -7,10 +7,18 @@ echo -ne "${dark_gray}" "Hello, $USER. Today is, "; date
 echo -e "${light_blue}"; cal ;  
 echo -ne "${CYAN}";
 echo -ne "${light_gray}Sysinfo:";uptime ;echo ""
+
+# Display a random tip
+if [ -d ~/.config/tips/  ]; then
+    ~/.config/tips/display.py
+fi
+
+# Display the current weather in Grand Rapids :)
 if [ $(which weather) ]; then
     echo "Weather today: "
     weather GRR | grep ': '
 fi
+
 
 # ~~~~~~~~~~~~~~ Other ideas and / or snippes ~~~~~~~~~~~~~~ 
 
