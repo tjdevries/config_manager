@@ -1,22 +1,15 @@
 #!/bin/bash
 
-printf "This script will install the updated scripts\n"
-
 install_bash () {
     # Install Dependencies
-    if [[ ! $(which task) ]]
-    then
-        echo "Bash: Installing Task"
-        sudo apt-get install task -y
-        echo "Bash: Installed Task"
-        echo -e "yes\n" | task 
-    fi
 
     if [ ! "$(which weather)" ]
     then
-        echo "Bash: Installing weather"
-        sudo apt-get install weather-util -y
-        echo "Bash: Installed weather"
+        if [ ! $no_sudo ]; then
+            echo "Bash: Installing weather"
+            sudo apt-get install weather-util -y
+            echo "Bash: Installed weather"
+        fi
     fi
 
     # If the git is installed, we...
@@ -29,16 +22,30 @@ install_bash () {
     fi
 
     # Copy bashrc file
-	cp ./bash/.bash_aliases  ~/ -v
-    cp ./bash/.bash_functions  ~/ -v
-    cp ./bash/.bash_logout   ~/ -v
-    cp ./bash/.bashrc   ~/ -v
-    cp ./bash/.bash_taskwarrior  ~/ -v 
-    cp ./bash/.bash_welcome   ~/ -v
-    cp ./bash/.taskrc ~/ -v
+	cp ./bash/.bash_aliases     ~/ -v
+    cp ./bash/.bash_functions   ~/ -v
+    cp ./bash/.bash_logout      ~/ -v
+    cp ./bash/.bashrc           ~/ -v
+    cp ./bash/.bash_taskwarrior ~/ -v
+    cp ./bash/.bash_welcome     ~/ -v
+    cp ./bash/.taskrc           ~/ -v
 
     source ~/.bashrc
 }
+
+
+install_task () {
+    if [[ ! $(which task) ]]
+    then
+        if [ ! $no_sudo ]; then
+            echo "Bash: Installing Task"
+            sudo apt-get install task -y
+            echo "Bash: Installed Task"
+            echo -e "yes\n" | task 
+        fi
+    fi
+}
+
 
 install_vim () {
     # Check to see if VIM is installed
@@ -46,7 +53,9 @@ install_vim () {
     then
         # Install VIM
         echo "VIM: Begin Installation"
-        sudo apt-get install vim
+        if [ ! $no_sudo ]; then
+            sudo apt-get install vim
+        fi
         echo "VIM: Installed Succesfully"
         echo ""
     fi
@@ -56,7 +65,9 @@ install_vim () {
     then
         # Install Dependencies
         echo "Pathogen: Install Dependencies"
-        sudo apt-get install curl > /dev/null
+        if [ ! "$(which curl)" ]; then
+            sudo apt-get install curl > /dev/null
+        fi
         echo "Pathogen: Dependencies Installed"
 
         echo "Pathogen: Begin Installation"
@@ -104,17 +115,27 @@ install_tips () {
     cp -Rv ./tips/ ~/.config/ 
 }
 
+printf "This script will install the updated scripts\n"
+
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 echo "$DIR"
 
+# Check if we have sudo access
+if [ "$2" == '-n' ]; then
+    no_sudo=1
+fi
 
 if [ "$1" == '-h' ]; then
 	printf "This is the help command\n"
 	printf "Command options: \n"
-	echo -e '-a | --all \tInstall all the configuration tools'
+	echo -e "-a | --all \tInstall all the configuration tools"
 	echo -e "-b | --bash\tInstall the bash tools only"
+    echo
+    echo -e "If a previous command has been issued, specify '-n' to signify"
+    echo -e "\tthat there is no ${red}sudo${NC} access"
 elif [ "$1" == '-a' ]; then
 	install_bash
+    install_task
     install_vim
     install_git
     install_tips
