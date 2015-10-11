@@ -69,7 +69,7 @@ set statusline+=%*
 
 
 "  Sets the python checker to look for Python 3
-" let g:syntastic_python_python_exec = '/usr/bin/python3'
+let g:syntastic_python_python_exec = '/usr/bin/python3'
 
 "  Disables style messages as error messages in our linters
 " let g:syntastic_quiet_messages = { "type": "style" }
