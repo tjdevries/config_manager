@@ -3,10 +3,10 @@
 # ~~~~~~~~~~~~~~~ Welcome Screen :) ~~~~~~~~~~~~~~~~~~~~~~~~
 clear
 
-echo -ne "${dark_gray}" "Hello, $USER. Today is, "; date
-echo -e "${light_blue}"; cal ;  
-echo -ne "${CYAN}";
-echo -ne "${light_gray}Sysinfo:";uptime ;echo ""
+echo -ne "${light_blue}Hello, $USER. Today is, "; date; echo -ne "${NC}"
+echo -e "${light_blue}"; cal ; echo -ne "${NC}"  
+echo 
+echo -ne "${light_blue}Sysinfo:"; uptime; echo -e "${NC}"
 
 # Display a random tip
 if [ -d ~/.config/tips/  ]; then
@@ -14,10 +14,11 @@ if [ -d ~/.config/tips/  ]; then
 fi
 
 # Display the current weather in Grand Rapids :)
-if [ $(which weather) ]; then
-    echo "Weather today: "
-    weather GRR | grep ': '
-fi
+# Kind of just got bored with the weather thing... just leaving it our for now
+# if [ $(which weather) ]; then
+#     echo "Weather today: "
+#     weather GRR | grep ': '
+# fi
 
 
 # ~~~~~~~~~~~~~~ Other ideas and / or snippes ~~~~~~~~~~~~~~ 
