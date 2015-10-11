@@ -101,7 +101,7 @@ install_tips () {
     # Installs our custom tips into the config folder
     mkdir -p ~/.config/
 
-    cp -Rv ./tips/ ~/.config/tips 
+    cp -Rv ./tips/ ~/.config/ 
 }
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
