@@ -1,3 +1,13 @@
+#!/usr/bin/env python3.4
+
+# Imports
+import random
+
+# Define the tips
 tips = [
-  'This is the first tip'
+  "The last command entered with ':' can be repeated with @: and further repeats can be done with @@",
+  "Using the * key searches for the word under the cursor. Use # to do the same thing backwards",
 ]
+
+# Print a random tip!
+print(tips[int(random.random()*len(tips))])
