@@ -41,6 +41,10 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 
+" Make it so that long lines wrap smartly
+set breakindent 
+let &showbreak=repeat(' ', 3)
+set linebreak
 
 " Always use spaces instead of tab characters
 set expandtab
