@@ -2,7 +2,8 @@
 
 # Check for the configuration items that we want
 if [ ! "$(vim --version | grep +python3 )" ]; then
-    need_compile=1
+    # This is not ready yet
+    # need_compile=1
 fi
 
 if [ $need_compile ]; then
