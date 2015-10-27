@@ -107,6 +107,16 @@ if [ ! -d ~/.vim/bundle/vim-airline ] || [ ! -d ~/.fonts/ ]; then
     fc-cache -vf ~/.fonts/
 fi
 
+# Install tagbar
+if [ ! -d ~/.vim/bundle/tagbar ]; then
+    git clone https://github.com/majutsushi/tagbar ~/.vim/bundle/tagbar
+fi
+
+# Install vim-fugitive
+if [ ! -d ~/.vim/bundle/vim-fugitive ]; then
+    git clone https://github.com/tpope/vim-fugitive ~/.vim/bundle/vim-fugitive
+fi
+
 # Install tabular
 if [ ! -d ~/.vim/bundle/tabular ]; then
     git clone https://github.com/godlygeek/tabular ~/.vim/bundle/tabular
