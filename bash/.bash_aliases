@@ -14,6 +14,12 @@ alias school='cd ~/Dropbox/calvin'
 # Maybe at some point I should make this vim
 export EDITOR="nano"
 
+# Go directory
+mkdir -p ~/go
+mkdir -p ~/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ General Aliases ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 alias sudo='sudo '
 
