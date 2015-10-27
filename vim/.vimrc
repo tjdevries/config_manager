@@ -66,17 +66,24 @@ let g:syntastic_check_on_wg = 0
 " Allowing Checkers
 let g:synastic_python_checkers = ['flake8']
 
+" ----- Airline Things -----
+" Pretty fonts!
+let g:airline_powerline_fonts = 1
+
 " Some default settings that modify the statusline
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 
 "  Sets the python checker to look for Python 3
 let g:syntastic_python_python_exec = '/usr/bin/python3'
 
 "  Disables style messages as error messages in our linters
 " let g:syntastic_quiet_messages = { "type": "style" }
+
+" ----- ctags -----
+" Enable ctags
+set tags=tags;
 
 " ----- Markdown Things -----
 let g:vim_markdown_folding_disabled=1
