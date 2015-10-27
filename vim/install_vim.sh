@@ -17,23 +17,44 @@ if [ $need_compile ]; then
 
     # Got to home directory and get the git repository
     cd ~
-    git clone https://github.com/b4winckler/vim
-    git clone https://github.com/drewinglis/vim-breakindent ~/Downloads/
+    if [ ! -d ~/vim ]; then
+        "install_vim: Create and download vim folder"
+        git clone https://github.com/b4winckler/vim
+    else
+        echo "install_vim: Vim folder already exists"
+        cd ~/vim
+        git --reset hard
+        git pull
+    fi
 
-    cd ~/vim
-    patch -p1 < ~/Downloads/vim-breakindent/breakindent.patch
+    if [ ! -d ~/Downloads/vim-breakindent ]; then
+        echo "install_vim: Create and download the breakindent patch"
+        git clone https://github.com/drewinglis/vim-breakindent ~/Downloads/vim-breakindent
+    else
+        echo "install_vim: Break indent patch already downladed"
+        cd ~/Downloads/vim-breakindent
+        git --reset hard
+        git pull
+    fi
 
+    cd ~/vim/src
+
+    echo "install_vim: make clean"
     # Begin the make process
-    make distclean
+    make clean
+
+#    cd ~/vim
+#    patch -p1 < ~/Downloads/vim-breakindent/breakindent.patch
+#    cd src
 
     # Configuration options here
     ./configure \
         --enable-perlinterp \
-        --enable-python3interp=yes \
-        --with-python3-config-dir="$(python3-config --configdir)" \
+#        --enable-python3interp=yes \
+#        --with-python3-config-dir="$(python3-config --configdir)" \
         --enable-rubyinterp \
         --enable-cscope \
-        --enable-gui=auto \
+        --enable-gui=no \
         --enable-gtk2-check \
         --enable-gnome-check \
         --with-features=huge \
