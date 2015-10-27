@@ -4,6 +4,7 @@
 if [ ! "$(vim --version | grep +python3 )" ]; then
     # This is not ready yet
     # need_compile=1
+    echo "Someday you should fix the install vim"
 fi
 
 if [ $need_compile ]; then
@@ -84,9 +85,26 @@ if [ ! -d ~/.vim/bundle/vim-sensible ]; then
     git clone git://github.com/tpope/vim-sensible.git ~/.vim/bundle/vim-sensible 
 fi
 
-# Install vim-airline
-if [ ! -d ~/.vim/bundle/vim-airline ]; then
+# Install vim-airline and make sure that we have the fonts install
+if [ ! -d ~/.vim/bundle/vim-airline ] || [ ! -d ~/.fonts/ ]; then
     git clone https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
+
+    # After installing vim-arline, we want to get the cool fonts
+    mkdir -p ~/.fonts/
+
+    # Move into the folder and get the updated fonts
+    cd ~/.fonts/
+    wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+    wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+
+    # Make it a possible font directory
+    sudo mkfontscale
+    sudo mkfontdir
+
+    xset +fp ~/.fonts/
+
+    # Update the font cache
+    fc-cache -vf ~/.fonts/
 fi
 
 # Install tabular
