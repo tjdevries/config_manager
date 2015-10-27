@@ -42,7 +42,7 @@ set shiftwidth=4
 set softtabstop=4
 
 " Make it so that long lines wrap smartly
-set breakindent 
+set breakindent
 let &showbreak=repeat(' ', 3)
 set linebreak
 
@@ -68,7 +68,7 @@ let g:synastic_python_checkers = ['flake8']
 
 " ----- Airline Things -----
 " Pretty fonts!
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 
 " Some default settings that modify the statusline
 set statusline+=%#warningmsg#
@@ -96,7 +96,7 @@ augroup markdown
     " Ctrl+\ will run TableFormat in either mode
     au FileType mkd.markdown exec 'inoremap <C-\> <C-O>:TableFormat<CR>'
     au FileType mkd.markdown exec 'noremap <silent> <C-\> :TableFormat<CR>'
-augroup END 
+augroup END
 
 
 " ----- Flake8 Things -----
