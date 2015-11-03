@@ -6,6 +6,9 @@
 " Plugin Manager
 execute pathogen#infect()
 
+" Don't worry about old compatibility
+set nocompatible
+
 " ----- Vim User Interface -----
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
@@ -49,12 +52,6 @@ set linebreak
 " Always use spaces instead of tab characters
 set expandtab
 
-" ----- Status Line (Python) -----
-" This currently doesn't work
-" python from powerline.vim import setup as powerline_setup
-" python powerline_setup()
-" python del powerline_setup
-
 " ----- Syntastic Things -----
 "  Really not sure what these things do yet
 "  For now going to use flake8 instead of syntastic.
@@ -78,16 +75,15 @@ set statusline+=%*
 "  Sets the python checker to look for Python 3
 let g:syntastic_python_python_exec = '/usr/bin/python3'
 
-"  Disables style messages as error messages in our linters
-" let g:syntastic_quiet_messages = { "type": "style" }
+" ----- CtrlP Things -----
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlPMixed'
 
 " ----- ctags -----
 " Enable ctags
 set tags=tags;
 
 " ----- Markdown Things -----
-let g:vim_markdown_folding_disabled=1
-
 augroup markdown
     " remove buffer-local auto commands forcurrent buffer
     au!
@@ -96,16 +92,12 @@ augroup markdown
     " Ctrl+\ will run TableFormat in either mode
     au FileType mkd.markdown exec 'inoremap <C-\> <C-O>:TableFormat<CR>'
     au FileType mkd.markdown exec 'noremap <silent> <C-\> :TableFormat<CR>'
+
+    let g:vim_markdown_folding_disabled=1
 augroup END
 
 
-" ----- Flake8 Things -----
-" Run flake8() whenever a python file is written
-" autocmd BufWritePost *.py call Flake8()
-" Trying to do this using syntastic now. Refer above
-
 " ----- Color Things -----
-
 " Enable syntax highlighting
 syntax enable
 syntax on
@@ -116,4 +108,16 @@ highlight Normal ctermfg=grey ctermbg=black
 colorscheme solarized
 
 let g:solarized_termcolors=256
+
+" ------------------------- Old Items: Kept for Reference -------------------------   
+" ----- Flake8 Things -----
+" Run flake8() whenever a python file is written
+" autocmd BufWritePost *.py call Flake8()
+" Trying to do this using syntastic now. Refer above
+
+" ----- Status Line (Python) -----
+" This currently doesn't work
+" python from powerline.vim import setup as powerline_setup
+" python powerline_setup()
+" python del powerline_setup
 

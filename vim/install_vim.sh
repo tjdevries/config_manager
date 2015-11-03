@@ -107,6 +107,11 @@ if [ ! -d ~/.vim/bundle/vim-airline ] || [ ! -d ~/.fonts/ ]; then
     fc-cache -vf ~/.fonts/
 fi
 
+echo "--------------------------------------------------------------------------------"
+echo "  Checking Vim Plugins: Begin "
+echo "--------------------------------------------------------------------------------"
+
+
 # Install tagbar
 if [ ! -d ~/.vim/bundle/tagbar ]; then
     git clone https://github.com/majutsushi/tagbar ~/.vim/bundle/tagbar
@@ -136,6 +141,15 @@ fi
 if [ ! -d ~/.vim/bundle/vim-colors-solarized  ]; then
     git clone git://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle/vim-colors-solarized
 fi
+
+# Install ctrlp 
+if [ ! -d ~/.vim/bundle/ctrlp.vim ]; then
+    git clone https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
+fi
+
+echo "--------------------------------------------------------------------------------"
+echo "  Checking Vim Plugins: Complete "
+echo "--------------------------------------------------------------------------------"
 
 # The python one doesn't work any more
 # sudo pip3 install powerline-status
