@@ -33,6 +33,9 @@ filetype plugin indent on
 " Enable smart autocompletion for programs
 set omnifunc=syntaxcomplete#Complete
 
+" Spell check
+set spell
+
 " ----- Tab things -----
 " Want auto indents automatically
 set autoindent
