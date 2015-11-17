@@ -1,0 +1,13 @@
+[user]
+    name = TJ DeVries
+    email = devries.timothyj@gmail.com
+
+[core]
+    editor = vim
+
+[alias]
+    # Thanks r00k, this creates a pretty graph view of the log
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
+[push]
+    default = current
