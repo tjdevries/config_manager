@@ -104,7 +104,8 @@ install_git () {
         echo ""
     fi
 
-    # Configure git to have my name and email
+    # Configure git to have my global gitconfig file
+    cp ./git/.gitconfig ~/ -v
     
 }
 
