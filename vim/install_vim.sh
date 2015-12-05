@@ -1,8 +1,13 @@
 #!/bin/bash
 
+printEqual () {
+    echo "=============================================================="
+    echo "    $1"
+    echo "=============================================================="
+}
+
 # Check for the configuration items that we want
 if [ ! "$(vim --version | grep +python3 )" ]; then
-    # This is not ready yet
     # need_compile=1
     echo "Someday you should fix the install vim"
 fi
@@ -14,45 +19,47 @@ if [ $need_compile ]; then
         libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
         libcairo2-dev libx11-dev libxpm-dev libxt-dev -y
 
-    sudo apt-get install ruby-dev python3-dev -y
+    # Get the required dev packages to get +
+    sudo apt-get install ruby-dev python-dev python3-dev -y
 
     # Got to home directory and get the git repository
     cd ~
     if [ ! -d ~/vim ]; then
-        "install_vim: Create and download vim folder"
+        
+        printEqual "install_vim: Create and download vim folder"
         git clone https://github.com/b4winckler/vim
     else
-        echo "install_vim: Vim folder already exists"
+        printEqual "install_vim: Vim folder already exists"
         cd ~/vim
-        git --reset hard
-        git pull
+        git fetch origin
+        git reset --hard origin/master
     fi
 
     if [ ! -d ~/Downloads/vim-breakindent ]; then
-        echo "install_vim: Create and download the breakindent patch"
+        printEqual "install_vim: Create and download the breakindent patch"
         git clone https://github.com/drewinglis/vim-breakindent ~/Downloads/vim-breakindent
     else
-        echo "install_vim: Break indent patch already downladed"
+        printEqual "install_vim: Break indent patch already downloaded"
         cd ~/Downloads/vim-breakindent
-        git --reset hard
-        git pull
+        git fetch origin
+        git reset --hard origin/master
     fi
 
     cd ~/vim/src
 
-    echo "install_vim: make clean"
+    printEqual "install_vim: make clean"
     # Begin the make process
-    make clean
+    sudo make clean
 
 #    cd ~/vim
 #    patch -p1 < ~/Downloads/vim-breakindent/breakindent.patch
 #    cd src
 
     # Configuration options here
-    ./configure \
+    sudo ./configure \
         --enable-perlinterp \
-#        --enable-python3interp=yes \
-#        --with-python3-config-dir="$(python3-config --configdir)" \
+        --enable-python3interp=yes \
+        --with-python3-config-dir="$(python3-config --configdir)" \
         --enable-rubyinterp \
         --enable-cscope \
         --enable-gui=no \
@@ -62,9 +69,12 @@ if [ $need_compile ]; then
         --enable-multibyte \
         --with-x \
         --with-compiledby="xorpd" \
-        --prefix=/opt/vim74
+        --prefix=/usr/local/bin \
+        --with-vim-name="myvim"
+        --silent \
+        --cache-file="~/install_vim.log"
 
-    make
+    sudo make
     sudo make install
 fi
 

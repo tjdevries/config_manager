@@ -36,6 +36,9 @@ set omnifunc=syntaxcomplete#Complete
 " Spell check
 set spell
 
+" Make it so there are always ten lines below my cursor
+set scrolloff=10
+
 " ----- Tab things -----
 " Want auto indents automatically
 set autoindent
