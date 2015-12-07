@@ -3,7 +3,7 @@
 if has('nvim')
     runtime! plugin/python_setup.vim
     let g:python_host_prog = '/usr/bin/python'
-    let g:python3_host_prog = '/usr/bin/python3'
+    " let g:python3_host_prog = '/usr/bin/python3'
 endif
 
 " ----- Things to pursue further -----
@@ -105,6 +105,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+" Use Python Version
+let g:UltiSnipsUsePythonVersion = 2
+
 " ----- ctags -----
 " Enable ctags
 set tags=tags;
@@ -126,6 +129,8 @@ augroup END
 "augroup python
 "    au!
 "augroup END
+
+autocmd BufWritePre *.py :%s/\s\+$//e
 
 " ----- Color Things -----
 " Enable syntax highlighting
