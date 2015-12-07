@@ -1,5 +1,7 @@
 #!/bin/bash
 
+START_DIR="$(pwd)"
+
 install_bash () {
     # Install Dependencies
 
@@ -87,10 +89,11 @@ install_vim () {
         echo -e "[flake8]\nmax-line-length = 140" > ~/.config/flake8
     fi
 
-    ./vim/install_vim.sh
+    $START_DIR/vim/install_vim.sh
 
-    # Copy VIM file
-    ln -s ./vim/.vimrc ~/.vimrc -v
+    # link VIM file
+    ln -sf $START_DIR/vim/.vimrc ~/.vimrc -v
+    ln -sf $START_DIR/vim/.vimrc ~/vim/.vimrc -v
 }
 
 install_git () {
