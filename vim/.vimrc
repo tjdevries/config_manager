@@ -1,3 +1,11 @@
+" ----- NeoVim Things -----
+" Python Support
+if has('nvim')
+    runtime! plugin/python_setup.vim
+    let g:python_host_prog = '/usr/bin/python'
+    let g:python3_host_prog = '/usr/bin/python3'
+endif
+
 " ----- Things to pursue further -----
 " completeopt=??
 " For regular expressions turn magic on
@@ -8,6 +16,7 @@ execute pathogen#infect()
 
 " Don't worry about old compatibility
 set nocompatible
+
 
 " ----- Vim User Interface -----
 " Ignore compiled files
@@ -34,6 +43,7 @@ filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 
 " Spell check
+set spelllang=en_us
 set spell
 
 " Make it so there are always ten lines below my cursor
@@ -111,9 +121,13 @@ syntax on
 " Choose Color scheme
 " The next command does this "set background=dark""
 highlight Normal ctermfg=grey ctermbg=black
-colorscheme solarized
 
-let g:solarized_termcolors=256
+if has('nvim')
+    colorscheme slate
+else
+    colorscheme solarized
+    let g:solarized_termcolors=256
+endif
 
 " ------------------------- Old Items: Kept for Reference -------------------------   
 " ----- Flake8 Things -----
