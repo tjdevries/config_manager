@@ -108,7 +108,7 @@ install_git () {
     fi
 
     # Configure git to have my global gitconfig file
-    cp ./git/.gitconfig ~/ -v
+    ln -sf $START_DIR/git/.gitconfig ~/.gitconfig -v
     
 }
 
