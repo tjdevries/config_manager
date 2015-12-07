@@ -90,7 +90,7 @@ install_vim () {
     ./vim/install_vim.sh
 
     # Copy VIM file
-    cp ./vim/.vimrc ~/.vimrc -v
+    ln -s ./vim/.vimrc ~/.vimrc -v
 }
 
 install_git () {
