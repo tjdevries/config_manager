@@ -43,8 +43,8 @@ filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 
 " Spell check
-set spelllang=en_us
-set spell
+" set spelllang=en_us
+" set spell
 
 " Make it so there are always ten lines below my cursor
 set scrolloff=10
@@ -91,9 +91,19 @@ set statusline+=%*
 "  Sets the python checker to look for Python 3
 let g:syntastic_python_python_exec = '/usr/bin/python3'
 
+" --------- Competion ---------
 " ----- CtrlP Things -----
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPMixed'
+
+" ----- UltiSnip ---
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-e>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+-
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 " ----- ctags -----
 " Enable ctags
@@ -112,6 +122,10 @@ augroup markdown
     let g:vim_markdown_folding_disabled=1
 augroup END
 
+" ----- Python Things -----
+"augroup python
+"    au!
+"augroup END
 
 " ----- Color Things -----
 " Enable syntax highlighting

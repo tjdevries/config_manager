@@ -177,6 +177,29 @@ if [ ! -d ~/.vim/bundle/ctrlp.vim ]; then
     git clone https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 fi
 
+# Install YCM
+if [ ! -d ~/.vim/bundle/YouCompleteMe ]; then
+    git clone https://github.com/Valloric/YouCompleteMe ~/.vim/bundle/YouCompleteMe
+    
+    # Enter the correct directory
+    cd ~/.vim/bundle/YouCompleteMe
+
+    # Update our third party sub modules
+    git submodule update --init --recursive
+
+    ./install.py --clang-completer --gocode-completer
+fi
+
+# Install ultisnips
+if [ ! -d ~/.vim/bundle/ultisnips ]; then
+    git clone https://github.com/SirVer/ultisnips ~/.vim/bundle/ultisnips
+fi
+
+# Install optional snippets
+if [ ! -d ~/.vim/bundle/vim-snippets ]; then
+    git clone https://github.com/honza/vim-snippets ~/.vim/bundle/vim-snippets
+fi
+
 echo "--------------------------------------------------------------------------------"
 echo "  Checking Vim Plugins: Complete "
 echo "--------------------------------------------------------------------------------"
