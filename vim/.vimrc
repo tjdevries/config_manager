@@ -148,6 +148,23 @@ else
     let g:solarized_termcolors=256
 endif
 
+
+" ----- Remapping the keys -----
+nnoremap <Up>          :echom "--> k <-- "<CR>
+nnoremap <Down>        :echom "--> j <-- "<CR>
+nnoremap <Right>       :echom "--> l <-- "<CR>
+nnoremap <Left>        :echom "--> h <-- "<CR>
+
+inoremap <Up>     <C-o>:echom "--> k <-- "<CR>
+inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
+inoremap <Right>  <C-o>:echom "--> l <-- "<CR>
+inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
+
+nnoremap ; :
+
+" Set jj to be escape in insert mode
+inoremap jj <esc>
+
 " ------------------------- Old Items: Kept for Reference -------------------------   
 " ----- Flake8 Things -----
 " Run flake8() whenever a python file is written
