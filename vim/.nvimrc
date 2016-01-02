@@ -50,5 +50,10 @@ call plug#end()
 " Nvim automatically turns on preview, which I don't like
 set completeopt-=preview
 
+" ----- Flashy Operator -----
+" Make it auto trigger on yank
+map y <Plug>(operator-flashy)
+nmap Y <Plug>(operator-flashy)$
+
 " ----- Colorscheme -----
 colorscheme slate
