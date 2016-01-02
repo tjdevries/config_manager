@@ -20,8 +20,9 @@ let g:plug_timeout=600
 " Plugin management: Vim-plug
 call plug#begin('~/.vim/plugged')
 
-" Fun status line
+" UI Improvements
 Plug 'bling/vim-airline'
+Plug 'haya14busa/vim-operator-flashy' | Plug 'kana/vim-operator-user'
 
 " Syntastic
 Plug 'scrooloose/syntastic'
