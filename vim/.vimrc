@@ -1,26 +1,10 @@
 " ----- NeoVim Things -----
 " Python Support
 if has('nvim')
-    runtime! plugin/python_setup.vim
-    let g:python_host_prog = '/usr/bin/python'
-    " let g:python3_host_prog = '/usr/bin/python3'
-    
-    " Nvim automatically turns on preview, which I don't like
-    set completeopt-=preview
+    source ~/.config/nvim/.nvimrc
+else
+    source ~/.config/vim/.specific.vimrc
 endif
-
-" ----- Things to pursue further -----
-" completeopt=??
-" For regular expressions turn magic on
-" set magic
-
-let g:pathogen_disabled = []
-call add(g:pathogen_disabled, 'vim-autoclose')
-" Plugin Manager
-execute pathogen#infect()
-
-" Don't worry about old compatibility
-set nocompatible
 
 " Set our leader key to ,
 let mapleader=","
@@ -39,7 +23,7 @@ set incsearch
 set showmatch
 
 " Show line numbers
-set number
+set relativenumber
 
 " Load filetype-specific indent files
 " Also enables plugins?
@@ -88,7 +72,7 @@ let g:synastic_python_checkers = ['flake8']
 
 " ----- Airline Things -----
 " Pretty fonts!
-" let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 
 " Some default settings that modify the statusline
 set statusline+=%#warningmsg#
@@ -145,16 +129,6 @@ syntax enable
 syntax on
 
 " Choose Color scheme
-" The next command does this "set background=dark""
-highlight Normal ctermfg=grey ctermbg=black
-
-if has('nvim')
-    colorscheme slate
-else
-    colorscheme solarized
-    let g:solarized_termcolors=256
-endif
-
 
 " ----- Remapping the keys -----
 nnoremap <Up>          :echom "--> k <-- "<CR>
@@ -176,7 +150,7 @@ inoremap jj <esc>
 nnoremap k gk
 nnoremap j gj
 
-" ------------------------- Old Items: Kept for Reference -------------------------   
+" ------------------------- Old Items: Kept for Reference -------------------------
 " ----- Flake8 Things -----
 " Run flake8() whenever a python file is written
 " autocmd BufWritePost *.py call Flake8()

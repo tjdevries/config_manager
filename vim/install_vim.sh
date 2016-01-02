@@ -16,7 +16,7 @@ printEqual () {
 
 if [ $need_compile ]; then
     # Compile vim with the things that I like
-    # Get the required development packages 
+    # Get the required development packages
     sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
         libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
         libcairo2-dev libx11-dev libxpm-dev libxt-dev -y
@@ -27,7 +27,7 @@ if [ $need_compile ]; then
     # Got to home directory and get the git repository
     cd ~
     if [ ! -d ~/vim ]; then
-        
+
         printEqual "install_vim: Create and download vim folder"
         git clone https://github.com/b4winckler/vim
     else
@@ -94,7 +94,7 @@ fi
 
 # Install vim-sensible
 if [ ! -d ~/.vim/bundle/vim-sensible ]; then
-    git clone git://github.com/tpope/vim-sensible.git ~/.vim/bundle/vim-sensible 
+    git clone git://github.com/tpope/vim-sensible.git ~/.vim/bundle/vim-sensible
 fi
 
 # Install vim-airline and make sure that we have the fonts install
@@ -154,7 +154,7 @@ if [ ! -d ~/.vim/bundle/vim-colors-solarized  ]; then
     git clone git://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle/vim-colors-solarized
 fi
 
-# Install ctrlp 
+# Install ctrlp
 if [ ! -d ~/.vim/bundle/ctrlp.vim ]; then
     git clone https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 fi
@@ -162,7 +162,7 @@ fi
 # Install YCM
 if [ ! -d ~/.vim/bundle/YouCompleteMe ]; then
     git clone https://github.com/Valloric/YouCompleteMe ~/.vim/bundle/YouCompleteMe
-    
+
     # Enter the correct directory
     cd ~/.vim/bundle/YouCompleteMe
 
@@ -192,4 +192,4 @@ echo "--------------------------------------------------------------------------
 # if [ "$lvim --version | grep +python)" ]; then
 #        echo "Has python support"
 #        fi
- 
+
