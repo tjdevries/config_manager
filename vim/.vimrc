@@ -4,6 +4,9 @@ if has('nvim')
     runtime! plugin/python_setup.vim
     let g:python_host_prog = '/usr/bin/python'
     " let g:python3_host_prog = '/usr/bin/python3'
+    
+    " Nvim automatically turns on preview, which I don't like
+    set completeopt-=preview
 endif
 
 " ----- Things to pursue further -----
@@ -11,12 +14,16 @@ endif
 " For regular expressions turn magic on
 " set magic
 
+let g:pathogen_disabled = []
+call add(g:pathogen_disabled, 'vim-autoclose')
 " Plugin Manager
 execute pathogen#infect()
 
 " Don't worry about old compatibility
 set nocompatible
 
+" Set our leader key to ,
+let mapleader=","
 
 " ----- Vim User Interface -----
 " Ignore compiled files
@@ -98,10 +105,10 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 " ----- UltiSnip ---
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-e>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
--
+let g:UltiSnipsExpandTrigger="<leader>e"
+let g:UltiSnipsJumpForwardTrigger="<leader>r"
+let g:UltiSnipsJumpBackwardTrigger="<leader>w"
+
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
@@ -164,6 +171,10 @@ nnoremap ; :
 
 " Set jj to be escape in insert mode
 inoremap jj <esc>
+
+" For long, wrapped lines
+nnoremap k gk
+nnoremap j gj
 
 " ------------------------- Old Items: Kept for Reference -------------------------   
 " ----- Flake8 Things -----
