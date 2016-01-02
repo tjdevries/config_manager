@@ -12,25 +12,7 @@ printEqual () {
 #    echo "Someday you should fix the install vim"
 # fi
 
-# Install Neovim
-install_neovim() {
-    sudo apt-get install software-properties-common
 
-    sudo apt-get install python-dev python-pip python3-dev python3-pip
-
-    sudo add-apt-repository ppa:neovim-ppa/unstable
-    sudo apt-get update
-    sudo apt-get install neovim
-
-    sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-    sudo update-alternatives --config vi
-    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-    sudo update-alternatives --config editor
-
-    mkdir -p ~/.config
-    ln ~/.vim ~/.config/nvim
-    ln -s ~/.vimrc ~/.config/nvim/init.vim
-}
 
 if [ $need_compile ]; then
     # Compile vim with the things that I like
