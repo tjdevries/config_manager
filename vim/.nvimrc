@@ -43,6 +43,7 @@ Plug 'godlygeek/tabular'        " Quickly align text by pattern
 Plug 'tpope/vim-surround'       " Surround text objects easily
 Plug 'tpope/vim-speeddating'    " Handle changing of dates in a nicer manner
 Plug 'tpope/vim-commentary'     " Easily comment out lines or objects
+Plug 'tpope/vim-repeat'         " Repeat actions better
 
 " Markdown Plugins
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
