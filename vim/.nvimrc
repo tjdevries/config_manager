@@ -41,6 +41,7 @@ Plug 'tpope/vim-fugitive'
 
 " Text Manipulation Based Plugins
 Plug 'godlygeek/tabular'
+Plug 'tpope/vim-surround'
 
 " Markdown Plugins
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
