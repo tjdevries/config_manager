@@ -20,9 +20,8 @@ let g:plug_timeout=600
 " Plugin management: Vim-plug
 call plug#begin('~/.vim/plugged')
 
-" UI Improvements
+" Fun status line
 Plug 'bling/vim-airline'
-Plug 'haya14busa/vim-operator-flashy' | Plug 'kana/vim-operator-user'
 
 " Syntastic
 Plug 'scrooloose/syntastic'
@@ -40,8 +39,10 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
 
 " Text Manipulation Based Plugins
-Plug 'godlygeek/tabular'
-Plug 'tpope/vim-surround'
+Plug 'godlygeek/tabular'        " Quickly align text by pattern
+Plug 'tpope/vim-surround'       " Surround text objects easily
+Plug 'tpope/vim-speeddating'    " Handle changing of dates in a nicer manner
+Plug 'tpope/vim-commentary'     " Easily comment out lines or objects
 
 " Markdown Plugins
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -50,11 +51,6 @@ call plug#end()
 
 " Nvim automatically turns on preview, which I don't like
 set completeopt-=preview
-
-" ----- Flashy Operator -----
-" Make it auto trigger on yank
-map y <Plug>(operator-flashy)
-nmap Y <Plug>(operator-flashy)$
 
 " ----- Colorscheme -----
 colorscheme slate
