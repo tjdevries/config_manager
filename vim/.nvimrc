@@ -48,10 +48,27 @@ Plug 'tpope/vim-repeat'         " Repeat actions better
 " Markdown Plugins
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
+" Colorscheme Plugins
+Plug 'morhetz/gruvbox'          " gruvbox
+
+" Nyaovim Plugins
+Plug 'rhysd/nyaovim-markdown-preview'
+
 call plug#end()
 
 " Nvim automatically turns on preview, which I don't like
 set completeopt-=preview
 
 " ----- Colorscheme -----
-colorscheme slate
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
+let g:gruvbox_italic=1              " Turn on italics for gruvbox
+colorscheme gruvbox
+
+set background=dark
+
+" ----- Nyaovim Markdown Preview Settings -----
+" Only apply if it is loaded
+" if exists(':StartMarkdownPreview')
+"   let g:markdown_preview_auto = 1
+"   let g:markdown_preview_eager = 1 
+" endif

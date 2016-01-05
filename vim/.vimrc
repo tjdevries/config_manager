@@ -24,6 +24,7 @@ set showmatch
 
 " Show line numbers
 set relativenumber
+set number
 
 " Load filetype-specific indent files
 " Also enables plugins?
