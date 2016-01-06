@@ -37,6 +37,7 @@ Plug 'majutsushi/tagbar'
 
 " Git Based Plugins
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Text Manipulation Based Plugins
 Plug 'godlygeek/tabular'        " Quickly align text by pattern
@@ -59,6 +60,9 @@ call plug#end()
 " Nvim automatically turns on preview, which I don't like
 set completeopt-=preview
 
+" Make updates happen faster
+set updatetime=250
+
 " ----- Colorscheme -----
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
 let g:gruvbox_italic=1              " Turn on italics for gruvbox
@@ -69,6 +73,6 @@ set background=dark
 " ----- Nyaovim Markdown Preview Settings -----
 " Only apply if it is loaded
 " if exists(':StartMarkdownPreview')
-"   let g:markdown_preview_auto = 1
-"   let g:markdown_preview_eager = 1 
+let g:markdown_preview_auto = 1
+let g:markdown_preview_eager = 1 
 " endif
