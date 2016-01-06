@@ -16,3 +16,4 @@ Tech Picks:
 Random:
 
 - Try KDE according to Tobias
+- Also found this while looking for some other stuff. https://github.com/sindresorhus/awesome
