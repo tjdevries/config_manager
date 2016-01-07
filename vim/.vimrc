@@ -1,7 +1,11 @@
 " ----- NeoVim Things -----
 " Python Support
 if has('nvim')
-    source ~/.config/nvim/.nvimrc
+    if has('unix')
+        source ~/.config/nvim/.nvimrc
+    else
+        " Windows pathway
+        source ~\Documents\GitHub\config_manager\vim\.nvimrc
 else
     source ~/.config/vim/.specific.vimrc
 endif

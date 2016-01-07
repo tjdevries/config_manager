@@ -4,8 +4,11 @@
 " Find a way to do color schemes with vim-plug
 " Figure out how to use ctrl-p
 
-let g:python_host_prog = '/usr/bin/python'
-" let g:python3_host_prog = '/usr/bin/python3'
+if has('unix')
+    let g:python_host_prog = '/usr/bin/python'
+    " let g:python3_host_prog = '/usr/bin/python3'
+else
+    let g:python_host_pgro = 'C:\python
 
 " Automatically installs vim-plug if not already there
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -18,7 +21,14 @@ endif
 let g:plug_timeout=600
 
 " Plugin management: Vim-plug
-call plug#begin('~/.vim/plugged')
+"   Choose the correct path
+if has('unix')
+    let plugin_path = "~/.vim/plugg"
+else
+    let plugin_path = "C:\neovim\"
+endif
+
+call plug#begin(plugin_path)
 
 " Fun status line
 Plug 'bling/vim-airline'
