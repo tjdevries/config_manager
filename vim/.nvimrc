@@ -9,6 +9,7 @@ if has('unix')
     " let g:python3_host_prog = '/usr/bin/python3'
 else
     let g:python_host_pgro = 'C:\python
+endif
 
 " Automatically installs vim-plug if not already there
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -23,7 +24,7 @@ let g:plug_timeout=600
 " Plugin management: Vim-plug
 "   Choose the correct path
 if has('unix')
-    let plugin_path = "~/.vim/plugg"
+    let plugin_path = "~/.vim/plugged"
 else
     let plugin_path = "C:\neovim\"
 endif

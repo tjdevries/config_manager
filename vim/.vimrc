@@ -6,6 +6,7 @@ if has('nvim')
     else
         " Windows pathway
         source ~\Documents\GitHub\config_manager\vim\.nvimrc
+    endif
 else
     source ~/.config/vim/.specific.vimrc
 endif
