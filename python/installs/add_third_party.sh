@@ -32,3 +32,10 @@ then
 else
     echo "We found PyPDF2"
 fi
+
+# Do some pip installs
+sudo apt-get install python3-pip
+
+sudo pip3 install flake8 --upgrade
+sudo pip3 install pep8 --upgrade
+sudo pip3 install pep8-naming --upgrade
