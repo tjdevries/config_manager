@@ -34,14 +34,19 @@ call plug#begin(plugin_path)
 " Fun status line
 Plug 'bling/vim-airline'
 
-" Syntastic
-Plug 'scrooloose/syntastic'
+" Syntax Type Plugins
+" Plug 'scrooloose/syntastic'
+" Plug 'klen/python-mode', { 'for': 'python' } " Not sure I like this one
+Plug 'benekastah/neomake'       " A better linter than syntastic?
 
 " UltiSnips
 Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 
-" YouCompleteMe
-Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
+" Deoplete
+Plug 'Shougo/deoplete.nvim'
+
+" YouCompleteMe, not using right now. Went for Deoplete
+" Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
 
 " Tag Based Plugins
 Plug 'majutsushi/tagbar'
@@ -58,7 +63,8 @@ Plug 'tpope/vim-commentary'     " Easily comment out lines or objects
 Plug 'tpope/vim-repeat'         " Repeat actions better
 
 " Fuzzy file finding
-Plug 'junegunn/fzf', { 'do': './install --all'}   " Fuzzy Searcher
+Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
+Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM! 
 
 " Markdown Plugins
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -76,6 +82,26 @@ set completeopt-=preview
 
 " Make updates happen faster
 set updatetime=250
+
+"----- Deoplete -----
+let g:deoplete#enable_at_startup = 1
+
+" ----- Neomake -----
+" Automatically run Neomake on write
+autocmd! BufWritePost *  Neomake
+
+" Automatically open the error window
+let g:neomake_open_list = 1
+
+" Python
+let g:neomake_python_flake8_maker = {
+        \ 'args': ['--max-line-length=120']
+        \ }
+
+let g:neomake_python_enabled_makers = [ 'flake8' ]
+
+" Vim
+let g:neomake_vimscript_enabled_makers = [ 'vint' ]
 
 " ----- Colorscheme -----
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
