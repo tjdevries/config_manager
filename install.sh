@@ -49,7 +49,11 @@ install_task () {
 }
 
 
+# TODO: Change this to neovim.
 install_vim () {
+    # Before installing Vim, install python things
+    $START_DIR/python/add_third_party.sh 
+
     # Check to see if VIM is installed
     if [ ! "$(which vim)" ]
     then
