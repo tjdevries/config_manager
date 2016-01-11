@@ -8,7 +8,7 @@ if has('unix')
     let g:python_host_prog = '/usr/bin/python'
     " let g:python3_host_prog = '/usr/bin/python3'
 else
-    let g:python_host_pgro = 'C:\python
+    let g:python_host_pgro = 'C:\python'
 endif
 
 " Automatically installs vim-plug if not already there
@@ -24,12 +24,12 @@ let g:plug_timeout=600
 " Plugin management: Vim-plug
 "   Choose the correct path
 if has('unix')
-    let plugin_path = "~/.vim/plugged"
+    let g:plugin_path = '~/.vim/plugged'
 else
-    let plugin_path = "C:\neovim\"
+    let g:plugin_path = 'C:/neovim/'
 endif
 
-call plug#begin(plugin_path)
+call plug#begin(g:plugin_path)
 
 " Fun status line
 Plug 'bling/vim-airline'
@@ -94,9 +94,9 @@ autocmd! BufWritePost *  Neomake
 let g:neomake_open_list = 1
 
 " Python
-let g:neomake_python_flake8_maker = {
-        \ 'args': ['--max-line-length=120']
-        \ }
+" let g:neomake_python_flake8_maker = {
+"         \ 'args': ['--max-line-length=120 --format="|%(row)4d |%(col)4d | %(code)s: %(text)s"']
+"         \ }
 
 let g:neomake_python_enabled_makers = [ 'flake8' ]
 
