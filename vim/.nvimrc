@@ -110,6 +110,8 @@ colorscheme gruvbox
 
 set background=dark
 
+set nohlsearch
+
 " ----- Nyaovim Markdown Preview Settings -----
 " Only apply if it is loaded
 " if exists(':StartMarkdownPreview')
