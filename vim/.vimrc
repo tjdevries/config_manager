@@ -12,7 +12,7 @@ else
 endif
 
 " Set our leader key to ,
-let mapleader=","
+let g:mapleader=','
 
 " ----- Vim User Interface -----
 " Ignore compiled files
@@ -65,17 +65,6 @@ set linebreak
 " Always use spaces instead of tab characters
 set expandtab
 
-" ----- Syntastic Things -----
-"  Really not sure what these things do yet
-"  For now going to use flake8 instead of syntastic.
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wg = 0
-
-" Allowing Checkers
-let g:synastic_python_checkers = ['flake8']
-
 " ----- Airline Things -----
 " Pretty fonts!
 let g:airline_powerline_fonts = 1
@@ -88,19 +77,15 @@ set statusline+=%*
 "  Sets the python checker to look for Python 3
 let g:syntastic_python_python_exec = '/usr/bin/python3'
 
-" --------- Competion ---------
-" ----- CtrlP Things -----
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPMixed'
-
+" --------- Completion ---------
 " ----- UltiSnip ---
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<leader>e"
-let g:UltiSnipsJumpForwardTrigger="<leader>r"
-let g:UltiSnipsJumpBackwardTrigger="<leader>w"
+let g:UltiSnipsExpandTrigger='<leader>e'
+let g:UltiSnipsJumpForwardTrigger='<leader>r'
+let g:UltiSnipsJumpBackwardTrigger='<leader>w'
 
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit='vertical'
 
 " Use Python Version
 let g:UltiSnipsUsePythonVersion = 2
@@ -123,16 +108,15 @@ augroup markdown
 augroup END
 
 " ----- Python Things -----
-"augroup python
-"    au!
-"augroup END
+augroup python
+    au!
+    autocmd BufWritePre *.py :%s/\s\+$//e
+augroup END
 
-autocmd BufWritePre *.py :%s/\s\+$//e
 
 " ----- Color Things -----
 " Enable syntax highlighting
 syntax enable
-syntax on
 
 " Choose Color scheme
 
