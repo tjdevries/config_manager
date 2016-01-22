@@ -44,6 +44,8 @@ Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 
 " Deoplete
 Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/neoinclude.vim'
+Plug 'davidhalter/jedi-vim'
 
 " YouCompleteMe, not using right now. Went for Deoplete
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
@@ -85,6 +87,20 @@ set updatetime=250
 
 "----- Deoplete -----
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_completion_start_length = 1
+let g:deoplete#enable_smart_case = 1
+
+"   Make tab perform the completion for deoplete
+inoremap <silent><expr> <Tab>
+            \ pumvisible() ? "\<C-n>" :
+            \ deoplete#mappings#manual_complete()
+
+"   Python completion
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#show_call_signatures = 0
 
 " ----- Neomake -----
 " Automatically run Neomake on write
