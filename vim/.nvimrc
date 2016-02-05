@@ -143,6 +143,18 @@ colorscheme gruvbox
 
 set background=dark
 " }}}
+" {{{ Airline Configuration
+let g:airline_powerline_fonts=1
+" let g:airline_section_a = 'hello'
+" let g:airline_section_z = 'column'
+
+let g:airline_inactive_collapse = 1 " Only indicate filename on inactive buffers
+let g:airline_exclue_preview = 1 " Don't show status line in preview
+let g:airline#extensions#branch#empty_message = 'HEADLESS' " No Branch Message
+let g:airline#extensions#branch#format = 2 " See documentation
+" }}}
+" {{{ Tagbar Configuration
+" }}}
 " {{{ Nyaovim Markdown Preview
 " Only apply if it is loaded
 if exists(':StartMarkdownPreview')

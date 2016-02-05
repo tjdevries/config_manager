@@ -53,18 +53,6 @@ set linebreak
 " Always use spaces instead of tab characters
 set expandtab
 " }}}
-" {{{  Airline Configuration
-" Pretty fonts!
-let g:airline_powerline_fonts = 1
-
-" Some default settings that modify the statusline
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-"  Sets the python checker to look for Python 3
-let g:syntastic_python_python_exec = '/usr/bin/python3'
-" }}}
 " {{{ UltiSnip Configuration
 " Trigger configuration.
 let g:UltiSnipsExpandTrigger='<leader>e'
