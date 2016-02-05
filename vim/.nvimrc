@@ -3,6 +3,7 @@
 " {{{ TODO
 " Find a way to do color schemes with vim-plug
 " Figure out how to use ctrl-p
+" Tagbar + statusline configuration
 " }}}
 " {{{ Unix vs. Windows Configuration
 if has('unix')
@@ -36,6 +37,7 @@ call plug#begin(g:plugin_path)
 
 " Fun status line
 Plug 'bling/vim-airline'
+Plug 'mkitt/tabline.vim'
 
 " Syntax Type Plugins
 " Plug 'scrooloose/syntastic'
@@ -145,15 +147,21 @@ set background=dark
 " }}}
 " {{{ Airline Configuration
 let g:airline_powerline_fonts=1
-" let g:airline_section_a = 'hello'
-" let g:airline_section_z = 'column'
+let g:airline_section_z = airline#section#create(['%4l', ':%3v']) " Only show the line & col number
 
 let g:airline_inactive_collapse = 1 " Only indicate filename on inactive buffers
 let g:airline_exclue_preview = 1 " Don't show status line in preview
-let g:airline#extensions#branch#empty_message = 'HEADLESS' " No Branch Message
+let g:airline#extensions#branch#empty_message = '' " No Branch Message
 let g:airline#extensions#branch#format = 2 " See documentation
+
+" Tabline config
+let g:airline#extensions#tabline#enabled = 1 " Enable Tabline integration
+let g:airline#extensions#tabline#buffer_idx_mode = 1 " Leader # navigation
+
+nmap <leader>1 <Plug>AirlineSelectTab1
 " }}}
 " {{{ Tagbar Configuration
+nnoremap <silent> <C-t> :TagbarToggle<CR>
 " }}}
 " {{{ Nyaovim Markdown Preview
 " Only apply if it is loaded
