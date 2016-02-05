@@ -1,0 +1,4 @@
+policies:
+    # Disable a violation that bothers me because I want it to be without a group
+    ProhibitAutocmdWithNoGroup:
+        enable: false
