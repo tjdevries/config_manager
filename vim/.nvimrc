@@ -6,7 +6,7 @@
 
 if has('unix')
     let g:python_host_prog = '/usr/bin/python'
-    " let g:python3_host_prog = '/usr/bin/python3'
+    let g:python3_host_prog = '/usr/bin/python3'
 else
     let g:python_host_pgro = 'C:\python'
 endif
@@ -43,9 +43,10 @@ Plug 'benekastah/neomake'       " A better linter than syntastic?
 Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 
 " Deoplete
-Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/neoinclude.vim'
-Plug 'davidhalter/jedi-vim'
+Plug 'Shougo/deoplete.nvim',  {  'on': 'DeopleteEnable' }
+Plug 'Shougo/neoinclude.vim', {  'on': 'DeopleteEnable' }
+Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
+Plug 'ervandew/supertab',     {  'for': 'python' }
 
 " YouCompleteMe, not using right now. Went for Deoplete
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
@@ -81,26 +82,30 @@ call plug#end()
 
 " Nvim automatically turns on preview, which I don't like
 set completeopt-=preview
+set splitright
+set splitbelow
 
 " Make updates happen faster
 set updatetime=250
 
 "----- Deoplete -----
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_completion_start_length = 1
-let g:deoplete#enable_smart_case = 1
+function StartDeoplete()
+    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#auto_completion_start_length = 1
+    let g:deoplete#enable_smart_case = 1
+
+    "   Python completion
+    autocmd FileType python setlocal omnifunc=jedi#completions
+    let g:jedi#completions_enabled = 0
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#smart_auto_mappings = 0
+    let g:jedi#show_call_signatures = 0
+endfunction
 
 "   Make tab perform the completion for deoplete
-inoremap <silent><expr> <Tab>
-            \ pumvisible() ? "\<C-n>" :
-            \ deoplete#mappings#manual_complete()
-
-"   Python completion
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#show_call_signatures = 0
+" inoremap <silent><expr> <Tab>
+"             \ pumvisible() ? "\<C-n>" :
+"             \ deoplete#mappings#manual_complete()
 
 " ----- Neomake -----
 " Automatically run Neomake on write
@@ -130,7 +135,15 @@ set nohlsearch
 
 " ----- Nyaovim Markdown Preview Settings -----
 " Only apply if it is loaded
-" if exists(':StartMarkdownPreview')
-let g:markdown_preview_auto = 1
-let g:markdown_preview_eager = 1 
-" endif
+if exists(':StartMarkdownPreview')
+    let g:markdown_preview_auto = 1
+    let g:markdown_preview_eager = 1 
+endif
+
+" {{{ Python
+augroup python
+    au!
+    let g:jedi#force_py_version = 3
+
+augroup END
+" }}}
