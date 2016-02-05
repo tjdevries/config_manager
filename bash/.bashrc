@@ -133,6 +133,13 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# Enable Git autocompletion
+if [[ ! -f ~/git-completion.bash ]]; then
+    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/git-completion.bash
+fi
+
+source ~/git-completion.bash
+
 # --------------------------- References to other files---------------------------
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
