@@ -1,5 +1,6 @@
-" ----- NeoVim Things -----
-" Python Support
+" TJ's Vimrc
+
+" {{{ Neovim Configuration
 if has('nvim')
     if has('unix')
         source ~/.config/nvim/.nvimrc
@@ -10,43 +11,30 @@ if has('nvim')
 else
     source ~/.config/vim/.specific.vimrc
 endif
-
+" }}}
+" {{{ Leader
 " Set our leader key to ,
 let g:mapleader=','
-
-" ----- Vim User Interface -----
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
-
-" Height of the command bar
-set cmdheight=2
-
-" Makes search act like search in modern browsers
-set incsearch
-
-" show matching brackets when text indicator is over them
-set showmatch
-
-" Show line numbers
-set relativenumber
-set number
+" }}}
+" {{{ General VIM configuration
+set wildignore=*.o,*~,*.pyc " Ignore compiled files
+set cmdheight=2             " Height of the command bar
+set incsearch               " Makes search act like search in modern browsers
+set showmatch               " show matching brackets when text indicator is over them
+set relativenumber          " Show line numbers
+set number                  " But show the actual number for the line we're on
 
 " Load filetype-specific indent files
 " Also enables plugins?
 filetype plugin indent on
 
-" Useability
-" Enable smart autocompletion for programs
-set omnifunc=syntaxcomplete#Complete
-
 " Spell check
 " set spelllang=en_us
 " set spell
 
-" Make it so there are always ten lines below my cursor
-set scrolloff=10
-
-" ----- Tab things -----
+set scrolloff=10            " Make it so there are always ten lines below my cursor
+" }}}
+" {{{ Tab Configuration
 " Want auto indents automatically
 set autoindent
 set cindent
@@ -64,8 +52,8 @@ set linebreak
 
 " Always use spaces instead of tab characters
 set expandtab
-
-" ----- Airline Things -----
+" }}}
+" {{{  Airline Configuration
 " Pretty fonts!
 let g:airline_powerline_fonts = 1
 
@@ -76,10 +64,9 @@ set statusline+=%*
 
 "  Sets the python checker to look for Python 3
 let g:syntastic_python_python_exec = '/usr/bin/python3'
-
-" --------- Completion ---------
-" ----- UltiSnip ---
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" }}}
+" {{{ UltiSnip Configuration
+" Trigger configuration.
 let g:UltiSnipsExpandTrigger='<leader>e'
 let g:UltiSnipsJumpForwardTrigger='<leader>r'
 let g:UltiSnipsJumpBackwardTrigger='<leader>w'
@@ -89,12 +76,11 @@ let g:UltiSnipsEditSplit='vertical'
 
 " Use Python Version
 let g:UltiSnipsUsePythonVersion = 2
-
-" ----- ctags -----
-" Enable ctags
-set tags=tags;
-
-" ----- Markdown Things -----
+" }}}
+" {{{ ctags
+set tags=tags; " Enable ctags
+" }}}
+" {{{ Markdown Configuration
 augroup markdown
     " remove buffer-local auto commands forcurrent buffer
     au!
@@ -106,21 +92,21 @@ augroup markdown
 
     let g:vim_markdown_folding_disabled=1
 augroup END
-
-" ----- Python Things -----
+" }}}
+" {{{ Python configuration
 augroup python
     au!
     autocmd BufWritePre *.py :%s/\s\+$//e
 augroup END
-
-
-" ----- Color Things -----
+" }}}
+" {{{ Color Configuration
 " Enable syntax highlighting
 syntax enable
 
 " Choose Color scheme
-
-" ----- Remapping the keys -----
+" Now done in vim vs nvim configs
+" }}}
+" {{{ VERY IMPORTANT KEYBINDINGS
 nnoremap <Up>          :echom "--> k <-- "<CR>
 nnoremap <Down>        :echom "--> j <-- "<CR>
 nnoremap <Right>       :echom "--> l <-- "<CR>
@@ -139,7 +125,8 @@ inoremap jj <esc>
 " For long, wrapped lines
 nnoremap k gk
 nnoremap j gj
-
+" }}}
+" {{{ Old stuff
 " ------------------------- Old Items: Kept for Reference -------------------------
 " ----- Flake8 Things -----
 " Run flake8() whenever a python file is written
@@ -151,3 +138,4 @@ nnoremap j gj
 " python from powerline.vim import setup as powerline_setup
 " python powerline_setup()
 " python del powerline_setup
+" }}}
