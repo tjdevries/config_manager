@@ -1,22 +1,25 @@
 " Neovim specific configuration file
 
-" TODO
+" {{{ TODO
 " Find a way to do color schemes with vim-plug
 " Figure out how to use ctrl-p
-
+" }}}
+" {{{ Unix vs. Windows Configuration
 if has('unix')
     let g:python_host_prog = '/usr/bin/python'
     let g:python3_host_prog = '/usr/bin/python3'
 else
     let g:python_host_pgro = 'C:\python'
 endif
+" }}}
+" {{{ vim-plug configuration
 
 " Automatically installs vim-plug if not already there
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
+" if empty(glob('~/.vim/autoload/plug.vim'))
+"   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   autocmd VimEnter * PlugInstall | source $MYVIMRC
+" endif
 
 " Extend the length of the timeout for vim-plug
 let g:plug_timeout=600
@@ -79,23 +82,29 @@ Plug 'morhetz/gruvbox'          " gruvbox
 Plug 'rhysd/nyaovim-markdown-preview'
 
 call plug#end()
-
-" Nvim automatically turns on preview, which I don't like
-set completeopt-=preview
-set splitright
-set splitbelow
-
-" Make updates happen faster
-set updatetime=250
-
-"----- Deoplete -----
+" }}}
+" {{{ Vim default behaviors
+set completeopt-=preview " Turn off preview
+set splitright           " Prefer windows splitting to the right
+set splitbelow           " Prefer windows splitting to the bottom
+set updatetime=250       " Make updates happen faster
+set nohlsearch
+" }}}
+" {{{ Folding behvaiors
+set foldmethod=marker
+set foldlevel=0
+set modelines=1
+" }}}
+" {{{ Deoplete
 function StartDeoplete()
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#auto_completion_start_length = 1
     let g:deoplete#enable_smart_case = 1
 
     "   Python completion
-    autocmd FileType python setlocal omnifunc=jedi#completions
+    augroup Python
+        autocmd FileType python setlocal omnifunc=jedi#completions
+    augroup END
     let g:jedi#completions_enabled = 0
     let g:jedi#auto_vim_configuration = 0
     let g:jedi#smart_auto_mappings = 0
@@ -106,40 +115,41 @@ endfunction
 " inoremap <silent><expr> <Tab>
 "             \ pumvisible() ? "\<C-n>" :
 "             \ deoplete#mappings#manual_complete()
-
-" ----- Neomake -----
+" }}}
+" {{{ Neomake
 " Automatically run Neomake on write
-autocmd! BufWritePost *  Neomake
+if !exists('neomake_config_done')
+    let g:neomake_config_done = 1
+    autocmd BufWritePost *  Neomake
+    
+    " Automatically open the error window
+    let g:neomake_open_list = 1
 
-" Automatically open the error window
-let g:neomake_open_list = 1
+    " Python
+    " let g:neomake_python_flake8_maker = {
+    "         \ 'args': ['--max-line-length=120 --format="|%(row)4d |%(col)4d | %(code)s: %(text)s"']
+    "         \ }
 
-" Python
-" let g:neomake_python_flake8_maker = {
-"         \ 'args': ['--max-line-length=120 --format="|%(row)4d |%(col)4d | %(code)s: %(text)s"']
-"         \ }
+    let g:neomake_python_enabled_makers = [ 'flake8' ]
 
-let g:neomake_python_enabled_makers = [ 'flake8' ]
-
-" Vim
-let g:neomake_vimscript_enabled_makers = [ 'vint' ]
-
-" ----- Colorscheme -----
+    " Vim
+    let g:neomake_vimscript_enabled_makers = [ 'vint' ]
+endif
+" }}}
+" {{{ Colorscheme
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
 let g:gruvbox_italic=1              " Turn on italics for gruvbox
 colorscheme gruvbox
 
 set background=dark
-
-set nohlsearch
-
-" ----- Nyaovim Markdown Preview Settings -----
+" }}}
+" {{{ Nyaovim Markdown Preview
 " Only apply if it is loaded
 if exists(':StartMarkdownPreview')
     let g:markdown_preview_auto = 1
     let g:markdown_preview_eager = 1 
 endif
-
+" }}}
 " {{{ Python
 augroup python
     au!
@@ -147,3 +157,5 @@ augroup python
 
 augroup END
 " }}}
+
+" vim:foldmethod=marker:foldlevel=0
