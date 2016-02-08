@@ -83,6 +83,9 @@ Plug 'morhetz/gruvbox'          " gruvbox
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
 
+" Quickfix Modifications
+Plug 'romainl/vim-qf'
+
 call plug#end()
 " }}}
 " {{{ Vim default behaviors
