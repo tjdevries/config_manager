@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+
+import sys
+from enchant.checker import SpellChecker
+
+chkr = SpellChecker("en_US")
+
+
+def check_line(line):
+    # Don't check comments
+    if line[0] == '#':
+        return 0
+
+    error_count = 0
+    chkr.set_text(line)
+    for err in chkr:
+        try:
+            sys.stdin = open("/dev/tty", "r")
+            with sys.stdin:
+                print('Error: `{}`. \n\t1. Error\n\t2. Add to dictionary'.format(err.word))
+                opt = int(input())
+        except EOFError:
+            break
+
+        if opt == 1:
+            error_count += 1
+
+        if opt == 2:
+            print('TODO')
+
+    return error_count
+
+
+def print_msg(message, level=None):
+    levels = ['Error', 'Info']
+    if level not in levels:
+        print(message)
+    else:
+        length = max(len(x) for x in levels)
+
+        print('[ {l:{length}} ] {m}'.format(l=level, length=length, m=message))
+
+# Create an error counter
+error_count = 0
+
+# Find the temporary file
+commit_msg_filepath = sys.argv[1]
+
+# Open the file
+with open(commit_msg_filepath, 'r') as f:
+    line = f.readline()
+
+    # Check the Commit Subject
+    if line[0].capitalize() != line[0]:
+        print_msg('Commit subject must start with a capital letter', 'Error')
+        error_count += 1
+
+    if '.\n' in line or '.' == line[-1]:
+        print_msg('Commit subject should not end with a period', 'Error')
+        error_count += 1
+
+    if len(line) >= 50:
+        print_msg('Commit subject must be less than 50 characters', 'Error')
+
+    error_count += check_line(line)
+
+    for line in f:
+        error_count += check_line(line)
+
+if error_count:
+    print_msg('Commit not acceptable', 'Info')
+    sys.exit(error_count)
+else:
+    print_msg('Commit acceptable', 'Info')
