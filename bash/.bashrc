@@ -33,6 +33,7 @@ shopt -s checkwinsize
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
+export LC_ALL="en_US.UTF-8"
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -174,3 +175,5 @@ fi
 
 
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

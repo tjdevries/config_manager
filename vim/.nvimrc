@@ -34,6 +34,8 @@ else
 endif
 
 call plug#begin(g:plugin_path)
+" Testing
+Plug '~/Git/vim-secret-markers'
 
 " Fun status line
 Plug 'bling/vim-airline'
@@ -69,6 +71,7 @@ Plug 'tpope/vim-surround'       " Surround text objects easily
 Plug 'tpope/vim-speeddating'    " Handle changing of dates in a nicer manner
 Plug 'tpope/vim-commentary'     " Easily comment out lines or objects
 Plug 'tpope/vim-repeat'         " Repeat actions better
+Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' }
 
 " Fuzzy file finding
 Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
@@ -85,6 +88,9 @@ Plug 'rhysd/nyaovim-markdown-preview'
 
 " Quickfix Modifications
 Plug 'romainl/vim-qf'
+
+" Folding
+Plug 'tmhedberg/SimpylFold', { 'for': 'none' }  " Not used currently
 
 call plug#end()
 " }}}
@@ -178,7 +184,15 @@ augroup python
     au!
     let g:jedi#force_py_version = 3
 
+    " CTRL K moves to the function definition above
+    " CTRL J moves to the function definition below
+    nmap <C-k> [pf
+    nmap <C-j> ]pf
+
 augroup END
 " }}}
-
+" {{{ General Mapping
+" Open the buffers with C-B
+nmap <C-b> :Buffers<CR>
+" }}}
 " vim:foldmethod=marker:foldlevel=0
