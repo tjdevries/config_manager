@@ -35,7 +35,9 @@ endif
 
 call plug#begin(g:plugin_path)
 " Testing
-Plug '~/Git/vim-secret-markers'
+Plug 'janko-m/vim-test'
+Plug 'junegunn/vader.vim'
+Plug '~/Git/vim-secret-markers'  "Hopefully soon, this will be pulling from Git :D
 
 " Fun status line
 Plug 'bling/vim-airline'
@@ -84,8 +86,10 @@ Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
 " Markdown Plugins
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
-" Colorscheme Plugins
+" Colorscheme and appearance
 Plug 'morhetz/gruvbox'          " gruvbox
+Plug 'junegunn/goyo.vim'        " focusing mode
+Plug 'junegunn/limelight.vim'   " Extra focus mode
 
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
@@ -95,6 +99,15 @@ Plug 'romainl/vim-qf'
 
 " Folding
 Plug 'tmhedberg/SimpylFold', { 'for': 'none' }  " Not used currently
+
+" Web based plugins
+Plug 'mattn/webapi-vim'
+Plug 'jceb/vim-hier'
+Plug 'dannyob/quickfixstatus'
+
+" Vim help
+Plug 'tpope/vim-scriptease'
+Plug 'tpope/vim-projectionist'
 
 call plug#end()
 " }}}
