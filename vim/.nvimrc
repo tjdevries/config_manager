@@ -52,8 +52,11 @@ Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 " Deoplete
 Plug 'Shougo/deoplete.nvim',  {  'on': 'DeopleteEnable' }
 Plug 'Shougo/neoinclude.vim', {  'on': 'DeopleteEnable' }
+
+" Python
 Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
 Plug 'ervandew/supertab',     {  'for': 'python' }
+" Plug 'dbsr/vimpy', { 'for': 'python' }
 
 " YouCompleteMe, not using right now. Went for Deoplete
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
@@ -64,6 +67,7 @@ Plug 'majutsushi/tagbar'
 " Git Based Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'moznion/github-commit-comment.vim'
 
 " Text Manipulation Based Plugins
 Plug 'godlygeek/tabular'        " Quickly align text by pattern
@@ -75,7 +79,7 @@ Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' 
 
 " Fuzzy file finding
 Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
-Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM! 
+Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
 
 " Markdown Plugins
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -132,7 +136,7 @@ endfunction
 if !exists('neomake_config_done')
     let g:neomake_config_done = 1
     autocmd BufWritePost *  Neomake
-    
+
     " Automatically open the error window
     let g:neomake_open_list = 1
 
@@ -176,7 +180,7 @@ nnoremap <silent> <C-t> :TagbarToggle<CR>
 " Only apply if it is loaded
 if exists(':StartMarkdownPreview')
     let g:markdown_preview_auto = 1
-    let g:markdown_preview_eager = 1 
+    let g:markdown_preview_eager = 1
 endif
 " }}}
 " {{{ Python
@@ -189,6 +193,7 @@ augroup python
     nmap <C-k> [pf
     nmap <C-j> ]pf
 
+    let g:vimpy_remove_unused = 1
 augroup END
 " }}}
 " {{{ General Mapping
