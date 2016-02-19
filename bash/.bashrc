@@ -33,6 +33,7 @@ shopt -s checkwinsize
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
+export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
 # If set, the pattern "**" used in a pathname expansion context will
