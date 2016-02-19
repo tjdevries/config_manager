@@ -88,6 +88,7 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 " Colorscheme and appearance
 Plug 'morhetz/gruvbox'          " gruvbox
+Plug 'junegunn/seoul256.vim'    " seoul color scheme
 Plug 'junegunn/goyo.vim'        " focusing mode
 Plug 'junegunn/limelight.vim'   " Extra focus mode
 
@@ -166,10 +167,14 @@ endif
 " }}}
 " {{{ Colorscheme
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
-let g:gruvbox_italic=1              " Turn on italics for gruvbox
-colorscheme gruvbox
-
-set background=dark
+" let g:gruvbox_italic=1              " Turn on italics for gruvbox
+" colorscheme gruvbox
+" set background=dark
+" seoul256 (dark):
+"   Range:   233 (darkest) ~ 239 (lightest)
+"   Default: 237
+let g:seoul256_background = 234
+colo seoul256
 " }}}
 " {{{ Airline Configuration
 let g:airline_powerline_fonts=1
