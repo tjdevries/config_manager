@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
 import sys
+from os.path import expanduser
 from enchant import DictWithPWL
 from enchant.checker import SpellChecker
 
-my_words = 'my_words.txt'
+home = expanduser('~')
+my_words = home + '/.my_words.txt'
 dict_to_check = DictWithPWL('en_US', my_words)
 chkr = SpellChecker(dict_to_check)
 
