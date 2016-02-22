@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
 import sys
+from enchant import DictWithPWL
 from enchant.checker import SpellChecker
 
-chkr = SpellChecker("en_US")
+my_words = 'my_words.txt'
+dict_to_check = DictWithPWL('en_US', my_words)
+chkr = SpellChecker(dict_to_check)
 
 
 def check_line(line):
@@ -26,7 +29,8 @@ def check_line(line):
             error_count += 1
 
         if opt == 2:
-            print('TODO')
+            with open(my_words, 'a') as f:
+                f.write(str(err) + '\n')
 
     return error_count
 
