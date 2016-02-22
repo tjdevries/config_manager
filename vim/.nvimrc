@@ -37,6 +37,7 @@ call plug#begin(g:plugin_path)
 " Testing
 Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
+" Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
 Plug '~/Git/vim-secret-markers'  "Hopefully soon, this will be pulling from Git :D
 
 " Fun status line
