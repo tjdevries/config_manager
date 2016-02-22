@@ -30,7 +30,7 @@ def check_line(line):
 
         if opt == 2:
             with open(my_words, 'a') as f:
-                f.write(str(err) + '\n')
+                f.write(str(err.word) + '\n')
 
     return error_count
 
