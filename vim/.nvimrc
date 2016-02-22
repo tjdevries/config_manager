@@ -83,6 +83,7 @@ Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' 
 " Fuzzy file finding
 Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
 Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
+Plug 'Shougo/unite.vim'
 
 " Markdown Plugins
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -110,6 +111,9 @@ Plug 'dannyob/quickfixstatus'
 " Vim help
 Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-projectionist'
+
+" Task Warrior Plugins
+Plug 'blindFS/vim-taskwarrior'
 
 call plug#end()
 " }}}
