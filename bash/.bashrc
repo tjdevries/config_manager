@@ -167,6 +167,10 @@ if [ -f ~/.bash_welcome ]; then
     . ~/.bash_welcome
 fi
 
+# Source some local only settings
+if [ -f ~/.bash_personal ]; then
+    . ~/.bash_personal
+fi
 
 # -------------------------------- From Server -------------------------------
 
