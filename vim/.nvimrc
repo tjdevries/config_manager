@@ -115,6 +115,9 @@ Plug 'tpope/vim-projectionist'
 " Task Warrior Plugins
 Plug 'blindFS/vim-taskwarrior'
 
+" Encryption
+Plug 'd0c-s4vage/vim-morph'
+
 call plug#end()
 " }}}
 " {{{ Vim default behaviors
