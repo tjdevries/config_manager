@@ -176,6 +176,10 @@ let g:gruvbox_italic=1              " Turn on italics for gruvbox
 colorscheme gruvbox
 set background=dark
 
+" Highlight the current line
+set cursorline
+
+
 " set t_Co=256
 " seoul256 (dark):
 "   Range:   233 (darkest) ~ 239 (lightest)
