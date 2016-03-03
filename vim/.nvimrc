@@ -79,6 +79,9 @@ Plug 'tpope/vim-speeddating'    " Handle changing of dates in a nicer manner
 Plug 'tpope/vim-commentary'     " Easily comment out lines or objects
 Plug 'tpope/vim-repeat'         " Repeat actions better
 Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' }
+Plug 'vim-pandoc/vim-markdownfootnotes'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Fuzzy file finding
 Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
@@ -171,6 +174,13 @@ if !exists('neomake_config_done')
 
     " Vim
     let g:neomake_vimscript_enabled_makers = [ 'vint' ]
+
+    " Javascript
+    let g:neomake_javascript_jshint_maker = {
+    \ 'args': ['--verbose'],
+    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
+    \ }
+let g:neomake_javascript_enabled_makers = ['jshint']
 endif
 " }}}
 " {{{ Colorscheme
@@ -231,5 +241,58 @@ augroup END
 " {{{ General Mapping
 " Open the buffers with C-B
 nmap <C-b> :Buffers<CR>
+" }}}
+" {{{ Hilarious fun screen saver
+" Press \r to start rotating lines and <C-c> (Control+c) to stop.
+
+function! s:RotateString(string)
+    let split_string = split(a:string, '\zs')
+    return join(split_string[-1:] + split_string[:-2], '')
+endfunction
+
+function! s:RotateLine(line, leading_whitespace, trailing_whitespace)
+    return substitute(
+        \ a:line,
+        \ '^\(' . a:leading_whitespace . '\)\(.\{-}\)\(' . a:trailing_whitespace . '\)$',
+        \ '\=submatch(1) . <SID>RotateString(submatch(2)) . submatch(3)',
+        \ ''
+    \ )
+endfunction
+
+function! s:RotateLines()
+    let saved_view = winsaveview()
+    let first_visible_line = line('w0')
+    let last_visible_line = line('w$')
+    let lines = getline(first_visible_line, last_visible_line)
+    let leading_whitespace = map(
+        \ range(len(lines)),
+        \ 'matchstr(lines[v:val], ''^\s*'')'
+    \ )
+    let trailing_whitespace = map(
+        \ range(len(lines)),
+        \ 'matchstr(lines[v:val], ''\s*$'')'
+    \ )
+    try
+        while 1 " <C-c> to exit
+            let lines = map(
+                \ range(len(lines)),
+                \ '<SID>RotateLine(lines[v:val], leading_whitespace[v:val], trailing_whitespace[v:val])'
+            \ )
+            call setline(first_visible_line, lines)
+            redraw
+            sleep 50m
+        endwhile
+    finally
+        if &modified
+            silent undo
+        endif
+        call winrestview(saved_view)
+    endtry
+endfunction
+
+nnoremap <silent> <Plug>(RotateLines) :<C-u>call <SID>RotateLines()<CR>
+
+nmap \r <Plug>(RotateLines)
+
 " }}}
 " vim:foldmethod=marker:foldlevel=0
