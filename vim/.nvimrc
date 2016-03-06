@@ -146,16 +146,6 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case = 1
 
-" Python completion
-augroup python
-    au!
-    setlocal omnifunc=jedi#completions
-    let g:jedi#completions_enabled = 0
-    let g:jedi#auto_vim_configuration = 0
-    let g:jedi#smart_auto_mappings = 0
-    let g:jedi#show_call_signatures = 0
-augroup END
-
 "   Make tab perform the completion for deoplete
 " inoremap <silent><expr> <Tab>
 "             \ pumvisible() ? "\<C-n>" :
@@ -185,7 +175,7 @@ if !exists('neomake_config_done')
     \ 'args': ['--verbose'],
     \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
     \ }
-let g:neomake_javascript_enabled_makers = ['jshint']
+    let g:neomake_javascript_enabled_makers = ['jshint']
 endif
 " }}}
 " {{{ Colorscheme
@@ -229,19 +219,6 @@ if exists(':StartMarkdownPreview')
     let g:markdown_preview_auto = 1
     let g:markdown_preview_eager = 1
 endif
-" }}}
-" {{{ Python
-augroup python
-    au!
-    let g:jedi#force_py_version = 3
-
-    " CTRL K moves to the function definition above
-    " CTRL J moves to the function definition below
-    nmap <C-k> [pf
-    nmap <C-j> ]pf
-
-    let g:vimpy_remove_unused = 1
-augroup END
 " }}}
 " {{{ Web Development
 let g:used_javascript_libs = 'jquery'

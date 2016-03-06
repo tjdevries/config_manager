@@ -81,12 +81,6 @@ augroup markdown
     let g:vim_markdown_folding_disabled=1
 augroup END
 " }}}
-" {{{ Python configuration
-augroup python
-    au!
-    autocmd BufWritePre *.py :%s/\s\+$//e
-augroup END
-" }}}
 " {{{ Color Configuration
 " Enable syntax highlighting
 syntax enable
