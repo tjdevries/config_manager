@@ -61,6 +61,12 @@ Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
 Plug 'ervandew/supertab',     {  'for': 'python' }
 " Plug 'dbsr/vimpy', { 'for': 'python' }
 
+" Web Development
+Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+Plug 'vim-scripts/JavaScript-Indent',  { 'for': 'javascript' }
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', 'htmldjango'] }
+
 " YouCompleteMe, not using right now. Went for Deoplete
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
 
@@ -136,20 +142,19 @@ set foldlevel=0
 set modelines=1
 " }}}
 " {{{ Deoplete
-function StartDeoplete()
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#auto_completion_start_length = 1
-    let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_completion_start_length = 1
+let g:deoplete#enable_smart_case = 1
 
-    "   Python completion
-    augroup Python
-        autocmd FileType python setlocal omnifunc=jedi#completions
-    augroup END
+" Python completion
+augroup python
+    au!
+    setlocal omnifunc=jedi#completions
     let g:jedi#completions_enabled = 0
     let g:jedi#auto_vim_configuration = 0
     let g:jedi#smart_auto_mappings = 0
     let g:jedi#show_call_signatures = 0
-endfunction
+augroup END
 
 "   Make tab perform the completion for deoplete
 " inoremap <silent><expr> <Tab>
@@ -237,6 +242,9 @@ augroup python
 
     let g:vimpy_remove_unused = 1
 augroup END
+" }}}
+" {{{ Web Development
+let g:used_javascript_libs = 'jquery'
 " }}}
 " {{{ General Mapping
 " Open the buffers with C-B
