@@ -53,12 +53,13 @@ Plug 'benekastah/neomake'       " A better linter than syntastic?
 Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 
 " Deoplete
-Plug 'Shougo/deoplete.nvim',  {  'on': 'DeopleteEnable' }
-Plug 'Shougo/neoinclude.vim', {  'on': 'DeopleteEnable' }
+Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/neoinclude.vim'
 
 " Python
-Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
-Plug 'ervandew/supertab',     {  'for': 'python' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
+" Plug 'ervandew/supertab',     {  'for': 'python' }
 " Plug 'dbsr/vimpy', { 'for': 'python' }
 
 " Web Development

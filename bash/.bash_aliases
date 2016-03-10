@@ -54,6 +54,7 @@ alias h="history|grep "
 
 # SSH tools
 alias offcampus='ssh tjd33@cs-ssh.calvin.edu'
+alias homeserver='ssh tj-admin@192.168.1.100 -p 2222'
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Tools ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
