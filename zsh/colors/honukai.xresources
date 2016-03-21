@@ -1,0 +1,25 @@
+! X Resources: Generated with Hodler (http://github.com/matttproud/hodler)
+*color0: #000000
+*color1: #dc4f2f
+*color2: #6bbd3a
+*color3: #e5d62c
+*color4: #256ffc
+*color5: #f258b8
+*color6: #38b1d9
+*color7: #bbbbbb
+*color8: #555555
+*color9: #e17e63
+*color10: #7eb959
+*color11: #ffff55
+*color12: #5c8ef3
+*color13: #f982c0
+*color14: #78cde6
+*color15: #ffffff
+*background: #111625
+*foreground: #babbc8
+*cursorColor: #fffefe
+! See "highlightColorMode" and "hm" options in XTerm manual page.
+*highlightTextColor: #fffefe
+*highlightColor: #2e3757
+! No support for cursor text coloring; would be #fbff6e.
+! No support for bold coloring; would be #ffffff.
