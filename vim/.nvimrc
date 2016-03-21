@@ -38,7 +38,7 @@ call plug#begin(g:plugin_path)
 Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
-Plug '~/Git/vim-secret-markers'  "Hopefully soon, this will be pulling from Git :D
+Plug '~/Git/vim-vertex'  "Hopefully soon, this will be pulling from Git :D
 
 " Fun status line
 Plug 'bling/vim-airline'
@@ -85,6 +85,7 @@ Plug 'tpope/vim-surround'       " Surround text objects easily
 Plug 'tpope/vim-speeddating'    " Handle changing of dates in a nicer manner
 Plug 'tpope/vim-commentary'     " Easily comment out lines or objects
 Plug 'tpope/vim-repeat'         " Repeat actions better
+Plug 'tpope/vim-abolish'        " Cool things with words!
 Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'vim-pandoc/vim-markdownfootnotes'
 Plug 'vim-pandoc/vim-pandoc'
@@ -180,21 +181,25 @@ if !exists('neomake_config_done')
 endif
 " }}}
 " {{{ Colorscheme
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
-let g:gruvbox_italic=1              " Turn on italics for gruvbox
-colorscheme gruvbox
-set background=dark
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
+set cursorline  " Highlight the current line
+" set t_Co=256  " Not sure if this is necessary in neovim-qt
 
-" Highlight the current line
-set cursorline
+" Easily switch between color schemes
+let current_scheme = 'gruvbox'
 
+if current_scheme == 'gruvbox' 
+    let g:gruvbox_italic=1              " Turn on italics for gruvbox
+    colorscheme gruvbox
+    set background=dark
+elseif current_scheme == 'seoul256'
+    " seoul256 (dark):
+    "   Range:   233 (darkest) ~ 239 (lightest)
+    "   Default: 237
+    let g:seoul256_background = 234
+    colo seoul256
+endif
 
-" set t_Co=256
-" seoul256 (dark):
-"   Range:   233 (darkest) ~ 239 (lightest)
-"   Default: 237
-" let g:seoul256_background = 234
-" colo seoul256
 " }}}
 " {{{ Airline Configuration
 let g:airline_powerline_fonts=1
@@ -227,6 +232,23 @@ let g:used_javascript_libs = 'jquery'
 " {{{ General Mapping
 " Open the buffers with C-B
 nmap <C-b> :Buffers<CR>
+
+" System clipboard integration!
+set clipboard+=unnamedplus
+" }}}
+" {{{ Terminal Mapping
+" Make esc leave terminal mode
+tnoremap <Esc> <C-\><C-n>
+
+" Easy moving between the buffers
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 " }}}
 " {{{ Hilarious fun screen saver
 " Press \r to start rotating lines and <C-c> (Control+c) to stop.
