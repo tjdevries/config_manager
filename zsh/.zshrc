@@ -29,6 +29,7 @@ plugins=(git task tj_task)
 
 # {{{2 General Aliases
 # {{{3 List aliases
+alias ls='ls -F --color=auto --group-directories-first'
 alias ll='ls -al'
 alias la='ls -A'
 alias l='ls -CF'
