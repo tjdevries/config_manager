@@ -1,0 +1,43 @@
+[global_config]
+  always_split_with_profile = True
+  enabled_plugins = TerminalShot, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  title_hide_sizetext = True
+[keybindings]
+  full_screen = <Alt>f
+  switch_to_tab_1 = <Alt>1
+  switch_to_tab_2 = <Alt>2
+  switch_to_tab_3 = <Alt>3
+  switch_to_tab_4 = <Alt>4
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      profile = default
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_color = "#002b36"
+    background_darkness = 0.92
+    background_image = None
+    background_type = transparent
+    foreground_color = "#839496"
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    show_titlebar = False
+  [[testing]]
+    background_color = "#002b36"
+    background_image = None
+    foreground_color = "#839496"
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    show_titlebar = False
+  [[honukai]]
+    background_color = "#111625"
+    background_darkness = 0.92
+    background_image = None
+    background_type = transparent
+    foreground_color = "#babbc8"
+    palette = "#000000:#dc4f2f:#6bbd3a:#e5d62c:#256ffc:#f258b8:#38b1d9:#bbbbbb:#555555:#e17e63:#7eb959:#ffff55:#5c8ef3:#f982c0:#78cde6:#ffffff"
+    show_titlebar = False
