@@ -15,6 +15,9 @@ source $ZSH/oh-my-zsh.sh
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=5
 export LC_ALL=en_US.UTF-8
+
+# Use 256 colors
+export TERM=xterm-256color
 # }}}
 
 # {{{ Plugin Configuration
@@ -22,7 +25,7 @@ export LC_ALL=en_US.UTF-8
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git task tj_task)
+plugins=(git taskwarrior python battery)
 # }}}
 
 # {{{1 Aliases
@@ -158,3 +161,5 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # }}}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
