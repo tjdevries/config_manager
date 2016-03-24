@@ -34,6 +34,9 @@ else
 endif
 
 call plug#begin(g:plugin_path)
+" Startup
+Plug 'mhinz/vim-startify'
+
 " Testing
 Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
@@ -157,7 +160,7 @@ let g:deoplete#enable_smart_case = 1
 " Automatically run Neomake on write
 if !exists('neomake_config_done')
     let g:neomake_config_done = 1
-    autocmd BufWritePost *  Neomake
+    " autocmd BufWritePost *  Neomake
 
     " Automatically open the error window
     let g:neomake_open_list = 1
@@ -181,14 +184,14 @@ if !exists('neomake_config_done')
 endif
 " }}}
 " {{{ Colorscheme
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
+set t_Co=256  " Not sure if this is necessary in neovim-qt
 set cursorline  " Highlight the current line
-" set t_Co=256  " Not sure if this is necessary in neovim-qt
 
 " Easily switch between color schemes
 let current_scheme = 'gruvbox'
 
-if current_scheme == 'gruvbox' 
+if current_scheme == 'gruvbox'
     let g:gruvbox_italic=1              " Turn on italics for gruvbox
     colorscheme gruvbox
     set background=dark
@@ -249,6 +252,39 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
+" }}}
+" {{{ Vim-Startify Configuration
+let g:startify_bookmarks = ['~/.zshrc', '~/.config/nvim/.nvimrc']
+let g:startify_change_to_dir = 1
+let g:startify_list_order = [
+  \ ['   LRU:'],
+  \ 'files',
+  \ ['   LRU within this dir:'],
+  \ 'dir',
+  \ ['   Sessions:'],
+  \ 'sessions',
+  \ ['   Bookmarks:'],
+  \ 'bookmarks',
+  \ ]
+
+let g:startify_skiplist = [
+            \ 'COMMIT_EDITMSG',
+            \ 'bundle/.*/doc',
+            \ '/data/repo/neovim/runtime/doc',
+            \ '/Users/mhi/local/vim/share/vim/vim74/doc',
+            \ ]
+
+let g:startify_custom_footer =
+  \ ['', "   Vim is charityware. Please read ':help uganda'.", '']
+
+hi StartifyBracket ctermfg=240
+hi StartifyFile    ctermfg=147
+hi StartifyFooter  ctermfg=240
+hi StartifyHeader  ctermfg=114
+hi StartifyNumber  ctermfg=215
+hi StartifyPath    ctermfg=245
+hi StartifySlash   ctermfg=240
+hi StartifySpecial ctermfg=240
 " }}}
 " {{{ Hilarious fun screen saver
 " Press \r to start rotating lines and <C-c> (Control+c) to stop.
