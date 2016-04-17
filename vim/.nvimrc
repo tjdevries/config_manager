@@ -55,7 +55,13 @@ Plug 'benekastah/neomake'       " A better linter than syntastic?
 " UltiSnips
 Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 
+" {{{2 Shougo
+" Unite
+Plug 'Shougo/unite.vim'
+
 " Deoplete
+Plug 'Shougo/echodoc.vim'
+Plug 'Shougo/context_filetype.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neoinclude.vim'
 
@@ -64,6 +70,7 @@ Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 " Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
 " Plug 'ervandew/supertab',     {  'for': 'python' }
 " Plug 'dbsr/vimpy', { 'for': 'python' }
+" }}}
 
 " Web Development
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
@@ -95,9 +102,8 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Fuzzy file finding
-Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
-Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
-Plug 'Shougo/unite.vim'
+" Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
+" Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
 
 " Markdown Plugins
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -130,7 +136,7 @@ Plug 'tpope/vim-projectionist'
 Plug 'blindFS/vim-taskwarrior'
 
 " Encryption
-Plug 'd0c-s4vage/vim-morph'
+" Plug 'd0c-s4vage/vim-morph'
 
 call plug#end()
 " }}}
@@ -146,7 +152,20 @@ set foldmethod=marker
 set foldlevel=0
 set modelines=1
 " }}}
-" {{{ Deoplete
+" {{{1 Shougo Config
+" {{{2 Unite Config
+" nnoremap [unite] <Nop>
+" nmap <leader>f [unite]
+" nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
+let mapleader = ','
+nnoremap <silent> <leader>f :<C-u>Unite buffer<CR>
+nnoremap <silent> <leader>t :<C-u>Unite tab:no-current<CR>
+" }}}
+" {{{2 Echodoc
+let g:echodoc_enable_at_startup = 1
+set completeopt-=preview
+" }}}
+" {{{2 Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case = 1
@@ -160,7 +179,7 @@ let g:deoplete#enable_smart_case = 1
 " Automatically run Neomake on write
 if !exists('neomake_config_done')
     let g:neomake_config_done = 1
-    " autocmd BufWritePost *  Neomake
+    nnoremap <leader>m Neomake
 
     " Automatically open the error window
     let g:neomake_open_list = 1
@@ -183,9 +202,10 @@ if !exists('neomake_config_done')
     let g:neomake_javascript_enabled_makers = ['jshint']
 endif
 " }}}
+" }}}
 " {{{ Colorscheme
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
-set t_Co=256  " Not sure if this is necessary in neovim-qt
+let &t_Co=256  " Not sure if this is necessary in neovim-qt
 set cursorline  " Highlight the current line
 
 " Easily switch between color schemes
@@ -233,8 +253,11 @@ endif
 let g:used_javascript_libs = 'jquery'
 " }}}
 " {{{ General Mapping
-" Open the buffers with C-B
-nmap <C-b> :Buffers<CR>
+" Easier Moving between splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " System clipboard integration!
 set clipboard+=unnamedplus

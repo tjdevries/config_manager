@@ -3,6 +3,7 @@
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="honukai"
+EDITOR="nvim"
 
 # {{{ Changes on default configuration
 # Path to your oh-my-zsh installation.
@@ -30,6 +31,11 @@ plugins=(git taskwarrior python battery)
 
 # {{{1 Aliases
 
+# {{{2 Edit Aliases
+alias ez='$EDITOR ~/.zshrc'
+alias gn='cd ~/Git/neovim/src/nvim/'
+alias en='$EDITOR ~/Git/config_manager/vim/.nvimrc'
+# }}}
 # {{{2 General Aliases
 # {{{3 List aliases
 alias ls='ls -F --color=auto --group-directories-first'

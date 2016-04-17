@@ -15,5 +15,5 @@ nmap <C-j> ]pf
 " }}}
 " {{{ Misc
 let g:vimpy_remove_unused = 1
-autocmd BufWritePre *.py :%s/\s\+$//e
+" autocmd BufWritePre *.py :%s/\s\+$//e
 " }}}
