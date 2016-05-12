@@ -100,6 +100,7 @@ Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' 
 Plug 'vim-pandoc/vim-markdownfootnotes'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'tpope/vim-characterize'
 
 " Fuzzy file finding
 " Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
