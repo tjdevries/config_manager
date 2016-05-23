@@ -8,6 +8,7 @@
 " {{{ Unix vs. Windows Configuration
 if has('unix')
     let g:python_host_prog = '/usr/bin/python'
+    let g:python2_host_prog = '/usr/bin/python2'
     let g:python3_host_prog = '/usr/bin/python3'
 else
     let g:python_host_pgro = 'C:\python'
@@ -114,6 +115,7 @@ Plug 'morhetz/gruvbox'          " gruvbox
 Plug 'junegunn/seoul256.vim'    " seoul color scheme
 Plug 'junegunn/goyo.vim'        " focusing mode
 Plug 'junegunn/limelight.vim'   " Extra focus mode
+Plug 'altercation/vim-colors-solarized'
 
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
@@ -140,6 +142,110 @@ Plug 'blindFS/vim-taskwarrior'
 " Plug 'd0c-s4vage/vim-morph'
 
 call plug#end()
+" }}}
+" {{{ Neovim Configuration
+" }}}
+" {{{ Leader
+" Set our leader key to ,
+let g:mapleader=','
+" }}}
+" {{{ General VIM configuration
+set wildignore=*.o,*~,*.pyc " Ignore compiled files
+set cmdheight=2             " Height of the command bar
+set incsearch               " Makes search act like search in modern browsers
+set showmatch               " show matching brackets when text indicator is over them
+set relativenumber          " Show line numbers
+set number                  " But show the actual number for the line we're on
+
+" Load filetype-specific indent files
+" Also enables plugins?
+filetype plugin indent on
+
+" Spell check
+" set spelllang=en_us
+" set spell
+
+set scrolloff=10            " Make it so there are always ten lines below my cursor
+" }}}
+" {{{ Tab Configuration
+" Want auto indents automatically
+set autoindent
+set cindent
+set wrap
+
+" Set the width of the tab to 4 wid
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+" Make it so that long lines wrap smartly
+set breakindent
+let &showbreak=repeat(' ', 3)
+set linebreak
+
+" Always use spaces instead of tab characters
+set expandtab
+" }}}
+" {{{ UltiSnip Configuration
+" Trigger configuration.
+let g:UltiSnipsExpandTrigger='<leader>e'
+let g:UltiSnipsJumpForwardTrigger='<leader>r'
+let g:UltiSnipsJumpBackwardTrigger='<leader>w'
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit='vertical'
+
+" Use Python Version
+let g:UltiSnipsUsePythonVersion = 3
+" }}}
+" {{{ ctags
+set tags=tags; " Enable ctags
+" }}}
+" {{{ Markdown Configuration
+augroup markdown
+    " remove buffer-local auto commands forcurrent buffer
+    au!
+    " hook to run TableFormat when <bar> is entered in insert mode
+    au FileType mkd.markdown exec 'inoremap \| \|<C-O>:TableFormat<CR><C-O>f\|<right>'
+    " Ctrl+\ will run TableFormat in either mode
+    au FileType mkd.markdown exec 'inoremap <C-\> <C-O>:TableFormat<CR>'
+    au FileType mkd.markdown exec 'noremap <silent> <C-\> :TableFormat<CR>'
+
+    let g:vim_markdown_folding_disabled=1
+augroup END
+" }}}
+" {{{ VERY IMPORTANT KEYBINDINGS
+nnoremap <Up>          :echom "--> k <-- "<CR>
+nnoremap <Down>        :echom "--> j <-- "<CR>
+nnoremap <Right>       :echom "--> l <-- "<CR>
+nnoremap <Left>        :echom "--> h <-- "<CR>
+
+inoremap <Up>     <C-o>:echom "--> k <-- "<CR>
+inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
+inoremap <Right>  <C-o>:echom "--> l <-- "<CR>
+inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
+
+nnoremap ; :
+
+" Set jj to be escape in insert mode
+inoremap jj <esc>
+
+" For long, wrapped lines
+nnoremap k gk
+nnoremap j gj
+" }}}
+" {{{ Old stuff
+" ------------------------- Old Items: Kept for Reference -------------------------
+" ----- Flake8 Things -----
+" Run flake8() whenever a python file is written
+" autocmd BufWritePost *.py call Flake8()
+" Trying to do this using syntastic now. Refer above
+
+" ----- Status Line (Python) -----
+" This currently doesn't work
+" python from powerline.vim import setup as powerline_setup
+" python powerline_setup()
+" python del powerline_setup
 " }}}
 " {{{ Vim default behaviors
 set completeopt-=preview " Turn off preview
@@ -186,9 +292,9 @@ if !exists('neomake_config_done')
     let g:neomake_open_list = 1
 
     " Python
-    " let g:neomake_python_flake8_maker = {
-    "         \ 'args': ['--max-line-length=120 --format="|%(row)4d |%(col)4d | %(code)s: %(text)s"']
-    "         \ }
+    let g:neomake_python_flake8_maker = {
+            \ 'args': ['--max-line-length=120']
+            \ }
 
     let g:neomake_python_enabled_makers = [ 'flake8' ]
 
@@ -205,9 +311,10 @@ endif
 " }}}
 " }}}
 " {{{ Colorscheme
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1   " Turn on better color support in vim
-let &t_Co=256  " Not sure if this is necessary in neovim-qt
+syntax enable
+
 set cursorline  " Highlight the current line
+set termguicolors " Better color support
 
 " Easily switch between color schemes
 let current_scheme = 'gruvbox'

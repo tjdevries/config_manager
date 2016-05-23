@@ -1,16 +1,6 @@
 " TJ's Vimrc
 
 " {{{ Neovim Configuration
-if has('nvim')
-    if has('unix')
-        source ~/.config/nvim/.nvimrc
-    else
-        " Windows pathway
-        source ~\Documents\GitHub\config_manager\vim\.nvimrc
-    endif
-else
-    source ~/.config/vim/.specific.vimrc
-endif
 " }}}
 " {{{ Leader
 " Set our leader key to ,
