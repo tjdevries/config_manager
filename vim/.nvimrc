@@ -83,6 +83,8 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', '
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
 
 " Tag Based Plugins
+" Plug 'ludovicchabant/vim-gutentags' " I could not get this to work.
+" Plug 'szw/vim-tags' " I could not get this one to work either
 Plug 'majutsushi/tagbar'
 
 " Git Based Plugins
@@ -252,7 +254,7 @@ nnoremap j gj
 " python del powerline_setup
 " }}}
 " {{{ Vim default behaviors
-set completeopt-=preview " Turn off preview
+" set completeopt-=preview " Turn off preview
 set splitright           " Prefer windows splitting to the right
 set splitbelow           " Prefer windows splitting to the bottom
 set updatetime=250       " Make updates happen faster
@@ -280,6 +282,7 @@ set completeopt-=preview
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case = 1
+let g:deoplete#sources#jedi#show_docstring = 1
 
 "   Make tab perform the completion for deoplete
 " inoremap <silent><expr> <Tab>
@@ -296,9 +299,9 @@ if !exists('neomake_config_done')
     let g:neomake_open_list = 1
 
     " Python
-    let g:neomake_python_flake8_maker = {
-            \ 'args': ['--max-line-length=120']
-            \ }
+    " let g:neomake_python_flake8_maker = {
+    "         \ 'args': ['--max-line-length=120']
+    "         \ }
 
     let g:neomake_python_enabled_makers = [ 'flake8' ]
 
@@ -311,6 +314,11 @@ if !exists('neomake_config_done')
     \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
     \ }
     let g:neomake_javascript_enabled_makers = ['jshint']
+
+    " C
+    " let g:neomake_c_gcc_maker = {
+    " \ }
+    " let g:neomake_c_enabled_makers = ['clang-3.6']
 endif
 " }}}
 " }}}
@@ -348,8 +356,9 @@ let python_highlight_all = 1
 
 " }}}
 " {{{ Airline Configuration
-let g:airline_powerline_fonts=1
-let g:airline_section_z = airline#section#create(['%4l', ':%3v']) " Only show the line & col number
+let g:airline_powerline_fonts=0
+" let g:airline_section_z = airline#section#create(['%4l', ' :%3v', gutentags#statusline('[Generating...]')]) " Only show the line & col number
+let g:airline_section_z = airline#section#create(['%4l', ' :%3v']) " Only show the line & col number
 
 let g:airline_inactive_collapse = 1 " Only indicate filename on inactive buffers
 let g:airline_exclue_preview = 1 " Don't show status line in preview
@@ -381,6 +390,10 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" Move easily to the next error
+nnoremap <leader>l :lnext<CR>
+nnoremap <leader>h :lprevious<CR>
 
 " System clipboard integration!
 set clipboard+=unnamedplus
