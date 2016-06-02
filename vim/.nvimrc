@@ -111,11 +111,15 @@ Plug 'tpope/vim-characterize'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 " Colorscheme and appearance
-Plug 'morhetz/gruvbox'          " gruvbox
-Plug 'junegunn/seoul256.vim'    " seoul color scheme
-Plug 'junegunn/goyo.vim'        " focusing mode
-Plug 'junegunn/limelight.vim'   " Extra focus mode
-Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'                                            " gruvbox
+Plug 'junegunn/seoul256.vim'                                      " seoul color scheme
+Plug 'junegunn/goyo.vim'                                          " focusing mode
+Plug 'junegunn/limelight.vim'                                     " Extra focus mode
+Plug 'altercation/vim-colors-solarized'                           " Solarized color scheme
+Plug 'joshdick/onedark.vim' | Plug 'joshdick/airline-onedark.vim' " Atom type color scheme
+
+Plug 'sheerun/vim-polyglot'                         " All the colors!
+Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors
 
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
@@ -313,11 +317,11 @@ endif
 " {{{ Colorscheme
 syntax enable
 
-set cursorline  " Highlight the current line
+set cursorline    " Highlight the current line
 set termguicolors " Better color support
 
 " Easily switch between color schemes
-let current_scheme = 'gruvbox'
+let current_scheme = 'onedark'
 
 if current_scheme == 'gruvbox'
     let g:gruvbox_italic=1              " Turn on italics for gruvbox
@@ -329,7 +333,18 @@ elseif current_scheme == 'seoul256'
     "   Default: 237
     let g:seoul256_background = 234
     colo seoul256
+elseif current_scheme == 'onedark'
+    colorscheme onedark
+
+    let g:airline_theme='onedark'
+    let g:onedark_terminal_italics=1
 endif
+
+" Disable polyglot python syntax
+let g:polyglot_disabled = ['python']
+
+" Turn on python syntax highlighting
+let python_highlight_all = 1
 
 " }}}
 " {{{ Airline Configuration
