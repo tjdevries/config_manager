@@ -85,6 +85,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', '
 " Tag Based Plugins
 " Plug 'ludovicchabant/vim-gutentags' " I could not get this to work.
 " Plug 'szw/vim-tags' " I could not get this one to work either
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 Plug 'majutsushi/tagbar'
 
 " Git Based Plugins
@@ -206,6 +207,12 @@ let g:UltiSnipsUsePythonVersion = 3
 " }}}
 " {{{ ctags
 set tags=tags; " Enable ctags
+
+let g:easytags_async = 1    " Background support for easy tags
+let g:easytags_event = ['BufWritePost'] " Update the tags after writing
+" Some highlight support is included in easytags
+" highlight pythonFunctionTag <insert command>
+"
 " }}}
 " {{{ Markdown Configuration
 augroup markdown
