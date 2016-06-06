@@ -42,7 +42,7 @@ Plug 'mhinz/vim-startify'
 Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
-Plug '~/Git/vim-vertex'  "Hopefully soon, this will be pulling from Git :D
+Plug 'tjdevries/vim-vertex'  "Hopefully soon, this will be pulling from Git :D
 
 " Fun status line
 Plug 'bling/vim-airline'
@@ -164,6 +164,8 @@ set incsearch               " Makes search act like search in modern browsers
 set showmatch               " show matching brackets when text indicator is over them
 set relativenumber          " Show line numbers
 set number                  " But show the actual number for the line we're on
+set ignorecase              " Ignore case when searching...
+set smartcase               " ... unless there is a capital letter in the query
 
 " Load filetype-specific indent files
 " Also enables plugins?
@@ -172,6 +174,12 @@ filetype plugin indent on
 " Spell check
 " set spelllang=en_us
 " set spell
+"
+set completeopt+=preview " Turn On preview
+set splitright           " Prefer windows splitting to the right
+set splitbelow           " Prefer windows splitting to the bottom
+set updatetime=250       " Make updates happen faster
+set nohlsearch
 
 set scrolloff=10            " Make it so there are always ten lines below my cursor
 " }}}
@@ -261,13 +269,6 @@ nnoremap j gj
 " python powerline_setup()
 " python del powerline_setup
 " }}}
-" {{{ Vim default behaviors
-" set completeopt-=preview " Turn off preview
-set splitright           " Prefer windows splitting to the right
-set splitbelow           " Prefer windows splitting to the bottom
-set updatetime=250       " Make updates happen faster
-set nohlsearch
-" }}}
 " {{{ Folding behvaiors
 set foldmethod=marker
 set foldlevel=0
@@ -275,12 +276,10 @@ set modelines=1
 " }}}
 " {{{1 Shougo Config
 " {{{2 Unite Config
-" nnoremap [unite] <Nop>
-" nmap <leader>f [unite]
-" nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-let mapleader = ','
-nnoremap <silent> <leader>f :<C-u>Unite buffer<CR>
-nnoremap <silent> <leader>t :<C-u>Unite tab:no-current<CR>
+nnoremap <silent> <leader>uf :<C-u>Unite buffer<CR>
+nnoremap <silent> <leader>if :<C-u>Unite -start-insert buffer<CR>
+nnoremap <silent> <leader>ut :<C-u>Unite tab:no-current<CR>
+nnoremap <silent> <leader>it :<C-u>Unite -start-insert tab:no-current<CR>
 " }}}
 " {{{2 Echodoc
 let g:echodoc_enable_at_startup = 1
@@ -336,7 +335,7 @@ endif
 syntax enable
 
 set cursorline    " Highlight the current line
-set termguicolors " Better color support
+" set termguicolors " Better color support
 
 " Easily switch between color schemes
 let current_scheme = 'onedark'
@@ -371,7 +370,7 @@ let python_highlight_all = 1
 
 " }}}
 " {{{ Airline Configuration
-let g:airline_powerline_fonts=0
+let g:airline_powerline_fonts=1
 " let g:airline_section_z = airline#section#create(['%4l', ' :%3v', gutentags#statusline('[Generating...]')]) " Only show the line & col number
 let g:airline_section_z = airline#section#create(['%4l', ' :%3v']) " Only show the line & col number
 
