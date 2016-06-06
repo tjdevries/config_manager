@@ -17,5 +17,3 @@ nmap <C-j> ]pf
 let g:vimpy_remove_unused = 1
 " autocmd BufWritePre *.py :%s/\s\+$//e
 " }}}
-
-autocmd BufWritePre *.py Neomake

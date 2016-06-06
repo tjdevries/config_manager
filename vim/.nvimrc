@@ -121,8 +121,9 @@ Plug 'junegunn/limelight.vim'                                     " Extra focus 
 Plug 'altercation/vim-colors-solarized'                           " Solarized color scheme
 Plug 'joshdick/onedark.vim' | Plug 'joshdick/airline-onedark.vim' " Atom type color scheme
 
-Plug 'sheerun/vim-polyglot'                         " All the colors!
+" Plug 'sheerun/vim-polyglot'                         " All the colors!
 Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors
+Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
@@ -300,7 +301,7 @@ let g:deoplete#sources#jedi#show_docstring = 1
 " Automatically run Neomake on write
 if !exists('neomake_config_done')
     let g:neomake_config_done = 1
-    nnoremap <leader>m Neomake
+    nnoremap <leader>m :Neomake<CR>
 
     " Automatically open the error window
     let g:neomake_open_list = 1
@@ -326,6 +327,8 @@ if !exists('neomake_config_done')
     " let g:neomake_c_gcc_maker = {
     " \ }
     " let g:neomake_c_enabled_makers = ['clang-3.6']
+
+    autocmd BufWritePre *.py,*.vim Neomake
 endif
 " }}}
 " }}}
@@ -355,8 +358,13 @@ elseif current_scheme == 'onedark'
     let g:onedark_terminal_italics=1
 endif
 
-" Disable polyglot python syntax
-let g:polyglot_disabled = ['python']
+let polyglot_enabled = 0
+
+if polyglot_enabled
+    " Disable polyglot python syntax
+    let g:polyglot_disabled = ['python']
+
+endif
 
 " Turn on python syntax highlighting
 let python_highlight_all = 1
