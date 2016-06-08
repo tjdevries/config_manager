@@ -38,11 +38,13 @@ call plug#begin(g:plugin_path)
 " Startup
 Plug 'mhinz/vim-startify'
 
+Plug '~/git/gruvbox-tj/'
+
 " Testing
 Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
-Plug 'tjdevries/vim-vertex'  "Hopefully soon, this will be pulling from Git :D
+" Plug 'tjdevries/vim-vertex'  "Hopefully soon, this will be pulling from Git :D
 
 " Fun status line
 Plug 'bling/vim-airline'
@@ -124,6 +126,9 @@ Plug 'junegunn/goyo.vim'                                          " focusing mod
 Plug 'junegunn/limelight.vim'                                     " Extra focus mode
 Plug 'altercation/vim-colors-solarized'                           " Solarized color scheme
 Plug 'joshdick/onedark.vim' | Plug 'joshdick/airline-onedark.vim' " Atom type color scheme
+Plug 'w0ng/vim-hybrid'
+Plug 'chriskempson/base16-vim'
+
 
 " Plug 'sheerun/vim-polyglot'                         " All the colors!
 " Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors
@@ -348,15 +353,26 @@ endif
 syntax enable
 
 set cursorline    " Highlight the current line
-" set termguicolors " Better color support
+set termguicolors " Better color support
 
 " Easily switch between color schemes
-let current_scheme = 'onedark'
+let g:current_scheme = 'gruvbox-tj'
 
 if current_scheme == 'gruvbox'
     let g:gruvbox_italic=1              " Turn on italics for gruvbox
-    colorscheme gruvbox
     set background=dark
+
+    colorscheme gruvbox
+elseif current_scheme == 'gruvbox-tj'
+    let g:gruvbox_italic=1              " Turn on italics for gruvbox
+    let g:gruvbox_bold=1
+    let g:gruvbox_termcolors=256
+    " let g:gruvbox_improved_warnings=1
+    " let g:gruvbox_improved_strings=1
+    let g:gruvbox_contrast_dark='soft'
+
+    set background=dark
+    colorscheme gruvbox-tj
 elseif current_scheme == 'seoul256'
     " seoul256 (dark):
     "   Range:   233 (darkest) ~ 239 (lightest)
@@ -368,18 +384,16 @@ elseif current_scheme == 'onedark'
 
     let g:airline_theme='onedark'
     let g:onedark_terminal_italics=1
+elseif current_scheme == 'hybrid'
+    " let g:hybrid_custom_term_colors = 1
+    let g:hybrid_reduced_contrast = 1
+    set background=dark
+    colorscheme hybrid
+elseif current_scheme == 'base16'
+    set background=dark
+    let base16colorspace=256
+    colorscheme base16-tomorrow
 endif
-
-let polyglot_enabled = 0
-
-if polyglot_enabled
-    " Disable polyglot python syntax
-    let g:polyglot_disabled = ['python']
-
-endif
-
-" Turn on python syntax highlighting
-let python_highlight_all = 1
 
 " }}}
 " {{{ Airline Configuration
