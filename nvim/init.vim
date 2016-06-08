@@ -11,7 +11,7 @@ if has('unix')
     let g:python2_host_prog = '/usr/bin/python2'
     let g:python3_host_prog = '/usr/bin/python3'
 else
-    let g:python_host_pgro = 'C:\python'
+    let g:python_host_prog = 'C:\python'
 endif
 " }}}
 " {{{ vim-plug configuration
@@ -60,17 +60,18 @@ Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 " Unite
 Plug 'Shougo/unite.vim'
 
-" Deoplete
+" Deoplete  {{{
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neoinclude.vim'
 
-" Python
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }  " Python
+Plug 'Shougo/neco-vim'                           " Vim completion
 " Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
 " Plug 'ervandew/supertab',     {  'for': 'python' }
-" Plug 'dbsr/vimpy', { 'for': 'python' }
+" Plug 'dbsr/vimpy', { 'for': 'python' ]
+" }}}
 " }}}
 
 " Web Development
@@ -90,8 +91,8 @@ Plug 'majutsushi/tagbar'
 
 " Git Based Plugins
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 Plug 'moznion/github-commit-comment.vim'
+" Plug 'airblade/vim-gitgutter' " I've been having some problems with this one lately.
 
 " Text Manipulation Based Plugins
 Plug 'godlygeek/tabular'        " Quickly align text by pattern
@@ -105,6 +106,9 @@ Plug 'vim-pandoc/vim-markdownfootnotes'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'tpope/vim-characterize'
+Plug 'AndrewRadev/splitjoin.vim'
+
+Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }     " Get python alignment to work correctly
 
 " Fuzzy file finding
 " Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
@@ -122,7 +126,7 @@ Plug 'altercation/vim-colors-solarized'                           " Solarized co
 Plug 'joshdick/onedark.vim' | Plug 'joshdick/airline-onedark.vim' " Atom type color scheme
 
 " Plug 'sheerun/vim-polyglot'                         " All the colors!
-Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors
+" Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 
 " Nyaovim Plugins
@@ -249,8 +253,8 @@ inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
 
 nnoremap ; :
 
-" Set jj to be escape in insert mode
-inoremap jj <esc>
+" Set kj to be escape in insert mode
+inoremap kj <esc>
 
 " For long, wrapped lines
 nnoremap k gk
@@ -289,7 +293,9 @@ set completeopt-=preview
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case = 1
+
 let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#enable_cache = 1
 
 "   Make tab perform the completion for deoplete
 " inoremap <silent><expr> <Tab>
@@ -310,6 +316,13 @@ if !exists('neomake_config_done')
     "         \ 'args': ['--max-line-length=120']
     "         \ }
 
+    " TODO: Get prospector to work, maybe just on a special command.
+    " let g:neomake_python_prospector_maker = {
+    "     \ 'exe': 'prospector',
+    "     \ 'args': ['%:p'],
+    "     \ }
+    " let g:neomake_python_enabled_makers = [ 'flake8', 'prospector' ]
+
     let g:neomake_python_enabled_makers = [ 'flake8' ]
 
     " Vim
@@ -317,9 +330,9 @@ if !exists('neomake_config_done')
 
     " Javascript
     let g:neomake_javascript_jshint_maker = {
-    \ 'args': ['--verbose'],
-    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-    \ }
+        \ 'args': ['--verbose'],
+        \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
+        \ }
     let g:neomake_javascript_enabled_makers = ['jshint']
 
     " C

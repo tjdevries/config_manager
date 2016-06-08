@@ -4,6 +4,7 @@
 # time that oh-my-zsh is loaded.
 ZSH_THEME="honukai"
 EDITOR="nvim"
+VISUAL="nvim"
 
 # {{{ Changes on default configuration
 # Path to your oh-my-zsh installation.
@@ -26,7 +27,7 @@ export TERM=xterm-256color
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git taskwarrior python battery)
+plugins=(git python battery)
 # }}}
 
 # {{{1 Aliases
@@ -34,7 +35,7 @@ plugins=(git taskwarrior python battery)
 # {{{2 Edit Aliases
 alias ez='$EDITOR ~/.zshrc'
 alias gn='cd ~/Git/neovim/src/nvim/'
-alias en='$EDITOR ~/Git/config_manager/vim/.nvimrc'
+alias en='$EDITOR ~/Git/config_manager/nvim/init.vim'
 # }}}
 # {{{2 General Aliases
 # {{{3 List aliases
