@@ -1,5 +1,9 @@
 " Neovim specific configuration file
 
+" {{{ Leader
+" Set our leader key to ,
+let g:mapleader=','
+" }}}
 " {{{ TODO
 " Find a way to do color schemes with vim-plug
 " Figure out how to use ctrl-p
@@ -38,7 +42,6 @@ call plug#begin(g:plugin_path)
 " Startup
 Plug 'mhinz/vim-startify'
 
-Plug '~/git/gruvbox-tj/'
 
 " Testing
 Plug 'janko-m/vim-test'
@@ -68,9 +71,9 @@ Plug 'Shougo/context_filetype.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neoinclude.vim'
 
+Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }  " Python
 Plug 'Shougo/neco-vim'                           " Vim completion
-" Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
 " Plug 'ervandew/supertab',     {  'for': 'python' }
 " Plug 'dbsr/vimpy', { 'for': 'python' ]
 " }}}
@@ -109,6 +112,7 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'tpope/vim-characterize'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'tweekmonster/impsort.vim', {'for': 'python'}
 
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }     " Get python alignment to work correctly
 
@@ -121,6 +125,7 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 " Colorscheme and appearance
 Plug 'morhetz/gruvbox'                                            " gruvbox
+Plug 'tjdevries/gruvbox-tj/'                                      " my gruvbox!
 Plug 'junegunn/seoul256.vim'                                      " seoul color scheme
 Plug 'junegunn/goyo.vim'                                          " focusing mode
 Plug 'junegunn/limelight.vim'                                     " Extra focus mode
@@ -133,6 +138,7 @@ Plug 'chriskempson/base16-vim'
 " Plug 'sheerun/vim-polyglot'                         " All the colors!
 " Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
+Plug 'elzr/vim-json', { 'for': 'json' }
 
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
@@ -161,10 +167,6 @@ Plug 'blindFS/vim-taskwarrior'
 call plug#end()
 " }}}
 " {{{ Neovim Configuration
-" }}}
-" {{{ Leader
-" Set our leader key to ,
-let g:mapleader=','
 " }}}
 " {{{ General VIM configuration
 set wildignore=*.o,*~,*.pyc " Ignore compiled files
@@ -264,6 +266,10 @@ inoremap kj <esc>
 " For long, wrapped lines
 nnoremap k gk
 nnoremap j gj
+
+" Map execute this line
+nnoremap <leader>x :exe getline(".")<CR>
+vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
 " }}}
 " {{{ Old stuff
 " ------------------------- Old Items: Kept for Reference -------------------------
@@ -292,9 +298,15 @@ nnoremap <silent> <leader>it :<C-u>Unite -start-insert tab:no-current<CR>
 " }}}
 " {{{2 Echodoc
 let g:echodoc_enable_at_startup = 1
-set completeopt-=preview
 " }}}
 " {{{2 Deoplete
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#completions_enabled = 0
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#documentation_command = "K"
+let g:jedi#show_call_signatures = "1"
+
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case = 1
@@ -317,9 +329,9 @@ if !exists('neomake_config_done')
     let g:neomake_open_list = 1
 
     " Python
-    " let g:neomake_python_flake8_maker = {
-    "         \ 'args': ['--max-line-length=120']
-    "         \ }
+    let g:neomake_python_flake8_maker = {
+            \ 'args': ['--max-line-length=140']
+            \ }
 
     " TODO: Get prospector to work, maybe just on a special command.
     " let g:neomake_python_prospector_maker = {
@@ -353,9 +365,10 @@ endif
 syntax enable
 
 set cursorline    " Highlight the current line
-set termguicolors " Better color support
+" set termguicolors " Better color support
 
 " Easily switch between color schemes
+" let g:current_scheme = 'gruvbox-tj'
 let g:current_scheme = 'gruvbox-tj'
 
 if current_scheme == 'gruvbox'
