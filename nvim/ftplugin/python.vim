@@ -14,7 +14,7 @@ nmap <C-k> [pf
 nmap <C-j> ]pf
 " }}}
 " {{{ Impsort
-autocmd BufWritePre *.py ImpSort!
+" autocmd BufWritePre *.py ImpSort!
 " }}}
 " {{{ Misc
 let g:vimpy_remove_unused = 1

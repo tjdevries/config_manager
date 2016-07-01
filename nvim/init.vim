@@ -58,8 +58,9 @@ Plug 'mkitt/tabline.vim'
 " Plug 'klen/python-mode', { 'for': 'python' } " Not sure I like this one
 Plug 'benekastah/neomake'       " A better linter than syntastic?
 
-" UltiSnips
+" Snippets
 Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
+" Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets' | Plug 'honza/vim-snippets'
 
 " {{{2 Shougo
 " Unite
@@ -213,17 +214,30 @@ set linebreak
 " Always use spaces instead of tab characters
 set expandtab
 " }}}
-" {{{ UltiSnip Configuration
-" Trigger configuration.
-let g:UltiSnipsExpandTrigger='<leader>e'
-let g:UltiSnipsJumpForwardTrigger='<leader>r'
-let g:UltiSnipsJumpBackwardTrigger='<leader>w'
+" {{{ Snippet Configuration
+let snippet_manager = 'ultisnips'
+if snippet_manager == 'ultisnips'
+    " Configuration for custom snips
+    let g:UltiSnipsSnippetsDir = "~/.config/nvim/snips"
+    let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snips"]
 
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit='vertical'
+    " Trigger configuration.
+    let g:UltiSnipsExpandTrigger='<leader>e'
+    let g:UltiSnipsJumpForwardTrigger='<leader>r'
+    let g:UltiSnipsJumpBackwardTrigger='<leader>w'
 
-" Use Python Version
-let g:UltiSnipsUsePythonVersion = 3
+    " If you want :UltiSnipsEdit to split your window.
+    let g:UltiSnipsEditSplit='vertical'
+
+    " Use Python Version
+    let g:UltiSnipsUsePythonVersion = 3
+elseif snippet_manager == 'neosnippet'
+    let g:neosnippet#snippets_directory = ["~/.config/nvim/snips/", g:plugin_path . "/vim-snippets/"]
+
+    let g:neosnippet#enable_snipmate_compatibility = 1
+
+    imap <C-k>  <Plug>(neosnippet_expand_or_jump)
+endif
 " }}}
 " {{{ ctags
 set tags=tags; " Enable ctags
@@ -300,19 +314,22 @@ nnoremap <silent> <leader>it :<C-u>Unite -start-insert tab:no-current<CR>
 let g:echodoc_enable_at_startup = 1
 " }}}
 " {{{2 Deoplete
+" {{{3 Jedi
 let g:jedi#auto_vim_configuration = 0
+let g:jedi#force_py_version = 3
 let g:jedi#completions_enabled = 0
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#documentation_command = "K"
 let g:jedi#show_call_signatures = "1"
 
+let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#enable_cache = 1
+" }}}
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case = 1
 
-let g:deoplete#sources#jedi#show_docstring = 1
-let g:deoplete#sources#jedi#enable_cache = 1
 
 "   Make tab perform the completion for deoplete
 " inoremap <silent><expr> <Tab>
@@ -330,7 +347,7 @@ if !exists('neomake_config_done')
 
     " Python
     let g:neomake_python_flake8_maker = {
-            \ 'args': ['--max-line-length=140']
+            \ 'args': ['--max-line-length=140', '--ignore=E402']
             \ }
 
     " TODO: Get prospector to work, maybe just on a special command.
@@ -365,7 +382,7 @@ endif
 syntax enable
 
 set cursorline    " Highlight the current line
-" set termguicolors " Better color support
+set termguicolors " Better color support
 
 " Easily switch between color schemes
 " let g:current_scheme = 'gruvbox-tj'
