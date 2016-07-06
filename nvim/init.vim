@@ -230,6 +230,8 @@ if snippet_manager == 'ultisnips'
 
     " Use Python Version
     let g:UltiSnipsUsePythonVersion = 3
+
+    let g:ultisnips_python_style="google"
 elseif snippet_manager == 'neosnippet'
     let g:neosnippet#snippets_directory = ["~/.config/nvim/snips/", g:plugin_path . "/vim-snippets/"]
 
