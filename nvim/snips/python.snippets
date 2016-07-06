@@ -1,0 +1,4 @@
+snippet printobj "Print the attributes of an object"
+for item in dir(${1:object}):
+	print(item, getattr($1, item))
+endsnippet
