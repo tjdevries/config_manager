@@ -38,7 +38,7 @@ call plug#begin(g:plugin_path)
 " Startup
 Plug 'mhinz/vim-startify'
 
-Plug '~/git/gruvbox-tj/'
+Plug '~/Git/gruvbox-tj/'
 
 " Testing
 Plug 'janko-m/vim-test'
@@ -153,7 +153,7 @@ Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-projectionist'
 
 " Task Warrior Plugins
-Plug 'blindFS/vim-taskwarrior'
+" Plug 'blindFS/vim-taskwarrior'
 
 " Encryption
 " Plug 'd0c-s4vage/vim-morph'
@@ -224,8 +224,9 @@ let g:UltiSnipsEditSplit='vertical'
 let g:UltiSnipsUsePythonVersion = 3
 " }}}
 " {{{ ctags
-set tags=tags; " Enable ctags
+" set tags=tags; " Enable ctags
 
+let g:easytags_file = '~/.cache/tags'
 let g:easytags_async = 1    " Background support for easy tags
 let g:easytags_event = ['BufWritePost'] " Update the tags after writing
 " Some highlight support is included in easytags
@@ -317,9 +318,9 @@ if !exists('neomake_config_done')
     let g:neomake_open_list = 1
 
     " Python
-    " let g:neomake_python_flake8_maker = {
-    "         \ 'args': ['--max-line-length=120']
-    "         \ }
+    let g:neomake_python_flake8_maker = {
+            \ 'args': ['--max-line-length=120']
+            \ }
 
     " TODO: Get prospector to work, maybe just on a special command.
     " let g:neomake_python_prospector_maker = {
@@ -345,7 +346,8 @@ if !exists('neomake_config_done')
     " \ }
     " let g:neomake_c_enabled_makers = ['clang-3.6']
 
-    autocmd BufWritePre *.py,*.vim Neomake
+    autocmd BufWritePre *.py Neomake
+    " autocmd BufWritePre *.vim Neomake
 endif
 " }}}
 " }}}
@@ -402,7 +404,7 @@ let g:airline_powerline_fonts=1
 let g:airline_section_z = airline#section#create(['%4l', ' :%3v']) " Only show the line & col number
 
 let g:airline_inactive_collapse = 1 " Only indicate filename on inactive buffers
-let g:airline_exclue_preview = 1 " Don't show status line in preview
+let g:airline_exclude_preview = 1 " Don't show status line in preview
 let g:airline#extensions#branch#empty_message = '' " No Branch Message
 let g:airline#extensions#branch#format = 2 " See documentation
 
