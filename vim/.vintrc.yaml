@@ -1,4 +1,16 @@
+cmdargs:
+    severity: error
+    env:
+        neovim: true
+
+
 policies:
     # Disable a violation that bothers me because I want it to be without a group
     ProhibitAutocmdWithNoGroup:
+        enable: false
+
+    ProhibitImplicitScopeVariable:
+        enable: false
+
+    ProhibitImplicitScopeBuitlinVariable:
         enable: false
