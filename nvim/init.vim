@@ -71,6 +71,7 @@ Plug 'Shougo/context_filetype.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neoinclude.vim'
 
+" Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }  " Python
 Plug 'Shougo/neco-vim'                           " Vim completion
@@ -329,6 +330,16 @@ let g:jedi#show_call_signatures = "1"
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#enable_cache = 1
 " }}}
+" {{{ Lua
+" TODO: Figure out how to make this work better
+let g:lua_check_syntax = 0
+let g:lua_complete_omni = 0
+let g:lua_complete_dynamic = 0
+let g:lua_define_completion_mappings = 0
+
+" let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
+" let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
+" }}}
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case = 1
@@ -338,6 +349,7 @@ let g:deoplete#enable_smart_case = 1
 " inoremap <silent><expr> <Tab>
 "             \ pumvisible() ? "\<C-n>" :
 "             \ deoplete#mappings#manual_complete()
+" }}}
 " }}}
 " {{{ Neomake
 " Automatically run Neomake on write
@@ -380,7 +392,6 @@ if !exists('neomake_config_done')
     autocmd BufWritePre *.py Neomake
     " autocmd BufWritePre *.vim Neomake
 endif
-" }}}
 " }}}
 " {{{ Colorscheme
 syntax enable
