@@ -1,0 +1,7 @@
+snippet add_string "Add a string to a dictionary"
+PyDict_SetItemString($1, "$2", Py_BuildValue("i", $3, 1));
+endsnippet
+
+snippet add_same_string "Add a string to a dictionary"
+PyDict_SetItemString($1, "$2", Py_BuildValue("i", $2, 1));
+endsnippet

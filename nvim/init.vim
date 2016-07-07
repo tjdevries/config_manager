@@ -133,6 +133,7 @@ Plug 'altercation/vim-colors-solarized'                           " Solarized co
 Plug 'joshdick/onedark.vim' | Plug 'joshdick/airline-onedark.vim' " Atom type color scheme
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
+" Plug 'Rykka/riv.vim'
 
 
 " Plug 'sheerun/vim-polyglot'                         " All the colors!
