@@ -12,6 +12,10 @@
 " CTRL J moves to the function definition below
 nmap <C-k> [pf
 nmap <C-j> ]pf
+
+nnoremap <silent><leader>df <Esc>:Pytest file<CR>
+nnoremap <silent><leader>dc <Esc>:Pytest class<CR>
+nnoremap <silent><leader>dm <Esc>:Pytest method<CR>
 " }}}
 " {{{ Impsort
 " autocmd BufWritePre *.py ImpSort!

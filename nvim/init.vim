@@ -39,6 +39,10 @@ else
 endif
 
 call plug#begin(g:plugin_path)
+" To Learn:
+" Plug 'tweekmonster/braceless.vim'
+Plug 'tweekmonster/colorpal.vim'
+
 " Startup
 Plug 'mhinz/vim-startify'
 
@@ -56,6 +60,7 @@ Plug 'mkitt/tabline.vim'
 " Plug 'scrooloose/syntastic'
 " Plug 'klen/python-mode', { 'for': 'python' } " Not sure I like this one
 Plug 'benekastah/neomake'       " A better linter than syntastic?
+Plug 'alfredodeza/pytest.vim'   " Pytest helper
 
 " Snippets
 Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
@@ -90,9 +95,9 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', '
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
 
 " Tag Based Plugins
-" Plug 'ludovicchabant/vim-gutentags' " I could not get this to work.
+Plug 'ludovicchabant/vim-gutentags' " I could not get this to work.
 " Plug 'szw/vim-tags' " I could not get this one to work either
-Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+" Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 Plug 'majutsushi/tagbar'
 
 " Git Based Plugins
@@ -144,6 +149,7 @@ Plug 'elzr/vim-json', { 'for': 'json' }
 
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
+Plug 'rhysd/nyaovim-mini-browser'
 
 " Quickfix Modifications
 Plug 'romainl/vim-qf'
@@ -243,7 +249,7 @@ elseif snippet_manager == 'neosnippet'
 endif
 " }}}
 " {{{ ctags
-" set tags=tags; " Enable ctags
+set tags=tags; " Enable ctags
 
 let g:easytags_file = '~/.cache/tags'
 let g:easytags_async = 1    " Background support for easy tags
@@ -397,7 +403,7 @@ endif
 syntax enable
 
 set cursorline    " Highlight the current line
-set termguicolors " Better color support
+" set termguicolors " Better color support
 
 " Easily switch between color schemes
 " let g:current_scheme = 'gruvbox-tj'
@@ -414,7 +420,7 @@ elseif current_scheme == 'gruvbox-tj'
     let g:gruvbox_termcolors=256
     " let g:gruvbox_improved_warnings=1
     " let g:gruvbox_improved_strings=1
-    let g:gruvbox_contrast_dark='soft'
+    " let g:gruvbox_contrast_dark='soft'
 
     set background=dark
     colorscheme gruvbox-tj
