@@ -69,6 +69,7 @@ Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 " {{{2 Shougo
 " Unite
 Plug 'Shougo/unite.vim'
+Plug 'Shougo/neoyank.vim'       " Yank ring for unit
 
 " Deoplete  {{{
 Plug 'Shougo/echodoc.vim'
