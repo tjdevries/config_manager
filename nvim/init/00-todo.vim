@@ -31,3 +31,5 @@
 
 " Window moving
 " Maybe change it wasd, with alt or something
+
+" Figure out why the digraph stuff isn't working
