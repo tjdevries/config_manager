@@ -10,16 +10,16 @@ let g:loaded_descriptive_maps = 1
 " let g:descriptive_maps = get(g:, 'descriptive_maps', {})
 let g:descriptive_maps = {}
 let s:_map_arguments = [
-            \ "<buffer>",
-            \ "<nowait>",
-            \ "<silent>",
-            \ "<special>",
-            \ "<script>",
-            \ "<expr>",
-            \ "<unique>"
+            \ '<buffer>',
+            \ '<nowait>',
+            \ '<silent>',
+            \ '<special>',
+            \ '<script>',
+            \ '<expr>',
+            \ '<unique>'
             \ ]
 
-let g:_description_separator = ">>>"
+let g:_description_separator = '>>>'
 
 function! s:describe(command_string)
     let l:cmd_split = split(a:command_string)
@@ -41,7 +41,7 @@ function! s:describe(command_string)
         let l:description = join(l:cmd_split[l:description_split_location + 1:], ' ')
     else
         let l:rhs = join(l:cmd_split[l:ind + 1:], ' ')
-        let l:description = "Undocumented"
+        let l:description = 'Undocumented'
     endif
 
     call s:_handle_arguments(l:map_command, l:map_args, l:lhs, l:rhs, l:description)
@@ -58,7 +58,7 @@ function! s:_handle_arguments(map_command, map_args, lhs, rhs, description)
                 \ 'args': a:map_args
                 \ }
 
-    let g:last_handled = a:map_command  . " " . join(a:map_args, ' ') . " " . a:lhs . " " . a:rhs
+    let g:last_handled = a:map_command  . ' ' . join(a:map_args, ' ') . ' ' . a:lhs . ' ' . a:rhs
     execute g:last_handled
 endfunction
 
