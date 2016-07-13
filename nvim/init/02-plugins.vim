@@ -38,9 +38,9 @@ Plug 'benekastah/neomake'       " A better linter than syntastic?
 Plug 'alfredodeza/pytest.vim'   " Pytest helper
 
 " Snippets
-if g:my_snippet_manager == 'ultisnips'
+if g:my_snippet_manager ==? 'ultisnips'
     Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
-elseif g:my_snippet_manager == 'neosnippet'
+elseif g:my_snippet_manager ==? 'neosnippet'
     Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets' | Plug 'honza/vim-snippets'
 endif
 
@@ -74,11 +74,11 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', '
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
 
 " Tag Based Plugins
-if g:my_tags_manager == 'gutentags'
+if g:my_tags_manager ==? 'gutentags'
     Plug 'ludovicchabant/vim-gutentags'
-elseif g:my_tags_manager == 'vim-tags'
+elseif g:my_tags_manager ==? 'vim-tags'
     Plug 'szw/vim-tags'
-elseif g:my_tags_manager == 'easytags'
+elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 endif
 Plug 'majutsushi/tagbar'
@@ -133,6 +133,7 @@ Plug 'elzr/vim-json', { 'for': 'json' }
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
 Plug 'rhysd/nyaovim-mini-browser'
+Plug 'tjdevries/nyaovim-popup-menu'
 
 " Quickfix Modifications
 Plug 'romainl/vim-qf'
