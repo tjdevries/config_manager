@@ -3,5 +3,6 @@
 *swp
 *.no
 *grive
+*tags
 
 nvim/.netrwhist
