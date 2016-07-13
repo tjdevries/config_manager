@@ -25,7 +25,8 @@ Plug 'mhinz/vim-startify'
 Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
-" Plug 'tjdevries/vim-vertex'  "Hopefully soon, this will be pulling from Git :D
+Plug 'tjdevries/vim-vertex'
+Plug 'tjdevries/descriptive_maps.vim'
 
 " Fun status line
 Plug 'bling/vim-airline'
