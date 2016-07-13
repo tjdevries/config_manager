@@ -67,8 +67,10 @@ Plug 'Shougo/neco-vim'                           " Vim completion
 " Web Development
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
 Plug 'vim-scripts/JavaScript-Indent',  { 'for': 'javascript' }
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
+" Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', 'htmldjango'] }
+Plug 'mattn/emmet-vim'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'html']}
 
 " YouCompleteMe, not using right now. Went for Deoplete
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
