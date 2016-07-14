@@ -1,7 +1,7 @@
-Describe nnoremap <Up>          :echom "--> k <-- "<CR>
-Describe nnoremap <Down>        :echom "--> j <-- "<CR>
-Describe nnoremap <Right>       :echom "--> l <-- "<CR>
-Describe nnoremap <Left>        :echom "--> h <-- "<CR>
+Describe nnoremap <Up>          :echom "--> k <-- "<CR> >>> Silly boy, that's now how you move
+Describe nnoremap <Down>        :echom "--> j <-- "<CR> >>> Silly boy, that's now how you move
+Describe nnoremap <Right>       :echom "--> l <-- "<CR> >>> Silly boy, that's now how you move
+Describe nnoremap <Left>        :echom "--> h <-- "<CR> >>> Silly boy, that's now how you move
 
 Describe inoremap <Up>     <C-o>:echom "--> k <-- "<CR>
 Describe inoremap <Down>   <C-o>:echom "--> j <-- "<CR>

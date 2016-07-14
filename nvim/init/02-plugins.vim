@@ -160,3 +160,5 @@ Plug 'tpope/vim-projectionist'
 " Plug 'd0c-s4vage/vim-morph'
 
 call plug#end()
+
+call plug#load('descriptive_maps.vim')
