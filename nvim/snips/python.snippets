@@ -2,3 +2,34 @@ snippet printobj "Print the attributes of an object"
 for item in dir(${1:object}):
 	print(item, getattr($1, item))
 endsnippet
+
+snippet FileCleaner "Keep your files the way they were" b
+class FileCleaner:
+    def __init__(self, filename: str, temp_prefix='._tmp'):
+        self.filename = filename
+        self.temp_file = temp_prefix + filename.replace(sep, '')
+
+    def __enter__(self):
+        copyfile(self.filename, self.temp_file)
+
+    def __exit__(self, type, value, traceback):
+        copyfile(self.temp_file, self.filename)
+        remove(self.temp_file)
+
+
+class ListFileCleaner:
+    def __init__(self, filenames: list, temp_prefix='._tmp'):
+        self.filenames = filenames
+
+        self.filecleaners = []
+        for filename in self.filenames:
+            self.filecleaners.append(FileCleaner(filename))
+
+    def __enter__(self):
+        for filecleaner in self.filecleaners:
+            filecleaner.__enter__()
+
+    def __exit__(self, type, value, traceback):
+        for filecleaner in self.filecleaners:
+            filecleaner.__exit__(type, value, traceback)
+endsnippet

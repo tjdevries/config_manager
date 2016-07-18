@@ -1,0 +1,11 @@
+snippet pass_args "Pass arguments"
+" Pass arguments through
+" fun! Foo(arg, ...)
+"     if a:0
+"         exe 'call Bar(a:arg1, a:arg2, ' . join(map(range(a:0), '"a:000[" . v:val . "]"'), ', ') . ')'
+"     else
+"         call Bar(a:arg, "foo")
+"     endif
+" endfunction
+endsnippet
+
