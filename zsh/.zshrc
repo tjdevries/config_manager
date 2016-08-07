@@ -4,7 +4,6 @@
 # time that oh-my-zsh is loaded.
 ZSH_THEME="honukai"
 EDITOR="nvim"
-VISUAL="nvim"
 
 # {{{ Changes on default configuration
 # Path to your oh-my-zsh installation.
@@ -20,9 +19,6 @@ export LC_ALL=en_US.UTF-8
 
 # Use 256 colors
 export TERM=xterm-256color
-# Base 16 Shell
-# BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
-# [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 # }}}
 
 # {{{ Plugin Configuration
@@ -30,7 +26,7 @@ export TERM=xterm-256color
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python battery)
+plugins=(git taskwarrior python battery)
 # }}}
 
 # {{{1 Aliases
@@ -38,7 +34,7 @@ plugins=(git python battery)
 # {{{2 Edit Aliases
 alias ez='$EDITOR ~/.zshrc'
 alias gn='cd ~/Git/neovim/src/nvim/'
-alias en='$EDITOR ~/Git/config_manager/nvim/init.vim'
+alias en='$EDITOR ~/Git/config_manager/vim/.nvimrc'
 # }}}
 # {{{2 General Aliases
 # {{{3 List aliases
@@ -173,3 +169,7 @@ fi
 # }}}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+pyenv virtualenvwrapper
