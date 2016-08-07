@@ -26,7 +26,12 @@ Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
 Plug 'tjdevries/vim-vertex'
-Plug 'tjdevries/descriptive_maps.vim'
+
+" if isdirectory("~/Git/descriptive_maps.vim")
+Plug '~/Git/descriptive_maps.vim'
+" else
+"     Plug 'tjdevries/descriptive_maps.vim'
+" endif
 
 " Fun status line
 Plug 'bling/vim-airline'
