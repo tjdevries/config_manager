@@ -3,13 +3,26 @@
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="honukai"
-EDITOR="nvim"
+
+if hash nvim 2>/dev/null; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
+
+sources=(
+'aliases'
+)
+
+for s in "${sources[@]}"; do
+  source "$HOME/.config/zsh/include/${s}.zsh"
+done
 
 # {{{ Changes on default configuration
 # Path to your oh-my-zsh installation.
 export ZSH=~/.config/oh-my-zsh/
 export ZSH_CUSTOM=$ZSH/custom
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/tj_chromebook/.vim/plugged/fzf/bin"
+# export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -26,43 +39,11 @@ export TERM=xterm-256color
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git taskwarrior python battery)
+plugins=(git python battery)
 # }}}
 
 # {{{1 Aliases
 
-# {{{2 Edit Aliases
-alias ez='$EDITOR ~/.zshrc'
-alias gn='cd ~/Git/neovim/src/nvim/'
-alias en='$EDITOR ~/Git/config_manager/vim/.nvimrc'
-# }}}
-# {{{2 General Aliases
-# {{{3 List aliases
-alias ls='ls -F --color=auto --group-directories-first'
-alias ll='ls -al'
-alias la='ls -A'
-alias l='ls -CF'
-alias ldr='ls --color --group-directories-first'
-alias ldl='ls --color -l --group-directories-first'
-# }}}
-# {{{3 History Aliases
-alias h="history|grep "
-# }}}
-# {{{3 Apt-get Aliases
-alias agi='sudo apt-get install '
-alias agu='sudo apt-get update && sudo apt-get upgrade'
-# }}}
-# {{{3 Disk Aliases
-# This is GOLD for finding out what is taking so much space on your drives!
-alias diskspace="du -S | sort -n -r |more"
-
-# Show me the size (sorted) of only the folders in this directory
-alias folders="find . -maxdepth 1 -type d -print | xargs du -sk | sort -rn"
-# }}}
-# }}}
-# {{{2 SSH Aliases
-alias offcampus='ssh tjd33@cs-ssh.calvin.edu'
-# }}}
 
 # }}}
 
@@ -90,10 +71,10 @@ extract () {
 }
 # }}}
 # {{{2 Cute clock
-# clock - A bash clock that can run in your terminal window. 
-clock () 
-{ 
-while true;do clear;echo "===========";date +"%r";echo "===========";sleep 1;done 
+# clock - A bash clock that can run in your terminal window.
+clock ()
+{
+while true;do clear;echo "===========";date +"%r";echo "===========";sleep 1;done
 }
 # }}}
 # }}}
@@ -169,6 +150,8 @@ fi
 # }}}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Pyenv configuration
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
