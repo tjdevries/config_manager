@@ -6,3 +6,5 @@
 *tags
 
 nvim/.netrwhist
+zsh/history
+zsh/.zcompdump*
