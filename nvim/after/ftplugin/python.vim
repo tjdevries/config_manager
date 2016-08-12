@@ -16,6 +16,7 @@ nmap <C-j> ]pf
 nnoremap <silent><leader>df <Esc>:Pytest file<CR>
 nnoremap <silent><leader>dc <Esc>:Pytest class<CR>
 nnoremap <silent><leader>dm <Esc>:Pytest method<CR>
+nnoremap <silent><leader>ds <Esc>:Pytest session<CR>
 " }}}
 " {{{ Impsort
 " autocmd BufWritePre *.py ImpSort!

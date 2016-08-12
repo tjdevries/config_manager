@@ -34,7 +34,7 @@ Plug '~/Git/descriptive_maps.vim'
 " endif
 
 " Fun status line
-Plug 'bling/vim-airline'
+Plug 'powerline/fonts', { 'do': './install.sh' } | Plug 'bling/vim-airline'
 Plug 'mkitt/tabline.vim'
 
 " Syntax Type Plugins
@@ -103,6 +103,7 @@ Plug 'tpope/vim-speeddating'    " Handle changing of dates in a nicer manner
 Plug 'tpope/vim-commentary'     " Easily comment out lines or objects
 Plug 'tpope/vim-repeat'         " Repeat actions better
 Plug 'tpope/vim-abolish'        " Cool things with words!
+Plug 'tpope/vim-sleuth'         " Easier tab handling
 Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'vim-pandoc/vim-markdownfootnotes'
 Plug 'vim-pandoc/vim-pandoc'
