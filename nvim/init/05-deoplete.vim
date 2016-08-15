@@ -13,6 +13,7 @@ let g:jedi#show_call_signatures = "1"
 
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#enable_cache = 1
+let g:deoplete#sources#jedi#worker_threads = 2
 
 " Lua configuration
 let g:lua_check_syntax = 0
