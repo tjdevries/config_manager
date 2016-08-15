@@ -17,6 +17,7 @@ call plug#begin(g:plugin_path)
 " To Learn:
 " Plug 'tweekmonster/braceless.vim'
 Plug 'tweekmonster/colorpal.vim'
+Plug 'tweekmonster/spellrotate.vim'
 
 " Startup
 Plug 'mhinz/vim-startify'
@@ -142,7 +143,12 @@ Plug 'elzr/vim-json', { 'for': 'json' }
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
 Plug 'rhysd/nyaovim-mini-browser'
-Plug 'tjdevries/nyaovim-popup-menu'
+Plug 'rhysd/nyaovim-popup-tooltip'
+" if isdirectory('~/Git/nyaovim-popup-menu')
+    Plug '~/Git/nyaovim-popup-menu'
+" else
+"     Plug 'tjdevries/nyaovim-popup-menu'
+" endif
 
 " Quickfix Modifications
 Plug 'romainl/vim-qf'

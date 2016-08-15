@@ -148,3 +148,5 @@ endfunction
 
 " Restore previous external compatibility options
 let &cpo = s:save_cpo
+
+nmap <silent> <expr>  zz  FS_ToggleFoldAroundSearch({'context':1})
