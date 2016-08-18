@@ -4,19 +4,31 @@
 # time that oh-my-zsh is loaded.
 ZSH_THEME="honukai"
 
+export DISABLE_LS_COLORS='true'
+
 if hash nvim 2>/dev/null; then
   export EDITOR=nvim
 else
   export EDITOR=vim
 fi
 
+# {{{ Plugin Configuration
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git python battery)
+# }}}
+
 sources=(
-'aliases'
+  'aliases'
+  'git'
 )
 
 for s in "${sources[@]}"; do
-  source "$HOME/.config/zsh/include/${s}.zsh"
+  source $HOME/.config/zsh/include/${s}.zsh
 done
+
 
 # {{{ Changes on default configuration
 # Path to your oh-my-zsh installation.
@@ -32,19 +44,6 @@ export LC_ALL=en_US.UTF-8
 
 # Use 256 colors
 export TERM=xterm-256color
-# }}}
-
-# {{{ Plugin Configuration
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git python battery)
-# }}}
-
-# {{{1 Aliases
-
-
 # }}}
 
 # {{{1 Functions
@@ -153,6 +152,5 @@ fi
 
 # Pyenv configuration
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$PYENV_ROOT/bin:/opt/Freescale/KDS_v3/toolchain/bin:$PATH"
 eval "$(pyenv init -)"
-pyenv virtualenvwrapper
