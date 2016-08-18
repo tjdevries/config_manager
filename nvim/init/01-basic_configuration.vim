@@ -5,7 +5,7 @@ let g:mapleader=','
 if has('unix')
     let g:python_host_prog = '/usr/bin/python'
     let g:python2_host_prog = '/usr/bin/python2'
-    let g:python3_host_prog = '/usr/bin/python3'
+    let g:python3_host_prog = '/home/dexter/.pyenv/versions/neovim3/bin/python'
 else
     let g:python_host_prog = 'C:\python'
 endif
@@ -39,6 +39,7 @@ set wrap
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+set shiftround
 
 " Make it so that long lines wrap smartly
 set breakindent
