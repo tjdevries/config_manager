@@ -123,8 +123,9 @@ Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }     " Get python alignm
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 " Colorscheme and appearance
-Plug 'morhetz/gruvbox'                                            " gruvbox
-Plug 'tjdevries/gruvbox-tj/'                                      " my gruvbox!
+" Plug 'morhetz/gruvbox'                                            " gruvbox
+" Plug 'tjdevries/gruvbox-tj/'                                      " my gruvbox!
+Plug '~/Git/gruvbox-tj/'
 Plug 'junegunn/seoul256.vim'                                      " seoul color scheme
 Plug 'junegunn/goyo.vim'                                          " focusing mode
 Plug 'junegunn/limelight.vim'                                     " Extra focus mode
@@ -132,6 +133,7 @@ Plug 'altercation/vim-colors-solarized'                           " Solarized co
 Plug 'joshdick/onedark.vim' | Plug 'joshdick/airline-onedark.vim' " Atom type color scheme
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
+Plug 'chrisbra/Colorizer'
 " Plug 'Rykka/riv.vim'
 
 
