@@ -23,7 +23,12 @@ search_top_level() {
     MY_RESULT="$(git grep --full-name -In $1)"
     py_script="
 import sys
+
+search_string = \"$1\"
 bash = sys.argv[1]
+CSI='\x1B['
+reset = CSI + 'm'
+bash = bash.replace(search_string, CSI + '91;40m' + search_string + reset)
 bash_split = ['File Name:#:Result'] + bash.split('\n')
 name_len = 0
 line_len = 0
