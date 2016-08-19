@@ -1,3 +1,20 @@
+# Something for me to see where aliases get defined
+
+set functionargzero
+
+alias_paths=( )
+alias_with_path () {
+    # BASE_PATH=`pwd -P`
+    FILE_PATH="$0"
+
+    # alias_paths+="$BASE_PATH/$FILE_PATH: Aliases $1"
+    alias_paths+="File: $FILE_PATH ->    $1"
+    \alias $1
+}
+
+# alias alias=alias_with_path
+
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
