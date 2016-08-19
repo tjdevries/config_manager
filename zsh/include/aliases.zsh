@@ -1,4 +1,4 @@
-
+alias s='source ~/.config/zsh/.zshrc'
 # {{{1 Edit Aliases
 alias ez='$EDITOR ~/.config/zsh/.zshrc'
 alias gn='cd ~/Git/neovim/src/nvim/'
