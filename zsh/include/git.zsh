@@ -22,10 +22,8 @@ search_top_level() {
     cd $TOPLEVEL
     MY_RESULT="$(git grep --full-name -In $1)"
     py_script="
-import sys
-
 search_string = \"$1\"
-bash = sys.argv[1]
+bash = \"\"\"$MY_RESULT\"\"\"
 CSI='\x1B['
 reset = CSI + 'm'
 bash = bash.replace(search_string, CSI + '91;40m' + search_string + reset)
@@ -46,7 +44,7 @@ for line in bash_split:
     temp_line = this_line[1]
     print(to_print.format(temp_name, temp_line, ' '.join(this_line[2:])))
 "
-python3 -c "$py_script" $MY_RESULT
+python3 -c "$py_script"
 cd $A
 }
 
