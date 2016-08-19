@@ -1,7 +1,7 @@
 # Basic functions
 alias gs='git status'
-alias gpl='git pull'
-alias gpu='git push'
+alias gpull='git pull'
+alias gpush='git push'
 alias gd='git diff'
 alias gpr='git pull --rebase'
 
