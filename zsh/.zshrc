@@ -60,7 +60,7 @@ done
 # {{{ Changes on default configuration
 # Path to your oh-my-zsh installation.
 export ZSH=~/.config/oh-my-zsh/
-export ZSH_CUSTOM=$ZSH/custom
+export ZSH_CUSTOM=~/.config/zsh/custom
 # export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games"
 
 source $ZSH/oh-my-zsh.sh
