@@ -149,6 +149,10 @@ fi
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
+export HISTSIZE=1000000000
+export SAVEHIST=$HISTSIZE
+export HISTFILE=$HOME/.config/zsh/history
+setopt hist_ignore_space
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then

@@ -53,3 +53,6 @@ alias gfind='git ls-files | grep -i'
 
 # Switching contexts
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit -m "[WIP]: $(date)"'
+
+# Oops savers
+alias gundo='git reset HEAD~'
