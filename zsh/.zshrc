@@ -1,4 +1,6 @@
 # Something for me to see where aliases get defined
+# Use 256 colors
+export TERM=xterm-256color
 
 set functionargzero
 
@@ -14,12 +16,18 @@ alias_with_path () {
 
 # alias alias=alias_with_path
 
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs time)
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
+
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="honukai"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 export DISABLE_LS_COLORS='true'
 
@@ -59,8 +67,6 @@ source $ZSH/oh-my-zsh.sh
 export UPDATE_ZSH_DAYS=5
 export LC_ALL=en_US.UTF-8
 
-# Use 256 colors
-export TERM=xterm-256color
 # }}}
 
 # {{{1 Functions
