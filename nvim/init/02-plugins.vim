@@ -124,8 +124,11 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 " Colorscheme and appearance
 " Plug 'morhetz/gruvbox'                                            " gruvbox
-" Plug 'tjdevries/gruvbox-tj/'                                      " my gruvbox!
-Plug '~/Git/gruvbox-tj/'
+if isdirectory(expand('~/Git/gruvbox-tj'))
+    Plug '~/Git/gruvbox-tj/'
+else
+    Plug 'tjdevries/gruvbox-tj/'                                      " my gruvbox!
+endif
 Plug 'junegunn/seoul256.vim'                                      " seoul color scheme
 Plug 'junegunn/goyo.vim'                                          " focusing mode
 Plug 'junegunn/limelight.vim'                                     " Extra focus mode
