@@ -21,13 +21,15 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs time)
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
-
+# POWERLEVEL9K_TIME_FORMAT="%D{%H:%M $(echo -e "\U1F4C5") %d:%m:%y}"
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M -- %d:%m:%y}"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="powerlevel9k/powerlevel9k"
+
 
 export DISABLE_LS_COLORS='true'
 
