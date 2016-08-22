@@ -19,6 +19,9 @@ Describe nnoremap j gj
 Describe nnoremap <leader>x :exe getline(".")<CR>
 Describe vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
 
+" Remove whitespace
+nnoremap <leader>sws :%s/\s\+$//<CR>
+
 " Easier Moving between splits
 Describe nnoremap <C-J> <C-W><C-J>
 Describe nnoremap <C-K> <C-W><C-K>
