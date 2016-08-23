@@ -77,9 +77,18 @@ else
 fi
 
 ## Zsh Plugins
+zplug 'zplug/zplug'
+
+# zplug 'lib/history', from:oh-my-zsh, use:
+# zplug 'lib/completion', from:oh-my-zsh
+# zplug 'lib/directories', from:oh-my-zsh
+# zplug 'lib/git', from:oh-my-zsh
+# zplug 'lib/theme-and-appearance', from:oh-my-zsh
+
 zplug 'zsh-users/zsh-autosuggestions', nice:-20
-# zplug 'zsh-users/zsh-syntax-highlighting', nice:19
 zplug 'zsh-users/zsh-completions', nice:19
+# zplug 'zsh-users/zsh-syntax-highlighting', nice:19
+
 zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme, nice:-19
 
 zplug load
