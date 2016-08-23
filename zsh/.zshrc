@@ -4,6 +4,18 @@ export TERM=xterm-256color
 
 set functionargzero
 
+export ZSH=~/.config/oh-my-zsh/
+export ZSH_CUSTOM=~/.config/zsh/
+export CONFIG_HOME=$HOME/.config/
+export ZPLUG_HOME=$CONFIG_HOME/zplug
+export ZSH_HOME=$CONFIG_HOME/zplug
+export ZSH_ENV_HOME=$HOME/
+export NVIM_HOME=$CONFIG_HOME/nvim
+
+source $ZSH/oh-my-zsh.sh
+source "$ZPLUG_HOME/init.zsh"
+
+
 alias_paths=( )
 alias_with_path () {
     # BASE_PATH=`pwd -P`
@@ -57,13 +69,24 @@ for s in "${sources[@]}"; do
 done
 
 
+zplug 'zsh-users/zsh-autosuggestions', nice:-20
+zplug 'zsh-users/zsh-syntax-highlighting', nice:19
+zplug 'zsh-users/zsh-completions', nice:0
+
+zplug load
+
+if zplug check zsh-users/zsh-autosuggestions; then
+  bindkey '^ ' autosuggest-accept
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
+fi
+
+plugins=(zsh-autosuggestions)
+
 # {{{ Changes on default configuration
 # Path to your oh-my-zsh installation.
-export ZSH=~/.config/oh-my-zsh/
-export ZSH_CUSTOM=~/.config/zsh/custom
+
 # export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games"
 
-source $ZSH/oh-my-zsh.sh
 
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=5
@@ -101,6 +124,9 @@ clock ()
 while true;do clear;echo "===========";date +"%r";echo "===========";sleep 1;done
 }
 # }}}
+install_emojify() {
+  sudo sh -c "curl https://raw.githubusercontent.com/mrowa44/emojify/master/emojify -o /usr/local/bin/emojify && chmod +x /usr/local/bin/emojify"
+}
 # }}}
 
 # {{{1 Language specific configuration
