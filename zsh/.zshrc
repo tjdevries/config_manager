@@ -1,9 +1,9 @@
 # Something for me to see where aliases get defined
 # Use 256 colors
 export TERM=xterm-256color
+export LANG=en_US.UTF8
 
-set functionargzero
-
+## Import locations
 export ZSH=~/.config/oh-my-zsh/
 export ZSH_CUSTOM=~/.config/zsh/
 export CONFIG_HOME=$HOME/.config/
@@ -12,7 +12,15 @@ export ZSH_HOME=$CONFIG_HOME/zplug
 export ZSH_ENV_HOME=$HOME/
 export NVIM_HOME=$CONFIG_HOME/nvim
 
-source $ZSH/oh-my-zsh.sh
+## ZSH options
+setopt functionargzero
+setopt hist_ignore_space
+
+## ZSH environment options
+export DISABLE_LS_COLORS='true'
+
+## Sources for important abilities
+# source $ZSH/oh-my-zsh.sh
 source "$ZPLUG_HOME/init.zsh"
 
 
@@ -25,25 +33,40 @@ alias_with_path () {
     alias_paths+="File: $FILE_PATH ->    $1"
     \alias $1
 }
-
 # alias alias=alias_with_path
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs time)
+## Powerlevel configuration
+# Not sure I have the right fonts for this yet...
+# POWERLEVEL9K_MODE="awesome-patched"
+
+DEFAULT_USER=$USER
+
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+
+POWERLEVEL9K_SHOW_CHANGESE="true"
+
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
-# POWERLEVEL9K_TIME_FORMAT="%D{%H:%M $(echo -e "\U1F4C5") %d:%m:%y}"
-POWERLEVEL9K_TIME_FORMAT="%D{%H:%M -- %d:%m:%y}"
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M \Uf073 %d:%m:%y}"
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="powerlevel9k/powerlevel9k"
+get_commit_message(){
+  if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
+    COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
+    if [ ${#COMMIT_MESSAGE} -gt 23 ]; then
+      printf "[ %.22s... ]" $COMMIT_MESSAGE 
+    else
+      printf "[ %.25s ]" $COMMIT_MESSAGE
+    fi
+  fi
+}
 
+POWERLEVEL9K_CUSTOM_COMMIT_MESSAGE="get_commit_message"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(custom_commit_message time)
 
-export DISABLE_LS_COLORS='true'
 
 if hash nvim 2>/dev/null; then
   export EDITOR=nvim
@@ -51,14 +74,16 @@ else
   export EDITOR=vim
 fi
 
-# {{{ Plugin Configuration
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-# plugins=(python battery)
-# }}}
+## Zsh Plugins
+# zplug 'zsh-users/zsh-autosuggestions', nice:-20
+# zplug 'zsh-users/zsh-syntax-highlighting', nice:19
+zplug 'zsh-users/zsh-completions', nice:0
+zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme
 
+zplug load
+
+
+## My "Plugins"
 sources=(
   'aliases'
   'git'
@@ -69,30 +94,14 @@ for s in "${sources[@]}"; do
 done
 
 
-zplug 'zsh-users/zsh-autosuggestions', nice:-20
-zplug 'zsh-users/zsh-syntax-highlighting', nice:19
-zplug 'zsh-users/zsh-completions', nice:0
-
-zplug load
-
 if zplug check zsh-users/zsh-autosuggestions; then
   bindkey '^ ' autosuggest-accept
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 fi
 
-plugins=(zsh-autosuggestions)
-
-# {{{ Changes on default configuration
-# Path to your oh-my-zsh installation.
-
-# export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games"
-
-
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=5
 export LC_ALL=en_US.UTF-8
-
-# }}}
 
 # {{{1 Functions
 # {{{2 Extract Stuff
@@ -124,11 +133,12 @@ clock ()
 while true;do clear;echo "===========";date +"%r";echo "===========";sleep 1;done
 }
 # }}}
+# {{{ Install emojify
 install_emojify() {
   sudo sh -c "curl https://raw.githubusercontent.com/mrowa44/emojify/master/emojify -o /usr/local/bin/emojify && chmod +x /usr/local/bin/emojify"
 }
 # }}}
-
+# }}}
 # {{{1 Language specific configuration
 
 # {{{2 Go
@@ -175,10 +185,9 @@ fi
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
-export HISTSIZE=1000000000
+export HISTSIZE=100000000
 export SAVEHIST=$HISTSIZE
 export HISTFILE=$HOME/.config/zsh/history
-setopt hist_ignore_space
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -193,15 +202,6 @@ setopt hist_ignore_space
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-# }}}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
