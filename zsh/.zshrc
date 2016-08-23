@@ -52,13 +52,15 @@ POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M \Uf073 %d:%m:%y}"
 
+max_commit_length=25
+ellipsis_commit_length=$(($max_commit_length - 3))
 get_commit_message(){
   if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
     COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
-    if [ ${#COMMIT_MESSAGE} -gt 23 ]; then
-      printf "[ %.22s... ]" $COMMIT_MESSAGE 
+    if [ ${#COMMIT_MESSAGE} -gt $((ellipsis_commit_length + 1)) ]; then
+      printf "[ %.${ellipsis_commit_length}s... ]" $COMMIT_MESSAGE 
     else
-      printf "[ %.25s ]" $COMMIT_MESSAGE
+      printf "[ %.${max_commit_length}s ]" $COMMIT_MESSAGE
     fi
   fi
 }
@@ -75,7 +77,7 @@ else
 fi
 
 ## Zsh Plugins
-# zplug 'zsh-users/zsh-autosuggestions', nice:-20
+zplug 'zsh-users/zsh-autosuggestions', nice:-20
 # zplug 'zsh-users/zsh-syntax-highlighting', nice:19
 zplug 'zsh-users/zsh-completions', nice:0
 zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme
