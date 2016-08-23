@@ -79,8 +79,8 @@ fi
 ## Zsh Plugins
 zplug 'zsh-users/zsh-autosuggestions', nice:-20
 # zplug 'zsh-users/zsh-syntax-highlighting', nice:19
-zplug 'zsh-users/zsh-completions', nice:0
-zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme
+zplug 'zsh-users/zsh-completions', nice:19
+zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme, nice:-19
 
 zplug load
 
@@ -135,9 +135,13 @@ clock ()
 while true;do clear;echo "===========";date +"%r";echo "===========";sleep 1;done
 }
 # }}}
-# {{{ Install emojify
+# {{{ Installers
 install_emojify() {
   sudo sh -c "curl https://raw.githubusercontent.com/mrowa44/emojify/master/emojify -o /usr/local/bin/emojify && chmod +x /usr/local/bin/emojify"
+}
+
+install_zplug() {
+  curl -sL zplug.sh/installer | zsh
 }
 # }}}
 # }}}
