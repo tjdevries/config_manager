@@ -35,6 +35,7 @@ Describe nnoremap <leader>h :lprevious<CR>
 if has('nvim')
     " Make esc leave terminal mode
     Describe tnoremap <Esc> <C-\><C-n>
+    tnoremap kj <C-\><C-n>
 
     " Easy moving between the buffers
     Describe tnoremap <A-h> <C-\><C-n><C-w>h

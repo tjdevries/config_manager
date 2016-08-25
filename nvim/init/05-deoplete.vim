@@ -1,15 +1,29 @@
+" General configuration
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case = 1
+
+" Github configuration
+let g:deoplete#sources = {}
+let g:deoplete#sources.gitcommit=['github']
+
+let g:deoplete#keyword_patterns = {}
+let g:deoplete#keyword_patterns.gitcommit = '.+'
+
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#omni#input_patterns.gitcommit = '.+'
+" call deoplete#util#set_pattern(
+"   \ g:deoplete#omni#input_patterns,
+"   \ 'gitcommit', [g:deoplete#keyword_patterns.gitcommit])
 
 " Jedi configuration
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#force_py_version = 3
 let g:jedi#completions_enabled = 0
-let g:jedi#goto_command = "<leader>d"
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#documentation_command = "K"
-let g:jedi#show_call_signatures = "1"
+let g:jedi#goto_command = '<leader>d'
+let g:jedi#goto_assignments_command = '<leader>g'
+let g:jedi#documentation_command = 'K'
+let g:jedi#show_call_signatures = '1'
 
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#enable_cache = 1

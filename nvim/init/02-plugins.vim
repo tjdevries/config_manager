@@ -18,6 +18,7 @@ call plug#begin(g:plugin_path)
 " Plug 'tweekmonster/braceless.vim'
 Plug 'tweekmonster/colorpal.vim'
 Plug 'tweekmonster/spellrotate.vim'
+Plug 'metakirby5/codi.vim'
 
 " Startup
 Plug 'mhinz/vim-startify'
@@ -62,10 +63,12 @@ Plug 'Shougo/context_filetype.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neoinclude.vim'
 
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
+Plug 'Shougo/neco-vim'                             "  Vim completion
+Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
+
 " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
-Plug 'davidhalter/jedi-vim',  {  'for': 'python' }
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }  " Python
-Plug 'Shougo/neco-vim'                           " Vim completion
 " Plug 'ervandew/supertab',     {  'for': 'python' }
 " Plug 'dbsr/vimpy', { 'for': 'python' ]
 " }}}
@@ -94,7 +97,9 @@ Plug 'majutsushi/tagbar'
 
 " Git Based Plugins
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'moznion/github-commit-comment.vim'
+Plug 'SevereOverfl0w/deoplete-github'
 " Plug 'airblade/vim-gitgutter' " I've been having some problems with this one lately.
 
 " Text Manipulation Based Plugins
