@@ -2,6 +2,7 @@
 # Use 256 colors
 export TERM=xterm-256color
 export LANG=en_US.UTF8
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 ## Import locations
 export ZSH=~/.config/oh-my-zsh/
@@ -50,17 +51,17 @@ POWERLEVEL9K_SHOW_CHANGESE="true"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
-POWERLEVEL9K_TIME_FORMAT="%D{%H:%M \Uf073 %d:%m:%y}"
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M \Uf073 %m-%d-%y}"
 
-max_commit_length=25
+max_commit_length=50
 ellipsis_commit_length=$(($max_commit_length - 3))
 get_commit_message(){
   if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
     COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
     if [ ${#COMMIT_MESSAGE} -gt $((ellipsis_commit_length + 1)) ]; then
-      printf "[ %.${ellipsis_commit_length}s... ]" $COMMIT_MESSAGE 
+      printf "[ %${ellipsis_commit_length}.${ellipsis_commit_length}s... ]" $COMMIT_MESSAGE 
     else
-      printf "[ %.${max_commit_length}s ]" $COMMIT_MESSAGE
+      printf "[ %${max_commit_length}.${max_commit_length}s ]" $COMMIT_MESSAGE
     fi
   fi
 }
@@ -107,6 +108,7 @@ done
 
 if zplug check zsh-users/zsh-autosuggestions; then
   bindkey '^ ' autosuggest-accept
+  bindkey '^n' autosuggest-accept
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 fi
 
