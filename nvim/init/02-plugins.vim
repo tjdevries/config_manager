@@ -100,6 +100,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'moznion/github-commit-comment.vim'
 Plug 'SevereOverfl0w/deoplete-github'
+Plug '~/Git/githubapi-deoplete'
 " Plug 'airblade/vim-gitgutter' " I've been having some problems with this one lately.
 
 " Text Manipulation Based Plugins
