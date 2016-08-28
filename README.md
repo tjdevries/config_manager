@@ -7,19 +7,12 @@ The general idea is that if I come to a new system (or had to remake an old syst
 
 It will also allow me to try and document changes that I make so I'm able to remember why I made certain changes when I did.
 
-## Bash Management
-All of the bash files are located in $REPO/bash
+## BASH
 
-The current bash files are:
-- `.bash_aliases`: My general aliases for bash
-- `.bash_functions`: Some functions that I have created for bash, as long as useful ones that I've found
-- `.bash_logout`: Script to run when bash exis
-- `.bash_taskwarrior`: Script that contains useful items for *task*
-- `.bash_welcome`: A little welcome script that greets me when I log in :)
-- `.bashrc`: Bashrc
-- `.taskrc`: A config file for task
+I don't really use bash anymore. I'm using zsh these days.
 
 ## Docs
+
 These are personal documents that I use to keep track of across multiple machines.
 
 Many of them I like to have version controlled so that I can see what the changes are over time, as well as go back to resources that I thought I potentially did not need anymore
@@ -27,6 +20,7 @@ Many of them I like to have version controlled so that I can see what the change
 It also contains some `gimli` files that I use across machines. I hope to update this with more `.css` files in the future so I'm able to make markdown even prettier while using `gimli`. I have not found a different alternative for markdown, and I'm not sure that I really need to either I suppose.
 
 ## Python
+
 The python folder consists of multiple sections:
 
 - installs
@@ -37,7 +31,9 @@ The python folder consists of multiple sections:
     - For example, a script to split up a pdf into multiple images, and then include those images into a markdown document for note taking.
 
 ## Task
+
 Task warrior optimizations. This requires a lot more work currently
 
 ## VIM
+
 Oh VIM, how I love thee. Have a folder for configuration files and an install script!

@@ -185,3 +185,4 @@ Plug 'tpope/vim-projectionist'
 call plug#end()
 
 call plug#load('descriptive_maps.vim')
+call plug#load('vim-abolish')

@@ -7,7 +7,7 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 ## Import locations
 export ZSH=~/.config/oh-my-zsh/
 export ZSH_CUSTOM=~/.config/zsh/
-export CONFIG_HOME=$HOME/.config/
+export CONFIG_HOME=$HOME/.config
 export ZPLUG_HOME=$CONFIG_HOME/zplug
 export ZSH_HOME=$CONFIG_HOME/zplug
 export ZSH_ENV_HOME=$HOME/
@@ -36,23 +36,10 @@ alias_with_path () {
 }
 # alias alias=alias_with_path
 
-## Powerlevel configuration
-# Not sure I have the right fonts for this yet...
-# POWERLEVEL9K_MODE="awesome-patched"
 
 DEFAULT_USER=$USER
-
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_SHORTEN_DELIMITER=""
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
-
-POWERLEVEL9K_SHOW_CHANGESE="true"
-
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
-POWERLEVEL9K_TIME_FORMAT="%D{%H:%M \Uf073 %m-%d-%y}"
-
+# {{{ Prompt configuration
+# {{{ Prompt functions
 max_commit_length=50
 ellipsis_commit_length=$(($max_commit_length - 3))
 get_commit_message(){
@@ -65,10 +52,47 @@ get_commit_message(){
     fi
   fi
 }
+# }}}
+# {{{ Prompt building
+setopt prompt_subst
+# precmd_prompt () {
+#   git_prompt_info=${(r:$((COLUMNS-22)):: :)$(git_prompt_info)}
+#   PROMPT="[%D{%H:%M:%S}] %>>$git_prompt_info %D{%Y-%m-%d}"
+#   PROMPT+=$'\n%n@%m:%/\nyes, zoey? : '
+# }
+# precmd_prompt () {
+#   PS1_1_left=${(%):-'[%D{%H:%M:%S}] '}
+#   PS1_1_right=${(%):-' %D{%Y-%m-%d'}
+#   local middle_width=$((COLUMNS-#PS1_1_left-#PS1_1_right}))
+#   local git_prompt_info=$(git_prompt_info
+#   if ((#git_prompt_info < middle_width)); then
+#     PS1_1_middle=${(r:$middle_width:: :)git_prompt_info}
+#   else
+#     PS1_1_middle=${git_prompt_info:0:$middle_width}
+#   fi
+#   PROMPT='${PS1_1_left}${PS1_1_middle}${PS1_1_right}'
+#   PROMPT+=$'\n%n@%m:%/\nyes, zoey? : '
+# }
+precmd_prompt () {
+  empty_line=${(l:$COLUMNS:: :)}
+  line_1_left="First line"
+  line_1_right="Right side"
+  line_1_center_length=$(($COLUMNS-${#line_1_left}))
+  # "%{$fg[magenta]%}%n%{$reset_color%} in %~:"
+  # "> "
 
-POWERLEVEL9K_CUSTOM_COMMIT_MESSAGE="get_commit_message"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(custom_commit_message time)
+PROMPT='$empty_line
+$line_1_left${(l:$line_1_center_length::.:)line_1_right}
+> '
+}
+precmd_functions+=(precmd_prompt)
+# PROMPT="
+# %{$fg[magenta]%}%n%{$reset_color%} in %~:
+# > "
+# RPROMPT="$(get_commit_message)"
+
+# }}}
+# }}}
 
 
 if hash nvim 2>/dev/null; then
@@ -80,20 +104,46 @@ fi
 ## Zsh Plugins
 zplug 'zplug/zplug'
 
-# zplug 'lib/history', from:oh-my-zsh, use:
-# zplug 'lib/completion', from:oh-my-zsh
-# zplug 'lib/directories', from:oh-my-zsh
-# zplug 'lib/git', from:oh-my-zsh
-# zplug 'lib/theme-and-appearance', from:oh-my-zsh
+# zplug "lib/history", from:oh-my-zsh, nice:0
+# zplug "lib/completion", from:oh-my-zsh, nice:0
+# zplug "lib/directories", from:oh-my-zsh, nice:0
+# zplug "lib/git", from:oh-my-zsh, nice:0
+# zplug "lib/theme-and-appearance", from:oh-my-zsh, nice:0
 
 zplug 'zsh-users/zsh-autosuggestions', nice:-20
 zplug 'zsh-users/zsh-completions', nice:19
 # zplug 'zsh-users/zsh-syntax-highlighting', nice:19
 
-zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme, nice:-19
+# zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme, nice:-19
 
 zplug load
 
+
+if zplug check bhilburn/powerlevel9k; then
+  ## Powerlevel configuration
+  # Not sure I have the right fonts for this yet...
+  # POWERLEVEL9K_MODE="awesome-patched"
+  POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+  POWERLEVEL9K_SHORTEN_DELIMITER=""
+  POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+
+  POWERLEVEL9K_SHOW_CHANGESE="true"
+
+  POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+  POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+  POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
+  POWERLEVEL9K_TIME_FORMAT="%D{%H:%M \Uf073 %m-%d-%y}"
+
+  POWERLEVEL9K_CUSTOM_COMMIT_MESSAGE="get_commit_message"
+  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(custom_commit_message time)
+fi
+
+if zplug check zsh-users/zsh-autosuggestions; then
+  bindkey '^ ' autosuggest-accept
+  bindkey '^n' autosuggest-accept
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
+fi
 
 ## My "Plugins"
 sources=(
@@ -105,12 +155,6 @@ for s in "${sources[@]}"; do
   source $HOME/.config/zsh/include/${s}.zsh
 done
 
-
-if zplug check zsh-users/zsh-autosuggestions; then
-  bindkey '^ ' autosuggest-accept
-  bindkey '^n' autosuggest-accept
-  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
-fi
 
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=5

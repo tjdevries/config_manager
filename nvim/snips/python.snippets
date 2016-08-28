@@ -40,6 +40,50 @@ class ListFileCleaner:
             filecleaner.__exit__(type, value, traceback)
 endsnippet
 
+snippet serial_ports "Find and select serial ports"
+def discover_serial_ports():
+    if sys.platform.startswith('win'):
+        ports = ['COM%s' % (i + 1) for i in range(256)]
+    elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+        # this excludes your current terminal "/dev/tty"
+        ports = glob.glob('/dev/tty[A-Za-z]*')
+    elif sys.platform.startswith('darwin'):
+        ports = glob.glob('/dev/tty.*')
+    else:
+        raise EnvironmentError('Unsupported platform')
+
+    result = []
+    i = 0
+    for port in ports:
+        try:
+            s = serial.Serial(port)
+            s.close()
+            result.append((i, port))
+            i += 1
+        except (serial.SerialException):
+            pass
+    return result
+
+
+def select_serial_port(ports):
+    port_name = ""
+    if len(ports) > 1:
+        print("Select your com port")
+
+        for port in ports:
+            print("%s: %s" % (port[0], port[1]))
+            if (args.device == port[1]):
+                port_name = port[1]
+        if(port_name == ""):
+            sys.stdout.flush()
+            port_num = int(input(":"))
+            port_name = ports[port_num][1]
+    elif (len(ports) == 1):
+        port_name = ports[0][1]
+
+    return port_name
+endsnippet
+
 # {{{
 ##########
 # COMMON #
