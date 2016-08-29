@@ -38,7 +38,8 @@ alias_with_path () {
 
 
 DEFAULT_USER=$USER
-MY_PROMPT=false
+MY_PROMPT=true
+MY_ASYNC_PROMPT=true
 # {{{ Prompt configuration
 # {{{ Prompt functions
 max_commit_length=50
@@ -54,6 +55,7 @@ get_commit_message(){
   fi
 }
 # }}}
+
 if [ $MY_PROMPT = true ]; then
   # {{{ Prompt building
   setopt prompt_subst
@@ -75,24 +77,50 @@ if [ $MY_PROMPT = true ]; then
   #   PROMPT='${PS1_1_left}${PS1_1_middle}${PS1_1_right}'
   #   PROMPT+=$'\n%n@%m:%/\nyes, zoey? : '
   # }
-  precmd_prompt () {
-    empty_line=${(l:$COLUMNS:: :)}
-    line_1_left="First line"
-    line_1_right="Right side"
-    line_1_center_length=$(($COLUMNS-${#line_1_left}))
-    # "%{$fg[magenta]%}%n%{$reset_color%} in %~:"
-    # "> "
+  if [ $MY_ASYNC_PROMPT = true ]; then
+    # Set the timeout to one second, could be larger if we wanted.
+    TMOUT=1
+    MY_PID=$$
 
-  PROMPT='$empty_line
-  $line_1_left${(l:$line_1_center_length::.:)line_1_right}
-  > '
-  }
-  precmd_functions+=(precmd_prompt)
-  # PROMPT="
-  # %{$fg[magenta]%}%n%{$reset_color%} in %~:
-  # > "
-  # RPROMPT="$(get_commit_message)"
+    # precmd_prompt () {
+    #   INFO_LINE='%F{yellow}[%D{%L:%M:%S}]%f: %F{blue}${${(%):-%~}}%f %b'
+    #   INFO_LINE_SPACES=$(($COLUMNS - ${#INFO_LINE}))
+    #   PROMPT='$INFO_LINE ${(l:$INFO_LINE_SPACES::.:)$(get_commit_message)}
+    #   > '
+    # }
+    # RPROMPT=''
+    # precmd_functions+=(precmd_prompt)
+    PROMPT='%F{yellow}[%D{%L:%M:%S}]%f: %F{blue}${${(%):-%~}}%f %b'
+    RPROMPT='$(get_commit_message)'
 
+    TRAPALRM() {
+      if [ "$WIDGET" != "complete-word" ]; then
+        # Trying to not make it reset if it isn't the main shell currently.
+        # if [ $MY_PID = $$ ]; then
+        #   zle reset-prompt
+        # fi
+        zle reset-prompt
+      fi
+    }
+  else
+    precmd_prompt () {
+      empty_line=${(l:$COLUMNS:: :)}
+      line_1_left="First line"
+      line_1_right="Right side"
+      line_1_center_length=$(($COLUMNS-${#line_1_left}))
+      # "%{$fg[magenta]%}%n%{$reset_color%} in %~:"
+      # "> "
+
+    PROMPT='$empty_line
+    $line_1_left${(l:$line_1_center_length::.:)line_1_right}
+    > '
+    }
+    precmd_functions+=(precmd_prompt)
+    PROMPT="
+    %{$fg[magenta]%}%n%{$reset_color%} in %~:
+    > "
+    RPROMPT="$(get_commit_message)"
+  fi
   # }}}
 else
   zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme, nice:-19
