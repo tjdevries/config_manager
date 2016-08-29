@@ -38,6 +38,7 @@ alias_with_path () {
 
 
 DEFAULT_USER=$USER
+MY_PROMPT=false
 # {{{ Prompt configuration
 # {{{ Prompt functions
 max_commit_length=50
@@ -53,45 +54,49 @@ get_commit_message(){
   fi
 }
 # }}}
-# {{{ Prompt building
-setopt prompt_subst
-# precmd_prompt () {
-#   git_prompt_info=${(r:$((COLUMNS-22)):: :)$(git_prompt_info)}
-#   PROMPT="[%D{%H:%M:%S}] %>>$git_prompt_info %D{%Y-%m-%d}"
-#   PROMPT+=$'\n%n@%m:%/\nyes, zoey? : '
-# }
-# precmd_prompt () {
-#   PS1_1_left=${(%):-'[%D{%H:%M:%S}] '}
-#   PS1_1_right=${(%):-' %D{%Y-%m-%d'}
-#   local middle_width=$((COLUMNS-#PS1_1_left-#PS1_1_right}))
-#   local git_prompt_info=$(git_prompt_info
-#   if ((#git_prompt_info < middle_width)); then
-#     PS1_1_middle=${(r:$middle_width:: :)git_prompt_info}
-#   else
-#     PS1_1_middle=${git_prompt_info:0:$middle_width}
-#   fi
-#   PROMPT='${PS1_1_left}${PS1_1_middle}${PS1_1_right}'
-#   PROMPT+=$'\n%n@%m:%/\nyes, zoey? : '
-# }
-precmd_prompt () {
-  empty_line=${(l:$COLUMNS:: :)}
-  line_1_left="First line"
-  line_1_right="Right side"
-  line_1_center_length=$(($COLUMNS-${#line_1_left}))
-  # "%{$fg[magenta]%}%n%{$reset_color%} in %~:"
-  # "> "
+if [ $MY_PROMPT = true ]; then
+  # {{{ Prompt building
+  setopt prompt_subst
+  # precmd_prompt () {
+  #   git_prompt_info=${(r:$((COLUMNS-22)):: :)$(git_prompt_info)}
+  #   PROMPT="[%D{%H:%M:%S}] %>>$git_prompt_info %D{%Y-%m-%d}"
+  #   PROMPT+=$'\n%n@%m:%/\nyes, zoey? : '
+  # }
+  # precmd_prompt () {
+  #   PS1_1_left=${(%):-'[%D{%H:%M:%S}] '}
+  #   PS1_1_right=${(%):-' %D{%Y-%m-%d'}
+  #   local middle_width=$((COLUMNS-#PS1_1_left-#PS1_1_right}))
+  #   local git_prompt_info=$(git_prompt_info
+  #   if ((#git_prompt_info < middle_width)); then
+  #     PS1_1_middle=${(r:$middle_width:: :)git_prompt_info}
+  #   else
+  #     PS1_1_middle=${git_prompt_info:0:$middle_width}
+  #   fi
+  #   PROMPT='${PS1_1_left}${PS1_1_middle}${PS1_1_right}'
+  #   PROMPT+=$'\n%n@%m:%/\nyes, zoey? : '
+  # }
+  precmd_prompt () {
+    empty_line=${(l:$COLUMNS:: :)}
+    line_1_left="First line"
+    line_1_right="Right side"
+    line_1_center_length=$(($COLUMNS-${#line_1_left}))
+    # "%{$fg[magenta]%}%n%{$reset_color%} in %~:"
+    # "> "
 
-PROMPT='$empty_line
-$line_1_left${(l:$line_1_center_length::.:)line_1_right}
-> '
-}
-precmd_functions+=(precmd_prompt)
-# PROMPT="
-# %{$fg[magenta]%}%n%{$reset_color%} in %~:
-# > "
-# RPROMPT="$(get_commit_message)"
+  PROMPT='$empty_line
+  $line_1_left${(l:$line_1_center_length::.:)line_1_right}
+  > '
+  }
+  precmd_functions+=(precmd_prompt)
+  # PROMPT="
+  # %{$fg[magenta]%}%n%{$reset_color%} in %~:
+  # > "
+  # RPROMPT="$(get_commit_message)"
 
-# }}}
+  # }}}
+else
+  zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme, nice:-19
+fi
 # }}}
 
 
@@ -114,7 +119,6 @@ zplug 'zsh-users/zsh-autosuggestions', nice:-20
 zplug 'zsh-users/zsh-completions', nice:19
 # zplug 'zsh-users/zsh-syntax-highlighting', nice:19
 
-# zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme, nice:-19
 
 zplug load
 
