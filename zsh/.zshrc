@@ -79,7 +79,7 @@ if [ $MY_PROMPT = true ]; then
     precmd_prompt() {
       export MY_CMD=$HISTCMD
       export RUN_ONCE=false
-      LEFT_LINE='%F{yellow}[$(date | cut -c12-19)]%f: $(pwd)'
+      LEFT_LINE='%F{yellow}[$(date | cut -c12-19)]%f: %~'
       RIGHT_LINE='$(get_commit_message)'
       DISTANCE=$(($COLUMNS + 4 - ${#${(%%)LEFT_LINE}} - $max_commit_length))
       PROMPT='

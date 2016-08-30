@@ -54,7 +54,10 @@ endif
 
 " {{{2 Shougo
 " Unite
+Plug 'Shougo/vimproc.vim'
 Plug 'Shougo/unite.vim'
+Plug 'Shougo/neomru.vim'
+Plug 'ujihisa/unite-colorscheme'
 Plug 'Shougo/neoyank.vim'       " Yank ring for unit
 
 " Deoplete  {{{
