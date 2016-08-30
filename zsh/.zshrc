@@ -46,7 +46,6 @@ MY_ASYNC_PROMPT=true
 max_commit_length=50
 ellipsis_commit_length=$(($max_commit_length - 3))
 get_commit_message(){
-  echo $RUN_ONCE
   # Trying to make sure it doesn't keep doing stuff over and over here,
   # but it's not working
   # if [ $MY_CMD = $HISTCMD ]; then
@@ -55,12 +54,6 @@ get_commit_message(){
   # else
   #   echo "Changed!"
   # fi
-  if [ $RUN_ONCE = true ]; then
-    echo 'WOWOW'
-  else
-    echo 'chngd'
-  fi
-
   if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
     COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
     if [ ${#COMMIT_MESSAGE} -gt $((ellipsis_commit_length + 1)) ]; then
@@ -69,10 +62,6 @@ get_commit_message(){
       printf "[ %${max_commit_length}.${max_commit_length}s ]" $COMMIT_MESSAGE
     fi
   fi
-
-  echo $RUN_ONCE
-  export RUN_ONCE=true
-  echo $RUN_ONCE
 }
 # }}}
 # }}}
@@ -91,10 +80,10 @@ if [ $MY_PROMPT = true ]; then
       export MY_CMD=$HISTCMD
       export RUN_ONCE=false
       LEFT_LINE='%F{yellow}[$(date | cut -c12-19)]%f: $(pwd)'
-      RIGHT_LINE='get_commit_message'
+      RIGHT_LINE='$(get_commit_message)'
       DISTANCE=$(($COLUMNS + 4 - ${#${(%%)LEFT_LINE}} - $max_commit_length))
       PROMPT='
-'$LEFT_LINE${(l:$DISTANCE:: :)}$($RIGHT_LINE)' 
+'$LEFT_LINE${(l:$DISTANCE:: :)}${RIGHT_LINE}' 
 $MY_CMD > '
     }
     precmd_functions+=(precmd_prompt)
