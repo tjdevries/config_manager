@@ -42,9 +42,25 @@ MY_PROMPT=true
 MY_ASYNC_PROMPT=true
 # {{{ Prompt configuration
 # {{{ Prompt functions
+# {{{ get_commit_message
 max_commit_length=50
 ellipsis_commit_length=$(($max_commit_length - 3))
 get_commit_message(){
+  echo $RUN_ONCE
+  # Trying to make sure it doesn't keep doing stuff over and over here,
+  # but it's not working
+  # if [ $MY_CMD = $HISTCMD ]; then
+  #   echo "WOWOW"
+  #   export MY_CMD=$(($MY_CMD + 1))
+  # else
+  #   echo "Changed!"
+  # fi
+  if [ $RUN_ONCE = true ]; then
+    echo 'WOWOW'
+  else
+    echo 'chngd'
+  fi
+
   if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
     COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
     if [ ${#COMMIT_MESSAGE} -gt $((ellipsis_commit_length + 1)) ]; then
@@ -53,50 +69,36 @@ get_commit_message(){
       printf "[ %${max_commit_length}.${max_commit_length}s ]" $COMMIT_MESSAGE
     fi
   fi
+
+  echo $RUN_ONCE
+  export RUN_ONCE=true
+  echo $RUN_ONCE
 }
+# }}}
 # }}}
 
 if [ $MY_PROMPT = true ]; then
   # {{{ Prompt building
   setopt prompt_subst
-  # precmd_prompt () {
-  #   git_prompt_info=${(r:$((COLUMNS-22)):: :)$(git_prompt_info)}
-  #   PROMPT="[%D{%H:%M:%S}] %>>$git_prompt_info %D{%Y-%m-%d}"
-  #   PROMPT+=$'\n%n@%m:%/\nyes, zoey? : '
-  # }
-  # precmd_prompt () {
-  #   PS1_1_left=${(%):-'[%D{%H:%M:%S}] '}
-  #   PS1_1_right=${(%):-' %D{%Y-%m-%d'}
-  #   local middle_width=$((COLUMNS-#PS1_1_left-#PS1_1_right}))
-  #   local git_prompt_info=$(git_prompt_info
-  #   if ((#git_prompt_info < middle_width)); then
-  #     PS1_1_middle=${(r:$middle_width:: :)git_prompt_info}
-  #   else
-  #     PS1_1_middle=${git_prompt_info:0:$middle_width}
-  #   fi
-  #   PROMPT='${PS1_1_left}${PS1_1_middle}${PS1_1_right}'
-  #   PROMPT+=$'\n%n@%m:%/\nyes, zoey? : '
-  # }
+  setopt promptsubst
+
   if [ $MY_ASYNC_PROMPT = true ]; then
     # Set the timeout to one second, could be larger if we wanted.
     TMOUT=1
     MY_PID=$$
 
-    # precmd_prompt () {
-    #   INFO_LINE='%F{yellow}[%D{%L:%M:%S}]%f: %F{blue}${${(%):-%~}}%f %b'
-    #   INFO_LINE_SPACES=$(($COLUMNS - ${#INFO_LINE}))
-    #   PROMPT='$INFO_LINE ${(l:$INFO_LINE_SPACES::.:)}
-# > '
-    # }
-    # RPROMPT=''
-    # precmd_functions+=(precmd_prompt)
+    precmd_prompt() {
+      export MY_CMD=$HISTCMD
+      export RUN_ONCE=false
+      LEFT_LINE='%F{yellow}[$(date | cut -c12-19)]%f: $(pwd)'
+      RIGHT_LINE='get_commit_message'
+      DISTANCE=$(($COLUMNS + 4 - ${#${(%%)LEFT_LINE}} - $max_commit_length))
+      PROMPT='
+'$LEFT_LINE${(l:$DISTANCE:: :)}$($RIGHT_LINE)' 
+$MY_CMD > '
+    }
+    precmd_functions+=(precmd_prompt)
 
-    # LEFT_LINE='%F{yellow}[%D{%L:%M:%S}]%f: %F{blue}${${(%):-%~}}%f %b'
-    LEFT_LINE='$(date | cut -c12-19): '
-    RIGHT_LINE='get_commit_message'
-    DISTANCE=$(($COLUMNS - ${#${(%%)LEFT_LINE}} - $max_commit_length - 4))
-    PROMPT=$LEFT_LINE${(l:$DISTANCE::.:)}$($RIGHT_LINE)' 
-$(pwd) > '
     # RPROMPT='$(get_commit_message)'
 
     TRAPALRM() {
