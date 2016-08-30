@@ -85,13 +85,19 @@ if [ $MY_PROMPT = true ]; then
     # precmd_prompt () {
     #   INFO_LINE='%F{yellow}[%D{%L:%M:%S}]%f: %F{blue}${${(%):-%~}}%f %b'
     #   INFO_LINE_SPACES=$(($COLUMNS - ${#INFO_LINE}))
-    #   PROMPT='$INFO_LINE ${(l:$INFO_LINE_SPACES::.:)$(get_commit_message)}
-    #   > '
+    #   PROMPT='$INFO_LINE ${(l:$INFO_LINE_SPACES::.:)}
+# > '
     # }
     # RPROMPT=''
     # precmd_functions+=(precmd_prompt)
-    PROMPT='%F{yellow}[%D{%L:%M:%S}]%f: %F{blue}${${(%):-%~}}%f %b'
-    RPROMPT='$(get_commit_message)'
+
+    # LEFT_LINE='%F{yellow}[%D{%L:%M:%S}]%f: %F{blue}${${(%):-%~}}%f %b'
+    LEFT_LINE='$(date | cut -c12-19): '
+    RIGHT_LINE='get_commit_message'
+    DISTANCE=$(($COLUMNS - ${#${(%%)LEFT_LINE}} - $max_commit_length - 4))
+    PROMPT=$LEFT_LINE${(l:$DISTANCE::.:)}$($RIGHT_LINE)' 
+$(pwd) > '
+    # RPROMPT='$(get_commit_message)'
 
     TRAPALRM() {
       if [ "$WIDGET" != "complete-word" ]; then
