@@ -40,6 +40,9 @@ alias_with_path () {
 DEFAULT_USER=$USER
 MY_PROMPT=true
 MY_ASYNC_PROMPT=true
+
+date_start=1
+date_end=19
 # {{{ Prompt configuration
 # {{{ Prompt functions
 # {{{ get_commit_message
@@ -66,16 +69,37 @@ get_commit_message(){
 # }}}
 # {{{ virtual_env_info
 virtual_env_info() {
+  VENV_VERSION_WIDTH=3
+  VENV_NAME_WIDTH=$(($date_end - $date_start - $VENV_VERSION_WIDTH))
+  VENV_WIDTH=$((1 + $VENV_NAME_WIDTH + $VENV_VERSION_WIDTH))
   if [ -z "$VIRTUAL_ENV" ]; then
-    printf "[ no pyenv ]" $pyenv_name $pyenv_version
+    printf "[ %$VENV_WIDTH.${VENV_WIDTH}s ]" "No pyenv used"
   else
     pyenv_version=$(echo $VIRTUAL_ENV | grep -o '[0-9]\.[0-9]\.[0-9]')
     pyenv_name=$(basename $VIRTUAL_ENV)
 
     # print "[ %8.8s ]" $pyenv_version $pyenv_name
-    printf "[ %4.4s %3.3s ]" $pyenv_name $pyenv_version
+    printf "[ %$VENV_NAME_WIDTH.${VENV_NAME_WIDTH}s %3.3s ]" $pyenv_name $pyenv_version
   fi
 }
+# }}}
+# {{{ get_git_branch
+get_git_branch() {
+  # Maybe we should use this instead?
+  # git rev-parse --abbrev-ref HEAD
+
+  # Maybe we should make a function for this so that it's easier.
+  if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
+    RESULT=$(git branch | grep "*" | cut -c3-)
+    printf $RESULT
+  fi
+}
+# }}}
+# {{{ my_date
+my_date() {
+  printf "[ $(date | cut -c$date_start-$date_end) ]"
+}
+# }}}
 # }}}
 
 if [ $MY_PROMPT = true ]; then
@@ -93,11 +117,22 @@ if [ $MY_PROMPT = true ]; then
     precmd_prompt() {
       export MY_CMD=$HISTCMD
       export RUN_ONCE=false
-      LEFT_LINE='%F{yellow}[ $(date | cut -c12-19) ]%f: %F{blue}%~%f'
+
+      # We need to have a no format one, so it's easy to get the true length
+      # This needs to be kept up to date with the true left line
+      LEFT_LINE_NO_FORMAT="$(my_date): $(get_git_branch) %~"
+      LEFT_LINE='%F{yellow}$(my_date)%f: %F{007}$(get_git_branch)%f %F{blue}%~%f'
+
+      # We need to have a no format one, so it's easy to get the true length
+      # This needs to be kept up to date with the true right line
+      RIGHT_LINE_NO_FORMAT="$(get_commit_message)"
       RIGHT_LINE='%F{red}$(get_commit_message)%f'
-      DISTANCE=$(($COLUMNS + 4 - ${#${(%%)LEFT_LINE}} - $max_commit_length))
+
+      DISTANCE=$(($COLUMNS - 1 - ${#${(%%)LEFT_LINE_NO_FORMAT}} - ${#${(%%)RIGHT_LINE_NO_FORMAT}}))
+
+      # Build the prompt from our components
       PROMPT='
-'$LEFT_LINE${(l:$DISTANCE:: :)}${RIGHT_LINE}' 
+'$LEFT_LINE${(l:$DISTANCE:: :)}${RIGHT_LINE}'
 '$get_virtual_env' > '
     }
     precmd_functions+=(precmd_prompt)
@@ -146,12 +181,12 @@ else
 fi
 
 ## Zsh Plugins
-zplug 'zplug/zplug'
+# zplug 'zplug/zplug', at:v2.1.0
 
-# zplug "lib/history", from:oh-my-zsh, nice:0
-# zplug "lib/completion", from:oh-my-zsh, nice:0
-# zplug "lib/directories", from:oh-my-zsh, nice:0
-# zplug "lib/git", from:oh-my-zsh, nice:0
+zplug "lib/history", from:oh-my-zsh, nice:0
+zplug "lib/completion", from:oh-my-zsh, nice:0
+zplug "lib/directories", from:oh-my-zsh, nice:0
+zplug "lib/git", from:oh-my-zsh, nice:0
 # zplug "lib/theme-and-appearance", from:oh-my-zsh, nice:0
 
 zplug 'zsh-users/zsh-autosuggestions', nice:-20
@@ -191,6 +226,7 @@ fi
 ## My "Plugins"
 sources=(
   'aliases'
+  'functions'
   'git'
 )
 
