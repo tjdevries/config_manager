@@ -55,7 +55,7 @@ get_commit_message(){
   #   echo "Changed!"
   # fi
   if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
-    COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
+    COMMIT_MESSAGE="$(git log -1 --pretty=%B | head -n1)"
     if [ ${#COMMIT_MESSAGE} -gt $((ellipsis_commit_length + 1)) ]; then
       printf "[ %${ellipsis_commit_length}.${ellipsis_commit_length}s... ]" $COMMIT_MESSAGE 
     else
@@ -64,6 +64,18 @@ get_commit_message(){
   fi
 }
 # }}}
+# {{{ virtual_env_info
+virtual_env_info() {
+  if [ -z "$VIRTUAL_ENV" ]; then
+    printf "[ no pyenv ]" $pyenv_name $pyenv_version
+  else
+    pyenv_version=$(echo $VIRTUAL_ENV | grep -o '[0-9]\.[0-9]\.[0-9]')
+    pyenv_name=$(basename $VIRTUAL_ENV)
+
+    # print "[ %8.8s ]" $pyenv_version $pyenv_name
+    printf "[ %4.4s %3.3s ]" $pyenv_name $pyenv_version
+  fi
+}
 # }}}
 
 if [ $MY_PROMPT = true ]; then
@@ -76,15 +88,17 @@ if [ $MY_PROMPT = true ]; then
     TMOUT=1
     MY_PID=$$
 
+    get_virtual_env='%F{gray}$(virtual_env_info)%f'
+
     precmd_prompt() {
       export MY_CMD=$HISTCMD
       export RUN_ONCE=false
-      LEFT_LINE='%F{yellow}[$(date | cut -c12-19)]%f: %~'
-      RIGHT_LINE='$(get_commit_message)'
+      LEFT_LINE='%F{yellow}[ $(date | cut -c12-19) ]%f: %F{blue}%~%f'
+      RIGHT_LINE='%F{red}$(get_commit_message)%f'
       DISTANCE=$(($COLUMNS + 4 - ${#${(%%)LEFT_LINE}} - $max_commit_length))
       PROMPT='
 '$LEFT_LINE${(l:$DISTANCE:: :)}${RIGHT_LINE}' 
-$MY_CMD > '
+'$get_virtual_env' > '
     }
     precmd_functions+=(precmd_prompt)
 
