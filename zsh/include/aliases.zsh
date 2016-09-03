@@ -29,3 +29,6 @@ alias folders="find . -maxdepth 1 -type d -print | xargs du -sk | sort -rn"
 # {{{1 SSH Aliases
 alias offcampus='ssh tjd33@cs-ssh.calvin.edu'
 # }}}
+# {{{ Tree aliases
+alias pt='tree -I "__pycache__|*.pyc" --dirsfirst -v'
+# }}}
