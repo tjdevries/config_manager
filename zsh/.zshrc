@@ -183,7 +183,7 @@ fi
 ## Zsh Plugins
 # zplug 'zplug/zplug', at:v2.1.0
 
-zplug "lib/history", from:oh-my-zsh, nice:0
+# zplug "lib/history", from:oh-my-zsh, nice:0
 zplug "lib/completion", from:oh-my-zsh, nice:0
 zplug "lib/directories", from:oh-my-zsh, nice:0
 zplug "lib/git", from:oh-my-zsh, nice:0
@@ -228,6 +228,7 @@ sources=(
   'aliases'
   'functions'
   'git'
+  'autojump'
 )
 
 for s in "${sources[@]}"; do
