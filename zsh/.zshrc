@@ -109,7 +109,7 @@ if [ $MY_PROMPT = true ]; then
 
   if [ $MY_ASYNC_PROMPT = true ]; then
     # Set the timeout to one second, could be larger if we wanted.
-    TMOUT=1
+    # TMOUT=1
     MY_PID=$$
 
     get_virtual_env='%F{gray}$(virtual_env_info)%f'
