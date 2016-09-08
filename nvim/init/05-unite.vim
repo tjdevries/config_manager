@@ -29,6 +29,7 @@ let g:unite_source_menu_menus.init_vim = {
             \ }
 let g:unite_source_menu_menus.init_vim.file_candidates = [
             \ ['init', '~/.config/nvim/init.vim'],
+            \ ['basic configuration', '~/.config/nvim/init/01-basic_configuration.vim'],
             \ ['plugins', '~/.config/nvim/init/02-plugins.vim'],
             \ ['↳airline', '~/.config/nvim/init/05-airline.vim'],
             \ ['↳deoplete', '~/.config/nvim/init/05-deoplete.vim'],
