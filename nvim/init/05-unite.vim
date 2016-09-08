@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " Quick unite shorcuts
 nnoremap <silent> <leader>uf :<C-u>Unite buffer<CR>
 nnoremap <silent> <leader>if :<C-u>Unite -start-insert buffer<CR>
@@ -27,10 +29,28 @@ let g:unite_source_menu_menus.init_vim = {
             \ }
 let g:unite_source_menu_menus.init_vim.file_candidates = [
             \ ['init', '~/.config/nvim/init.vim'],
-            \ ['plugins', '~/.config/nvim/init/02-plugins.vim']
+            \ ['plugins', '~/.config/nvim/init/02-plugins.vim'],
+            \ ['↳airline', '~/.config/nvim/init/05-airline.vim'],
+            \ ['↳deoplete', '~/.config/nvim/init/05-deoplete.vim'],
+            \ ['↳neomake', '~/.config/nvim/init/05-neomake.vim'],
+            \ ['↳startify', '~/.config/nvim/init/05-startify.vim'],
+            \ ['↳unite', '~/.config/nvim/init/05-unite.vim'],
+            \ ]
+
+let g:unite_source_menu_menus.zsh = {
+            \ 'description': 'Edit your import zsh configuration'
+            \ }
+let g:unite_source_menu_menus.zsh.file_candidates = [
+            \ ['zshrc', '~/.config/zsh/.zshrc'],
+            \ ['include', '~/.config/zsh/include/'],
+            \ ['↳aliases', '~/.config/zsh/include/aliases.zsh'],
+            \ ['↳autojump', '~/.config/zsh/include/autojump.zsh'],
+            \ ['↳functions', '~/.config/zsh/include/functions.zsh'],
+            \ ['↳git', '~/.config/zsh/include/git.zsh'],
             \ ]
 
 nnoremap <leader>en :Unite menu:init_vim<CR>
+nnoremap <leader>ez :Unite menu:zsh<CR>
 
 " WIP
 let g:unite_source_menu_menus.unite = {

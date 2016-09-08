@@ -37,6 +37,7 @@ let g:neomake_javascript_enabled_makers = ['jshint']
 " let g:neomake_c_gcc_maker = {
 " \ }
 " let g:neomake_c_enabled_makers = ['clang-3.6']
+let g:neomake_c_enabled_makers = []
 
 augroup vimrc_neomake
     autocmd!
