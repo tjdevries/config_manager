@@ -8,3 +8,4 @@
 nvim/.netrwhist
 zsh/history
 zsh/.zcompdump*
+zsh/.zcompcache/*
