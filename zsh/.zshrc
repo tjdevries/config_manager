@@ -24,6 +24,13 @@ export DISABLE_LS_COLORS='true'
 # source $ZSH/oh-my-zsh.sh
 source "$ZPLUG_HOME/init.zsh"
 
+if [ -f ~/.rvm/scripts/rvm ]; then
+  export HAS_RVM=true
+  source ~/.rvm/scripts/rvm
+else
+  export HAS_RVM=false
+fi
+
 
 alias_paths=( )
 alias_with_path () {
@@ -69,6 +76,14 @@ get_commit_message(){
 # }}}
 # {{{ virtual_env_info
 virtual_env_info() {
+  # TODO: Get working with rvm
+  # if [ $HAS_RVM = true ]; then
+  #   RVM_PROMPT=$(~/.rvm/bin/rvm-prompt)
+  # else
+  #   RVM_PROMT=
+  # fi
+  # VENV_NAME_WIDTH=$(($date_end - $date_start - $VENV_VERSION_WIDTH - ${#RVM_PROMPT}))
+
   VENV_VERSION_WIDTH=3
   VENV_NAME_WIDTH=$(($date_end - $date_start - $VENV_VERSION_WIDTH))
   VENV_WIDTH=$((1 + $VENV_NAME_WIDTH + $VENV_VERSION_WIDTH))
@@ -79,7 +94,7 @@ virtual_env_info() {
     pyenv_name=$(basename $VIRTUAL_ENV)
 
     # print "[ %8.8s ]" $pyenv_version $pyenv_name
-    printf "[ %$VENV_NAME_WIDTH.${VENV_NAME_WIDTH}s %3.3s ]" $pyenv_name $pyenv_version
+    printf "[ $RVM_PROMPT %$VENV_NAME_WIDTH.${VENV_NAME_WIDTH}s %3.3s ]" $pyenv_name $pyenv_version
   fi
 }
 # }}}
@@ -351,4 +366,5 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:/opt/Freescale/KDS_v3/toolchain/bin:$PATH"
 eval "$(pyenv init -)"
 
+# Rvm configuration
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
