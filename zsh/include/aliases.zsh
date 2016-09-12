@@ -6,7 +6,7 @@ alias en='$EDITOR ~/Git/config_manager/vim/.nvimrc'
 # }}}
 
 # {{{1 General Aliases
-alias ls='ls -F --color=auto --group-directories-first'
+alias ls='ls -F --color=auto --group-directories-first --sort=version'
 alias ll='ls -al'
 alias la='ls -A'
 alias l='ls -CF'

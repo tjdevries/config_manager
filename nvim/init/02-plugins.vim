@@ -11,6 +11,7 @@ let g:plug_timeout=600
 let g:my_snippet_manager = 'ultisnips'
 let g:my_tags_manager = 'gutentags'
 let g:my_current_scheme = 'gruvbox-tj'
+let g:my_current_uniter = 'unite'
 
 " Plugin management: Vim-plug
 call plug#begin(g:plugin_path)
@@ -54,11 +55,15 @@ endif
 
 " {{{2 Shougo
 " Unite
-Plug 'Shougo/vimproc.vim'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/neomru.vim'
-Plug 'ujihisa/unite-colorscheme'
-Plug 'Shougo/neoyank.vim'       " Yank ring for unit
+if g:my_current_uniter ==? 'unite'
+    Plug 'Shougo/vimproc.vim'
+    Plug 'Shougo/unite.vim'
+    Plug 'Shougo/neomru.vim'
+    Plug 'ujihisa/unite-colorscheme'
+    Plug 'Shougo/neoyank.vim'       " Yank ring for unit
+else
+endif
+Plug 'Shougo/denite.nvim'
 
 " Deoplete  {{{
 Plug 'Shougo/echodoc.vim'
