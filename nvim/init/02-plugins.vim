@@ -128,6 +128,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'tweekmonster/impsort.vim', {'for': 'python'}
 
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }     " Get python alignment to work correctly
+Plug 'nathanaelkane/vim-indent-guides'                       " See indentation guides
 
 " Fuzzy file finding
 " Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher

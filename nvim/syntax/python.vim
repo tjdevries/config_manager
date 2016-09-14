@@ -17,8 +17,8 @@ endfunction
 "
 " }}}
 " My additions
-syn keyword pythonSelfArg (self)
-syn keyword pythonSelf self
+syn match pythonSelf "\(self\.\)"
+syn match pythonSelfArg "\(self\)\(\.\)\@!"
 
 " What was here before, more or less
 syn keyword pythonStatement     break continue del
@@ -309,78 +309,79 @@ else
   syn sync maxlines=200
 endif
 
-" if version >= 508 || !exists("did_python_syn_inits")
-"   if version <= 508
-"     let did_python_syn_inits = 1
-"     command -nargs=+ HiLink hi link <args>
-"   else
-"     command -nargs=+ HiLink hi def link <args>
-"   endif
+if v:version >= 508 || !exists('did_python_syn_inits')
+  if v:version <= 508
+    let did_python_syn_inits = 1
+    command -nargs=+ HiLink hi link <args>
+  else
+    command -nargs=+ HiLink hi def link <args>
+  endif
 
-"   HiLink pythonStatement        Statement
-"   HiLink pythonImport           Include
-"   HiLink pythonFunction         Function
-"   HiLink pythonConditional      Conditional
-"   HiLink pythonRepeat           Repeat
-"   HiLink pythonException        Exception
-"   HiLink pythonOperator         Operator
+  HiLink pythonStatement        Statement
+  HiLink pythonImport           Include
+  HiLink pythonFunction         Function
+  HiLink pythonConditional      Conditional
+  HiLink pythonRepeat           Repeat
+  HiLink pythonException        Exception
+  HiLink pythonOperator         Operator
 
-"   HiLink pythonDecorator        Define
-"   HiLink pythonDottedName       Function
-"   HiLink pythonDot              Normal
+  HiLink pythonDecorator        Define
+  HiLink pythonDottedName       Function
+  HiLink pythonDot              Normal
 
-"   HiLink pythonComment          Comment
-" HiLink pythonCoding           Special
-" HiLink pythonRun              Special
-"   HiLink pythonTodo             Todo
+  HiLink pythonComment          Comment
+  HiLink pythonCoding           Special
+  HiLink pythonRun              Special
+  HiLink pythonTodo             Todo
 
-"   HiLink pythonError            Error
-"   HiLink pythonIndentError      Error
-"   HiLink pythonSpaceError       Error
+  HiLink pythonError            Error
+  HiLink pythonIndentError      Error
+  HiLink pythonSpaceError       Error
 
-"   HiLink pythonString           String
-"   HiLink pythonRawString        String
+  HiLink pythonString           String
+  HiLink pythonRawString        String
 
-"   HiLink pythonUniEscape        Special
-"   HiLink pythonUniEscapeError   Error
+  HiLink pythonUniEscape        Special
+  HiLink pythonUniEscapeError   Error
 
-"   if s:Python2Syntax()
-"     HiLink pythonUniString          String
-"     HiLink pythonUniRawString       String
-"     HiLink pythonUniRawEscape       Special
-"     HiLink pythonUniRawEscapeError  Error
-"   else
-"     HiLink pythonBytes              String
-"     HiLink pythonRawBytes           String
-"     HiLink pythonBytesContent       String
-"     HiLink pythonBytesError         Error
-"     HiLink pythonBytesEscape        Special
-"     HiLink pythonBytesEscapeError   Error
-"   endif
+  if s:Python2Syntax()
+    HiLink pythonUniString          String
+    HiLink pythonUniRawString       String
+    HiLink pythonUniRawEscape       Special
+    HiLink pythonUniRawEscapeError  Error
+  else
+    " TODO: Find out a little more about how these work
+    HiLink pythonBytes              GruvboxGreenItalic
+    HiLink pythonRawBytes           GruvboxGreenItalic
+    HiLink pythonBytesContent       GruvboxGreenItalic
+    HiLink pythonBytesError         Error
+    HiLink pythonBytesEscape        Special
+    HiLink pythonBytesEscapeError   Error
+  endif
 
-"   HiLink pythonStrFormatting    Special
-"   HiLink pythonStrFormat        Special
-"   HiLink pythonStrTemplate      Special
+  HiLink pythonStrFormatting    Special
+  HiLink pythonStrFormat        Special
+  HiLink pythonStrTemplate      Special
 
-"   HiLink pythonDocTest          Special
-"   HiLink pythonDocTest2         Special
+  HiLink pythonDocTest          Special
+  HiLink pythonDocTest2         Special
 
-"   HiLink pythonNumber           Number
-"   HiLink pythonHexNumber        Number
-"   HiLink pythonOctNumber        Number
-"   HiLink pythonBinNumber        Number
-"   HiLink pythonFloat            Float
-"   HiLink pythonNumberError      Error
-"   HiLink pythonOctError         Error
-"   HiLink pythonHexError         Error
-"   HiLink pythonBinError         Error
+  HiLink pythonNumber           Number
+  HiLink pythonHexNumber        Number
+  HiLink pythonOctNumber        Number
+  HiLink pythonBinNumber        Number
+  HiLink pythonFloat            Float
+  HiLink pythonNumberError      Error
+  HiLink pythonOctError         Error
+  HiLink pythonHexError         Error
+  HiLink pythonBinError         Error
 
-"   HiLink pythonBoolean          Boolean
+  HiLink pythonBoolean          Boolean
 
-"   HiLink pythonBuiltinObj       Structure
-"   HiLink pythonBuiltinFunc      Function
+  HiLink pythonBuiltinObj       Structure
+  HiLink pythonBuiltinFunc      Function
 
-"   HiLink pythonExClass          Structure
+  HiLink pythonExClass          Structure
 
-"   delcommand HiLink
-" endif
+  delcommand HiLink
+endif
