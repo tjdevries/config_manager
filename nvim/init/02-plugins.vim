@@ -190,6 +190,9 @@ Plug 'tpope/vim-projectionist'
 " Encryption
 " Plug 'd0c-s4vage/vim-morph'
 
+" Wiki
+Plug 'vimwiki/vimwiki'
+
 call plug#end()
 
 call plug#load('descriptive_maps.vim')
