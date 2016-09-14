@@ -9,6 +9,10 @@ def function():  # {{{
 # }}}
 endsnippet
 
+snippet denum "Dict to enum"
+${1:name} = enum.Enum('$1', {key: ${2:list_name}.index(key)${3: }for key in $2})
+endsnippet
+
 snippet FileCleaner "Keep your files the way they were" b
 class FileCleaner:
     def __init__(self, filename: str, temp_prefix='._tmp'):
