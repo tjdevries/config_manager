@@ -25,10 +25,13 @@ Plug 'metakirby5/codi.vim'
 Plug 'mhinz/vim-startify'
 
 " Testing
+Plug 'tjdevries/vim-vertex'
+Plug '~/Git/a_highlighter.nvim/'
+
+
 Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
-Plug 'tjdevries/vim-vertex'
 
 " if isdirectory("~/Git/descriptive_maps.vim")
 Plug '~/Git/descriptive_maps.vim'
@@ -61,6 +64,7 @@ if g:my_current_uniter ==? 'unite'
     Plug 'Shougo/neomru.vim'
     Plug 'ujihisa/unite-colorscheme'
     Plug 'Shougo/neoyank.vim'       " Yank ring for unit
+    Plug 'klen/unite-radio.vim'
 else
 endif
 Plug 'Shougo/denite.nvim'
@@ -151,9 +155,10 @@ Plug 'altercation/vim-colors-solarized'                           " Solarized co
 Plug 'joshdick/onedark.vim' | Plug 'joshdick/airline-onedark.vim' " Atom type color scheme
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
-Plug 'chrisbra/Colorizer'
+Plug 'jacoborus/tender.vim'
 " Plug 'Rykka/riv.vim'
 
+Plug 'chrisbra/Colorizer'                                         " Helpful tool for visualizing colors
 
 " Plug 'sheerun/vim-polyglot'                         " All the colors!
 " Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors

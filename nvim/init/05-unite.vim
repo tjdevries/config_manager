@@ -1,5 +1,9 @@
 scriptencoding utf-8
 
+
+let g:unite_source_radio_play_cmd = 'vlc'
+
+
 if g:my_current_uniter ==# 'unite'
       " Quick unite shorcuts
       nnoremap <silent> <leader>uf :<C-u>Unite buffer<CR>
@@ -32,6 +36,7 @@ if g:my_current_uniter ==# 'unite'
                   \ ['init', '~/.config/nvim/init.vim'],
                   \ ['init/', '~/.config/nvim/init/'],
                   \ ['basic configuration', '~/.config/nvim/init/01-basic_configuration.vim'],
+                  \ ['colorscheme', '~/.config/nvim/init/03-colorscheme.vim'],
                   \ ['plugins', '~/.config/nvim/init/02-plugins.vim'],
                   \ ['↳airline', '~/.config/nvim/init/05-airline.vim'],
                   \ ['↳deoplete', '~/.config/nvim/init/05-deoplete.vim'],
@@ -52,7 +57,7 @@ if g:my_current_uniter ==# 'unite'
                   \ ['↳git', '~/.config/zsh/include/git.zsh'],
                   \ ]
 
-      nnoremap <leader>en :Unite menu:init_vim<CR>
+      nnoremap <leader>en :Unite menu:init_vim -start-insert<CR>
       nnoremap <leader>ez :Unite menu:zsh<CR>
 
       " WIP

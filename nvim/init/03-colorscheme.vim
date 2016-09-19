@@ -22,6 +22,11 @@ elseif g:my_current_scheme ==? 'gruvbox-tj'
 
     set background=dark
     colorscheme gruvbox-tj
+elseif g:my_current_scheme ==? 'tender'
+    set termguicolors
+    set background=dark
+
+    colorscheme tender
 elseif g:my_current_scheme ==? 'seoul256'
     " seoul256 (dark):
     "   Range:   233 (darkest) ~ 239 (lightest)
