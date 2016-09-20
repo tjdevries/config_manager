@@ -24,6 +24,8 @@ Plug 'metakirby5/codi.vim'
 " Startup
 Plug 'mhinz/vim-startify'
 
+Plug 'tjdevries/a_highlighter.nvim'
+
 " Testing
 Plug 'tjdevries/vim-vertex'
 Plug '~/Git/a_highlighter.nvim/'

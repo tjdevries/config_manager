@@ -39,6 +39,15 @@ let g:neomake_javascript_enabled_makers = ['jshint']
 " let g:neomake_c_enabled_makers = ['clang-3.6']
 let g:neomake_c_enabled_makers = []
 
+
+" Zsh
+" Trying to add shellcheck, but it no longer is supported for zsh :'(
+" let g:neomake_zsh_shellcheck_maker = {
+"         \ 'args': ['-f json']
+"         \ }
+
+" let g:neomake_zsh_enabled_makers = ['shellcheck']
+
 augroup vimrc_neomake
     autocmd!
     autocmd BufWritePost * silent Neomake

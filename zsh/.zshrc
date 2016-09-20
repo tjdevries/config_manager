@@ -306,7 +306,10 @@ if [ -d /usr/local/go/bin ]; then
     export GOPATH=~/go
 fi
 # }}}
-
+# {{{2 Haskell
+export HASKELLPATH="$HOME/.cabal/bin"
+export PATH=$PATH:$HASKELLPATH
+# }}}
 # }}}
 
 # {{{ Default configuration options
