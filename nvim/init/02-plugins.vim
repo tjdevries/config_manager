@@ -115,7 +115,8 @@ Plug 'tpope/vim-rhubarb'
 Plug 'moznion/github-commit-comment.vim'
 Plug 'SevereOverfl0w/deoplete-github'
 Plug '~/Git/githubapi-deoplete'
-" Plug 'airblade/vim-gitgutter' " I've been having some problems with this one lately.
+Plug 'rhysd/committia.vim'
+Plug 'airblade/vim-gitgutter' " I've been having some problems with this one lately.
 
 " Text Manipulation Based Plugins
 Plug 'godlygeek/tabular'        " Quickly align text by pattern
@@ -154,7 +155,7 @@ Plug 'junegunn/seoul256.vim'                                      " seoul color 
 Plug 'junegunn/goyo.vim'                                          " focusing mode
 Plug 'junegunn/limelight.vim'                                     " Extra focus mode
 Plug 'altercation/vim-colors-solarized'                           " Solarized color scheme
-Plug 'joshdick/onedark.vim' | Plug 'joshdick/airline-onedark.vim' " Atom type color scheme
+Plug 'joshdick/onedark.vim'                                       " Atom type color scheme
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
 Plug 'jacoborus/tender.vim'
