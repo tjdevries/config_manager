@@ -43,6 +43,7 @@ if g:my_current_uniter ==# 'unite'
                   \ ['↳neomake', '~/.config/nvim/init/05-neomake.vim'],
                   \ ['↳startify', '~/.config/nvim/init/05-startify.vim'],
                   \ ['↳unite', '~/.config/nvim/init/05-unite.vim'],
+                  \ ['↳vimwiki', '~/.config/nvim/init/05-wiki.vim'],
                   \ ]
 
       let g:unite_source_menu_menus.zsh = {
