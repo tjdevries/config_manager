@@ -5,6 +5,7 @@ if !exists(':Abolish')
 endif
 
 Abolish teh the
+Abolish {p}y{o}bjext PyObject
 
 " These are taken from tpope. Thanks!
 Abolish afterword{,s}                         afterward{}

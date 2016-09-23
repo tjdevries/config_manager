@@ -38,6 +38,7 @@ let g:neomake_javascript_enabled_makers = ['jshint']
 " \ }
 " let g:neomake_c_enabled_makers = ['clang-3.6']
 let g:neomake_c_enabled_makers = []
+let g:neomake_cpp_enabled_makers = []
 
 
 " Zsh
