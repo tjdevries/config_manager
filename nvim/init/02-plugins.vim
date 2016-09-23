@@ -10,7 +10,7 @@ let g:plug_timeout=600
 " Configure which plugins to use
 let g:my_snippet_manager = 'ultisnips'
 let g:my_tags_manager = 'gutentags'
-let g:my_current_scheme = 'gruvbox-tj'
+let g:my_current_scheme = 'onedark'
 let g:my_current_uniter = 'unite'
 
 " Plugin management: Vim-plug

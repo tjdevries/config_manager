@@ -26,6 +26,7 @@ elseif g:my_current_scheme ==? 'tender'
     set termguicolors
     set background=dark
 
+    let g:airline_theme = 'tender'
     colorscheme tender
 elseif g:my_current_scheme ==? 'seoul256'
     " seoul256 (dark):
@@ -34,10 +35,11 @@ elseif g:my_current_scheme ==? 'seoul256'
     let g:seoul256_background = 234
     colo seoul256
 elseif g:my_current_scheme ==? 'onedark'
-    colorscheme onedark
-
     let g:airline_theme='onedark'
-    let g:onedark_terminal_italics=1
+    let g:onedark_terminal_italics = 1
+
+    set background=dark
+    colorscheme onedark
 elseif g:my_current_scheme ==? 'hybrid'
     " let g:hybrid_custom_term_colors = 1
     let g:hybrid_reduced_contrast = 1
