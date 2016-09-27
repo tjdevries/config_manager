@@ -144,20 +144,21 @@ my_current_directory() {
   #   print "did not save time"
   # fi
 
+  # TODO: Make this know more about virtualenvs?
   if [ $IS_A_GIT_DIR -eq 1 ]; then
-    export __git_dir="$(git rev-parse --show-toplevel)"
-    export __this_dir="$(pwd)"
+    __git_dir="$(git rev-parse --show-toplevel)"
+    __this_dir="$(pwd)"
 
     if [ $__git_dir = $__this_dir ]; then
       # print "$__git_dir"
-      export __mcd_result="\ue0a0/${__git_dir:t}"
+      __mcd_result="\ue0a0/${__git_dir:t}"
     else
       # print "${__git_dir#$__this_dir}"
       __git_dir="${__git_dir:h}"
-      export __mcd_result="\ue0a0${__this_dir#$__git_dir}"
+      __mcd_result="\ue0a0${__this_dir#$__git_dir}"
     fi
   else
-    export __mcd_result="%~"
+    __mcd_result="%~"
   fi
 
   print $__mcd_result
@@ -183,8 +184,17 @@ if [ $MY_PROMPT = true ]; then
       set_git_dir
       # We need to have a no format one, so it's easy to get the true length
       # This needs to be kept up to date with the true left line
-      LEFT_LINE_NO_FORMAT="$(my_date): $(get_commit_hash)$(get_git_branch) $(my_current_directory)"
-      LEFT_LINE='%F{yellow}$(my_date)%f: %F{blue}$(my_current_directory)%f %F{gray}$(get_commit_hash)%f%F{007}$(get_git_branch)%f'
+      LEFT_LINE_NO_FORMAT="$(my_date)"
+      LEFT_LINE_NO_FORMAT=$LEFT_LINE_NO_FORMAT': '
+      LEFT_LINE_NO_FORMAT=$LEFT_LINE_NO_FORMAT"$(my_current_directory)"
+      LEFT_LINE_NO_FORMAT=$LEFT_LINE_NO_FORMAT"$(get_commit_hash)"
+      LEFT_LINE_NO_FORMAT=$LEFT_LINE_NO_FORMAT"$(get_git_branch) "
+
+      LEFT_LINE='%F{yellow}$(my_date)%f'
+      LEFT_LINE=$LEFT_LINE': '
+      LEFT_LINE=$LEFT_LINE'%F{blue}$(my_current_directory)%f '
+      LEFT_LINE=$LEFT_LINE'%F{gray}$(get_commit_hash)%f'
+      LEFT_LINE=$LEFT_LINE'%F{007}$(get_git_branch)%f'
 
       # We need to have a no format one, so it's easy to get the true length
       # This needs to be kept up to date with the true right line
@@ -197,8 +207,6 @@ if [ $MY_PROMPT = true ]; then
       PROMPT='
 '$LEFT_LINE${(l:$DISTANCE:: :)}${RIGHT_LINE}'
 '$get_virtual_env' > '
-
-      export __old_pwd="$(pwd)"
     }
     precmd_functions+=(precmd_prompt)
 
@@ -214,6 +222,7 @@ if [ $MY_PROMPT = true ]; then
       fi
     }
   else
+    # {{{ Old
     precmd_prompt () {
       empty_line=${(l:$COLUMNS:: :)}
       line_1_left="First line"
@@ -231,6 +240,7 @@ if [ $MY_PROMPT = true ]; then
     %{$fg[magenta]%}%n%{$reset_color%} in %~:
     > "
     RPROMPT="$(get_commit_message)"
+    # }}}
   fi
   # }}}
 else
@@ -246,7 +256,7 @@ else
 fi
 
 ## Zsh Plugins
-# zplug 'zplug/zplug', at:v2.1.0
+zplug 'zplug/zplug', at:expand_glob
 
 # zplug "lib/history", from:oh-my-zsh, nice:0
 zplug "lib/completion", from:oh-my-zsh, nice:0
@@ -258,8 +268,13 @@ zplug 'zsh-users/zsh-autosuggestions', nice:-20
 zplug 'zsh-users/zsh-completions', nice:19
 # zplug 'zsh-users/zsh-syntax-highlighting', nice:19
 
+# Nice gitignore helper
+zplug 'voronkovich/gitignore.plugin.zsh'
 
-zplug load
+# Various hints
+zplug 'djui/alias-tips', use:"alias-tips.plugin.zsh"
+zplug 'joepvd/zsh-hints'
+
 
 
 if zplug check bhilburn/powerlevel9k; then
@@ -300,6 +315,7 @@ for s in "${sources[@]}"; do
   source $HOME/.config/zsh/include/${s}.zsh
 done
 
+zplug load
 
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=5
