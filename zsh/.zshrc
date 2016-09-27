@@ -52,8 +52,24 @@ date_start=1
 date_end=19
 # {{{ Prompt configuration
 # {{{ Prompt functions
+# {{{ set_git_dir
+set_git_dir() {
+  if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
+    export IS_A_GIT_DIR=1
+  else
+    export IS_A_GIT_DIR=0
+  fi
+}
+# }}}
+# {{{ get_commit_hash
+get_commit_hash(){
+  if [ $IS_A_GIT_DIR -eq 1 ]; then
+    echo "[$(git log --pretty=format:'%h' -n 1)]"
+  fi
+}
+# }}}
 # {{{ get_commit_message
-max_commit_length=50
+max_commit_length=35
 ellipsis_commit_length=$(($max_commit_length - 3))
 get_commit_message(){
   # Trying to make sure it doesn't keep doing stuff over and over here,
@@ -64,10 +80,10 @@ get_commit_message(){
   # else
   #   echo "Changed!"
   # fi
-  if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
+  if [ $IS_A_GIT_DIR -eq 1 ]; then
     COMMIT_MESSAGE="$(git log -1 --pretty=%B | head -n1)"
     if [ ${#COMMIT_MESSAGE} -gt $((ellipsis_commit_length + 1)) ]; then
-      printf "[ %${ellipsis_commit_length}.${ellipsis_commit_length}s... ]" $COMMIT_MESSAGE 
+      printf "[ %${ellipsis_commit_length}.${ellipsis_commit_length}s... ]" $COMMIT_MESSAGE
     else
       printf "[ %${max_commit_length}.${max_commit_length}s ]" $COMMIT_MESSAGE
     fi
@@ -104,7 +120,7 @@ get_git_branch() {
   # git rev-parse --abbrev-ref HEAD
 
   # Maybe we should make a function for this so that it's easier.
-  if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
+  if [ $IS_A_GIT_DIR -eq 1 ]; then
     RESULT=$(git branch | grep "*" | cut -c3-)
     printf $RESULT
   fi
@@ -115,6 +131,37 @@ my_date() {
   printf "[ $(date | cut -c$date_start-$date_end) ]"
 }
 # }}}
+# {{{ my_current_directory
+export __old_pwd=''
+my_current_directory() {
+  # Quick result
+  # TODO: Make this work correctly.
+  # __current_pwd="$(pwd)"
+  # if [[ $__current_pwd == $__old_pwd ]]; then
+  #   print $__mcd_result
+  #   return
+  # else
+  #   print "did not save time"
+  # fi
+
+  if [ $IS_A_GIT_DIR -eq 1 ]; then
+    export __git_dir="$(git rev-parse --show-toplevel)"
+    export __this_dir="$(pwd)"
+
+    if [ $__git_dir = $__this_dir ]; then
+      # print "$__git_dir"
+      export __mcd_result="\ue0a0/${__git_dir:t}"
+    else
+      # print "${__git_dir#$__this_dir}"
+      __git_dir="${__git_dir:h}"
+      export __mcd_result="\ue0a0${__this_dir#$__git_dir}"
+    fi
+  else
+    export __mcd_result="%~"
+  fi
+
+  print $__mcd_result
+}
 # }}}
 
 if [ $MY_PROMPT = true ]; then
@@ -133,10 +180,11 @@ if [ $MY_PROMPT = true ]; then
       export MY_CMD=$HISTCMD
       export RUN_ONCE=false
 
+      set_git_dir
       # We need to have a no format one, so it's easy to get the true length
       # This needs to be kept up to date with the true left line
-      LEFT_LINE_NO_FORMAT="$(my_date): $(get_git_branch) %~"
-      LEFT_LINE='%F{yellow}$(my_date)%f: %F{007}$(get_git_branch)%f %F{blue}%~%f'
+      LEFT_LINE_NO_FORMAT="$(my_date): $(get_commit_hash)$(get_git_branch) $(my_current_directory)"
+      LEFT_LINE='%F{yellow}$(my_date)%f: %F{blue}$(my_current_directory)%f %F{gray}$(get_commit_hash)%f%F{007}$(get_git_branch)%f'
 
       # We need to have a no format one, so it's easy to get the true length
       # This needs to be kept up to date with the true right line
@@ -149,6 +197,8 @@ if [ $MY_PROMPT = true ]; then
       PROMPT='
 '$LEFT_LINE${(l:$DISTANCE:: :)}${RIGHT_LINE}'
 '$get_virtual_env' > '
+
+      export __old_pwd="$(pwd)"
     }
     precmd_functions+=(precmd_prompt)
 
