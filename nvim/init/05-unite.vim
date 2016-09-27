@@ -33,17 +33,20 @@ if g:my_current_uniter ==# 'unite'
                   \ 'description': 'Edit your important init.vim information'
                   \ }
       let g:unite_source_menu_menus.init_vim.file_candidates = [
-                  \ ['init', '~/.config/nvim/init.vim'],
+                  \ ['nvim/', '~/.config/nvim/'],
+                  \ ['  init', '~/.config/nvim/init.vim'],
+                  \ ['after/', '~/.config/nvim/after/'],
+                  \ ['autoload/', '~/.config/nvim/autoload/'],
                   \ ['init/', '~/.config/nvim/init/'],
-                  \ ['basic configuration', '~/.config/nvim/init/01-basic_configuration.vim'],
-                  \ ['colorscheme', '~/.config/nvim/init/03-colorscheme.vim'],
-                  \ ['plugins', '~/.config/nvim/init/02-plugins.vim'],
-                  \ ['↳airline', '~/.config/nvim/init/05-airline.vim'],
-                  \ ['↳deoplete', '~/.config/nvim/init/05-deoplete.vim'],
-                  \ ['↳neomake', '~/.config/nvim/init/05-neomake.vim'],
-                  \ ['↳startify', '~/.config/nvim/init/05-startify.vim'],
-                  \ ['↳unite', '~/.config/nvim/init/05-unite.vim'],
-                  \ ['↳vimwiki', '~/.config/nvim/init/05-wiki.vim'],
+                  \ ['  basic configuration', '~/.config/nvim/init/01-basic_configuration.vim'],
+                  \ ['  colorscheme', '~/.config/nvim/init/03-colorscheme.vim'],
+                  \ ['  plugins', '~/.config/nvim/init/02-plugins.vim'],
+                  \ ['  ↳airline', '~/.config/nvim/init/05-airline.vim'],
+                  \ ['  ↳deoplete', '~/.config/nvim/init/05-deoplete.vim'],
+                  \ ['  ↳neomake', '~/.config/nvim/init/05-neomake.vim'],
+                  \ ['  ↳startify', '~/.config/nvim/init/05-startify.vim'],
+                  \ ['  ↳unite', '~/.config/nvim/init/05-unite.vim'],
+                  \ ['  ↳vimwiki', '~/.config/nvim/init/05-wiki.vim'],
                   \ ]
 
       let g:unite_source_menu_menus.zsh = {

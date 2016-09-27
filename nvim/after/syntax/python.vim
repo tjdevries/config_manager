@@ -1,22 +1,31 @@
+let s:my_colors = {
+      \ 'pythonSelf':  ['GruvboxPurpleItalic', 'Constant'],
+      \ 'pythonSelfArg': ['GruvboxGrayItalic', 'Comment'],
+      \ 'pythonImportedObject':  ['GruvboxBlueSign', 'PreProc'],
+      \ 'pythonBuiltin': ['GruvboxOrange', 'Keyword'],
+      \ 'pythonBuiltinObj':  ['GruvboxOrange', ],
+      \ 'pythonBuiltinFunc': ['GruvboxOrange', 'Function'],
+      \ 'pythonFunction': ['GruvboxAqua', 'Function'],
+      \ 'pythonDecorator': ['GruvboxRed', 'SpellRare'],
+      \ 'pythonInclude': ['GruvboxBlue', ],
+      \ 'pythonImport':  ['GruvboxBlue', ],
+      \ 'pythonRun': ['GruvboxBlue', ],
+      \ 'pythonCoding':  ['GruvboxBlue', ],
+      \ 'pythonOperator': ['GruvboxRed', ],
+      \ 'pythonExceptions':  ['GruvboxPurple', ],
+      \ 'pythonBoolean': ['GruvboxPurple', ],
+      \ 'pythonDot': ['GruvboxFg3', ],
+      \ }
 
-" I've added:
+function! s:my_highlighter(style, list_of_groups)
+  for group in a:list_of_groups
+    if hlexists(group)
+      call execute('hi! link ' . a:style . ' ' . group)
+      break
+    endif
+  endfor
+endfunction
 
-if hlexists('GruvboxPurpleItalic')
-  hi! link pythonSelf GruvboxPurpleItalic
-else
-  hi! link pythonSelf Constant
-endif
-
-if hlexists('GruvboxGrayItalic')
-  hi! link pythonSelfArg GruvboxGrayItalic
-else
-  hi! link pythonSelfArg Comment
-endif
-
-hi! link pythonNone GruvboxBlueSign
-
-if hlexists('GruvboxBlueSign')
-  hi! link pythonImportedObject GruvboxBlueSign
-else
-  hi! link pythonImportedObject PreProc
-endif
+for my_color in keys(s:my_colors)
+  call s:my_highlighter(my_color, s:my_colors[my_color])
+endfor

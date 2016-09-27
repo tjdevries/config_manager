@@ -21,6 +21,8 @@ Plug 'tweekmonster/colorpal.vim'
 Plug 'tweekmonster/spellrotate.vim'
 Plug 'metakirby5/codi.vim'
 
+Plug 'floobits/floobits-neovim'
+
 " Startup
 Plug 'mhinz/vim-startify'
 

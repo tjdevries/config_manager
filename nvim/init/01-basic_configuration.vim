@@ -3,7 +3,7 @@ let g:mapleader=','
 
 " Set important paths
 if has('unix')
-    let g:python_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
+    let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
     let g:python2_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
     let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 else

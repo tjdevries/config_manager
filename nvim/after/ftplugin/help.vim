@@ -54,7 +54,7 @@ function! s:toggle_help_file_type()
 endfunction
 
 
-nnoremap <silent><buffer> <leader>a :<c-u>call <sid>right_align()<cr>
-nnoremap <silent><buffer> <leader>t :<c-u>call <SID>toggle_help_file_type()<CR>
+nnoremap <silent><buffer> <leader>ha :<c-u>call <sid>right_align()<cr>
+nnoremap <silent><buffer> <leader>ht :<c-u>call <SID>toggle_help_file_type()<CR>
 
 setlocal formatexpr=HelpFormatExpr()
