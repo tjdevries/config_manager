@@ -5,7 +5,7 @@ endif
 let g:_did_vimrc_plugins = 1
 
 " Extend the length of the timeout for vim-plug
-let g:plug_timeout=600
+let g:plug_timeout=60
 
 " Configure which plugins to use
 let g:my_snippet_manager = 'ultisnips'
@@ -62,7 +62,7 @@ elseif g:my_snippet_manager ==? 'neosnippet'
     Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets' | Plug 'honza/vim-snippets'
 endif
 
-" {{{2 Shougo
+" {{{1 Shougo
 " Unite
 if g:my_current_uniter ==? 'unite'
     Plug 'Shougo/vimproc.vim'
@@ -203,6 +203,9 @@ Plug 'tpope/vim-projectionist'
 
 " Encryption
 " Plug 'd0c-s4vage/vim-morph'
+
+" Presentation
+Plug 'trapd00r/vimpoint'
 
 " Wiki
 Plug 'vimwiki/vimwiki'

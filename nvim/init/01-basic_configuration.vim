@@ -3,17 +3,28 @@ let g:mapleader=','
 
 " Set important paths
 if has('unix')
+    " You have to set these up using pip install.
+    " I usually do something with pyenv, since I find it easy
+    "
+    " $ pyenv install 3.5.2
+    " $ pyenv virtualenv 3.5.2 neovim3
+    " ... 
+    "
+    " Something like that
     let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
     let g:python2_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
     let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 else
+    " Will need to figure out the best way to do this once I start using
+    " windows again
     let g:python_host_prog = 'C:\python'
 endif
 
 filetype plugin indent on
 
 set wildignore=*.o,*~,*.pyc,*pycache* " Ignore compiled files
-set cmdheight=2                       " Height of the command bar
+set noshowmode
+set cmdheight=1                       " Height of the command bar
 set incsearch                         " Makes search act like search in modern browsers
 set showmatch                         " show matching brackets when text indicator is over them
 set relativenumber                    " Show line numbers
@@ -22,6 +33,8 @@ set ignorecase                        " Ignore case when searching...
 set smartcase                         " ... unless there is a capital letter in the query
 
 set completeopt+=preview              " Turn On preview
+                                      " Lots of people don't like this one. I don't mind
+                                      " and sometimes it provides really helpful stuff
 set splitright                        " Prefer windows splitting to the right
 set splitbelow                        " Prefer windows splitting to the bottom
 set updatetime=250                    " Make updates happen faster
@@ -35,11 +48,11 @@ set autoindent
 set cindent
 set wrap
 
-" Set the width of the tab to 4 wid
+" Set the width of the tab to 4 wide
+" This gets overridden by vim-sleuth, so that's nice
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set shiftround
 
 " Make it so that long lines wrap smartly
 set breakindent
@@ -55,4 +68,5 @@ set foldlevel=0
 set modelines=1
 
 " Clipboard
+" Always have the clipboard be the same as my regular clipboard
 set clipboard+=unnamedplus

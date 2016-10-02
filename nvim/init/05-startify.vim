@@ -29,12 +29,3 @@ let g:startify_skiplist = [
 
 let g:startify_custom_footer =
   \ ['', "   Vim is charityware. Please read ':help uganda'.", '']
-
-" hi StartifyBracket ctermfg=240
-" hi StartifyFile    ctermfg=147
-" hi StartifyFooter  ctermfg=240
-" hi StartifyHeader  ctermfg=114
-" hi StartifyNumber  ctermfg=215
-" hi StartifyPath    ctermfg=245
-" hi StartifySlash   ctermfg=240
-" hi StartifySpecial ctermfg=240

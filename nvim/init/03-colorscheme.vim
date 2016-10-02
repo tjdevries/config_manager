@@ -51,7 +51,9 @@ elseif g:my_current_scheme ==? 'base16'
     colorscheme base16-tomorrow
 endif
 
-" Thanks Justinmk!
+" Thanks to Justinmk for this.
+" Not currently using it though. I want to change some of the colors to make
+" it work my colorschemes more. And maybe have it wait until multiple presses.
 let g:halo_enabled = v:false
 
 if g:halo_enabled == v:true

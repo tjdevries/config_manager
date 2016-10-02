@@ -1,5 +1,8 @@
 let g:airline_powerline_fonts=1
 
+" TODO: Experiment a little more with some of these sections.
+"   It has been a little while since you've looked.
+
 " let g:airline_section_z = airline#section#create(['%4l', ' :%3v', gutentags#statusline('[Generating...]')]) " Only show the line & col number
 let g:airline_section_z = airline#section#create(['%4l', ' :%3v']) " Only show the line & col number
 

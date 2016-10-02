@@ -1,6 +1,7 @@
 " Neovim specific configuration file
 
 " Thanks to @tweekmonster for thinking of this.
+" I've provided some modifications.
 
 let g:_vimrc_base = '~/.config/nvim'
 let g:_vimrc_plugins = g:_vimrc_base.'/plugins'
@@ -15,8 +16,11 @@ else
 endif
 
 " Source all scripts in a directory
+" They around found in `g:_vimrc_plugins`
 function! s:source(dir) abort
+  " Onlysource files that have the `.vim` extension
   for filename in sort(glob(g:_vimrc_base.'/'.a:dir.'/*.vim', 0, 1))
+    " Old item from tweekmonster, I don't use it currently.
     " if !g:_vimrc_init && str2nr(fnamemodify(filename, ':t')[:1]) > 3
     "   continue
     " endif

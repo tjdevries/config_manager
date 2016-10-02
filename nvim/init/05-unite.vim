@@ -41,13 +41,11 @@ if g:my_current_uniter ==# 'unite'
                   \ ['  basic configuration', '~/.config/nvim/init/01-basic_configuration.vim'],
                   \ ['  colorscheme', '~/.config/nvim/init/03-colorscheme.vim'],
                   \ ['  plugins', '~/.config/nvim/init/02-plugins.vim'],
-                  \ ['  ↳airline', '~/.config/nvim/init/05-airline.vim'],
-                  \ ['  ↳deoplete', '~/.config/nvim/init/05-deoplete.vim'],
-                  \ ['  ↳neomake', '~/.config/nvim/init/05-neomake.vim'],
-                  \ ['  ↳startify', '~/.config/nvim/init/05-startify.vim'],
-                  \ ['  ↳unite', '~/.config/nvim/init/05-unite.vim'],
-                  \ ['  ↳vimwiki', '~/.config/nvim/init/05-wiki.vim'],
                   \ ]
+
+      " Add all the init files that I normally have here.
+      let s:init_config_files = tj#unite_file_lister(g:_vimrc_base . '/init', 'i ↳')
+      call extend(g:unite_source_menu_menus.init_vim.file_candidates, s:init_config_files)
 
       let g:unite_source_menu_menus.zsh = {
                   \ 'description': 'Edit your import zsh configuration'
@@ -55,14 +53,12 @@ if g:my_current_uniter ==# 'unite'
       let g:unite_source_menu_menus.zsh.file_candidates = [
                   \ ['zshrc', '~/.config/zsh/.zshrc'],
                   \ ['include', '~/.config/zsh/include/'],
-                  \ ['↳aliases', '~/.config/zsh/include/aliases.zsh'],
-                  \ ['↳autojump', '~/.config/zsh/include/autojump.zsh'],
-                  \ ['↳functions', '~/.config/zsh/include/functions.zsh'],
-                  \ ['↳git', '~/.config/zsh/include/git.zsh'],
                   \ ]
+      let s:zsh_init_config_files = tj#unite_file_lister($ZDOTDIR . '/include', '  ↳', '*.zsh')
+      call extend(g:unite_source_menu_menus.zsh.file_candidates, s:zsh_init_config_files)
 
       nnoremap <leader>en :Unite menu:init_vim -start-insert<CR>
-      nnoremap <leader>ez :Unite menu:zsh<CR>
+      nnoremap <leader>ez :Unite menu:zsh -start-insert<CR>
 
       " WIP
       let g:unite_source_menu_menus.unite = {

@@ -1,7 +1,3 @@
-" Find a way to do color schemes with vim-plug
-
-" Figure out how to use ctrl-p
-
 " Tagbar + statusline configuration
 
 " Get this to work for windows... or at least not error out.
@@ -16,9 +12,7 @@
 " set spelllang=en_us
 " set spell
  
-" Get  tabs to be 2 spaces in c, lua, etc.
-
-" Easy way to check if exists, finish, etc.
+" Put the easy way to check if exists, finish, etc.
 
 " Decide if I want to keep this. For now I have it out
 " nnoremap ; :
