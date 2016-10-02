@@ -21,7 +21,9 @@ Plug 'tweekmonster/colorpal.vim'
 Plug 'tweekmonster/spellrotate.vim'
 Plug 'metakirby5/codi.vim'
 
-Plug 'floobits/floobits-neovim'
+if has('python')
+    Plug 'floobits/floobits-neovim'
+endif
 
 " Startup
 Plug 'mhinz/vim-startify'
@@ -97,6 +99,7 @@ Plug 'vim-scripts/JavaScript-Indent',  { 'for': 'javascript' }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', 'htmldjango'] }
 Plug 'mattn/emmet-vim'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'html']}
+Plug 'tpope/vim-liquid'
 
 " YouCompleteMe, not using right now. Went for Deoplete
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
