@@ -85,6 +85,7 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
 Plug 'Shougo/neco-vim'                             "  Vim completion
 Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
+Plug 'zchee/deoplete-clang'                        "  C-Family languages
 
 " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 " Plug 'ervandew/supertab',     {  'for': 'python' }
@@ -172,6 +173,7 @@ Plug 'chrisbra/Colorizer'                                         " Helpful tool
 " Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'goodell/vim-mscgen'
 
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
