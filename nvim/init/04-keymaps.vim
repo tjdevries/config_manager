@@ -47,3 +47,10 @@ if has('nvim')
     nnoremap <A-k> <C-w>k
     nnoremap <A-l> <C-w>l
 endif
+
+" Fun C to write the result of a command at the end of the function
+" function signature
+nnoremap <leader>fs ^yt{$%"_ddI} /* <esc>pa*/<CR><esc>
+
+" Edit alternate file
+nnoremap <leader>ea :e #<CR>

@@ -10,7 +10,7 @@ let g:plug_timeout=60
 " Configure which plugins to use
 let g:my_snippet_manager = 'ultisnips'
 let g:my_tags_manager = 'gutentags'
-let g:my_current_scheme = 'onedark'
+let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'unite'
 
 " Plugin management: Vim-plug
@@ -20,6 +20,8 @@ call plug#begin(g:plugin_path)
 Plug 'tweekmonster/colorpal.vim'
 Plug 'tweekmonster/spellrotate.vim'
 Plug 'metakirby5/codi.vim'
+Plug 'tpope/vim-projectionist'  " Alternate file editting and some helpful stuff
+Plug 'tpope/vim-scriptease'     " Vim help
 
 if has('python')
     Plug 'floobits/floobits-neovim'
@@ -39,8 +41,9 @@ Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
 
+" This plugin is not ready
 " if isdirectory("~/Git/descriptive_maps.vim")
-Plug '~/Git/descriptive_maps.vim'
+" Plug '~/Git/descriptive_maps.vim'
 " else
 "     Plug 'tjdevries/descriptive_maps.vim'
 " endif
@@ -85,7 +88,7 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
 Plug 'Shougo/neco-vim'                             "  Vim completion
 Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
-Plug 'zchee/deoplete-clang'                        "  C-Family languages
+" Plug 'zchee/deoplete-clang'                        "  C-Family languages
 
 " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 " Plug 'ervandew/supertab',     {  'for': 'python' }
@@ -114,6 +117,7 @@ elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 endif
 Plug 'majutsushi/tagbar'
+Plug 'mhinz/vim-grepper'
 
 " Git Based Plugins
 Plug 'tpope/vim-fugitive'
@@ -196,10 +200,6 @@ Plug 'mattn/webapi-vim'
 Plug 'jceb/vim-hier'
 Plug 'dannyob/quickfixstatus'
 
-" Vim help
-Plug 'tpope/vim-scriptease'
-Plug 'tpope/vim-projectionist'
-
 " Task Warrior Plugins
 " Plug 'blindFS/vim-taskwarrior'
 
@@ -214,5 +214,5 @@ Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
-call plug#load('descriptive_maps.vim')
+" call plug#load('descriptive_maps.vim')
 call plug#load('vim-abolish')
