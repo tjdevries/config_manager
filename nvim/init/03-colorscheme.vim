@@ -7,6 +7,8 @@ if exists('g:nyaovim_version')
     set termguicolors
 endif
 
+" let g:my_current_scheme = 'custom_gruvbox'
+
 if g:my_current_scheme ==? 'gruvbox'
     let g:gruvbox_italic=1              " Turn on italics for gruvbox
     set background=dark
@@ -22,6 +24,42 @@ elseif g:my_current_scheme ==? 'gruvbox-tj'
 
     set background=dark
     colorscheme gruvbox-tj
+elseif g:my_current_scheme ==? 'custom_gruvbox'
+    let g:colorpal_pallet = {
+      \ 'black': '000000',
+      \ 'white': 'ffffff',
+      \ 'green': 'b8bb26',
+      \   'gray0': "1d1f21",
+      \   'gray1': "282a2e",
+      \   'gray2': "373b41",
+      \   'gray3': "969896",
+      \   'gray4': "b4b7b4",
+      \   'gray5': "c5c8c6",
+      \   'gray6': "e0e0e0",
+      \   'gray7': "ffffff",
+      \   'orange': "de935f",
+      \   'yellow': "f0c674",
+      \   'cyan': "8abeb7",
+      \   'blue': "81a2be",
+      \   'violet': "b294bb",
+      \   'brown': "a3685a",
+    \ }
+
+    let g:extra_colors = {
+      \ 'dark': '282828',
+      \ 'light': 'f2e5bc',
+      \ 'bright_red': "fb4934",
+      \ }
+
+    let g:colorpal_airline = {
+          \ 'normal': [['gray1', 'green'], ['gray6', 'gray2'], ['green,light', 'gray1']],
+          \ 'insert': [['gray1', 'cyan'], ['gray6', 'gray2'], ['orange', 'gray1']],
+          \ 'replace': [['gray1', 'red'], ['gray6', 'gray2'], ['orange', 'gray1']],
+          \ 'visual': [['gray1', 'violet'], ['gray6', 'gray2'], ['orange', 'gray1']],
+          \ 'inactive': [['gray7', 'gray2'], ['gray7', 'gray2'], ['gray7', 'gray2']],
+    \ }
+
+    colorscheme custom_gruvbox
 elseif g:my_current_scheme ==? 'tender'
     set termguicolors
     set background=dark
