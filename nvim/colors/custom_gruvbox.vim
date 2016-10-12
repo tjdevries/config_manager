@@ -32,7 +32,8 @@ CPHL PMenuSel gray0 yellow,bright
 CPHL PMenuSbar - gray0
 CPHL PMenuThumb - gray4
 
-CPHL Normal gray5  #282828 -
+" Can't figure out why this won't accept dark... oh well
+CPHL Normal gray5 #282828 -
 CPHL Cursor gray0 gray5 -
 CPHL LineNr gray3 gray1 -
 CPHL SignColumn gray3 gray1 -
@@ -43,20 +44,19 @@ CPHL Comment gray3 - italic
 
 CPHL Boolean orange,w+=20 - -
 CPHL Character red - -
-CPHL Conditional violet - -
+CPHL Conditional red - -
 CPHL Constant orange - -
-CPHL Define violet - none
+CPHL Define cyan - none
 CPHL Delimiter brown - -
 CPHL Float orange - -
-CPHL Function blue,bright - -
 CPHL Identifier red,light - none
-CPHL Include blue - -
+CPHL Include cyan - -
 CPHL Keyword violet - -
 CPHL Label yellow - -
 CPHL Number orange - -
 CPHL Operator gray5 - none
 CPHL PreProc yellow - -
-CPHL Repeat yellow - -
+CPHL Repeat red - -
 CPHL Special cyan - -
 CPHL SpecialChar brown - -
 CPHL Statement red - -
@@ -68,6 +68,20 @@ CPHL Todo yellow gray1 -
 CPHL Type yellow - none
 CPHL Typedef yellow - -
 
-CPHL pythonImportedObject yellow,bright,bright,c-30 - bold
+" {{{ Impsort highlights
+CPHL pythonImportedObject red,dark - bold
 CPHL pythonImportedFuncDef cyan,dark - bold
 CPHL pythonImportedClassDef yellow,dark - bold,italic
+CPHL pythonImportedModule red,bright - bold
+" }}}
+" {{{ Function items
+CPHL Function blue,bright - bold
+CPHL pythonBuiltinFunc blue - bold
+" }}}
+" {{{ Python items
+CPHL pythonSelf violet,bright - - 
+CPHL pythonSelfArg gray3 - italic
+" }}}
+" {{{ Parenth items
+CPHL MatchParen gray0 dark - -
+" }}}

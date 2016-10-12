@@ -126,7 +126,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'moznion/github-commit-comment.vim'
 Plug 'SevereOverfl0w/deoplete-github'
 Plug '~/Git/githubapi-deoplete'
-Plug 'rhysd/committia.vim'
+Plug 'rhysd/committia.vim'      " Sweet message committer
 Plug 'airblade/vim-gitgutter' " I've been having some problems with this one lately.
 
 " Text Manipulation Based Plugins
@@ -138,12 +138,11 @@ Plug 'tpope/vim-repeat'         " Repeat actions better
 Plug 'tpope/vim-abolish'        " Cool things with words!
 Plug 'tpope/vim-sleuth'         " Easier tab handling
 Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' }
-Plug 'vim-pandoc/vim-markdownfootnotes'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'tpope/vim-characterize'
 Plug 'AndrewRadev/splitjoin.vim'
+
 Plug 'tweekmonster/impsort.vim', {'for': 'python'}
+Plug 'tweekmonster/braceless.vim', {'on': 'BracelessEnable'}
 
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }     " Get python alignment to work correctly
 Plug 'nathanaelkane/vim-indent-guides'                       " See indentation guides
@@ -152,8 +151,21 @@ Plug 'nathanaelkane/vim-indent-guides'                       " See indentation g
 " Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
 " Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
 
-" Markdown Plugins
+" Markdown Plugins {{{
+
+" Not currently using these, because they add so much bloat
+" and are a little obnoxious at times
+"
+" Plug 'vim-pandoc/vim-markdownfootnotes'
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_fenced_languages = [
+            \ 'python=python',
+            \ 'json=json',
+            \ ]
+" }}}
 
 " Colorscheme and appearance
 " Plug 'morhetz/gruvbox'                                            " gruvbox
