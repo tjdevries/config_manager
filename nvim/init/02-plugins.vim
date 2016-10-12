@@ -72,11 +72,12 @@ if g:my_current_uniter ==? 'unite'
     Plug 'Shougo/unite.vim'
     Plug 'Shougo/neomru.vim'
     Plug 'ujihisa/unite-colorscheme'
-    Plug 'Shougo/neoyank.vim'       " Yank ring for unit
+    Plug 'Shougo/neoyank.vim'       " Yank ring for unite
     Plug 'klen/unite-radio.vim'
 else
 endif
 Plug 'Shougo/denite.nvim'
+Plug 'sjl/gundo.vim'                " Undo helper
 
 " Deoplete  {{{
 Plug 'Shougo/echodoc.vim'

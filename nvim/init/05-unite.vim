@@ -6,6 +6,7 @@ let g:unite_source_radio_play_cmd = 'vlc'
 
 if g:my_current_uniter ==# 'unite'
       " Quick unite shorcuts
+      nnoremap <silent> <leader>il :<C-u>Unite -start-insert line<CR>
       nnoremap <silent> <leader>uf :<C-u>Unite buffer<CR>
       nnoremap <silent> <leader>if :<C-u>Unite -start-insert buffer<CR>
       nnoremap <silent> <leader>ut :<C-u>Unite tab:no-current<CR>

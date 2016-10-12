@@ -54,3 +54,6 @@ nnoremap <leader>fs ^yt{$%"_ddI} /* <esc>pa*/<CR><esc>
 
 " Edit alternate file
 nnoremap <leader>ea :e #<CR>
+
+" Undo toggle
+nnoremap <leader>ut :GundoToggle<cr>
