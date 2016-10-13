@@ -118,3 +118,12 @@ if g:halo_enabled == v:true
   augroup END
   nnoremap <silent> <Esc> :call <SID>halo()<CR>
 endif
+
+function! SyntaxNames() abort
+  for id in synstack(line('.'), col('.'))
+    echo synIDattr(id, 'name')
+  endfor
+endfunction
+
+" Syntax help
+nnoremap <leader>sh :call SyntaxNames()<CR>

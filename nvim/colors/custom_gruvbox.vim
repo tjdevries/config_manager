@@ -101,6 +101,7 @@ CPHL pythonBuiltinFunc blue - bold
 " {{{ Python items
 CPHL pythonSelf violet,bright - - 
 CPHL pythonSelfArg gray3 - italic
+CPHL pythonOperator red - none
 " }}}
 " {{{ Parenth items
 CPHL MatchParen gray0 gray7 - -
