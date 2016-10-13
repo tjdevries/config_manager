@@ -103,14 +103,27 @@ CPHL pythonSelf violet,bright - -
 CPHL pythonSelfArg gray3 - italic
 " }}}
 " {{{ Parenth items
-CPHL MatchParen gray0 softdark - -
+CPHL MatchParen gray0 gray7 - -
 " }}}
 " {{{ Folded items
 CPHL Folded gray0 gray5 - -
 " }}}
+" {{{ Startify
+CPHL StartifyBracket red - -
+CPHL StartifyFile red,dark - -
+CPHL StartifyNumber blue - -
+CPHL StartifyPath green,dark - -
+CPHL StartifySlash cyan - bold
+CPHL StartifySection yellow,bright - -
+CPHL StartifySpecial orange - -
+CPHL StartifyHeader orange - -
+CPHL StartifyFooter gray2 - -
+" }}}
+
+
 " {{{ Color printer help
 function! g:Color_printer() abort
-  for color_name in keys(g:colorpal_pallet)
+  for color_name in keys(g:colorpal_pallette)
     execute('CPHL Temp ' . color_name . ' ' . color_name . ' - -')
     echon color_name . ': ' | echohl Temp | echon color_name | echohl None | echon "\n"
   endfor
