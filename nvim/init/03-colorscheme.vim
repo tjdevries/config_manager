@@ -33,8 +33,8 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
       \ 'orange'   : "fe8019",
       \ 'yellow'   : "fabd2f",
       \ 'blue'     : "83a598",
-      \ 'dark'     : '282828',
-      \ 'light'    : 'f2e5bc',
+      \ 'softdark'     : '282828',
+      \ 'softlight'    : 'f2e5bc',
       \ 'red'      : "fb4934",
       \
       \   'gray0'  : "1d1f21",

@@ -24,3 +24,8 @@ class MyClass(object):  # TODO: This thing
         }
 
 x = 5
+
+if True:# {{{
+    print('inside of fold')
+    # {{{ Some folded text
+    # }}}# }}}

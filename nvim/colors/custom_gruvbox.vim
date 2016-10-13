@@ -8,23 +8,43 @@ if exists('syntax_on')
 endif
 
 let g:colors_name = 'custom_gruvbox'
-" Not sure about this part
-let g:terminal_color_0  = '#000000'
-let g:terminal_color_1  = '#ff5555'
-let g:terminal_color_2  = '#50fa7b'
-let g:terminal_color_3  = '#f1fa8c'
-let g:terminal_color_4  = '#bd93f9'
-let g:terminal_color_5  = '#ff79c6'
-let g:terminal_color_6  = '#8be9fd'
-let g:terminal_color_7  = '#f8f8f2'
-let g:terminal_color_8  = '#555555'
-let g:terminal_color_9  = '#ff5555'
-let g:terminal_color_10  = '#50fa7b'
-let g:terminal_color_11  = '#f1fa8c'
-let g:terminal_color_12  = '#bd93f9'
-let g:terminal_color_13  = '#ff79c6'
-let g:terminal_color_14  = '#8be9fd'
-let g:terminal_color_15 = '#f8f8f2'
+" {{{ Terminal colors
+" *.foreground:   #c5c8c6
+" *.background:   #1d1f21
+" *.cursorColor:  #c5c8c6
+
+" black
+let g:terminal_color0 = '#282a2e'
+let g:terminal_color8 = '#373b41'
+
+" red
+let g:terminal_color1 = '#a54242'
+let g:terminal_color9 = '#cc6666'
+
+" green
+let g:terminal_color2 = '#8c9440'
+let g:terminal_color10 = '#b5bd68'
+
+" yellow
+let g:terminal_color3 = '#de935f'
+let g:terminal_color11 = '#f0c674'
+
+" blue
+let g:terminal_color4 = '#5f819d'
+let g:terminal_color12 = '#81a2be'
+
+" magenta
+let g:terminal_color5 = '#85678f'
+let g:terminal_color13 = '#b294bb'
+
+" cyan
+let g:terminal_color6 = '#5e8d87'
+let g:terminal_color14 = '#8abeb7'
+
+" white
+let g:terminal_color7 = '#707880'
+let g:terminal_color15 = '#c5c8c6'
+" }}}
 
 " Vim editor colors
 CPHL PMenu gray4 gray2,multiply(white,20)
@@ -83,5 +103,16 @@ CPHL pythonSelf violet,bright - -
 CPHL pythonSelfArg gray3 - italic
 " }}}
 " {{{ Parenth items
-CPHL MatchParen gray0 dark - -
+CPHL MatchParen gray0 softdark - -
+" }}}
+" {{{ Folded items
+CPHL Folded gray0 gray5 - -
+" }}}
+" {{{ Color printer help
+function! g:Color_printer() abort
+  for color_name in keys(g:colorpal_pallet)
+    execute('CPHL Temp ' . color_name . ' ' . color_name . ' - -')
+    echon color_name . ': ' | echohl Temp | echon color_name | echohl None | echon "\n"
+  endfor
+endfunction
 " }}}
