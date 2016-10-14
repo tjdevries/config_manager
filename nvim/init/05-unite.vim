@@ -12,7 +12,8 @@ if g:my_current_uniter ==# 'unite'
       nnoremap <silent> <leader>ut :<C-u>Unite tab:no-current<CR>
       nnoremap <silent> <leader>it :<C-u>Unite -start-insert tab:no-current<CR>
 
-
+      " Neoyank setup
+      nnoremap <silent> <leader>iy :<C-u>Unite -start-insert history/yank<CR>
 
       " CtrlP search
       call unite#filters#matcher_default#use(['matcher_fuzzy'])

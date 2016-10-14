@@ -88,11 +88,13 @@ CPHL Todo yellow gray1 -
 CPHL Type yellow - none
 CPHL Typedef yellow - -
 
-" {{{ Impsort highlights
+" {{{ Impsort & Braceless highlights
 CPHL pythonImportedObject red,dark - bold
 CPHL pythonImportedFuncDef cyan,dark - bold
 CPHL pythonImportedClassDef yellow,dark - bold,italic
 CPHL pythonImportedModule red,bright - bold
+
+CPHL BracelessIndent gray7,bright gray7,bright
 " }}}
 " {{{ Function items
 CPHL Function blue,bright - bold
@@ -102,6 +104,13 @@ CPHL pythonBuiltinFunc blue - bold
 CPHL pythonSelf violet,bright - - 
 CPHL pythonSelfArg gray3 - italic
 CPHL pythonOperator red - none
+
+CPHL pythonBytes green - italic
+CPHL pythonRawBytes green - italic
+CPHL pythonBytesContent green - italic
+CPHL link pythonBytesError Error
+CPHL link pythonBytesEscape Special
+CPHL link pythonBytesEscapeError Error
 " }}}
 " {{{ Parenth items
 CPHL MatchParen gray0 gray7 - -

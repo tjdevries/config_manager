@@ -5,6 +5,7 @@ set tags=tags; " Enable ctags
 nnoremap <leader>tg <C-]>
 " Tag window
 nnoremap <leader>tw <C-w><C-]>
+nnoremap <leader>ts <C-w><C-]><C-w>H
 " Tag tab
 nnoremap <leader>tt <C-w><C-]><C-w>T
 " }}}

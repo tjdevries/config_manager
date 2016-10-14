@@ -261,14 +261,6 @@ if v:version >= 508 || !exists('did_python_syn_inits')
   HiLink pythonUniEscape        Special
   HiLink pythonUniEscapeError   Error
 
-  " TODO: Find out a little more about how these work
-  HiLink pythonBytes              GruvboxGreenItalic
-  HiLink pythonRawBytes           GruvboxGreenItalic
-  HiLink pythonBytesContent       GruvboxGreenItalic
-  HiLink pythonBytesError         Error
-  HiLink pythonBytesEscape        Special
-  HiLink pythonBytesEscapeError   Error
-
   HiLink pythonStrFormatting    Special
   HiLink pythonStrFormat        Special
   HiLink pythonStrTemplate      Special

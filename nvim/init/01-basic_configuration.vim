@@ -23,6 +23,8 @@ endif
 filetype plugin indent on
 
 set wildignore=*.o,*~,*.pyc,*pycache* " Ignore compiled files
+set wildmode=longest,list,full        " Complete the longest common string,
+                                      " then list them, then full
 set noshowmode
 set cmdheight=1                       " Height of the command bar
 set incsearch                         " Makes search act like search in modern browsers
