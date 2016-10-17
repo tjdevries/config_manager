@@ -98,10 +98,8 @@ Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
 " }}}
 
 " Web Development
-Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
 Plug 'vim-scripts/JavaScript-Indent',  { 'for': 'javascript' }
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', 'htmldjango'] }
 Plug 'mattn/emmet-vim'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'html']}
 Plug 'tpope/vim-liquid'
@@ -191,6 +189,9 @@ Plug 'chrisbra/Colorizer'                                         " Helpful tool
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'goodell/vim-mscgen'
+Plug 'justinmk/vim-syntax-extra'
+Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', 'htmldjango'] }
 
 " Nyaovim Plugins
 Plug 'rhysd/nyaovim-markdown-preview'
