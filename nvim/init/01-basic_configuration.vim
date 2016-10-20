@@ -34,9 +34,16 @@ set number                            " But show the actual number for the line 
 set ignorecase                        " Ignore case when searching...
 set smartcase                         " ... unless there is a capital letter in the query
 
-set completeopt+=preview              " Turn On preview
-                                      " Lots of people don't like this one. I don't mind
-                                      " and sometimes it provides really helpful stuff
+let g:my_preview_enable = v:false
+if g:my_preview_enable
+    set completeopt+=preview              " Turn On preview
+                                          " Lots of people don't like this one. I don't mind
+                                          " and sometimes it provides really helpful stuff
+else
+    set completeopt-=preview              " Turn off preview
+endif
+
+set noequalalways                     " I don't like my windows changing all the time
 set splitright                        " Prefer windows splitting to the right
 set splitbelow                        " Prefer windows splitting to the bottom
 set updatetime=250                    " Make updates happen faster

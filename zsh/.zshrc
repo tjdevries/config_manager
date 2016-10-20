@@ -309,6 +309,7 @@ sources=(
   'functions'
   'git'
   'autojump'
+  'pyenv'
 )
 
 for s in "${sources[@]}"; do
@@ -365,7 +366,8 @@ install_zplug() {
 
 # {{{2 Go
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+export MYBIN=$HOME/bin
+export PATH=$MYBIN:$PATH:$GOPATH/bin
 
 if [ -d /usr/local/go/bin ]; then
     export PATH=$PATH:/usr/local/go/bin

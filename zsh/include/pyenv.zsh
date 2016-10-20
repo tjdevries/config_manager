@@ -1,0 +1,2 @@
+
+alias pa='pyenv activate'

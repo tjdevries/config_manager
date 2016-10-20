@@ -70,10 +70,11 @@ endif
 if g:my_current_uniter ==? 'unite'
     Plug 'Shougo/vimproc.vim'
     Plug 'Shougo/unite.vim'
-    Plug 'Shougo/neomru.vim'
-    Plug 'ujihisa/unite-colorscheme'
-    Plug 'Shougo/neoyank.vim'       " Yank ring for unite
-    Plug 'klen/unite-radio.vim'
+    Plug 'Shougo/neomru.vim'            " Most recently used files
+    Plug 'ujihisa/unite-colorscheme'    " Cycle through color schemes
+    Plug 'Shougo/neoyank.vim'           " Yank ring for unite
+    Plug 'klen/unite-radio.vim'         " Play radio stations
+    Plug 'tsukkee/unite-tag'            " Tag finder for unite
 else
 endif
 Plug 'Shougo/denite.nvim'
@@ -121,9 +122,14 @@ Plug 'mhinz/vim-grepper'
 " Git Based Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'moznion/github-commit-comment.vim'
-Plug 'SevereOverfl0w/deoplete-github'
-Plug '~/Git/githubapi-deoplete'
+Plug 'junegunn/gv.vim'
+
+if v:false
+    Plug 'moznion/github-commit-comment.vim'
+    Plug 'SevereOverfl0w/deoplete-github'
+    Plug '~/Git/githubapi-deoplete'
+endif
+
 Plug 'rhysd/committia.vim'      " Sweet message committer
 Plug 'airblade/vim-gitgutter' " I've been having some problems with this one lately.
 

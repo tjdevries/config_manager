@@ -59,3 +59,9 @@ function! tj#switch_header_c() abort
   if &filetype ==# 'h'
   endif
 endfunction
+
+""
+" Helper function to do nice stuff with tags
+function! tj#tag_mover(direction) abort
+  execute(':t' . a:direction)
+endfunction

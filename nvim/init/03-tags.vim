@@ -3,6 +3,11 @@ set tags=tags; " Enable ctags
 " Tags navigation {{{
 " Tag Go
 nnoremap <leader>tg <C-]>
+" Tag declaration, next, prev, menu
+nnoremap <leader>td 3<C-]>
+nnoremap <leader>tn :call tj#tag_mover('next')<CR>
+nnoremap <leader>tp :call tj#tag_mover('previous')<CR>
+nnoremap <leader>tm :tselect<CR>
 " Tag window
 nnoremap <leader>tw <C-w><C-]>
 nnoremap <leader>ts <C-w><C-]><C-w>H

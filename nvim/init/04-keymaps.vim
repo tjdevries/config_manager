@@ -28,6 +28,21 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Make windows to be basically the same size
+nnoremap <leader>= <C-w>=
+
+" Sizing window horizontally
+nnoremap <c-,> <C-W><
+nnoremap <c-.> <C-W>>
+nnoremap <A-,> <C-W>5<
+nnoremap <A-.> <C-W>5>
+
+" Sizing window vertically
+" taller
+nnoremap <A-t> <C-W>+
+" shorter
+nnoremap <A-s> <C-W>-
+
 " Move easily to the next error
 nnoremap <leader>l :lnext<CR>
 nnoremap <leader>h :lprevious<CR>
@@ -57,3 +72,6 @@ nnoremap <leader>ea :e #<CR>
 
 " Undo toggle
 nnoremap <leader>ut :GundoToggle<cr>
+
+" Random number into vim
+inoremap ,rn <c-o>:py import vim, random; vim.current.line += str(random.randint(0,9))<CR>

@@ -74,7 +74,7 @@ CPHL Include cyan - -
 CPHL Keyword violet - -
 CPHL Label yellow - -
 CPHL Number orange - -
-CPHL Operator gray5 - none
+CPHL Operator red,bright,bright,bright - -
 CPHL PreProc yellow - -
 CPHL Repeat red - -
 CPHL Special cyan - -
@@ -105,6 +105,7 @@ CPHL pythonSelf violet,bright - -
 CPHL pythonSelfArg gray3 - italic
 CPHL pythonOperator red - none
 
+CPHL python None red,bright - -
 CPHL pythonBytes green - italic
 CPHL pythonRawBytes green - italic
 CPHL pythonBytesContent green - italic
@@ -129,8 +130,20 @@ CPHL StartifySpecial orange - -
 CPHL StartifyHeader orange - -
 CPHL StartifyFooter gray2 - -
 " }}}
-
-
+" {{{ Diff items
+CPHL DiffAdd - #008000 none
+CPHL DiffChange - gray7,subtract(red,100),dark -
+CPHL DiffText - red italic
+CPHL DiffDelete gray3 gray0
+" }}}
+" {{{ Grepper colors
+highlight Directory
+  \ ctermfg=216 ctermbg=NONE cterm=NONE guifg=#ffaf87 guibg=NONE gui=NONE
+highlight qfLineNr
+  \ ctermfg=238 ctermbg=NONE cterm=NONE guifg=#444444 guibg=NONE gui=NONE
+highlight qfSeparator
+  \ ctermfg=243 ctermbg=NONE cterm=NONE guifg=#767676 guibg=NONE gui=NONE
+" }}}
 " {{{ Color printer help
 function! g:Color_printer() abort
   for color_name in keys(g:colorpal_pallette)
