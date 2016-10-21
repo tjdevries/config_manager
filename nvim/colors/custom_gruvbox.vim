@@ -105,7 +105,7 @@ CPHL pythonSelf violet,bright - -
 CPHL pythonSelfArg gray3 - italic
 CPHL pythonOperator red - none
 
-CPHL python None red,bright - -
+CPHL pythonNone red,bright - -
 CPHL pythonBytes green - italic
 CPHL pythonRawBytes green - italic
 CPHL pythonBytesContent green - italic
@@ -130,11 +130,14 @@ CPHL StartifySpecial orange - -
 CPHL StartifyHeader orange - -
 CPHL StartifyFooter gray2 - -
 " }}}
-" {{{ Diff items
-CPHL DiffAdd - #008000 none
+" {{{ Diff itms
+CPHL gitDiff gray6,dark,dark,dark - none
+
 CPHL DiffChange - gray7,subtract(red,100),dark -
 CPHL DiffText - red italic
 CPHL DiffDelete gray3 gray0
+CPHL DiffAdded green,dark,dark none none
+CPHL DiffRemoved red,bright none none
 " }}}
 " {{{ Grepper colors
 highlight Directory
@@ -144,6 +147,10 @@ highlight qfLineNr
 highlight qfSeparator
   \ ctermfg=243 ctermbg=NONE cterm=NONE guifg=#767676 guibg=NONE gui=NONE
 " }}}
+" Sneak colors {{{
+CPHL SneakPluginTarget blue,bright black,dark,dark,dark,dark bold
+" }}}
+
 " {{{ Color printer help
 function! g:Color_printer() abort
   for color_name in keys(g:colorpal_pallette)

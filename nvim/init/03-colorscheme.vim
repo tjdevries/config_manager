@@ -27,14 +27,12 @@ elseif g:my_current_scheme ==? 'gruvbox-tj'
 elseif g:my_current_scheme ==? 'custom_gruvbox'
     let g:colorpal_pallette = {
       \
-      \ 'black'    : '000000',
-      \ 'white'    : 'ffffff',
+      \ 'black'    : '282828',
+      \ 'white'    : 'f2e5bc',
       \ 'green'    : 'b8bb26',
       \ 'orange'   : "fe8019",
       \ 'yellow'   : "fabd2f",
       \ 'blue'     : "83a598",
-      \ 'softdark'     : '282828',
-      \ 'softlight'    : 'f2e5bc',
       \ 'red'      : "fb4934",
       \
       \   'gray0'  : "1d1f21",

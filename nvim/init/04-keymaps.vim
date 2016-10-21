@@ -15,6 +15,11 @@ inoremap kj <esc>
 nnoremap k gk
 nnoremap j gj
 
+" For moving quickly up and down,
+" Thanks to: http://vi.stackexchange.com/a/213
+nnoremap gj /\%<C-R>=virtcol(".")<CR>v\S<CR>
+nnoremap gk ?\%<C-R>=virtcol(".")<CR>v\S<CR>
+
 " Map execute this line
 nnoremap <leader>x :exe getline(".")<CR>
 vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
@@ -47,6 +52,23 @@ nnoremap <A-s> <C-W>-
 nnoremap <leader>l :lnext<CR>
 nnoremap <leader>h :lprevious<CR>
 
+" Fun C to write the result of a command at the end of the function
+" function signature
+nnoremap <leader>fs ^yt{$%"_ddI} /* <esc>pa*/<CR><esc>
+
+" Edit alternate file
+nnoremap <leader>ea :e #<CR>
+
+" Undo toggle
+nnoremap <leader>ut :GundoToggle<cr>
+
+" Random number into vim
+inoremap <leader>rn <c-o>:py import vim, random; vim.current.line += str(random.randint(0,9))<CR><esc>A
+
+" Helpful delete/change into blackhole buffer
+nmap <leader>d "bd
+nmap <leader>c "bc
+
 if has('nvim')
     " Make esc leave terminal mode
     tnoremap <Esc> <C-\><C-n>
@@ -63,15 +85,3 @@ if has('nvim')
     nnoremap <A-l> <C-w>l
 endif
 
-" Fun C to write the result of a command at the end of the function
-" function signature
-nnoremap <leader>fs ^yt{$%"_ddI} /* <esc>pa*/<CR><esc>
-
-" Edit alternate file
-nnoremap <leader>ea :e #<CR>
-
-" Undo toggle
-nnoremap <leader>ut :GundoToggle<cr>
-
-" Random number into vim
-inoremap ,rn <c-o>:py import vim, random; vim.current.line += str(random.randint(0,9))<CR>
