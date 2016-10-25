@@ -56,9 +56,6 @@ nnoremap <leader>h :lprevious<CR>
 " function signature
 nnoremap <leader>fs ^yt{$%"_ddI} /* <esc>pa*/<CR><esc>
 
-" Edit alternate file
-nnoremap <leader>ea :e #<CR>
-
 " Undo toggle
 nnoremap <leader>ut :GundoToggle<cr>
 
@@ -68,6 +65,9 @@ inoremap <leader>rn <c-o>:py import vim, random; vim.current.line += str(random.
 " Helpful delete/change into blackhole buffer
 nmap <leader>d "bd
 nmap <leader>c "bc
+
+" Edit the alternate function
+nnoremap <leader>ea :EditAlternate<CR>
 
 if has('nvim')
     " Make esc leave terminal mode

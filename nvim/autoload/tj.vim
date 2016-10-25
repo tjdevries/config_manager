@@ -47,18 +47,6 @@ function! tj#unite_file_lister(directory, prefix, ...) abort
   return unite_list
 endfunction
 
-""
-" Helper function to switch between a .c and .h files
-" ... might not need this with `:e #`
-function! tj#switch_header_c() abort
-  if &filetype ==# 'c'
-    execute(':e %r.h')
-    return
-  endif
-
-  if &filetype ==# 'h'
-  endif
-endfunction
 
 ""
 " Helper function to do nice stuff with tags

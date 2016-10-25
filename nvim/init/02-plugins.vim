@@ -108,6 +108,7 @@ Plug 'jceb/vim-hier'
 " }}}
 " Searching {{{
 Plug 'justinmk/vim-sneak'
+Plug 'tjdevries/edit_alternate.vim'
 " }}}
 " Snippets {{{
 if g:my_snippet_manager ==? 'ultisnips'
