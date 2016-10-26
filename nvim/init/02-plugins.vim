@@ -18,6 +18,8 @@ let g:my_current_uniter = 'unite'
 
 " Plugin management: Vim-plug
 call plug#begin(g:plugin_path)
+" Langerserver development
+Plug 'tjdevries/nvim-langserver-shim'
 " To Learn: {{{
 Plug 'tweekmonster/spellrotate.vim'
 Plug 'metakirby5/codi.vim'
@@ -84,6 +86,9 @@ let g:vim_markdown_fenced_languages = [
             \ 'python=python',
             \ 'json=json',
             \ ]
+" }}}
+" Neovim development {{{
+Plug 'tweekmonster/nvim-api-viewer'
 " }}}
 " Nyaovim Plugins {{{
 Plug 'rhysd/nyaovim-markdown-preview'

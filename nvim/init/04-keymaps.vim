@@ -60,7 +60,7 @@ nnoremap <leader>fs ^yt{$%"_ddI} /* <esc>pa*/<CR><esc>
 nnoremap <leader>ut :GundoToggle<cr>
 
 " Random number into vim
-inoremap <leader>rn <c-o>:py import vim, random; vim.current.line += str(random.randint(0,9))<CR><esc>A
+inoremap <leader>nr <c-o>:py import vim, random; vim.current.line += str(random.randint(0,9))<CR><esc>A
 
 " Helpful delete/change into blackhole buffer
 nmap <leader>d "bd
