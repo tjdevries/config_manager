@@ -45,7 +45,6 @@ let g:terminal_color14 = '#8abeb7'
 let g:terminal_color7 = '#707880'
 let g:terminal_color15 = '#c5c8c6'
 " }}}
-
 " Vim editor colors
 CPHL PMenu gray4 gray2,multiply(white,20)
 CPHL PMenuSel gray0 yellow,bright
@@ -152,7 +151,7 @@ highlight qfSeparator
 CPHL SneakPluginTarget blue,bright black,dark,dark,dark,dark bold
 " }}}
 " Statusline Colors {{{
-CPHL User1 dark yellow bold
+CPHL User1 softdark yellow bold
 CPHL User2 dark red bold
 CPHL User3 dark green bold
 " {{{ Color printer help

@@ -50,7 +50,7 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
 
 
     let g:colorpal_airline = {
-          \ 'normal': [['gray1', 'green'], ['gray6', 'gray2'], ['green,light', 'gray1']],
+          \ 'normal': [['#282828', 'green'], ['gray6', 'gray2'], ['green,light', 'gray1']],
           \ 'insert': [['gray1', 'cyan'], ['gray6', 'gray2'], ['orange', 'gray1']],
           \ 'replace': [['gray1', 'red'], ['gray6', 'gray2'], ['orange', 'gray1']],
           \ 'visual': [['gray1', 'violet'], ['gray6', 'gray2'], ['orange', 'gray1']],

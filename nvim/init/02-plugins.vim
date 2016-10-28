@@ -14,6 +14,7 @@ let g:my_snippet_manager = 'ultisnips'
 let g:my_tags_manager = 'gutentags'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'unite'
+let g:airline_enabled = v:false
 " }}}
 
 " Plugin management: Vim-plug
@@ -157,7 +158,10 @@ Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
 Plug 'mhinz/vim-startify'
 " }}}
 " Status Line {{{
-Plug 'powerline/fonts', { 'do': './install.sh' } | Plug 'bling/vim-airline'
+Plug 'powerline/fonts', { 'do': './install.sh' }
+if g:airline_enabled
+    Plug 'bling/vim-airline'
+endif
 Plug 'mkitt/tabline.vim'
 " }}}
 " Syntax Checkers {{{
@@ -192,7 +196,7 @@ if v:false
     Plug '~/Git/a_highlighter.nvim/'
     Plug 'tjdevries/a_highlighter.nvim'
     " This plugin is not ready
-    if isdirectory("~/Git/descriptive_maps.vim")
+    if isdirectory('~/Git/descriptive_maps.vim')
         Plug '~/Git/descriptive_maps.vim'
     else
         Plug 'tjdevries/descriptive_maps.vim'
