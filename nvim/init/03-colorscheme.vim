@@ -25,7 +25,7 @@ elseif g:my_current_scheme ==? 'gruvbox-tj'
     set background=dark
     colorscheme gruvbox-tj
 elseif g:my_current_scheme ==? 'custom_gruvbox'
-    let g:colorpal_pallette = {
+    let g:colorpal_palette = {
       \
       \ 'black'    : '282828',
       \ 'white'    : 'f2e5bc',

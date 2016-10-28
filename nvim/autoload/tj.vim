@@ -53,3 +53,17 @@ endfunction
 function! tj#tag_mover(direction) abort
   execute(':t' . a:direction)
 endfunction
+
+""
+" Helper to get autload functions easily
+function! tj#easy_autoload() abort
+  if expand('%') =~ 'autoload'
+    let autoload_name = split(expand('%'), 'autoload/')[-1]
+    let autoload_name = substitute(autoload_name, '\.vim', '', 'g')
+    let autoload_name = substitute(autoload_name, '/', '#', 'g')
+    let autoload_name = autoload_name . '#'
+
+    put ='function! ' . autoload_name
+    norm kJ
+  endif
+endfunction

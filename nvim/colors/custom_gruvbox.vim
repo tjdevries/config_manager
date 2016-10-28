@@ -54,6 +54,7 @@ CPHL PMenuThumb - gray4
 
 " Can't figure out why this won't accept dark... oh well
 CPHL Normal gray5 #282828 -
+CPHL CursorLine - Normal,bright,bright -
 CPHL Cursor gray0 gray5 -
 CPHL LineNr gray3 gray1 -
 CPHL SignColumn gray3 gray1 -
@@ -88,6 +89,10 @@ CPHL Todo yellow gray1 -
 CPHL Type yellow - none
 CPHL Typedef yellow - -
 
+" {{{ Function items
+CPHL Function blue,bright - bold
+CPHL pythonBuiltinFunc Function,dark,dark Function Function
+" }}}
 " {{{ Impsort & Braceless highlights
 CPHL pythonImportedObject red,dark - bold
 CPHL pythonImportedFuncDef cyan,dark - bold
@@ -95,10 +100,6 @@ CPHL pythonImportedClassDef yellow,dark - bold,italic
 CPHL pythonImportedModule red,bright - bold
 
 CPHL BracelessIndent gray7,bright gray7,bright
-" }}}
-" {{{ Function items
-CPHL Function blue,bright - bold
-CPHL pythonBuiltinFunc blue - bold
 " }}}
 " {{{ Python items
 CPHL pythonSelf violet,bright - - 
@@ -150,7 +151,10 @@ highlight qfSeparator
 " Sneak colors {{{
 CPHL SneakPluginTarget blue,bright black,dark,dark,dark,dark bold
 " }}}
-
+" Statusline Colors {{{
+CPHL User1 dark yellow bold
+CPHL User2 dark red bold
+CPHL User3 dark green bold
 " {{{ Color printer help
 function! g:Color_printer() abort
   for color_name in keys(g:colorpal_pallette)

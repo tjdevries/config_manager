@@ -39,10 +39,8 @@ if g:my_current_uniter ==# 'unite'
                   \ ['  init', '~/.config/nvim/init.vim'],
                   \ ['after/', '~/.config/nvim/after/'],
                   \ ['autoload/', '~/.config/nvim/autoload/'],
+                  \ ['colors/custom_gruvbox', '~/.config/nvim/colors/custom_gruvbox.vim'],
                   \ ['init/', '~/.config/nvim/init/'],
-                  \ ['  basic configuration', '~/.config/nvim/init/01-basic_configuration.vim'],
-                  \ ['  colorscheme', '~/.config/nvim/init/03-colorscheme.vim'],
-                  \ ['  plugins', '~/.config/nvim/init/02-plugins.vim'],
                   \ ]
 
       " Add all the init files that I normally have here.

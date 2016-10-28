@@ -13,6 +13,10 @@ nnoremap <leader>tw <C-w><C-]>
 nnoremap <leader>ts <C-w><C-]><C-w>H
 " Tag tab
 nnoremap <leader>tt <C-w><C-]><C-w>T
+" Tag bar, if available
+if exists(":TagbarToggle")
+    nnoremap <silent> <leader>tb :TagbarToggle<CR>
+endif
 " }}}
 
 if g:my_tags_manager ==? 'gutentags'

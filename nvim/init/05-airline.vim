@@ -15,3 +15,10 @@ let g:airline#extensions#branch#format = 2 " See documentation
 let g:airline#extensions#tabline#enabled = 1 " Enable Tabline integration
 let g:airline#extensions#tabline#buffer_idx_mode = 1 " Leader # navigation
 
+nnoremap <leader>at :AirlineToggle<CR>
+
+" Set the statusline for non airline times
+set statusline=%{my_stl#get_mode()}
+call my_stl#add_left_separator()
+set statusline+=%t
+set statusline+=%(\ [%M%R%H]%)

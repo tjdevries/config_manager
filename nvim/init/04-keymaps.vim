@@ -1,7 +1,7 @@
 nnoremap <Up>          :echom "--> k <-- "<CR>
 nnoremap <Down>        :echom "--> j <-- "<CR>
-nnoremap <Right>       :echom "--> l <-- "<CR>
-nnoremap <Left>        :echom "--> h <-- "<CR>
+nnoremap <Right> gt
+nnoremap <Left>  gT
 
 inoremap <Up>     <C-o>:echom "--> k <-- "<CR>
 inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
@@ -55,6 +55,9 @@ nnoremap <leader>h :lprevious<CR>
 " Fun C to write the result of a command at the end of the function
 " function signature
 nnoremap <leader>fs ^yt{$%"_ddI} /* <esc>pa*/<CR><esc>
+
+" Get autoload names easily
+inoremap <leader>au <c-O>:call tj#easy_autoload()<CR><esc>A
 
 " Undo toggle
 nnoremap <leader>ut :GundoToggle<cr>

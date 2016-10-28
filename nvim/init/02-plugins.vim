@@ -34,7 +34,8 @@ Plug 'chrisbra/Colorizer'                                         " Helpful tool
 Plug 'junegunn/goyo.vim'                                          " focusing mode
 Plug 'junegunn/limelight.vim'                                     " Extra focus mode
 
-Plug 'tweekmonster/colorpal.vim'        " I use this to make my colorscheme
+" I use this to make my colorscheme
+Plug 'tweekmonster/colorpal.vim'
 if isdirectory(expand('~/Git/gruvbox-tj'))
     Plug '~/Git/gruvbox-tj/'
 else
