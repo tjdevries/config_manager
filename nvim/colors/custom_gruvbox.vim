@@ -88,13 +88,18 @@ CPHL Todo yellow gray1 -
 CPHL Type yellow - none
 CPHL Typedef yellow - -
 
+" Tab line {{{
+CPHL TabLine white #282828,bright,bright,bright italic
+CPHL TabLineFill white #282828,bright,bright,bright
+CPHL TablineSel white,bright #282828,bright bold
+" }}}
 " {{{ Function items
 CPHL Function blue,bright - bold
 CPHL pythonBuiltinFunc Function,dark,dark Function Function
 " }}}
 " {{{ Impsort & Braceless highlights
 CPHL pythonImportedObject red,dark - bold
-CPHL pythonImportedFuncDef cyan,dark - bold
+CPHL pythonImportedFuncDef pythonBuiltinFunc,add(cyan,50) - bold
 CPHL pythonImportedClassDef yellow,dark - bold,italic
 CPHL pythonImportedModule red,bright - bold
 
@@ -114,7 +119,7 @@ CPHL link pythonBytesEscape Special
 CPHL link pythonBytesEscapeError Error
 " }}}
 " {{{ Parenth items
-CPHL MatchParen gray0 gray7 - -
+CPHL MatchParen cyan gray0 - -
 " }}}
 " {{{ Folded items
 CPHL Folded gray0 gray5 - -
@@ -151,9 +156,14 @@ highlight qfSeparator
 CPHL SneakPluginTarget blue,bright black,dark,dark,dark,dark bold
 " }}}
 " Statusline Colors {{{
-CPHL User1 softdark yellow bold
-CPHL User2 dark red bold
-CPHL User3 dark green bold
+CPHL User1 gray7 yellow bold
+CPHL User2 gray7 red bold
+CPHL User3 gray7 green bold
+CPHL NormalMode gray7 red bold
+CPHL InsertMode gray7 yellow bold
+" TODO: Get the templating thing to work with InsertMode
+CPHL ReplaceMode gray7 yellow bold,underline
+CPHL TerminalMode gray7 turquoise bold
 " {{{ Color printer help
 function! g:Color_printer() abort
   for color_name in keys(g:colorpal_pallette)

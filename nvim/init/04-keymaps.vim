@@ -72,6 +72,9 @@ nmap <leader>c "bc
 " Edit the alternate function
 nnoremap <leader>ea :EditAlternate<CR>
 
+" Change the working directory for everybody
+nnoremap <leader>cd :windo lcd 
+
 if has('nvim')
     " Make esc leave terminal mode
     tnoremap <Esc> <C-\><C-n>

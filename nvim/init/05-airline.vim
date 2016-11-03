@@ -24,13 +24,15 @@ else
         let stl .= my_stl#get_mode()
         let stl .= '%*'
         let stl .= my_stl#add_left_separator()
+        let stl .= '%{my_stl#get_git()}'
+
         " let stl .= '%2*'
-        let stl .= my_stl#get_file_name()
+        let stl .= '%{my_stl#get_file_name(4, 2)}'
+        let stl .= '%( [%M%R%H%W]%q%)'
         " let stl .= '%t'
         let stl .= '%*'
         let stl .= '%='
         let stl .= '(%l,%v)'
-        let stl .= '%( [%M%R%H%W]%q%)'
         let stl .= '%y'
 
         return stl
@@ -39,3 +41,4 @@ else
     " Set the statusline for non airline times
     set statusline=%!SetStatusline()
 endif
+
