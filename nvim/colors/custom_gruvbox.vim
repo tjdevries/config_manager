@@ -53,7 +53,9 @@ CPHL PMenuThumb - gray4
 
 " Can't figure out why this won't accept dark... oh well
 CPHL Normal gray5 #282828 -
+" Sometimes cursorline just does it's own thing?...
 CPHL CursorLine - Normal,bright,bright -
+highlight CursorLine cterm=bold
 CPHL Cursor gray0 gray5 -
 CPHL LineNr gray3 gray1 -
 CPHL SignColumn gray3 gray1 -
