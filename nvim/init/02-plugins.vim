@@ -131,7 +131,10 @@ if g:my_current_uniter ==? 'unite'
     Plug 'Shougo/unite.vim'
     Plug 'Shougo/neomru.vim'            " Most recently used files
     Plug 'ujihisa/unite-colorscheme'    " Cycle through color schemes
-    Plug 'Shougo/neoyank.vim'           " Yank ring for unite
+
+    if has('clipboard')
+        Plug 'Shougo/neoyank.vim'           " Yank ring for unite
+    endif
     Plug 'klen/unite-radio.vim'         " Play radio stations
     Plug 'tsukkee/unite-tag'            " Tag finder for unite
 else

@@ -33,7 +33,11 @@ endfunction
 
 function! my_stl#get_mode() abort
     let l:m = mode()
-    let l:mode = g:currentmode[l:m][1]
+    if has_key(g:currentmode, l:m)
+      let l:mode = g:currentmode[l:m][1]
+    else
+      let l:mode = g:currentmode['n']
+    endif
 
     if len(l:mode) > 1
       let l:leading_space = ''
@@ -189,4 +193,31 @@ function! my_stl#get_git() abort
   endif
 
   return stl
+endfunction
+
+function! my_stl#get_tag_name() abort
+  if !exists('w:_my_stl_tag_name')
+    let w:_my_stl_tag_name = ''
+  endif
+
+  if g:_active_buffer == bufnr('%')
+    let w:_tag_declaration = tagbar#currenttag('%s', '', 'p')
+    let w:_tag_definition  = tagbar#currenttag('%s', '', 'f')
+    let w:_tag_signature   = tagbar#currenttag('%s', '', 's')
+
+    let w:_my_stl_tag_name = ''
+    if winwidth('%') > len(w:_tag_declaration) * 4 && len(w:_tag_declaration) > 0
+      let w:_my_stl_tag_name .= '<' . w:_tag_declaration . '>'
+    elseif winwidth('%') > len(w:_tag_definition) * 4 && len(w:_tag_definition) > 0
+      let w:_my_stl_tag_name .= w:_tag_definition
+    elseif winwidth('%') > len(w:_tag_signature) * 2 && len(w:_tag_signature) > 0
+      let w:_my_stl_tag_name .= w:_tag_signature
+    else
+      let w:_my_stl_tag_name .= ''
+    endif
+
+    let w:_my_stl_tag_name .= ' '
+  endif
+
+  return w:_my_stl_tag_name
 endfunction

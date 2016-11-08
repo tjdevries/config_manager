@@ -19,26 +19,53 @@ if g:airline_enabled
 
     nnoremap <leader>at :AirlineToggle<CR>
 else
+    let s:show_date = v:true
+    let s:show_git  = v:true
+
+    let s:custom_filename = v:true
+
     function! SetStatusline()
+        " Setup for variables
+        let g:_active_buffer = bufnr('%')
+
+        " Left section
         let stl = ''
         let stl .= my_stl#get_mode()
         let stl .= '%*'
         let stl .= my_stl#add_left_separator()
-        let stl .= '%{my_stl#get_git()}'
 
-        " let stl .= '%2*'
-        let stl .= '%{my_stl#get_file_name(4, 2)}'
+        if s:show_git
+            let stl .= '%{my_stl#get_git()}'
+        endif
+
+        if s:custom_filename
+            let stl .= '%{my_stl#get_file_name(4, 2)}'
+        else
+            let stl .= '%t'
+        endif
+
         let stl .= '%( [%M%R%H%W]%q%)'
-        " let stl .= '%t'
         let stl .= '%*'
+
+        " Right section
         let stl .= '%='
+
+        let stl .= '%{my_stl#get_tag_name()}'
+
         let stl .= '(%l,%v)'
         let stl .= '%y'
+
+        " let stl .= 'Active buffer: ' . string(g:_active_buffer) . ' || '
+        if exists("*strftime") && s:show_date
+            let stl .= ' %{strftime("%b %d")}'
+        endif
 
         return stl
     endfunction
 
     " Set the statusline for non airline times
     set statusline=%!SetStatusline()
+
+    nnoremap <leader>at :set statusline=%!SetStatusline()<CR>
 endif
 
