@@ -79,3 +79,16 @@ set modelines=1
 " Clipboard
 " Always have the clipboard be the same as my regular clipboard
 set clipboard+=unnamedplus
+
+" Configure Inccommand
+if exists('&inccommand')
+    set inccommand=split
+
+    function! TJToggleInccommand() abort
+        if &inccommand ==? 'split'
+            set inccommand=nosplit
+        else
+            set inccommand=split
+        endif
+    endfunction
+endif
