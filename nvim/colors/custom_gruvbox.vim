@@ -61,6 +61,9 @@ CPHL LineNr gray3 gray1 -
 CPHL SignColumn gray3 gray1 -
 CPHL EndOfBuffer gray3 - -
 
+let s:visual_color = ' - blue,dark,dark,dark,dark -'
+execute('CPHL Visual' . s:visual_color)
+
 " Standard syntax highlighting
 CPHL Comment gray3 - italic
 
@@ -161,11 +164,16 @@ CPHL SneakPluginTarget blue,bright black,dark,dark,dark,dark bold
 CPHL User1 gray7 yellow bold
 CPHL User2 gray7 red bold
 CPHL User3 gray7 green bold
+CPHL CommandMode gray7 green bold
 CPHL NormalMode gray7 red bold
 CPHL InsertMode gray7 yellow bold
 " TODO: Get the templating thing to work with InsertMode
 CPHL ReplaceMode gray7 yellow bold,underline
 CPHL TerminalMode gray7 turquoise bold
+
+" TODO: Template or make these slightly different or something
+execute('CPHL VisualMode' . s:visual_color)
+execute('CPHL VisualLineMode' . s:visual_color)
 " {{{ Color printer help
 function! g:Color_printer() abort
   for color_name in keys(g:colorpal_pallette)

@@ -91,3 +91,36 @@ if has('nvim')
     nnoremap <A-l> <C-w>l
 endif
 
+" Clear highlighting easily
+" Show matching highlights, but erase them if I press enter
+if &hlsearch
+  let g:_is_highlighted = v:true
+  function! DoNoHL() abort
+    if g:_is_highlighted && &hlsearch
+      let g:_is_highlighted = v:false
+      return ":nohl\<CR>"
+    else
+      return "\<CR>"
+    endif
+  endfunction
+
+  let s:search_chars = [
+        \ '/',
+        \ '?',
+        \ ]
+
+  let s:repeat_chars = [
+        \ 'n',
+        \ 'N',
+        \ ]
+
+  for current_char in s:search_chars
+    execute('nnoremap ' . current_char . ' :let g:_is_highlighted=v:true<CR>' . current_char . '\v')
+  endfor
+
+  for repeat_char in s:repeat_chars
+    execute('nnoremap ' . repeat_char . ' :let g:_is_highlighted=v:true<CR>' . repeat_char)
+  endfor
+
+  nnoremap <expr> <CR> DoNoHL()
+endif

@@ -83,6 +83,9 @@ function! tj#is_git_file() abort
   endif
 endfunction
 
+""
+" Simple caching for buffer variables
+" TODO: Maybe make this take in a argument for the scope?
 function! tj#buffer_cache(name, function) abort
   if exists('b:' . a:name)
     return b:{a:name}
