@@ -60,6 +60,7 @@ if has('python')
 endif
 " }}}
 " Git Based Plugins {{{
+Plug 'lambdalisue/vim-gita'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim'

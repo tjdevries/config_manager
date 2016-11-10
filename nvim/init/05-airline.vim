@@ -52,11 +52,11 @@ else
 
         let stl .= '%{my_stl#get_tag_name()}'
 
-        let stl .= '(%l,%v)'
+        let stl .= '(%3.4l,%-3.4v)'
         let stl .= '%y'
 
         " let stl .= 'Active buffer: ' . string(g:_active_buffer) . ' || '
-        if exists("*strftime") && s:show_date
+        if exists('*strftime') && s:show_date
             let stl .= ' %{strftime("%b %d")}'
         endif
 

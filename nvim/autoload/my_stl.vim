@@ -26,6 +26,7 @@ let g:currentmode = {
 
 let s:current_mode_color = ''
 let s:left_sep = ' >> '
+let s:right_sep = ' << '
 
 function! my_stl#get_mode_highlight() abort
 
@@ -56,6 +57,10 @@ endfunction
 
 function! my_stl#add_left_separator() abort
   return s:left_sep
+endfunction
+
+function! my_stl#add_right_separator() abort
+  return s:right_sep
 endfunction
 
 function! my_stl#set_up_colors() abort
@@ -161,35 +166,46 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
   " return '%f'
 endfunction
 
+let s:git_helper = 'gita'
 function! my_stl#get_git() abort
   let stl = ''
 
   " Check for git information
-  if exists('*fugitive#head') && (
-              \ exists('b:git_dir')
-              \ || len(fugitive#head(8)) > 0
-              \ )
-      let stl .= "\ue0a0 "
-      let stl .= fugitive#head(8)
-
-      if exists('*GitGutterGetHunkSummary')
-          let results = GitGutterGetHunkSummary()
-
-          if results != [0, 0, 0]
-            let diff_symbols = ['+', '~', '-']
-
-            let diff_line = ''
-            for i in range(3)
-                if results[i] > 0
-                    let diff_line .= l:diff_symbols[i] . string(results[i]) . ', '
-                endif
-            endfor
-
-            let stl .= ' [' . diff_line[:-3] . ']'
-          endif
+  if tj#buffer_cache('_stl_git_file', 'tj#is_git_file()')
+    if s:git_helper ==# 'fugitive'
+      if exists('*fugitive#head') && (
+                  \ exists('b:git_dir')
+                  \ || len(fugitive#head(8)) > 0
+                  \ )
+          let stl .= "\ue0a0 "
+          let stl .= fugitive#head(8)
       endif
+    elseif s:git_helper ==# 'gita'
+      let stl .= "\ue0a0 "
+      let stl .= gita#statusline#format('%ln/%lb')
+    endif
 
+
+    if exists('*GitGutterGetHunkSummary')
+        let results = GitGutterGetHunkSummary()
+
+        if results != [0, 0, 0]
+          let diff_symbols = ['+', '~', '-']
+
+          let diff_line = ''
+          for i in range(3)
+              if results[i] > 0
+                  let diff_line .= l:diff_symbols[i] . string(results[i]) . ', '
+              endif
+          endfor
+
+          let stl .= ' [' . diff_line[:-3] . ']'
+        endif
+    endif
+
+    if len(stl) > 0
       let stl .= my_stl#add_left_separator()
+    endif
   endif
 
   return stl
@@ -207,7 +223,7 @@ function! my_stl#get_tag_name() abort
 
     let w:_my_stl_tag_name = ''
     if winwidth('%') > len(w:_tag_declaration) * 4 && len(w:_tag_declaration) > 0
-      let w:_my_stl_tag_name .= '<' . w:_tag_declaration . '>'
+      let w:_my_stl_tag_name .=  w:_tag_declaration 
     elseif winwidth('%') > len(w:_tag_definition) * 4 && len(w:_tag_definition) > 0
       let w:_my_stl_tag_name .= w:_tag_definition
     elseif winwidth('%') > len(w:_tag_signature) * 2 && len(w:_tag_signature) > 0
@@ -216,7 +232,9 @@ function! my_stl#get_tag_name() abort
       let w:_my_stl_tag_name .= ''
     endif
 
-    let w:_my_stl_tag_name .= ' '
+    if len(w:_my_stl_tag_name) > 0
+      let w:_my_stl_tag_name .= my_stl#add_right_separator()
+    endif
   endif
 
   return w:_my_stl_tag_name
