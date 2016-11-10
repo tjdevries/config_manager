@@ -71,7 +71,7 @@ endfunction
 ""
 " Determine if we're in a git repository
 function! tj#is_git_file() abort
-  let system_reply = system('( cd ' . expand('%:h') . '; git ls-files ' . expand('%:t') . ' --error-unmatch;)')
+  let system_reply = system('( cd ' . shellescape(expand('%:h')) . '; git ls-files ' . shellescape(expand('%:t')) . ' --error-unmatch;)')
 
   " If fatal is in the name, then it's not in a git repo
   " If error is in the name, then it's not currently tracked
