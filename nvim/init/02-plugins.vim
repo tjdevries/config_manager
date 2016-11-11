@@ -13,7 +13,7 @@ let g:plug_timeout=60
 let g:my_snippet_manager = 'ultisnips'
 let g:my_tags_manager = 'gutentags'
 let g:my_current_scheme = 'gruvbox-tj'
-let g:my_current_uniter = 'unite'
+let g:my_current_uniter = 'denite'
 let g:airline_enabled = v:false
 " }}}
 
@@ -130,18 +130,18 @@ endif
 if g:my_current_uniter ==? 'unite'
     Plug 'Shougo/vimproc.vim'
     Plug 'Shougo/unite.vim'
-    Plug 'Shougo/neomru.vim'            " Most recently used files
     Plug 'ujihisa/unite-colorscheme'    " Cycle through color schemes
 
-    if has('clipboard')
-        Plug 'Shougo/neoyank.vim'           " Yank ring for unite
-    endif
     Plug 'klen/unite-radio.vim'         " Play radio stations
     Plug 'tsukkee/unite-tag'            " Tag finder for unite
-else
+elseif g:my_current_uniter ==? 'denite'
+    Plug 'Shougo/denite.nvim'
 endif
-Plug 'Shougo/denite.nvim'
-Plug 'sjl/gundo.vim'                " Undo helper
+
+Plug 'Shougo/neomru.vim'            " Most recently used files
+if has('clipboard')
+    Plug 'Shougo/neoyank.vim'           " Yank ring for my uniter
+endif
 " }}}
 " Deoplete  {{{
 Plug 'Shougo/echodoc.vim'
@@ -228,6 +228,9 @@ Plug 'tweekmonster/braceless.vim', {'on': 'BracelessEnable'}
 
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }     " Get python alignment to work correctly
 Plug 'nathanaelkane/vim-indent-guides'                       " See indentation guides
+" }}}
+" Undo plugins {{{
+Plug 'sjl/gundo.vim'                " Undo helper
 " }}}
 " Web based plugins {{{
 Plug 'mattn/webapi-vim'
