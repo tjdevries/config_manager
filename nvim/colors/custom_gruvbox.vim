@@ -94,7 +94,7 @@ CPHL Type yellow - none
 CPHL Typedef yellow - -
 
 " Tab line {{{
-CPHL TabLine white #282828,bright,bright,bright italic
+CPHL TabLine white gray7,add(white,30) none
 CPHL TabLineFill white #282828,bright,bright,bright
 CPHL TablineSel white,bright #282828,bright bold
 " }}}

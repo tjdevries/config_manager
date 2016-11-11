@@ -22,8 +22,16 @@ call plug#begin(g:plugin_path)
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
 " To Learn: {{{
+" Intriguing
+Plug 'https://github.com/haya14busa/vim-metarepeat'
+
+" Investigating
 Plug 'tweekmonster/spellrotate.vim'
+
+" Interested
 Plug 'metakirby5/codi.vim'
+
+" Ill
 Plug 'tpope/vim-projectionist'  " Alternate file editting and some helpful stuff
 Plug 'tpope/vim-scriptease'     " Vim help
 " }}}

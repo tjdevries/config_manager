@@ -78,6 +78,7 @@ else
 
   call denite#custom#map('insert', '<C-n>', 'move_to_next_line')
   call denite#custom#map('insert', '<C-p>', 'move_to_prev_line')
+  call denite#custom#map('insert', '<C-y>', 'choose_action')
   " }}}
   " Buffer management {{{ 
   nnoremap <silent> <leader>il :<C-u>Denite -mode=insert line<CR>
