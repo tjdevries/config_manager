@@ -21,6 +21,7 @@ let g:airline_enabled = v:false
 call plug#begin(g:plugin_path)
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
+Plug 'https://github.com/prabirshrestha/vim-lsp'
 " To Learn: {{{
 " Intriguing
 Plug 'https://github.com/haya14busa/vim-metarepeat'

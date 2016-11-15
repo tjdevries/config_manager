@@ -55,6 +55,6 @@ endfunction
 
 
 nnoremap <silent><buffer> <leader>ha :<c-u>call <sid>right_align()<cr>
-nnoremap <silent><buffer> <leader>ht :<c-u>call <SID>toggle_help_file_type()<CR>
+nnoremap <silent><buffer> <leader>th :<c-u>call <SID>toggle_help_file_type()<CR>
 
 setlocal formatexpr=HelpFormatExpr()

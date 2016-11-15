@@ -5,6 +5,7 @@
 [core]
     editor = nvim
     excludesfile = /home/tj/.gitignore_global
+	autocrlf = input
 
 [alias]
     # Thanks r00k, this creates a pretty graph view of the log

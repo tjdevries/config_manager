@@ -9,3 +9,27 @@ snippet pass_args "Pass arguments"
 " endfunction
 endsnippet
 
+
+snippet check_key_single "Getting a single key"
+if has_key(${1:a:response}, '$2')
+  let l:$2Value = get($1, '$2', ${3:v:false})
+
+  call langserver#${4:capabilities}#set_$2(l:$2Value)
+endif
+endsnippet
+
+snippet function_key_single "Function for a single key"
+""
+"
+function! langserver#capabilities#set_$1(name, $2) abort
+  let l:config_dict = s:prepare_capabiilties(a:name)
+
+  let l:config_dict['$2'] = a:$2
+endfunction
+endsnippet
+
+snippet check_key "Checking and getting a key"
+if has_key(${1:a:response}, '$2')
+  let l:$2_$3 = get($1['$2'], $3, $4)
+endif
+endsnippet

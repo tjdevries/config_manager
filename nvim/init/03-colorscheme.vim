@@ -29,11 +29,16 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
       \
       \ 'black'    : '282828',
       \ 'white'    : 'f2e5bc',
+      \
+      \ 'red'      : "fb4934",
       \ 'green'    : 'b8bb26',
-      \ 'orange'   : "fe8019",
       \ 'yellow'   : "fabd2f",
       \ 'blue'     : "83a598",
-      \ 'red'      : "fb4934",
+      \ 'purple'   : "d3869b",
+      \ 'aqua'     : "8ec07c",
+      \ 'orange'   : "fe8019",
+      \
+      \ 'softwhite': "ebdbb2",
       \
       \   'gray0'  : "1d1f21",
       \   'gray1'  : "282a2e",

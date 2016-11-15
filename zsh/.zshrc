@@ -365,10 +365,6 @@ install_zplug() {
 # {{{1 Language specific configuration
 
 # {{{2 Go
-export GOPATH=$HOME/go
-export MYBIN=$HOME/bin
-export PATH=$MYBIN:$PATH:$GOPATH/bin
-
 if [ -d /usr/local/go/bin ]; then
     export PATH=$PATH:/usr/local/go/bin
     export GOPATH=~/go

@@ -101,6 +101,8 @@ CPHL TablineSel white,bright #282828,bright bold
 " {{{ Function items
 CPHL Function blue,bright - bold
 CPHL pythonBuiltinFunc Function,dark,dark Function Function
+CPHL vimFunction Function,dark,dark Function Function
+CPHL vimAutoloadFunction Function,dark,dark Function -
 " }}}
 " {{{ Impsort & Braceless highlights
 CPHL pythonImportedObject red,dark - bold
@@ -122,6 +124,10 @@ CPHL pythonBytesContent green - italic
 CPHL link pythonBytesError Error
 CPHL link pythonBytesEscape Special
 CPHL link pythonBytesEscapeError Error
+" }}}
+" Vim items {{{
+CPHL VimFuncVar purple
+CPHL VimIsCommand softwhite
 " }}}
 " {{{ Parenth items
 CPHL MatchParen cyan gray0 - -
