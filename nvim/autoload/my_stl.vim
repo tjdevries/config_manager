@@ -182,7 +182,9 @@ function! my_stl#get_git() abort
       endif
     elseif s:git_helper ==# 'gita'
       let stl .= "\ue0a0 "
-      let stl .= gita#statusline#format('%ln/%lb')
+      let stl .= gita#statusline#format('%ln')[:5]
+      let stl .= '/'
+      let stl .= gita#statusline#format('%lb')
     endif
 
 

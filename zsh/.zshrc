@@ -19,6 +19,7 @@ setopt hist_ignore_space
 
 ## ZSH environment options
 export DISABLE_LS_COLORS='true'
+# eval "$(dircolors ~/.config/zsh/dircolors/gruvbox.dircolors)"
 
 ## Sources for important abilities
 # source $ZSH/oh-my-zsh.sh
@@ -192,7 +193,7 @@ if [ $MY_PROMPT = true ]; then
 
       LEFT_LINE='%F{yellow}$(my_date)%f'
       LEFT_LINE=$LEFT_LINE': '
-      LEFT_LINE=$LEFT_LINE'%F{blue}$(my_current_directory)%f '
+      LEFT_LINE=$LEFT_LINE'%F{39}$(my_current_directory)%f '
       LEFT_LINE=$LEFT_LINE'%F{gray}$(get_commit_hash)%f'
       LEFT_LINE=$LEFT_LINE'%F{007}$(get_git_branch)%f'
 
@@ -366,8 +367,9 @@ install_zplug() {
 
 # {{{2 Go
 if [ -d /usr/local/go/bin ]; then
-    export PATH=$PATH:/usr/local/go/bin
     export GOPATH=~/go
+    export GOBIN=$GOPATH/bin
+    export PATH=$PATH:/usr/local/go/bin:$GOBIN
 fi
 # }}}
 # {{{2 Haskell
