@@ -19,7 +19,7 @@ if g:airline_enabled
 
     nnoremap <leader>at :AirlineToggle<CR>
 else
-    let s:show_date = v:true
+    let s:show_date = v:false
     let s:show_git  = v:true
 
     let s:custom_filename = v:true

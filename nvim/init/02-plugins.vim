@@ -230,6 +230,7 @@ Plug 'tpope/vim-sleuth'         " Easier tab handling
 Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'tpope/vim-characterize'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/sideways.vim' " Easy sideways movement
 
 Plug 'tweekmonster/impsort.vim', {'for': 'python'}
 Plug 'tweekmonster/braceless.vim', {'on': 'BracelessEnable'}
