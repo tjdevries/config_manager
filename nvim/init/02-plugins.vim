@@ -56,6 +56,8 @@ Plug 'jacoborus/tender.vim'
 Plug 'joshdick/onedark.vim'                                       " Atom type color scheme
 Plug 'junegunn/seoul256.vim'                                      " seoul color scheme
 Plug 'w0ng/vim-hybrid'
+
+Plug 'tjdevries/vim-inyoface'
 " }}}
 " Formatters {{{
 Plug 'google/vim-maktaba'
@@ -118,7 +120,7 @@ Plug 'trapd00r/vimpoint'
 " }}}
 " Quickfix Modifications {{{
 Plug 'romainl/vim-qf'
-Plug 'jceb/vim-hier'
+" Plug 'jceb/vim-hier'
 " Don't think I'm using this one
 " Plug 'dannyob/quickfixstatus'
 " }}}

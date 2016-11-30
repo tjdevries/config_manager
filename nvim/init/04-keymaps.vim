@@ -107,6 +107,8 @@ if &hlsearch
   let s:search_chars = [
         \ '/',
         \ '?',
+        \ '*',
+        \ '#',
         \ ]
 
   let s:repeat_chars = [
@@ -124,3 +126,6 @@ if &hlsearch
 
   nnoremap <expr> <CR> DoNoHL()
 endif
+
+nnoremap <leader>sf :call tj#list_occurrences()<CR>
+nnoremap <leader>scf :call tj#list_occurrences(input('Search regex: '))<CR>
