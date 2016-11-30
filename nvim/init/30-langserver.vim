@@ -12,4 +12,8 @@ let g:langserver_executables = {
             \ 'name': 'javascript-typescript',
             \ 'cmd': [],
             \ },
+      \ 'ocaml': {
+            \ 'name': 'freebroccolo/ocaml-language-server',
+            \ 'cmd': ['ocaml-language-server', '--stdio'],
+            \ },
       \ }
