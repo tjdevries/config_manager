@@ -8,6 +8,8 @@ inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
 inoremap <Right>  <C-o>:echom "--> l <-- "<CR>
 inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
 
+map left right
+
 " Set kj to be escape in insert mode
 inoremap kj <esc>
 
@@ -17,8 +19,8 @@ nnoremap j gj
 
 " For moving quickly up and down,
 " Thanks to: http://vi.stackexchange.com/a/213
-nnoremap gj /\%<C-R>=virtcol(".")<CR>v\S<CR>
-nnoremap gk ?\%<C-R>=virtcol(".")<CR>v\S<CR>
+nnoremap gj /\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>
+nnoremap gk ?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>
 
 " Map execute this line
 nnoremap <leader>x :exe getline(".")<CR>
@@ -71,9 +73,6 @@ inoremap <leader>nr <c-o>:py import vim, random; vim.current.line += str(random.
 nmap <leader>d "bd
 nmap <leader>c "bc
 
-" Edit the alternate function
-nnoremap <leader>ea :EditAlternate<CR>
-
 " Change the working directory for everybody
 nnoremap <leader>cd :windo lcd 
 
@@ -100,6 +99,8 @@ endif
 " Clear highlighting easily
 " Show matching highlights, but erase them if I press enter
 if &hlsearch
+  let s:magical_searching = v:false
+
   let g:_is_highlighted = v:true
   function! DoNoHL() abort
     if g:_is_highlighted && &hlsearch
@@ -122,8 +123,14 @@ if &hlsearch
         \ 'N',
         \ ]
 
+  if s:magical_searching
+    let s:append_search = '\v'
+  else
+    let s:append_search = ''
+  endif
+
   for s:current_char in s:search_chars
-    execute('nnoremap ' . s:current_char . ' :let g:_is_highlighted=v:true<CR>' . s:current_char . '\v')
+    execute('nnoremap ' . s:current_char . ' :let g:_is_highlighted=v:true<CR>' . s:current_char . s:append_search)
   endfor
 
   for s:repeat_char in s:repeat_chars

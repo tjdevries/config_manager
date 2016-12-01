@@ -66,6 +66,22 @@ else
     " Set the statusline for non airline times
     set statusline=%!SetStatusline()
 
+    " Small snippet for messing with statusline
+    function! TestReturnHighlight()
+        if &spell
+            return '%#PreProc#%l%0'
+        else
+            return 'Not spelling and no colors'
+        endif
+    endfunction
+
+    function! SetStatuslineSnippet()
+        let l:str_stl = ''
+
+        let l:str_stl .= TestReturnHighlight()
+
+        return l:str_stl
+    endfunction
     nnoremap <leader>at :set statusline=%!SetStatusline()<CR>
 endif
 

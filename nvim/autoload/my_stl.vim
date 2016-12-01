@@ -25,8 +25,8 @@ let g:currentmode = {
     \ }
 
 let s:current_mode_color = ''
-let s:left_sep = ' >> '
-let s:right_sep = ' << '
+let s:left_sep = ' ❯❯ '
+let s:right_sep = ' ❮❮ '
 
 function! my_stl#get_mode_highlight() abort
 

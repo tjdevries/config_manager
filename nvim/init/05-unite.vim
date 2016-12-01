@@ -125,6 +125,7 @@ else
 
   nnoremap <leader>en :Denite menu:init_vim -mode=insert<CR>
   nnoremap <leader>ez :Denite menu:zsh -mode=insert<CR>
+  nnoremap <leader>er :Denite file_mru<CR>
   " }}}
   " File searching {{{
   call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])

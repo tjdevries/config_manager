@@ -24,6 +24,7 @@ Plug 'tjdevries/nvim-langserver-shim'
 " To Learn: {{{
 " Intriguing
 Plug 'https://github.com/haya14busa/vim-metarepeat'
+Plug 'rhysd/vim-clang-format'
 
 " Investigating
 Plug 'tweekmonster/spellrotate.vim'

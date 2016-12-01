@@ -82,8 +82,6 @@ CPHL Number orange - -
 CPHL Operator red,bright,bright,bright - -
 CPHL PreProc yellow - -
 CPHL Repeat red - -
-CPHL Special cyan - -
-CPHL SpecialChar brown - -
 CPHL Statement red - -
 CPHL StorageClass yellow - -
 CPHL String green - -
@@ -93,6 +91,12 @@ CPHL Todo yellow gray1 -
 CPHL Type yellow - none
 CPHL Typedef yellow - -
 
+" Special characters {{{
+CPHL Special cyan - -
+CPHL SpecialChar brown - -
+CPHL SpecialKey gray7,l+=0.99 - -
+CPHL NonText gray7,l+=0.99 - -
+" }}}
 " Tab line {{{
 CPHL TabLine white gray7,add(white,30) none
 CPHL TabLineFill white #282828,bright,bright,bright
@@ -128,6 +132,16 @@ CPHL link pythonBytesEscapeError Error
 " Vim items {{{
 CPHL VimFuncVar purple
 CPHL VimIsCommand softwhite
+" Vimrc items {{{
+CPHL vimMapModKey cyan - -
+CPHL vimNotation cyan - -
+CPHL vimMapLHS yellow - -
+CPHL vimBracket cyan,negative - -
+" }}}
+" CPHL items {{{
+CPHL CPHLBlank yellow,s-=.5 - -
+CPHL CPHLMod purple,s+=.5 - -
+" }}}
 " }}}
 " {{{ Parenth items
 CPHL MatchParen cyan gray0 - -
