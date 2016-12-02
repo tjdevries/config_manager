@@ -94,3 +94,33 @@ function! tj#buffer_cache(name, function) abort
     return b:{a:name}
   endif
 endfunction
+
+""
+" List occurences
+function! tj#list_occurrences(...) abort
+  if a:0 > 0
+    let l:search_string = a:1
+  else
+    let l:search_string = expand('<cword>')
+  endif
+
+  let l:objects = split(execute('g/' . l:search_string . '/p'), "\n")
+  let l:loc_objects = []
+  
+  for l:obj in l:objects
+    call add(l:loc_objects, {
+          \ 'bufnr': bufnr('%'),
+          \ 'lnum': str2nr(substitute(l:obj, '\(^\s*\d*\s\).*', '\1', '')),
+          \ 'col': 1,
+          \ 'text': substitute(l:obj, '^\s*\d*\s*', '', ''),
+          \ })
+  endfor
+
+  call setloclist(0,
+        \ l:loc_objects,
+        \ )
+
+  lwindow
+  return l:loc_objects
+endfunction
+

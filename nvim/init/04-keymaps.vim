@@ -23,6 +23,8 @@ nnoremap gk ?\%<C-R>=virtcol(".")<CR>v\S<CR>
 " Map execute this line
 nnoremap <leader>x :exe getline(".")<CR>
 vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
+nnoremap <leader><leader>x :w<CR>:source %<CR>
+nnoremap <leader><leader>v :Vader %<CR>
 
 " Remove whitespace
 nnoremap <leader>sws :%s/\s\+$//<CR>
@@ -107,6 +109,8 @@ if &hlsearch
   let s:search_chars = [
         \ '/',
         \ '?',
+        \ '*',
+        \ '#',
         \ ]
 
   let s:repeat_chars = [
@@ -114,13 +118,16 @@ if &hlsearch
         \ 'N',
         \ ]
 
-  for current_char in s:search_chars
-    execute('nnoremap ' . current_char . ' :let g:_is_highlighted=v:true<CR>' . current_char . '\v')
+  for s:current_char in s:search_chars
+    execute('nnoremap ' . s:current_char . ' :let g:_is_highlighted=v:true<CR>' . s:current_char . '\v')
   endfor
 
-  for repeat_char in s:repeat_chars
-    execute('nnoremap ' . repeat_char . ' :let g:_is_highlighted=v:true<CR>' . repeat_char)
+  for s:repeat_char in s:repeat_chars
+    execute('nnoremap ' . s:repeat_char . ' :let g:_is_highlighted=v:true<CR>' . s:repeat_char)
   endfor
 
   nnoremap <expr> <CR> DoNoHL()
 endif
+
+nnoremap <leader>sf :call tj#list_occurrences()<CR>
+nnoremap <leader>scf :call tj#list_occurrences(input('Search regex: '))<CR>

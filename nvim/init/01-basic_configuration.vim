@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " Set our leader key to ,
 let g:mapleader=','
 
@@ -91,11 +93,39 @@ set clipboard+=unnamedplus
 if exists('&inccommand')
   set inccommand=split
 
-  function! TJToggleInccommand() abort
+  function! CycleIncCommand() abort
     if &inccommand ==? 'split'
       set inccommand=nosplit
     else
       set inccommand=split
     endif
   endfunction
+
+  nnoremap <leader>ci :call CycleIncCommand()<CR>
+endif
+
+" Listchars
+set list
+
+if &list
+  " Some fun characters:
+  " ▸
+  " ⇨
+  let g:list_char_index = 0
+  let g:list_char_options = [
+        \ 'tab:»·,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·',
+        \ 'tab:»·,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·,space:␣',
+        \ '',
+        \ ]
+  function! CycleListChars() abort
+    execute 'set listchars=' . g:list_char_options[
+          \ float2nr(
+          \fmod(g:list_char_index, len(g:list_char_options))
+          \ )
+          \ ]
+
+    let g:list_char_index += 1
+  endfunction
+
+  nnoremap <leader>cl :call CycleListChars()<CR>
 endif

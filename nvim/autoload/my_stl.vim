@@ -7,10 +7,10 @@ let g:currentmode = {
     \ 'no' : ['N·OpPd', '' ],
     \ 'v'  : ['Visual', 'V', 'VisualMode'],
     \ 'V'  : ['V·Line', 'Vl', 'VisualLineMode'],
-    \ '^V' : ['V·Blck', 'Vb' ],
+    \ '' : ['V·Blck', 'Vb' ],
     \ 's'  : ['Select', 'S' ],
     \ 'S'  : ['S·Line', 'Sl' ],
-    \ '^S' : ['S·Block', 'Sb' ],
+    \ '' : ['S·Block', 'Sb' ],
     \ 'i'  : ['Insert', 'I', 'InsertMode'],
     \ 'R'  : ['Rplace', 'R', 'ReplaceMode'],
     \ 'Rv' : ['VRplce', 'Rv' ],
@@ -34,6 +34,9 @@ endfunction
 
 function! my_stl#get_mode() abort
     let l:m = mode()
+
+    " return l:m
+
     if has_key(g:currentmode, l:m)
       let l:mode = g:currentmode[l:m][1]
     else
@@ -184,7 +187,7 @@ function! my_stl#get_git() abort
       let stl .= "\ue0a0 "
       let stl .= gita#statusline#format('%ln')[:5]
       let stl .= '/'
-      let stl .= gita#statusline#format('%lb')
+      let stl .= gita#statusline#format('%lb')[:5]
     endif
 
 
@@ -219,12 +222,16 @@ function! my_stl#get_tag_name() abort
   endif
 
   if g:_active_buffer == bufnr('%')
-    let w:_tag_declaration = tagbar#currenttag('%s', '', 'p')
-    let w:_tag_definition  = tagbar#currenttag('%s', '', 'f')
-    let w:_tag_signature   = tagbar#currenttag('%s', '', 's')
+    try
+      let w:_tag_declaration = tagbar#currenttag('%s', '', 'p')
+      let w:_tag_definition  = tagbar#currenttag('%s', '', 'f')
+      let w:_tag_signature   = tagbar#currenttag('%s', '', 's')
+    catch
+      return ''
+    endtry
 
     let w:_my_stl_tag_name = ''
-    if winwidth('%') > len(w:_tag_declaration) * 4 && len(w:_tag_declaration) > 0
+    if winwidth('%') > len(w:_tag_declaration) * 8 && len(w:_tag_declaration) > 0
       let w:_my_stl_tag_name .=  w:_tag_declaration 
     elseif winwidth('%') > len(w:_tag_definition) * 4 && len(w:_tag_definition) > 0
       let w:_my_stl_tag_name .= w:_tag_definition

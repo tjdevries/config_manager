@@ -8,4 +8,12 @@ let g:langserver_executables = {
             \ 'name': 'sourcegraph/python-langserver',
             \ 'cmd': [expand('~/bin/python-langserver/python-langserver.py')],
             \ },
+      \ 'javascript,typescript,jsx,tsx': {
+            \ 'name': 'javascript-typescript',
+            \ 'cmd': [],
+            \ },
+      \ 'ocaml': {
+            \ 'name': 'freebroccolo/ocaml-language-server',
+            \ 'cmd': ['ocaml-language-server', '--stdio'],
+            \ },
       \ }
