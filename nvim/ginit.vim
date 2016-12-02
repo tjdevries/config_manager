@@ -1,7 +1,11 @@
 " My nvim-qt specific configuration
 
-" Guifont Inconsolata for Powerline:h9
-Guifont Fira Mono Medium for Powerline:h8
+if has('windows')
+  Guifont Fira Mono Medium for Powerline:h12
+  " Guifont Inconsolata for Powerline:h12
+else
+  Guifont Fira Mono Medium for Powerline:h8
+endif
 
 " Always use true colors in nvim-qt
 set termguicolors

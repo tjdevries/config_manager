@@ -11,9 +11,12 @@ if has('unix')
   " ... 
   "
   " Something like that
-  let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
-  let g:python2_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
-  let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
+  if executable('~/.pyenv/versions/neovim2/bin/python')
+    let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
+    let g:python2_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
+    let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
+  else
+  endif
 else
   " Will need to figure out the best way to do this once I start using windows again
   let g:python_host_prog = 'C:\python'
@@ -76,6 +79,9 @@ set expandtab
 set foldmethod=marker
 set foldlevel=0
 set modelines=1
+
+" Just turn the dang bell off
+set belloff=all
 
 " Clipboard
 " Always have the clipboard be the same as my regular clipboard

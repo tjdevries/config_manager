@@ -1,3 +1,8 @@
+
+# Set the shell to zsh
+export SHELL=/bin/zsh
+
+
 # Something for me to see where aliases get defined
 # Use 256 colors
 export TERM=xterm-256color
