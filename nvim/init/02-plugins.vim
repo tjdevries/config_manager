@@ -166,6 +166,7 @@ Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
 " Plug 'zchee/deoplete-clang'                        "  C-Family languages
 " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
+Plug 'Valodim/vim-zsh-completion'                  " Just some old school completion for zsh
 " }}}
 " }}}
 " Startup {{{

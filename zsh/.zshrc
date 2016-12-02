@@ -1,4 +1,3 @@
-
 # Set the shell to zsh
 export SHELL=/bin/zsh
 
@@ -26,240 +25,8 @@ setopt hist_ignore_space
 export DISABLE_LS_COLORS='true'
 # eval "$(dircolors ~/.config/zsh/dircolors/gruvbox.dircolors)"
 
-## Sources for important abilities
-# source $ZSH/oh-my-zsh.sh
+## Zplug {{{
 source "$ZPLUG_HOME/init.zsh"
-
-if [ -f ~/.rvm/scripts/rvm ]; then
-  export HAS_RVM=true
-  source ~/.rvm/scripts/rvm
-else
-  export HAS_RVM=false
-fi
-
-
-alias_paths=( )
-alias_with_path () {
-    # BASE_PATH=`pwd -P`
-    FILE_PATH="$0"
-
-    # alias_paths+="$BASE_PATH/$FILE_PATH: Aliases $1"
-    alias_paths+="File: $FILE_PATH ->    $1"
-    \alias $1
-}
-# alias alias=alias_with_path
-
-
-DEFAULT_USER=$USER
-MY_PROMPT=true
-MY_ASYNC_PROMPT=true
-
-date_start=1
-date_end=19
-# {{{ Prompt configuration
-# {{{ Prompt functions
-# {{{ set_git_dir
-set_git_dir() {
-  if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
-    export IS_A_GIT_DIR=1
-  else
-    export IS_A_GIT_DIR=0
-  fi
-}
-# }}}
-# {{{ get_commit_hash
-get_commit_hash(){
-  if [ $IS_A_GIT_DIR -eq 1 ]; then
-    echo "[$(git log --pretty=format:'%h' -n 1)]"
-  fi
-}
-# }}}
-# {{{ get_commit_message
-max_commit_length=35
-ellipsis_commit_length=$(($max_commit_length - 3))
-get_commit_message(){
-  # Trying to make sure it doesn't keep doing stuff over and over here,
-  # but it's not working
-  # if [ $MY_CMD = $HISTCMD ]; then
-  #   echo "WOWOW"
-  #   export MY_CMD=$(($MY_CMD + 1))
-  # else
-  #   echo "Changed!"
-  # fi
-  if [ $IS_A_GIT_DIR -eq 1 ]; then
-    COMMIT_MESSAGE="$(git log -1 --pretty=%B | head -n1)"
-    if [ ${#COMMIT_MESSAGE} -gt $((ellipsis_commit_length + 1)) ]; then
-      printf "[ %${ellipsis_commit_length}.${ellipsis_commit_length}s... ]" $COMMIT_MESSAGE
-    else
-      printf "[ %${max_commit_length}.${max_commit_length}s ]" $COMMIT_MESSAGE
-    fi
-  fi
-}
-# }}}
-# {{{ virtual_env_info
-virtual_env_info() {
-  # TODO: Get working with rvm
-  # if [ $HAS_RVM = true ]; then
-  #   RVM_PROMPT=$(~/.rvm/bin/rvm-prompt)
-  # else
-  #   RVM_PROMT=
-  # fi
-  # VENV_NAME_WIDTH=$(($date_end - $date_start - $VENV_VERSION_WIDTH - ${#RVM_PROMPT}))
-
-  VENV_VERSION_WIDTH=3
-  VENV_NAME_WIDTH=$(($date_end - $date_start - $VENV_VERSION_WIDTH))
-  VENV_WIDTH=$((1 + $VENV_NAME_WIDTH + $VENV_VERSION_WIDTH))
-  if [ -z "$VIRTUAL_ENV" ]; then
-    printf "[ %$VENV_WIDTH.${VENV_WIDTH}s ]" "No pyenv used"
-  else
-    pyenv_version=$(echo $VIRTUAL_ENV | grep -o '[0-9]\.[0-9]\.[0-9]')
-    pyenv_name=$(basename $VIRTUAL_ENV)
-
-    # print "[ %8.8s ]" $pyenv_version $pyenv_name
-    printf "[ $RVM_PROMPT %$VENV_NAME_WIDTH.${VENV_NAME_WIDTH}s %3.3s ]" $pyenv_name $pyenv_version
-  fi
-}
-# }}}
-# {{{ get_git_branch
-get_git_branch() {
-  # Maybe we should use this instead?
-  # git rev-parse --abbrev-ref HEAD
-
-  # Maybe we should make a function for this so that it's easier.
-  if [ $IS_A_GIT_DIR -eq 1 ]; then
-    RESULT=$(git branch | grep "*" | cut -c3-)
-    printf $RESULT
-  fi
-}
-# }}}
-# {{{ my_date
-my_date() {
-  printf "[ $(date | cut -c$date_start-$date_end) ]"
-}
-# }}}
-# {{{ my_current_directory
-export __old_pwd=''
-my_current_directory() {
-  # Quick result
-  # TODO: Make this work correctly.
-  # __current_pwd="$(pwd)"
-  # if [[ $__current_pwd == $__old_pwd ]]; then
-  #   print $__mcd_result
-  #   return
-  # else
-  #   print "did not save time"
-  # fi
-
-  # TODO: Make this know more about virtualenvs?
-  if [ $IS_A_GIT_DIR -eq 1 ]; then
-    __git_dir="$(git rev-parse --show-toplevel)"
-    __this_dir="$(pwd)"
-
-    if [ $__git_dir = $__this_dir ]; then
-      # print "$__git_dir"
-      __mcd_result="\ue0a0/${__git_dir:t}"
-    else
-      # print "${__git_dir#$__this_dir}"
-      __git_dir="${__git_dir:h}"
-      __mcd_result="\ue0a0${__this_dir#$__git_dir}"
-    fi
-  else
-    __mcd_result="%~"
-  fi
-
-  print $__mcd_result
-}
-# }}}
-
-if [ $MY_PROMPT = true ]; then
-  # {{{ Prompt building
-  setopt prompt_subst
-  setopt promptsubst
-
-  if [ $MY_ASYNC_PROMPT = true ]; then
-    # Set the timeout to one second, could be larger if we wanted.
-    # TMOUT=1
-    MY_PID=$$
-
-    get_virtual_env='%F{gray}$(virtual_env_info)%f'
-
-    precmd_prompt() {
-      export MY_CMD=$HISTCMD
-      export RUN_ONCE=false
-
-      set_git_dir
-      # We need to have a no format one, so it's easy to get the true length
-      # This needs to be kept up to date with the true left line
-      LEFT_LINE_NO_FORMAT="$(my_date)"
-      LEFT_LINE_NO_FORMAT=$LEFT_LINE_NO_FORMAT': '
-      LEFT_LINE_NO_FORMAT=$LEFT_LINE_NO_FORMAT"$(my_current_directory)"
-      LEFT_LINE_NO_FORMAT=$LEFT_LINE_NO_FORMAT"$(get_commit_hash)"
-      LEFT_LINE_NO_FORMAT=$LEFT_LINE_NO_FORMAT"$(get_git_branch) "
-
-      LEFT_LINE='%F{yellow}$(my_date)%f'
-      LEFT_LINE=$LEFT_LINE': '
-      LEFT_LINE=$LEFT_LINE'%F{39}$(my_current_directory)%f '
-      LEFT_LINE=$LEFT_LINE'%F{gray}$(get_commit_hash)%f'
-      LEFT_LINE=$LEFT_LINE'%F{007}$(get_git_branch)%f'
-
-      # We need to have a no format one, so it's easy to get the true length
-      # This needs to be kept up to date with the true right line
-      RIGHT_LINE_NO_FORMAT="$(get_commit_message)"
-      RIGHT_LINE='%F{red}$(get_commit_message)%f'
-
-      DISTANCE=$(($COLUMNS - 1 - ${#${(%%)LEFT_LINE_NO_FORMAT}} - ${#${(%%)RIGHT_LINE_NO_FORMAT}}))
-
-      # Build the prompt from our components
-      PROMPT='
-'$LEFT_LINE${(l:$DISTANCE:: :)}${RIGHT_LINE}'
-'$get_virtual_env' > '
-    }
-    precmd_functions+=(precmd_prompt)
-
-    # RPROMPT='$(get_commit_message)'
-
-    TRAPALRM() {
-      if [ "$WIDGET" != "complete-word" ]; then
-        # Trying to not make it reset if it isn't the main shell currently.
-        # if [ $MY_PID = $$ ]; then
-        #   zle reset-prompt
-        # fi
-        zle reset-prompt
-      fi
-    }
-  else
-    # {{{ Old
-    precmd_prompt () {
-      empty_line=${(l:$COLUMNS:: :)}
-      line_1_left="First line"
-      line_1_right="Right side"
-      line_1_center_length=$(($COLUMNS-${#line_1_left}))
-      # "%{$fg[magenta]%}%n%{$reset_color%} in %~:"
-      # "> "
-
-    PROMPT='$empty_line
-    $line_1_left${(l:$line_1_center_length::.:)line_1_right}
-    > '
-    }
-    precmd_functions+=(precmd_prompt)
-    PROMPT="
-    %{$fg[magenta]%}%n%{$reset_color%} in %~:
-    > "
-    RPROMPT="$(get_commit_message)"
-    # }}}
-  fi
-  # }}}
-else
-  zplug 'bhilburn/powerlevel9k', use:powerlevel9k.zsh-theme, nice:-19
-fi
-# }}}
-
-
-if hash nvim 2>/dev/null; then
-  export EDITOR=nvim
-else
-  export EDITOR=vim
-fi
 
 ## Zsh Plugins
 zplug 'zplug/zplug', at:expand_glob
@@ -281,27 +48,10 @@ zplug 'voronkovich/gitignore.plugin.zsh'
 zplug 'djui/alias-tips', use:"alias-tips.plugin.zsh"
 zplug 'joepvd/zsh-hints'
 
+# Async helper
+zplug 'mafredri/zsh-async'
 
-
-if zplug check bhilburn/powerlevel9k; then
-  ## Powerlevel configuration
-  # Not sure I have the right fonts for this yet...
-  # POWERLEVEL9K_MODE="awesome-patched"
-  POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-  POWERLEVEL9K_SHORTEN_DELIMITER=""
-  POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
-
-  POWERLEVEL9K_SHOW_CHANGESE="true"
-
-  POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-  POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-  POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="↳ "
-  POWERLEVEL9K_TIME_FORMAT="%D{%H:%M \Uf073 %m-%d-%y}"
-
-  POWERLEVEL9K_CUSTOM_COMMIT_MESSAGE="get_commit_message"
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(custom_commit_message time)
-fi
+zplug load
 
 if zplug check zsh-users/zsh-autosuggestions; then
   bindkey '^ ' autosuggest-accept
@@ -309,12 +59,14 @@ if zplug check zsh-users/zsh-autosuggestions; then
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 fi
 
+
 ## My "Plugins"
 sources=(
+  'autojump'
   'aliases'
   'functions'
   'git'
-  'autojump'
+  'prompt'
   'pyenv'
 )
 
@@ -322,13 +74,25 @@ for s in "${sources[@]}"; do
   source $HOME/.config/zsh/include/${s}.zsh
 done
 
-zplug load
 
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=5
 export LC_ALL=en_US.UTF-8
 
+
 # {{{1 Functions
+# {{{2 Alias paths
+alias_paths=( )
+alias_with_path () {
+    # BASE_PATH=`pwd -P`
+    FILE_PATH="$0"
+
+    # alias_paths+="$BASE_PATH/$FILE_PATH: Aliases $1"
+    alias_paths+="File: $FILE_PATH ->    $1"
+    \alias $1
+}
+# alias alias=alias_with_path
+# }}}
 # {{{2 Extract Stuff
 extract () {
      if [ -f $1 ] ; then
@@ -369,7 +133,6 @@ install_zplug() {
 # }}}
 # }}}
 # {{{1 Language specific configuration
-
 # {{{2 Go
 if [ -d /usr/local/go/bin ]; then
     export GOPATH=~/go
@@ -381,7 +144,22 @@ fi
 export HASKELLPATH="$HOME/.cabal/bin"
 export PATH=$PATH:$HASKELLPATH
 # }}}
+# {{{2 Ruby configuration
+if [ -f ~/.rvm/scripts/rvm ]; then
+  export HAS_RVM=true
+  source ~/.rvm/scripts/rvm
+else
+  export HAS_RVM=false
+fi
 # }}}
+# }}}
+#
+if hash nvim 2>/dev/null; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
+
 
 # {{{ Default configuration options
 # Uncomment the following line to use case-sensitive completion.
