@@ -50,6 +50,7 @@ zplug 'joepvd/zsh-hints'
 
 # Async helper
 zplug 'mafredri/zsh-async'
+zplug 'intelfx/pure'
 
 zplug load
 

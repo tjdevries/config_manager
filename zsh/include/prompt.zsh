@@ -17,7 +17,7 @@ MY_PROMPT=true
 # {{{ Prompt options
 # Debug mode?
 PROMPT_DEBUG=true
-PROMPT_GIT=true
+PROMPT_GIT=false
 
 # For how long we want the time and date to be
 date_start=1
@@ -26,34 +26,27 @@ date_end=19
 # {{{ Prompt configuration
 # {{{ Prompt functions
 # {{{ Async functions
-COMPLETED=0
 LEFT_LINE='orig'
 RIGHT_LINE='orig'
 left_prompt_completed_callback() {
   LEFT_LINE=$3
 
-  if [ $PROMPT_DEBUG = true ]; then
-    LEFT_LINE=$LEFT_LINE$4
-  fi
-
+  prompt_print_debug $@
   COMPLETED=$(( COMPLETED + 1 ))
 }
 
 right_prompt_completed_callback() {
   RIGHT_LINE=$3
 
-  if [ $PROMPT_DEBUG = true ]; then
-    RIGHT_LINE=$RIGHT_LINE$4
-  fi
-
+  prompt_print_debug $@
   COMPLETED=$(( COMPLETED + 1 ))
 }
 
 prompt_build_left_line() {
-  LEFT_LINE='%F{yellow}'"$(my_date)"'%f'
+  LEFT_LINE='%F{yellow}$(my_date)%f'
   LEFT_LINE=$LEFT_LINE': '
   LEFT_LINE=$LEFT_LINE'%F{39}'
-  LEFT_LINE=$LEFT_LINE$(my_current_directory)
+  LEFT_LINE=$LEFT_LINE'$(my_current_directory)'
   LEFT_LINE=$LEFT_LINE'%f '
 
   if [ $PROMPT_GIT = true ]; then
@@ -73,6 +66,13 @@ prompt_build_right_line() {
   fi
 
   print $RIGHT_LINE
+}
+# }}}
+# {{{ Debuggin and logging
+prompt_print_debug() {
+  if [ $PROMPT_DEBUG = true ]; then
+    print $@
+  fi
 }
 # }}}
 # {{{ get_string_length
@@ -207,19 +207,31 @@ if [ $MY_PROMPT = true ]; then
     # Set the variable for if we are in a git directory or not
     set_git_dir
 
+    prompt_print_debug "working on it..."
+
     COMPLETED=0
+    JOBS_TO_COMPLETE=2
 
-    async_job left_worker echo $(prompt_build_left_line)
-    async_job right_worker echo $(prompt_build_right_line)
+    async_job left_worker prompt_build_left_line
+    async_job right_worker prompt_build_right_line
 
-    while (( COMPLETED < 2 )); do
-      sleep 0.01
+    prompt_print_debug "spawned jobs..."
+
+    while (( COMPLETED < JOBS_TO_COMPLETE )); do
+      prompt_print_debug "Waiting... -> " $COMPLETED '/' $JOBS_TO_COMPLETE
+      sleep 0.1
     done
+
+    prompt_print_debug "done waiting..."
 
     integer left_length=$(prompt_pure_string_length $LEFT_LINE)
     integer right_length=$(prompt_pure_string_length $RIGHT_LINE)
 
+    prompt_print_debug "subtractions..."
+
     DISTANCE=$(( $COLUMNS - 1 - $left_length - $right_length ))
+
+    prompt_print_debug "distance..."
 
     # Build the prompt from our components
     PROMPT='
@@ -230,7 +242,7 @@ if [ $MY_PROMPT = true ]; then
   }
 
   # This used to be a bunch of functions, but now we just added this thing only.
-  precmd_functions=(precmd_prompt)
+  # precmd_functions+=(precmd_prompt)
 
   # Old recursive updater used: TRAPALRM(). Look up if you want to look at it
   # }}}

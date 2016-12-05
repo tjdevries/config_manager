@@ -91,6 +91,10 @@ if has('nvim')
     nnoremap <A-j> <C-w>j
     nnoremap <A-k> <C-w>k
     nnoremap <A-l> <C-w>l
+
+    " Try and make sure to not mangle space items
+    tnoremap <S-Space> <Space>
+    tnoremap <C-Space> <Space>
 endif
 
 " Clear highlighting easily
