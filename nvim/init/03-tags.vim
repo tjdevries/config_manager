@@ -1,6 +1,7 @@
 set tags=tags; " Enable ctags
 
 " Tags navigation {{{
+"
 " Tag Go
 nnoremap <leader>tg <C-]>
 " Tag declaration, next, prev, menu
@@ -14,7 +15,7 @@ nnoremap <leader>ts <C-w><C-]><C-w>H
 " Tag tab
 nnoremap <leader>tt <C-w><C-]><C-w>T
 " Tag bar, if available
-if exists(":TagbarToggle")
+if exists(':TagbarToggle')
     nnoremap <silent> <leader>tb :TagbarToggle<CR>
 endif
 " }}}

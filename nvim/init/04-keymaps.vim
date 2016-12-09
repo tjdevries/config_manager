@@ -8,22 +8,22 @@ inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
 inoremap <Right>  <C-o>:echom "--> l <-- "<CR>
 inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
 
-map left right
-
 " Set kj to be escape in insert mode
 inoremap kj <esc>
 
 " For long, wrapped lines
 nnoremap k gk
+" For long, wrapped lines
 nnoremap j gj
 
 " For moving quickly up and down,
-" Thanks to: http://vi.stackexchange.com/a/213
 nnoremap gj /\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>
+" Thanks to: http://vi.stackexchange.com/a/213
 nnoremap gk ?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>
 
 " Map execute this line
 nnoremap <leader>x :exe getline(".")<CR>
+" Execute this file
 vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
 nnoremap <leader><leader>x :w<CR>:source %<CR>
 nnoremap <leader><leader>v :Vader %<CR>
@@ -140,5 +140,7 @@ if &hlsearch
   nnoremap <expr> <CR> DoNoHL()
 endif
 
+" List occurences from this file
 nnoremap <leader>sf :call tj#list_occurrences()<CR>
+" List occurences from a custom file
 nnoremap <leader>scf :call tj#list_occurrences(input('Search regex: '))<CR>

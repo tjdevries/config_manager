@@ -25,6 +25,7 @@ Plug 'tjdevries/nvim-langserver-shim'
 " Intriguing
 Plug 'https://github.com/haya14busa/vim-metarepeat'
 Plug 'rhysd/vim-clang-format'
+Plug 'lambdalisue/lista.nvim'
 
 " Investigating
 Plug 'tweekmonster/spellrotate.vim'
@@ -167,7 +168,6 @@ Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
 " Plug 'zchee/deoplete-clang'                        "  C-Family languages
 " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
-Plug 'Valodim/vim-zsh-completion'                  " Just some old school completion for zsh
 " }}}
 " }}}
 " Startup {{{
@@ -207,16 +207,12 @@ endif
 Plug 'majutsushi/tagbar'
 " }}}
 " Testing my plugins {{{
+Plug 'tjdevries/descriptive_maps.vim'
 if v:false
     Plug 'tjdevries/vim-vertex'
     Plug '~/Git/a_highlighter.nvim/'
     Plug 'tjdevries/a_highlighter.nvim'
     " This plugin is not ready
-    if isdirectory('~/Git/descriptive_maps.vim')
-        Plug '~/Git/descriptive_maps.vim'
-    else
-        Plug 'tjdevries/descriptive_maps.vim'
-    endif
 endif
 " }}}
 " Testing plugins {{{

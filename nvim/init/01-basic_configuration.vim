@@ -127,5 +127,7 @@ if &list
     let g:list_char_index += 1
   endfunction
 
+  " Cycle through list characters
+  " Useful as a helper
   nnoremap <leader>cl :call CycleListChars()<CR>
 endif

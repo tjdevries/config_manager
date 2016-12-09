@@ -76,9 +76,9 @@ else
   " General Settings {{{
   call denite#custom#option('default', 'prompt', '>> ')
 
-  call denite#custom#map('insert', '<C-n>', 'move_to_next_line')
-  call denite#custom#map('insert', '<C-p>', 'move_to_prev_line')
-  call denite#custom#map('insert', '<C-y>', 'choose_action')
+  call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+  call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+  call denite#custom#map('insert', '<C-y>', '<denite:choose_action>', 'noremap')
   " }}}
   " Buffer management {{{ 
   nnoremap <silent> <leader>il :<C-u>Denite -mode=insert line<CR>
