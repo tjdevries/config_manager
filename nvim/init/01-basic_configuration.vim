@@ -26,7 +26,8 @@ endif
 
 filetype plugin indent on
 
-set wildignore=*.o,*~,*.pyc,*pycache* " Ignore compiled files
+set wildignore+=*.o,*~,*.pyc,*pycache* " Ignore compiled files
+set wildignore+=__pycache__
 set wildmode=longest,list,full        " Complete the longest common string,
 " then list them, then full
 set noshowmode

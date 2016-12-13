@@ -34,6 +34,7 @@ if g:my_current_uniter ==# 'unite'
   let g:unite_source_menu_menus.init_vim.file_candidates = [
         \ ['nvim/', '~/.config/nvim/'],
         \ ['  init', '~/.config/nvim/init.vim'],
+        \ ['  ginit', '~/.config/nvim/ginit.vim'],
         \ ['after/', '~/.config/nvim/after/'],
         \ ['autoload/', '~/.config/nvim/autoload/'],
         \ ['colors/custom_gruvbox', '~/.config/nvim/colors/custom_gruvbox.vim'],
@@ -79,6 +80,13 @@ else
   call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
   call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
   call denite#custom#map('insert', '<C-y>', '<denite:choose_action>', 'noremap')
+
+  " Action items
+  call denite#custom#map('insert', ',p', '<denite:do_action:preview>', 'noremap')
+  call denite#custom#map('insert', ',v', '<denite:do_action:vsplit>', 'noremap')
+  call denite#custom#map('insert', ',s', '<denite:do_action:split>', 'noremap')
+  call denite#custom#map('insert', ',t', '<denite:do_action:tabopen>', 'noremap')
+
   " }}}
   " Buffer management {{{ 
   nnoremap <silent> <leader>il :<C-u>Denite -mode=insert line<CR>
@@ -98,7 +106,8 @@ else
         \ }
   let s:menus.init_vim.file_candidates = [
         \ ['nvim/', '~/.config/nvim/'],
-        \ ['  init', '~/.config/nvim/init.vim'],
+        \ ['  init.vim', '~/.config/nvim/init.vim'],
+        \ ['  ginit.vim', '~/.config/nvim/ginit.vim'],
         \ ['after/', '~/.config/nvim/after/'],
         \ ['autoload/', '~/.config/nvim/autoload/'],
         \ ['colors/custom_gruvbox', '~/.config/nvim/colors/custom_gruvbox.vim'],
