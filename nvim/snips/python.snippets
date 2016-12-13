@@ -1,3 +1,19 @@
+snippet prop "Make a property"
+@property
+def $1(self):
+    return self._$1
+endsnippet
+
+snippet propset "Make a property with a setter"
+@property
+def $1(self):
+    return self._$1
+
+@$1.setter
+def $1(self, value):
+    self._$1 = value
+endsnippet
+
 snippet printobj "Print the attributes of an object"
 for item in dir(${1:object}):
 	print(item, getattr($1, item))
