@@ -11,9 +11,9 @@ endif
 set termguicolors
 
 
-let s:original_font_command = split(execute('Guifont'), ':')
+let s:original_font_command = split(split(execute('Guifont'), "\n")[0], ':')
 let s:original_font_name = s:original_font_command[0]
-let s:original_font_size = s:original_font_command[1]
+let s:original_font_size = s:original_font_command[1][1:]
 
 let g:nvimqt_font = s:original_font_size
 
