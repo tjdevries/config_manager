@@ -131,10 +131,17 @@ function! tj#find_project_root(...) abort
 
   for index in range(len(l:project_location_list))
     if isdirectory('/' . join(l:project_location_list[0:index], '/') . '/.git')
-      return join(l:project_location_list[0:index], '/') . '/'
+      return '/' . join(l:project_location_list[0:index], '/') . '/'
     endif
   endfor
 
   return expand('%:p:h')
 endfunction
 
+function! tj#vimgrep_from_root(...) abort
+  " call execute(':vimgrep /' . expand('<cword>') . '/gj * ' . tj#find_project_root() . '**')
+  " call execute(':GrepperAg ' . expand('<cword>') . ' ' . tj#find_project_root() . '**')
+  " call execute(':GrepperAg ' . expand('<cword>') . ' ' . tj#find_project_root() . '**')
+endfunction
+
+nmap <C-f> :call tj#vimgrep_from_root()<CR>
