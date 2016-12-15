@@ -130,6 +130,12 @@ else
   let s:zsh_init_config_files = tj#unite_file_lister($ZDOTDIR . '/include', '  ↳', '*.zsh')
   call extend(s:menus.zsh.file_candidates, s:zsh_init_config_files)
 
+  let s:menus.other = {
+        \ 'description': 'Test'
+        \ }
+
+  let s:menus.other.file_candidates = []
+
   call denite#custom#var('menu', 'menus', s:menus)
 
   nnoremap <leader>en :Denite menu:init_vim -mode=insert<CR>

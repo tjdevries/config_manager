@@ -1,4 +1,9 @@
-if exists('g:neomake_config_done')
+try
+    silent call plug#load('neomake')
+catch
+endtry
+
+if exists('g:neomake_config_done') || !exists(':Neomake')
     finish
 endif
 
