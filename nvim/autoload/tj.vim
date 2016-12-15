@@ -124,3 +124,17 @@ function! tj#list_occurrences(...) abort
   return l:loc_objects
 endfunction
 
+""
+" Find project root
+function! tj#find_project_root(...) abort
+  let l:project_location_list = split(expand('%:p:h'), '/')
+
+  for index in range(len(l:project_location_list))
+    if isdirectory('/' . join(l:project_location_list[0:index], '/') . '/.git')
+      return join(l:project_location_list[0:index], '/')
+    endif
+  endfor
+
+  return expand('%:p:h')
+endfunction
+
