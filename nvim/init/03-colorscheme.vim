@@ -25,6 +25,11 @@ elseif g:my_current_scheme ==? 'gruvbox-tj'
     set background=dark
     colorscheme gruvbox-tj
 elseif g:my_current_scheme ==? 'custom_gruvbox'
+  let s:load_palette = v:false
+
+  if s:load_palette
+    call colorpal#load('tomorrow')
+  else
     let g:colorpal_palette = {
       \
       \ 'black'    : '282828',
@@ -61,8 +66,9 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
           \ 'visual': [['gray1', 'violet'], ['gray6', 'gray2'], ['orange', 'gray1']],
           \ 'inactive': [['gray7', 'gray2'], ['gray7', 'gray2'], ['gray7', 'gray2']],
     \ }
+  endif
 
-    colorscheme custom_gruvbox
+  colorscheme custom_gruvbox
 elseif g:my_current_scheme ==? 'tender'
     set termguicolors
     set background=dark

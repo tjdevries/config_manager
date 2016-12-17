@@ -165,6 +165,7 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
 Plug 'Shougo/neco-vim'                             "  Vim completion
 Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
+Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
 " Plug 'zchee/deoplete-clang'                        "  C-Family languages
 " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
@@ -181,7 +182,7 @@ endif
 Plug 'mkitt/tabline.vim'
 " }}}
 " Syntax Checkers {{{
-Plug 'benekastah/neomake'       " A better linter than syntastic?
+" Plug 'benekastah/neomake'       " A better linter than syntastic?
 Plug 'alfredodeza/pytest.vim'   " Pytest helper
 " }}}
 " Syntax Highlighters {{{
@@ -204,11 +205,14 @@ elseif g:my_tags_manager ==? 'vim-tags'
 elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 endif
-Plug 'majutsushi/tagbar'
+
+if v:false
+    Plug 'majutsushi/tagbar'
+endif
 " }}}
 " Testing my plugins {{{
-Plug 'tjdevries/descriptive_maps.vim'
 if v:false
+    Plug 'tjdevries/descriptive_maps.vim'
     Plug 'tjdevries/vim-vertex'
     Plug '~/Git/a_highlighter.nvim/'
     Plug 'tjdevries/a_highlighter.nvim'
