@@ -1,3 +1,6 @@
+# I'm going to try and keep these available to use in either bash or zsh
+# If they aren't, I should make them differently
+
 print_all_the_colors() {
     for code in {000..255}; do print -P -- "$code: %F{$code}Test%f"; done
 }
@@ -21,4 +24,9 @@ quick_change () {
     echo "Do you want to change?"
     grep -rl "$2" $1
     grep -rl "$2" $1 | xargs sed -i "s/$2/$3/g"
+}
+
+pip_update() {
+    echo "Updating python packages..."
+    pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
 }

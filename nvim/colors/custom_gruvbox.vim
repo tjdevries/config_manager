@@ -52,7 +52,7 @@ CPHL PMenuSbar - gray0
 CPHL PMenuThumb - gray4
 
 " Can't figure out why this won't accept dark... oh well
-CPHL Normal gray5 #282828 -
+CPHL Normal gray5 gray0 -
 " Sometimes cursorline just does it's own thing?...
 CPHL CursorLine - Normal,bright,bright -
 highlight CursorLine cterm=bold
@@ -98,9 +98,9 @@ CPHL SpecialKey gray7,l+=0.99 - -
 CPHL NonText gray7,l+=0.99 - -
 " }}}
 " Tab line {{{
-CPHL TabLine white gray7,add(white,30) none
-CPHL TabLineFill white #282828,bright,bright,bright
-CPHL TablineSel white,bright #282828,bright bold
+CPHL TabLine white gray1,add(white,30) none
+CPHL TabLineFill white gray7,bright,bright,bright
+CPHL TablineSel white,bright gray1,bright bold
 " }}}
 " {{{ Function items
 CPHL Function blue,bright - bold
@@ -130,6 +130,9 @@ CPHL link pythonBytesEscape Special
 CPHL link pythonBytesEscapeError Error
 " }}}
 " Vim items {{{
+CPHL vimNotFunc purple,light - -
+CPHL vimLet purple,light - -
+CPHL vimCommand purple,light - -
 CPHL VimFuncVar purple
 CPHL VimIsCommand softwhite
 " Vimrc items {{{

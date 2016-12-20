@@ -25,48 +25,73 @@ elseif g:my_current_scheme ==? 'gruvbox-tj'
     set background=dark
     colorscheme gruvbox-tj
 elseif g:my_current_scheme ==? 'custom_gruvbox'
-  let s:load_palette = v:false
+  let s:load_palette = 'tomorrow'
 
-  if s:load_palette
-    call colorpal#load('tomorrow')
-  else
-    let g:colorpal_palette = {
-      \
-      \ 'black'    : '282828',
-      \ 'white'    : 'f2e5bc',
-      \
-      \ 'red'      : "fb4934",
-      \ 'green'    : 'b8bb26',
-      \ 'yellow'   : "fabd2f",
-      \ 'blue'     : "83a598",
-      \ 'purple'   : "d3869b",
-      \ 'aqua'     : "8ec07c",
-      \ 'orange'   : "fe8019",
-      \
-      \ 'softwhite': "ebdbb2",
-      \
-      \   'gray0'  : "1d1f21",
-      \   'gray1'  : "282a2e",
-      \   'gray2'  : "373b41",
-      \   'gray3'  : "969896",
-      \   'gray4'  : "b4b7b4",
-      \   'gray5'  : "c5c8c6",
-      \   'gray6'  : "e0e0e0",
-      \   'gray7'  : "282828",
-      \   'brown'  : "a3685a",
-      \   'violet' : "b294bb",
-      \   'cyan'   : "8abeb7",
-    \ }
+  let g:gruvbox_palette = {
+    \
+    \ 'black'     : '282828',
+    \ 'gray0'     : '1d1f21',
+    \ 'gray1'     : '282828',
+    \ 'gray2'     : '373b41',
+    \ 'gray3'     : '969896',
+    \ 'gray4'     : 'b4b7b4',
+    \ 'gray5'     : 'c5c8c6',
+    \ 'gray6'     : 'e0e0e0',
+    \ 'gray7'     : 'ffffff',
+    \ 'white'     : 'f2e5bc',
+    \
+    \ 'red'       : 'fb4934',
+    \ 'green'     : 'b8bb26',
+    \ 'yellow'    : 'fabd2f',
+    \ 'blue'      : '83a598',
+    \   'aqua'    : '8ec07c',
+    \   'cyan'    : '8abeb7',
+    \ 'purple'    : 'd3869b',
+    \   'violet'  : 'b294bb',
+    \ 'orange'    : 'fe8019',
+    \ 'brown'     : 'a3685a',
+    \
+    \ 'softwhite' : 'ebdbb2',
+  \ }
+
+  let g:tomorrow_palette = {
+    \
+    \ 'black'     : '1d1f21',
+    \ 'gray0'     : '1d1f21',
+    \ 'gray1'     : '282a2e',
+    \ 'gray2'     : '373b41',
+    \ 'gray3'     : '969896',
+    \ 'gray4'     : 'b4b7b4',
+    \ 'gray5'     : 'c5c8c6',
+    \ 'gray6'     : 'e0e0e0',
+    \ 'gray7'     : 'ffffff',
+    \ 'white'     : 'f2e5bc',
+    \
+    \ 'red'       : 'cc6666',
+    \ 'green'     : 'b5bd68',
+    \ 'yellow'    : 'f0c674',
+    \ 'blue'      : '81a2be',
+    \   'aqua'    : '8ec07c',
+    \   'cyan'    : '8abeb7',
+    \ 'purple'    : 'd3869b',
+    \   'violet'  : 'b294bb',
+    \ 'orange'    : 'de935f',
+    \ 'brown'     : 'a3685a',
+    \
+    \ 'softwhite' : 'ebdbb2',
+  \ }
 
 
-    let g:colorpal_airline = {
-          \ 'normal': [['#282828', 'green'], ['gray6', 'gray2'], ['green,light', 'gray1']],
-          \ 'insert': [['gray1', 'cyan'], ['gray6', 'gray2'], ['orange', 'gray1']],
-          \ 'replace': [['gray1', 'red'], ['gray6', 'gray2'], ['orange', 'gray1']],
-          \ 'visual': [['gray1', 'violet'], ['gray6', 'gray2'], ['orange', 'gray1']],
-          \ 'inactive': [['gray7', 'gray2'], ['gray7', 'gray2'], ['gray7', 'gray2']],
-    \ }
-  endif
+  let g:colorpal_palette = g:{s:load_palette}_palette
+
+
+  let g:colorpal_airline = {
+        \ 'normal': [['#282828', 'green'], ['gray6', 'gray2'], ['green,light', 'gray1']],
+        \ 'insert': [['gray1', 'cyan'], ['gray6', 'gray2'], ['orange', 'gray1']],
+        \ 'replace': [['gray1', 'red'], ['gray6', 'gray2'], ['orange', 'gray1']],
+        \ 'visual': [['gray1', 'violet'], ['gray6', 'gray2'], ['orange', 'gray1']],
+        \ 'inactive': [['gray7', 'gray2'], ['gray7', 'gray2'], ['gray7', 'gray2']],
+  \ }
 
   colorscheme custom_gruvbox
 elseif g:my_current_scheme ==? 'tender'

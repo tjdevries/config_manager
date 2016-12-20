@@ -171,6 +171,9 @@ endfunction
 
 let s:git_helper = 'gita'
 function! my_stl#get_git() abort
+  " TODO: Make it so this doesn't have to be called int the %{} syntax
+  " I want it to be called and be able to add highlighting to the item.
+  " Could modify the return values and add the required highlighting.
   let stl = ''
 
   " Check for git information
@@ -187,7 +190,15 @@ function! my_stl#get_git() abort
       let stl .= "\ue0a0 "
       let stl .= gita#statusline#format('%ln')[:5]
       let stl .= '/'
-      let stl .= gita#statusline#format('%lb')[:5]
+      
+      let l:branch_name = gita#statusline#format('%lb')[:5]
+
+      if l:branch_name ==? 'master'
+        let stl .= l:branch_name
+      else
+        let stl .= l:branch_name
+        " let stl .= '%#WarningMsg#' . l:branch_name . '%0*'
+      endif
     endif
 
 

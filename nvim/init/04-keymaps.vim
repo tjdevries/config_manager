@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 nnoremap <Up>          :echom "--> k <-- "<CR>
 nnoremap <Down>        :echom "--> j <-- "<CR>
 nnoremap <Right> gt
@@ -144,3 +146,6 @@ endif
 nnoremap <leader>sf :call tj#list_occurrences()<CR>
 " List occurences from a custom file
 nnoremap <leader>scf :call tj#list_occurrences(input('Search regex: '))<CR>
+
+" Shrug ¯\_(ツ)_/¯
+inoremap ,shrug ¯\_(ツ)_/¯
