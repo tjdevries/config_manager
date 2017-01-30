@@ -32,13 +32,13 @@ source "$ZPLUG_HOME/init.zsh"
 zplug 'zplug/zplug', at:expand_glob
 
 # zplug "lib/history", from:oh-my-zsh, nice:0
-zplug "lib/completion", from:oh-my-zsh, nice:0
-zplug "lib/directories", from:oh-my-zsh, nice:0
-zplug "lib/git", from:oh-my-zsh, nice:0
+zplug "lib/completion", from:oh-my-zsh, defer:0
+zplug "lib/directories", from:oh-my-zsh, defer:0
+zplug "lib/git", from:oh-my-zsh, defer:0
 # zplug "lib/theme-and-appearance", from:oh-my-zsh, nice:0
 
-zplug 'zsh-users/zsh-autosuggestions', nice:-20
-zplug 'zsh-users/zsh-completions', nice:19
+zplug 'zsh-users/zsh-autosuggestions', defer:3
+zplug 'zsh-users/zsh-completions', defer:3
 # zplug 'zsh-users/zsh-syntax-highlighting', nice:19
 
 # Nice gitignore helper
@@ -49,8 +49,8 @@ zplug 'djui/alias-tips', use:"alias-tips.plugin.zsh"
 zplug 'joepvd/zsh-hints'
 
 # Async helper
-zplug 'mafredri/zsh-async'
-zplug 'intelfx/pure'
+zplug 'mafredri/zsh-async', defer:2
+zplug 'intelfx/pure', defer:3
 
 zplug load
 
