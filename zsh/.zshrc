@@ -135,7 +135,7 @@ install_zplug() {
 # }}}
 # {{{1 Language specific configuration
 # {{{2 Go
-if [ -d /usr/local/go/bin ]; then
+if [ -d /usr/local/go/bin/ ]; then
     export GOPATH=~/go
     export GOBIN=$GOPATH/bin
     export PATH=$PATH:/usr/local/go/bin:$GOBIN
@@ -152,6 +152,12 @@ if [ -f ~/.rvm/scripts/rvm ]; then
 else
   export HAS_RVM=false
 fi
+# }}}
+# {{{ Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+# }}}
+# {{{ NPM configuratoin
+export PATH=~/.npm-global/bin:$PATH
 # }}}
 # }}}
 #

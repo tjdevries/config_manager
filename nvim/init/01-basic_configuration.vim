@@ -13,11 +13,18 @@ if has('unix')
   " ... 
   "
   " Something like that
-  if executable('~/.pyenv/versions/neovim2/bin/python')
+  if glob('~/.pyenv/versions/neovim2/bin/python') != ''
     let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
     let g:python2_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
+  else
+    let g:python_host_prog = 'python'
+    let g:python2_host_prog = 'python2'
+  endif
+
+  if glob('~/.pyenv/versions/neovim3/bin/python') != ''
     let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
   else
+    let g:python3_host_prog = 'python3'
   endif
 else
   " Will need to figure out the best way to do this once I start using windows again

@@ -66,3 +66,7 @@ nnoremap ,+ :call <SID>change_gui_font_size('plus', v:false)<CR>
 nnoremap ,- :call <SID>change_gui_font_size('minus', v:false)<CR>
 nnoremap ,,f :call <SID>change_gui_font()<CR>
 
+" Toggle maximizing the window
+nnoremap ,wm :call GuiWindowMaximized(!g:GuiWindowMaximized)<CR>
+" Toggle full screening the window
+nnoremap ,wf :call GuiWindowFullScreen(!g:GuiWindowFullScreen)<CR>

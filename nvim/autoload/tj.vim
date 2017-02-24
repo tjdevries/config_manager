@@ -144,4 +144,4 @@ function! tj#vimgrep_from_root(...) abort
   " call execute(':GrepperAg ' . expand('<cword>') . ' ' . tj#find_project_root() . '**')
 endfunction
 
-nmap <C-f> :call tj#vimgrep_from_root()<CR>
+" nmap <C-f> :call tj#vimgrep_from_root()<CR>

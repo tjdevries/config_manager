@@ -5,10 +5,17 @@ nnoremap <Down>        :echom "--> j <-- "<CR>
 nnoremap <Right> gt
 nnoremap <Left>  gT
 
-inoremap <Up>     <C-o>:echom "--> k <-- "<CR>
+inoremap <Up>     <C-o>:echom "--> k <-- "<CR> """ don't let me move around like that...
 inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
 inoremap <Right>  <C-o>:echom "--> l <-- "<CR>
 inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
+
+" call describe("mode", "remap", ...)
+" idescribe <Up>  " description.
+" inoremap <expr> <describe> my mapping here other stuff<CR> """ asdf
+" inoremap <describe> asdf my mapping here other stuff<CR>
+"       \ <description> asdf
+
 
 " Set kj to be escape in insert mode
 inoremap kj <esc>

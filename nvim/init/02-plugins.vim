@@ -104,6 +104,10 @@ let g:vim_markdown_fenced_languages = [
 " }}}
 " Neovim development {{{
 Plug 'tweekmonster/nvim-api-viewer'
+Plug 'tweekmonster/nvimdev.nvim'
+" }}}
+" Neovim-qt {{{
+Plug 'equalsraf/neovim-gui-shim'
 " }}}
 " Nyaovim Plugins {{{
 Plug 'rhysd/nyaovim-markdown-preview'
@@ -155,6 +159,8 @@ if has('clipboard')
     Plug 'Shougo/neoyank.vim'           " Yank ring for my uniter
 endif
 " }}}
+"
+Plug 'Shougo/deol.nvim'
 " Deoplete  {{{
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/context_filetype.vim'
@@ -166,6 +172,7 @@ Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
 Plug 'Shougo/neco-vim'                             "  Vim completion
 Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
 Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
+Plug 'eagletmt/neco-ghc'
 " Plug 'zchee/deoplete-clang'                        "  C-Family languages
 " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
@@ -182,7 +189,7 @@ endif
 Plug 'mkitt/tabline.vim'
 " }}}
 " Syntax Checkers {{{
-" Plug 'benekastah/neomake'       " A better linter than syntastic?
+Plug 'benekastah/neomake'       " A better linter than syntastic?
 Plug 'alfredodeza/pytest.vim'   " Pytest helper
 " }}}
 " Syntax Highlighters {{{
@@ -206,13 +213,11 @@ elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 endif
 
-if v:false
-    Plug 'majutsushi/tagbar'
-endif
+" Plug 'majutsushi/tagbar'
 " }}}
 " Testing my plugins {{{
+Plug 'tjdevries/descriptive_maps.vim'
 if v:false
-    Plug 'tjdevries/descriptive_maps.vim'
     Plug 'tjdevries/vim-vertex'
     Plug '~/Git/a_highlighter.nvim/'
     Plug 'tjdevries/a_highlighter.nvim'
@@ -244,6 +249,9 @@ Plug 'nathanaelkane/vim-indent-guides'                       " See indentation g
 " }}}
 " Undo plugins {{{
 Plug 'sjl/gundo.vim'                " Undo helper
+" }}}
+" {{{ Vim Plugins
+Plug 'tweekmonster/nvim-api-viewer'
 " }}}
 " Web based plugins {{{
 Plug 'mattn/webapi-vim'
