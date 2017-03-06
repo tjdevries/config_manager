@@ -189,7 +189,7 @@ endif
 Plug 'mkitt/tabline.vim'
 " }}}
 " Syntax Checkers {{{
-Plug 'benekastah/neomake'       " A better linter than syntastic?
+" Plug 'benekastah/neomake'       " A better linter than syntastic?
 Plug 'alfredodeza/pytest.vim'   " Pytest helper
 " }}}
 " Syntax Highlighters {{{

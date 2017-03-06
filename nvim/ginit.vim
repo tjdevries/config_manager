@@ -62,11 +62,11 @@ function! s:change_gui_font_size(action, global) abort
   endtry
 endfunction
 
-nnoremap ,+ :call <SID>change_gui_font_size('plus', v:false)<CR>
-nnoremap ,- :call <SID>change_gui_font_size('minus', v:false)<CR>
-nnoremap ,,f :call <SID>change_gui_font()<CR>
+nnoremap <leader>+ :call <SID>change_gui_font_size('plus', v:false)<CR>
+nnoremap <leader>- :call <SID>change_gui_font_size('minus', v:false)<CR>
+nnoremap <leader><leader>f :call <SID>change_gui_font()<CR>
 
 " Toggle maximizing the window
-nnoremap ,wm :call GuiWindowMaximized(!g:GuiWindowMaximized)<CR>
+nnoremap <leader>wm :call GuiWindowMaximized(!g:GuiWindowMaximized)<CR>
 " Toggle full screening the window
-nnoremap ,wf :call GuiWindowFullScreen(!g:GuiWindowFullScreen)<CR>
+nnoremap <leader>wf :call GuiWindowFullScreen(!g:GuiWindowFullScreen)<CR>
