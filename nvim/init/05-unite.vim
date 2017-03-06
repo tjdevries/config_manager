@@ -115,7 +115,7 @@ else
         \ ]
 
   " Add all the init files that I normally have here.
-  let s:init_config_files = tj#unite_file_lister(g:_vimrc_base . '/init', 'i ↳')
+  let s:init_config_files = tj#unite_file_lister(g:_vimrc_base . '/init', '  ↳')
   call extend(s:menus.init_vim.file_candidates, s:init_config_files)
 
   let s:menus.zsh = {

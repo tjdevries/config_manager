@@ -1,8 +1,7 @@
 " My nvim-qt specific configuration
 
 if has('win32')
-  Guifont Fira Mono Medium for Powerline:h12
-  " Guifont Inconsolata for Powerline:h12
+  Guifont! Consolas:h11
 else
   Guifont Fira Mono Medium for Powerline:h10
 endif

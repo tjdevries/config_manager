@@ -3,7 +3,7 @@
 " Thanks to @tweekmonster for thinking of this.
 " I've provided some modifications.
 
-let g:_vimrc_base = '~/.config/nvim'
+let g:_vimrc_base = expand('<sfile>:p:h')
 let g:_vimrc_plugins = g:_vimrc_base.'/plugins'
 let g:_vimrc_init = isdirectory(g:_vimrc_plugins)
 
@@ -12,7 +12,7 @@ let g:_vimrc_sources = get(g:, '_vimrc_sources', {})
 if has('unix')
     let g:plugin_path = '~/.vim/plugged'
 else
-    let g:plugin_path = 'C:/neovim/'
+    let g:plugin_path = expand('$HOME') . '\nvim_plug'
 endif
 
 " Source all scripts in a directory

@@ -1,4 +1,11 @@
 
+if has('win32')
+  let s:os_sep = '\\'
+else
+  let s:os_sep = '/'
+endif
+
+
 ""
 " Selectively highlight through several specific options
 " to set the color for a specific group
@@ -39,8 +46,8 @@ function! tj#unite_file_lister(directory, prefix, ...) abort
   let search_dir = expand(a:directory)
 
   let unite_list = []
-  for filename in sort(glob(search_dir . '/' . extension, 0, 1))
-    let file_tail = split(filename, '/')[-1]
+  for filename in sort(glob(search_dir . s:os_sep . extension, 0, 1))
+    let file_tail = split(filename, s:os_sep)[-1]
     call add(unite_list, [a:prefix . file_tail, filename])
   endfor
 
@@ -144,4 +151,4 @@ function! tj#vimgrep_from_root(...) abort
   " call execute(':GrepperAg ' . expand('<cword>') . ' ' . tj#find_project_root() . '**')
 endfunction
 
-" nmap <C-f> :call tj#vimgrep_from_root()<CR>
+nmap <C-f> :call tj#vimgrep_from_root()<CR>

@@ -121,8 +121,8 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
     return '[No Name]'
   endif
 
-  let file_name = split(expand('%'), '/')
-  let my_pwd = split(substitute(getcwd(winnr(), tabpagenr()), "\n", '', 'g'), '/')
+  let file_name = maktaba#path#Split(expand('%'))
+  let my_pwd = maktaba#path#Split(substitute(getcwd(winnr(), tabpagenr()), "\n", '', 'g'))
   let result_name = ''
 
   let index = 0
@@ -142,7 +142,7 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
       let result_name .= '../'
     endfor
 
-    " TODO: Try and prepend a './' when we don't have relative paths downard
+    " TODO: Try and prepend a './' when we don't have relative paths downward
     " if len(my_pwd) - index == 1
     "   let result_name .= './'
     " endif
