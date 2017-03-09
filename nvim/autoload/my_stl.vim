@@ -187,7 +187,9 @@ function! my_stl#get_git() abort
           let stl .= fugitive#head(8)
       endif
     elseif s:git_helper ==# 'gita'
-      let stl .= "\ue0a0 "
+      if !has('win32')
+        let stl .= "\ue0a0 "
+      endif
       let stl .= gita#statusline#format('%ln')[:5]
       let stl .= '/'
       

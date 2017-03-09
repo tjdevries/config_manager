@@ -41,3 +41,12 @@ function! notes#smart_list() abort
   echo s:is_bullet_point(getline('.'))
   echo s:is_only_bullet_point(getline('.'))
 endfunction
+
+
+function! notes#cd_move_further() abort
+  cd ..
+endfunction
+
+function! notes#cd_move_closer() abort
+
+endfunction

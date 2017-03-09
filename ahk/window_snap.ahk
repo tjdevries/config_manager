@@ -1,5 +1,10 @@
 #SingleInstance force
 
+#include %A_ScriptDir%\util.ahk
+
+global default_numerator := 2
+global default_denominator := 3
+
 GetMonitor(hwnd := 0) {
     ; If no hwnd is provided, use the Active Window
     if (hwnd) 
@@ -40,36 +45,73 @@ GetMonitor(hwnd := 0) {
     return idxPrimary
 }
 
+VerticalSplit(direction,numerator,denominator,error) {
+    ; direction: 0 for up, 1 for down
+    ; numerator: The numerator of the fraction of the screen to take up
+    ; denominator: The denominator of the fraction of the screen to take up
+    ; error: Some fudge value to make it actually get to the edges of the screenes.
+    ;
+    ; Example: VerticalSplit(0,1,2,7) -> Split the top half of the screen with an error of 7 pixels
+    WinGetPos, X, Y, W, H, A
+    WinGetTitle, Title, A
 
-; Move window up (Windows + Shift + UP ... NOTE must maximize window first)
+    ; MsgBox, A is "%Title%".
+    ms_window := IsMSWindow(Title)
+
+    MonitorNumber := GetMonitor()
+
+    ; At one point I used monitor work area for this, but I don't think it's required.
+    ; SysGet, Mon, MonitorWorkArea, %MonitorNumber%
+
+    SysGet, Mon, MonitorWorkArea, %MonitorNumber%
+
+    ; Optional debug info
+    ; MsgBox, Left: %MonLeft% -- Top: %MonTop% -- Right: %MonRight% -- Bottom %MonBottom%. %X% %Y% %W% %H% %A%
+
+    ; Calculate important size items
+    height := abs(MonTop - MonBottom) * numerator / denominator
+    top := (1 - direction) * MonTop + direction * (MonBottom - height)
+
+    ; Get the class of Window
+    if (ms_window)
+    {
+        width := abs(MonRight - MonLeft)
+        left := MonLeft
+    }
+    else
+    {
+        width := abs(MonRight - MonLeft) + (error * 1)
+        left := MonLeft - error
+    }
+    WinMove,A,,left,top,width,height
+
+    return
+}
+
+
+; Move window up (Windows + Shift + UP)
 +#Up::
-    WinGetPos,X,Y,W,H,A,,,
-    WinGetPos,TX,TY,TW,TH,ahk_class Shell_TrayWnd,,,
+    global default_numerator, default_denominator
 
-    MonitorNumber := GetMonitor()
-    SysGet, Mon, MonitorWorkArea, %MonitorNumber%
-    ; MsgBox, Left: %MonLeft% -- Top: %MonTop% -- Right: %MonRight% -- Bottom %MonBottom%. %X% %Y% %W% %H% %A%
-
-    ; Calculate important size items
-    error := 7
-    height := abs(MonTop - MonBottom)/2
-    width := abs(MonRight - MonLeft) + error * 2
-    WinMove,A,,MonLeft-error,MonTop,width,height
+    VerticalSplit(0,default_numerator,default_denominator,7)
 return
 
-; Move window down (Windows + Shift + DOWN ... NOTE must maximize window first)
+; Move window down (Windows + Shift + DOWN)
 +#Down::
-    WinGetPos,X,Y,W,H,A,,,
-    WinMaximize
-    WinGetPos,TX,TY,TW,TH,ahk_class Shell_TrayWnd,,,
+    global default_numerator, default_denominator
 
-    MonitorNumber := GetMonitor()
-    SysGet, Mon, MonitorWorkArea, %MonitorNumber%
-    ; MsgBox, Left: %MonLeft% -- Top: %MonTop% -- Right: %MonRight% -- Bottom %MonBottom%. %X% %Y% %W% %H% %A%
-
-    ; Calculate important size items
-    error := 7
-    height := abs(MonTop - MonBottom)/2
-    width := abs(MonRight - MonLeft) + error * 2
-    WinMove,A,,MonLeft-error,MonTop+height,width,height
+    VerticalSplit(1,1,default_denominator,7)
 return
+
++#Left::
+    global default_numerator, default_denominator
+    EnvAdd, default_numerator, -1
+    EnvAdd, default_denominator, -1
+return
+
++#Right::
+    global default_numerator, default_denominator
+    EnvAdd, default_numerator, 1
+    EnvAdd, default_denominator, 1
+return
+

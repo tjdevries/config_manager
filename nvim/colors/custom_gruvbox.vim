@@ -205,3 +205,6 @@ function! g:Color_printer() abort
   endfor
 endfunction
 " }}}
+" {{{ HTML & Markdown
+CPHL htmlH1 blue,dark - bold
+" }}}

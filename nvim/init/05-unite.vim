@@ -110,13 +110,16 @@ else
         \ ['  ginit.vim', '~/.config/nvim/ginit.vim'],
         \ ['after/', '~/.config/nvim/after/'],
         \ ['autoload/', '~/.config/nvim/autoload/'],
+        \ ]
+
+  call extend(s:menus.init_vim.file_candidates, tj#unite_file_lister(g:_vimrc_base . '/autoload', '  ↳'))
+
+  let s:menus.init_vim.file_candidates += [
         \ ['colors/custom_gruvbox', '~/.config/nvim/colors/custom_gruvbox.vim'],
         \ ['init/', '~/.config/nvim/init/'],
         \ ]
 
-  " Add all the init files that I normally have here.
-  let s:init_config_files = tj#unite_file_lister(g:_vimrc_base . '/init', '  ↳')
-  call extend(s:menus.init_vim.file_candidates, s:init_config_files)
+  call extend(s:menus.init_vim.file_candidates, tj#unite_file_lister(g:_vimrc_base . '/init', '  ↳'))
 
   let s:menus.zsh = {
         \ 'description': 'Edit your import zsh configuration'
