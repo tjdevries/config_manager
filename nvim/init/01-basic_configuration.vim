@@ -29,6 +29,7 @@ if has('unix')
 else
   " Will need to figure out the best way to do this once I start using windows again
   let g:python_host_prog = 'C:\python'
+  " let g:loaded_ruby_provider = 1
 endif
 
 filetype plugin indent on

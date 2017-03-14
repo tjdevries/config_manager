@@ -169,7 +169,7 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
   " return '%f'
 endfunction
 
-let s:git_helper = 'gita'
+let s:git_helper = 'gina'
 function! my_stl#get_git() abort
   " TODO: Make it so this doesn't have to be called int the %{} syntax
   " I want it to be called and be able to add highlighting to the item.
@@ -177,16 +177,17 @@ function! my_stl#get_git() abort
   let stl = ''
 
   " Check for git information
-  if tj#buffer_cache('_stl_git_file', 'tj#is_git_file()')
-    if s:git_helper ==# 'fugitive'
+  if tj#buffer_cache('_stl_git_file', 'tj#is_git_file()') 
+    " {{{  Git status
+    if s:git_helper ==# 'fugitive'  " {{{
       if exists('*fugitive#head') && (
                   \ exists('b:git_dir')
                   \ || len(fugitive#head(8)) > 0
                   \ )
           let stl .= "\ue0a0 "
           let stl .= fugitive#head(8)
-      endif
-    elseif s:git_helper ==# 'gita'
+      endif " }}}
+    elseif s:git_helper ==# 'gita'  " {{{
       if !has('win32')
         let stl .= "\ue0a0 "
       endif
@@ -201,8 +202,11 @@ function! my_stl#get_git() abort
         let stl .= l:branch_name
         " let stl .= '%#WarningMsg#' . l:branch_name . '%0*'
       endif
-    endif
-
+      " }}}
+    elseif s:git_helper ==# 'gina'  " {{{
+      " TODO: Waiting for gina to have git status line
+    " }}}
+    endif  " }}}
 
     if exists('*GitGutterGetHunkSummary')
         let results = GitGutterGetHunkSummary()

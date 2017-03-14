@@ -72,7 +72,9 @@ if has('python')
 endif
 " }}}
 " Git Based Plugins {{{
-Plug 'lambdalisue/vim-gita'
+
+" Plug 'lambdalisue/vim-gita'
+Plug 'lambdalisue/gina.vim'  " gita replacement
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim'
@@ -216,8 +218,8 @@ endif
 " Plug 'majutsushi/tagbar'
 " }}}
 " Testing my plugins {{{
-Plug 'tjdevries/descriptive_maps.vim'
 if v:false
+    Plug 'tjdevries/descriptive_maps.vim'
     Plug 'tjdevries/vim-vertex'
     Plug '~/Git/a_highlighter.nvim/'
     Plug 'tjdevries/a_highlighter.nvim'
