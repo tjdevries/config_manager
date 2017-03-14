@@ -215,7 +215,7 @@ elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 endif
 
-" Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 " }}}
 " Testing my plugins {{{
 if v:false
