@@ -265,3 +265,25 @@ function! my_stl#get_tag_name() abort
 
   return w:_my_stl_tag_name
 endfunction
+
+function! my_stl#system_to_buf_var(variable, system_command) abort
+  let b:{a:variable} = 'checking'
+
+  let b:_stl_job_id_{a:variable} = jobstart(a:system_command, {
+        \ 'on_stdout': {job_id, result, event ->
+          \ execute('let b:' . a:variable . ' = result') },
+        \ })
+
+  return b:stl_job_id
+endfunction
+
+" Wait one minute
+" let g:circle_wait_time = 60
+" call my_stl#system_to_buf_var('circle_status', [
+"       \ 'while [ 1 ]',
+"       \ 'do',
+"         \ 'circle status > /dev/null',
+"         \ 'if [ $? -eq 0 ]; then; echo "pass"; else; echo "fail"; fi',
+"         \ 'sleep ' . string(g:circle_wait_time),
+"       \ 'done',
+"       \ ])
