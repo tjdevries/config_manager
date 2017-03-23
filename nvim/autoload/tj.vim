@@ -66,8 +66,11 @@ endfunction
 ""
 " Helper to get autload functions easily
 function! tj#easy_autoload() abort
-  if expand('%') =~# 'autoload'
-    let autoload_name = split(expand('%'), 'autoload/')[-1]
+  if expand('%:p') =~# 'autoload'
+    " Santize from windows
+    let autoload_name = substitute(expand('%:p'), '\\', '/', 'g')
+
+    let autoload_name = split(autoload_name, 'autoload/')[-1]
     let autoload_name = substitute(autoload_name, '\.vim', '', 'g')
     let autoload_name = substitute(autoload_name, '/', '#', 'g')
     let autoload_name = autoload_name . '#'
@@ -80,13 +83,33 @@ endfunction
 ""
 " Determine if we're in a git repository
 function! tj#is_git_file() abort
-  let system_reply = system('( cd ' . shellescape(expand('%:h')) . '; git ls-files ' . shellescape(expand('%:t')) . ' --error-unmatch;)')
+  let file_location = expand('%:p:h')
+  let file_name = expand('%:t')
 
-  " If fatal is in the name, then it's not in a git repo
-  " If error is in the name, then it's not currently tracked
-  " TODO: Use v:shell_error?
-  if system_reply =~? 'fatal: Not a git repo' || 
-        \ system_reply =~? 'error: pathspec'
+  let system_command = ''
+  if has('win32')
+    let system_command .= 'powershell.exe -Command '
+  else
+    let system_command .= '( '
+  endif
+
+  let system_command .= 'cd '
+        \ . file_location
+        \ . '; git ls-files '
+        \ . file_name
+        \ . ' --error-unmatch;'
+
+  if has('win32')
+  else
+    let system_command .= ' )'
+  endif
+
+  let system_reply = system(system_command)
+
+  " Debug reply
+  " return [file_location, file_name, system_command, system_reply, v:shell_error]
+
+  if v:shell_error
     return v:false
   else
     return v:true
@@ -95,12 +118,33 @@ endfunction
 
 ""
 " Simple caching for buffer variables
+" Can take a timeout, to update casually
 " TODO: Maybe make this take in a argument for the scope?
-function! tj#buffer_cache(name, function) abort
+function! tj#buffer_cache(name, function, ...) abort
+  " Set the timeout
+  if a:0 > 0
+    let timeout = a:1
+    let last_evaluated = get(b:, a:name . '_evaluated', 0)
+  else
+    let timeout = v:false
+  endif
+
   if exists('b:' . a:name)
+    if timeout
+      if (localtime() - last_evaluated) > timeout
+        let b:{a:name} = eval(a:function)
+        let b:{a:name}_evaluated = localtime()
+      endif
+    endif
+
     return b:{a:name}
   else
     let b:{a:name} = eval(a:function)
+
+    if timeout
+      let b:{a:name}_evaluated = localtime()
+    endif
+
     return b:{a:name}
   endif
 endfunction
@@ -116,7 +160,7 @@ function! tj#list_occurrences(...) abort
 
   let l:objects = split(execute('g/' . l:search_string . '/p'), "\n")
   let l:loc_objects = []
-  
+
   for l:obj in l:objects
     call add(l:loc_objects, {
           \ 'bufnr': bufnr('%'),

@@ -176,6 +176,7 @@ function! my_stl#get_git() abort
       " }}}
     elseif s:git_helper ==# 'gina'  " {{{
       " TODO: Waiting for gina to have git status line
+      let stl .= gina#component#repo#preset('fancy')
     " }}}
     endif  " }}}
 
