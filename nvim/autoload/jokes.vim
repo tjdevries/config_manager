@@ -7,4 +7,5 @@ function! jokes#random_tabstop()
   return "\<tab>"
 endfunction
 
+" Really mess with someone when they press tab
 " inoremap <expr> <tab> jokes#random_tabstop()

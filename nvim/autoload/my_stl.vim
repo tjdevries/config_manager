@@ -1,7 +1,7 @@
 scriptencoding 'utf-8'
 
 " Dictionary of type:
-" mode_result: ['long_string', 'short_string', 'highlight type']
+" mode_result: ['long_string', 'short_string', optional - 'highlight type']
 let g:currentmode = {
     \ 'n'  : ['Normal', 'N', 'NormalMode'],
     \ 'no' : ['N·OpPd', '' ],
@@ -27,6 +27,9 @@ let g:currentmode = {
 let s:current_mode_color = ''
 let s:left_sep = ' ❯❯ '
 let s:right_sep = ' ❮❮ '
+let s:long_name = v:false
+let s:git_helper = 'gina'
+let s:tags_enabled = v:true
 
 function! my_stl#get_mode_highlight() abort
 
@@ -35,12 +38,12 @@ endfunction
 function! my_stl#get_mode() abort
     let l:m = mode()
 
-    " return l:m
-
+    " Can have a longer name, with more info, or just a one letter name
+    let l:mode_index = s:long_name ? 0 : 1
     if has_key(g:currentmode, l:m)
-      let l:mode = g:currentmode[l:m][1]
+      let l:mode = g:currentmode[l:m][l:mode_index]
     else
-      let l:mode = g:currentmode['n']
+      let l:mode = g:currentmode['n'][l:mode_index]
     endif
 
     if len(l:mode) > 1
@@ -66,10 +69,6 @@ function! my_stl#add_right_separator() abort
   return s:right_sep
 endfunction
 
-function! my_stl#set_up_colors() abort
-  " exe 'CPHL User' . string(a:num) . ' ' . l:colors[a:num - 1][0] . ' ' . l:colors[a:num - 1][1]
-endfunction
-
 function! my_stl#get_user_color(mode) abort
   if len(g:currentmode[a:mode]) > 2
     let l:color_code = g:currentmode[a:mode][2]
@@ -83,31 +82,7 @@ function! my_stl#get_user_color(mode) abort
     let l:color_code = 9
     return '%' . l:color_code . '*'
   endif
-
 endfunction
-
-function! my_stl#change_user_color(num) abort
-  if (mode() =~# '\v(n|no)')
-    " exe 'hi StatusLine ctermfg=008'
-    " exe 'highlight User' . string(a:num) . ' guibg=blue'
-    let l:colors = g:colorpal_airline['normal']
-  elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
-    " exe 'hi! StatusLine ctermfg=005'
-  elseif (mode() ==# 'i')
-    " exe 'hi! StatusLine ctermfg=004'
-    " exe 'highlight User' . string(a:num) . ' guibg=red'
-    " exe 'CPHL User' . string(a:num) . ' MyInsert MyInsert MyInsert'
-    let l:colors = g:colorpal_airline['insert']
-  else
-    " exe 'hi! StatusLine ctermfg=006'
-  endif
-
-
-  " return ''
-  return '%' . string(a:num) . '*'
-endfunction
-
-" echo my_stl#get_file_name(2, 2)
 
 function! my_stl#get_file_name(name_length, relative_depth) abort
   " Quit for terminals
@@ -157,19 +132,15 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
     let result_name = expand('%')
   endif
 
+  " I like UNIX lines :)
+  let result_name = substitute(result_name, '\\', '/', 'g')
 
   " a:name_length letters, then any word chacters followed by a slash
   " Replace the first string with that string and "/"
   " Do it for all of them
   return substitute(result_name, '\(' . repeat('[^/]', a:name_length) . '\)[^/]*/', '\1/', 'g')
-        " \ . ' ' .
-        " \ winnr() . ' ' .
-        " \ tabpagenr() . ' ' .
-        " \ getcwd(winnr(), tabpagenr())
-  " return '%f'
 endfunction
 
-let s:git_helper = 'gina'
 function! my_stl#get_git() abort
   " TODO: Make it so this doesn't have to be called int the %{} syntax
   " I want it to be called and be able to add highlighting to the item.
@@ -234,6 +205,10 @@ function! my_stl#get_git() abort
 endfunction
 
 function! my_stl#get_tag_name() abort
+  if !s:tags_enabled
+    return ''
+  endif
+
   if !exists('w:_my_stl_tag_name')
     let w:_my_stl_tag_name = ''
   endif
@@ -287,3 +262,31 @@ endfunction
 "         \ 'sleep ' . string(g:circle_wait_time),
 "       \ 'done',
 "       \ ])
+
+
+" {{{ Old functions
+function! my_stl#change_user_color(num) abort
+  if (mode() =~# '\v(n|no)')
+    " exe 'hi StatusLine ctermfg=008'
+    " exe 'highlight User' . string(a:num) . ' guibg=blue'
+    let l:colors = g:colorpal_airline['normal']
+  elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
+    " exe 'hi! StatusLine ctermfg=005'
+  elseif (mode() ==# 'i')
+    " exe 'hi! StatusLine ctermfg=004'
+    " exe 'highlight User' . string(a:num) . ' guibg=red'
+    " exe 'CPHL User' . string(a:num) . ' MyInsert MyInsert MyInsert'
+    let l:colors = g:colorpal_airline['insert']
+  else
+    " exe 'hi! StatusLine ctermfg=006'
+  endif
+
+
+  " return ''
+  return '%' . string(a:num) . '*'
+endfunction
+
+function! my_stl#set_up_colors() abort
+  " exe 'CPHL User' . string(a:num) . ' ' . l:colors[a:num - 1][0] . ' ' . l:colors[a:num - 1][1]
+endfunction
+" }}}

@@ -201,6 +201,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', '
 Plug 'elzr/vim-json', { 'for': 'json' }                                                        " json
 Plug 'goodell/vim-mscgen'                                                                      " mscgen
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }                                              " yaml
+Plug 'PProvost/vim-ps1'
 
 " Too large or not helpful
 " Plug 'sheerun/vim-polyglot'                         " All the colors!

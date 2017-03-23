@@ -3,7 +3,7 @@
 if has('win32')
   Guifont! Consolas:h11
 else
-  Guifont Fira Mono Medium for Powerline:h10
+  Guifont! Fira Mono Medium for Powerline:h10
 endif
 
 " Always use true colors in nvim-qt
@@ -55,7 +55,7 @@ function! s:change_gui_font_size(action, global) abort
   echo s:current_font_name . ':h' . string(g:nvimqt_font)
 
   try
-    call execute('Guifont ' . s:current_font_name . ':h' . string(g:nvimqt_font))
+    call execute('Guifont! ' . s:current_font_name . ':h' . string(g:nvimqt_font))
   catch
     echo s:current_font_name . ':h' . string(g:nvimqt_font) . ' -> failed'
   endtry

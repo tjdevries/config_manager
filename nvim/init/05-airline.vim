@@ -1,5 +1,4 @@
-
-if g:airline_enabled
+if g:airline_enabled " {{{
     let g:airline_powerline_fonts=1
 
     " TODO: Experiment a little more with some of these sections.
@@ -18,7 +17,8 @@ if g:airline_enabled
     let g:airline#extensions#tabline#buffer_idx_mode = 1 " Leader # navigation
 
     nnoremap <leader>at :AirlineToggle<CR>
-else
+    " }}}
+else " {{{ My statusline
     let s:show_date = v:false
     let s:show_git  = v:true
 
@@ -83,5 +83,4 @@ else
         return l:str_stl
     endfunction
     nnoremap <leader>at :set statusline=%!SetStatusline()<CR>
-endif
-
+endif  " }}}

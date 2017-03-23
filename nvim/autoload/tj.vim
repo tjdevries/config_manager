@@ -9,6 +9,7 @@ endif
 ""
 " Selectively highlight through several specific options
 " to set the color for a specific group
+" Has pretty much been replaced by the cooler colorpal
 "
 " @arg style: A string naming the highlight style
 " @arg list_of_groups: A list of strings, naming the group to apply
@@ -23,6 +24,7 @@ endfunction
 
 ""
 " A dictionary containing key: value pairs to run through my_highlighter
+" Has pretty much been replaced by the cooler colorpal
 function! tj#highlight_customize(color_dict) abort
   for my_color in keys(a:color_dict)
     call tj#my_highlighter(my_color, a:color_dict[my_color])
@@ -82,6 +84,7 @@ function! tj#is_git_file() abort
 
   " If fatal is in the name, then it's not in a git repo
   " If error is in the name, then it's not currently tracked
+  " TODO: Use v:shell_error?
   if system_reply =~? 'fatal: Not a git repo' || 
         \ system_reply =~? 'error: pathspec'
     return v:false
@@ -150,5 +153,3 @@ function! tj#vimgrep_from_root(...) abort
   " call execute(':GrepperAg ' . expand('<cword>') . ' ' . tj#find_project_root() . '**')
   " call execute(':GrepperAg ' . expand('<cword>') . ' ' . tj#find_project_root() . '**')
 endfunction
-
-nmap <C-f> :call tj#vimgrep_from_root()<CR>

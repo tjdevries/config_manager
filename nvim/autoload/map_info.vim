@@ -1,3 +1,8 @@
+" TODO: Move this to a plugin
+" TODO: Wait for myself to finish the maps api and then descriptions in neovim
+" HEAD
+" TODO: Figure out how to add other descriptions to items.
+
 function! s:get_abbrs() abort
   return split(execute('abbr'), "\n")
 endfunction

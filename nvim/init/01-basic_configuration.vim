@@ -29,6 +29,17 @@ if has('unix')
 else
   " Will need to figure out the best way to do this once I start using windows again
   let g:python_host_prog = 'C:\python'
+  let l:python_possibilities = [
+        \ 'C:\Program Files\Python35\python.exe',
+        \ ]
+
+  for py_exe in l:python_possibilities
+    if executable(py_exe)
+      let g:python3_host_prog = py_exe
+      break
+    endif
+  endfor
+
   " let g:loaded_ruby_provider = 1
 endif
 
