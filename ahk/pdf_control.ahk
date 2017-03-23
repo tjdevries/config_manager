@@ -1,42 +1,45 @@
 #SingleInstance force
 
+PDFMove(direction) {
+    ; Get the current id
+    WinGet, current_id, ID, A
 
-MoveDown() {
-    ; Alt-tab
-    Send !{Tab}
-    sleep, 100
+    ; Get the pdf id
+    pdf_id := FindPDFWindow()
+    WinActivate, ahk_id %pdf_id%
 
-    ; down
-    Send {Down}
-    sleep, 30
+    ; move direction
+    if (direction == "down") {
+        Send {PgDn}
+    }
 
-    ; Alt-tab
-    Send !{Tab}
-    sleep, 100
+    if (direction == "up") {
+        Send {PgUp}
+    }
 
+    ; Register the keypress, then go back
+    ; Surely you can wait 10 ms
+    sleep, 10
+
+    ; Go back
+    WinActivate, ahk_id %current_id%
 }
 
-MoveUp() {
-    ; Alt-tab
-    Send !{Tab}
-    sleep, 100
 
-    ; down
-    Send {Up}
-    sleep, 30
+PDFMoveDown() {
+    PDFMove("down")
+}
 
-    ; Alt-tab
-    Send !{Tab}
-    sleep, 100
-
+PDFMoveUp() {
+    PDFMove("up")
 }
 
 
 ^+J::
-    MoveDown()
+    PDFMoveDown()
 return
 
 ^+K::
-    MoveUp()
+    PDFMoveUp()
 return
 

@@ -7,7 +7,7 @@ global default_denominator := 3
 
 GetMonitor(hwnd := 0) {
     ; If no hwnd is provided, use the Active Window
-    if (hwnd) 
+    if (hwnd)
     {
         WinGetPos, winX, winY, winW, winH, ahk_id %hwnd%
     }
