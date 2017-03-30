@@ -5,46 +5,6 @@
 global default_numerator := 2
 global default_denominator := 3
 
-GetMonitor(hwnd := 0) {
-    ; If no hwnd is provided, use the Active Window
-    if (hwnd)
-    {
-        WinGetPos, winX, winY, winW, winH, ahk_id %hwnd%
-    }
-    else
-    {
-        WinGetActiveStats, winTitle, winW, winH, winX, winY
-    }
-
-    SysGet, numDisplays, MonitorCount
-    SysGet, idxPrimary, MonitorPrimary
-    Loop %numDisplays%
-    {
-        SysGet, mon, MonitorWorkArea, %a_index%
-        leftShift := 0
-        rightShift := 0
-        ; Left may be skewed on Monitors past 1
-        if (a_index > 1)
-        {
-            leftShift := 20
-        }
-        ; Right overlaps Left on Monitors past 1
-        else if (numDisplays > 1)
-        {
-            rightShift := 20
-        }
-        ; Tracked based on X. Cannot properly sense on Windows "between" monitors
-        xMin := monLeft - leftShift
-        xMax := monRight - rightShift
-        if (winX >= xMin AND winX <= xMax)
-        {
-            return %a_index%
-        }
-    }
-    ; Return Primary Monitor if can't sense
-    return idxPrimary
-}
-
 VerticalSplit(direction,numerator,denominator,error) {
     ; direction: 0 for up, 1 for down
     ; numerator: The numerator of the fraction of the screen to take up
