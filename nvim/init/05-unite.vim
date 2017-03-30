@@ -121,6 +121,12 @@ else
 
   call extend(s:menus.init_vim.file_candidates, tj#unite_file_lister(g:_vimrc_base . '/init', '  ↳'))
 
+  let s:menus.init_vim.file_candidates += [
+        \ ['plugins/', expand(g:plug_home) . '/'],
+        \ ]
+
+  call extend(s:menus.init_vim.file_candidates, tj#unite_file_lister(expand(g:plug_home), '  ↳ Plug:', '*'))
+
   let s:menus.zsh = {
         \ 'description': 'Edit your import zsh configuration'
         \ }

@@ -217,6 +217,8 @@ elseif g:my_tags_manager ==? 'easytags'
 endif
 
 Plug 'majutsushi/tagbar'
+" Tagbar for registers basically
+Plug 'junegunn/vim-peekaboo'
 " }}}
 " Testing my plugins {{{
 if v:false

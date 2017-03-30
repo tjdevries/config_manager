@@ -6,14 +6,11 @@ else
 end
 
 function! async_nvim#get_nvim() abort
-  let g:_my_async = jobstart(
-        \ [s:nvim_bin, '--embed'],
-        \ {
-          \ 'on_stdout': { id, data, event ->
-            \ execute('call append(line("$"), ' . string(data) .')')
-            \ },
-        \ }
-      \ )
+  let g:_my_async = jobstart([s:nvim_bin, '--embed'],
+      \ {
+        \ 'rpc': v:true,
+      \ }
+    \ )
 
         " \ { 'rpc': v:true, }
 
