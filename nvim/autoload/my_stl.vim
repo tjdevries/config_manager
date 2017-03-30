@@ -176,7 +176,12 @@ function! my_stl#get_git() abort
       " }}}
     elseif s:git_helper ==# 'gina'  " {{{
       " TODO: Waiting for gina to have git status line
-      let stl .= gina#component#repo#preset('fancy')
+      let win_width = nvim_win_get_width(0)
+      if win_width > 120
+        let stl .= gina#component#repo#preset('fancy')
+      else
+        let stl .= gina#component#repo#branch()
+      endif
     " }}}
     endif  " }}}
 

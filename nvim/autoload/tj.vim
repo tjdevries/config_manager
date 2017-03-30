@@ -86,6 +86,13 @@ function! tj#is_git_file() abort
   let file_location = expand('%:p:h')
   let file_name = expand('%:t')
 
+  return tj#is_git_file_wrapper(file_location, file_name)
+endfunction
+
+function! tj#is_git_file_wrapper(location, name)
+  let file_location = a:location
+  let file_name = a:name
+
   let system_command = ''
   if has('win32')
     let system_command .= 'powershell.exe -Command '

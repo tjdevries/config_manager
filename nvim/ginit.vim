@@ -3,7 +3,8 @@
 if has('win32')
   Guifont! Consolas:h11
 else
-  Guifont! Fira Mono Medium for Powerline:h10
+  Guifont! Fira Mono:h10
+  " Guifont! Fira Mono Medium for Powerline:h10
 endif
 
 " Always use true colors in nvim-qt

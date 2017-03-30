@@ -154,10 +154,13 @@ if g:halo_enabled == v:true
 endif
 
 function! SyntaxNames() abort
+  let l:syntax_list = []
   for id in synstack(line('.'), col('.'))
-    echo synIDattr(id, 'name')
+    call add(l:syntax_list, synIDattr(id, 'name'))
   endfor
+
+  return l:syntax_list
 endfunction
 
 " Syntax help
-nnoremap <leader>sh :call SyntaxNames()<CR>
+nnoremap <leader>sh :echo string(SyntaxNames())<CR>
