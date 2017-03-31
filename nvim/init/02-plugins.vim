@@ -23,6 +23,12 @@ call plug#begin(g:plugin_path)
 Plug 'tjdevries/nvim-langserver-shim'
 " To Learn: {{{
 " Intriguing
+"
+" For narrowing regions of text to look at them alone
+Plug 'chrisbra/NrrwRgn'
+" For figuring out exceptions
+Plug 'tweekmonster/exception.vim'
+
 Plug 'https://github.com/haya14busa/vim-metarepeat'
 Plug 'rhysd/vim-clang-format'
 Plug 'lambdalisue/lista.nvim'
@@ -221,6 +227,7 @@ Plug 'majutsushi/tagbar'
 Plug 'junegunn/vim-peekaboo'
 " }}}
 " Testing my plugins {{{
+Plug 'tjdevries/pastery.vim'
 if v:false
     Plug 'tjdevries/descriptive_maps.vim'
     Plug 'tjdevries/vim-vertex'

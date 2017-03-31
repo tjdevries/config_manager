@@ -139,9 +139,9 @@ if &list
         \ ]
   function! CycleListChars() abort
     execute 'set listchars=' . g:list_char_options[
-          \ float2nr(
-          \fmod(g:list_char_index, len(g:list_char_options))
-          \ )
+            \ float2nr(
+              \ fmod(g:list_char_index, len(g:list_char_options))
+            \ )
           \ ]
 
     let g:list_char_index += 1
