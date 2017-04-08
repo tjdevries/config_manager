@@ -111,49 +111,7 @@ if has('nvim')
     tnoremap <C-Space> <Space>
 endif
 
-" Clear highlighting easily
-" Show matching highlights, but erase them if I press enter
-if &hlsearch
-  let s:magical_searching = v:false
-
-  let g:_is_highlighted = v:true
-  function! DoNoHL() abort
-    if g:_is_highlighted && &hlsearch
-      let g:_is_highlighted = v:false
-      return ":nohl\<CR>"
-    else
-      return "\<CR>"
-    endif
-  endfunction
-
-  let s:search_chars = [
-        \ '/',
-        \ '?',
-        \ '*',
-        \ '#',
-        \ ]
-
-  let s:repeat_chars = [
-        \ 'n',
-        \ 'N',
-        \ ]
-
-  if s:magical_searching
-    let s:append_search = '\v'
-  else
-    let s:append_search = ''
-  endif
-
-  for s:current_char in s:search_chars
-    execute('nnoremap ' . s:current_char . ' :let g:_is_highlighted=v:true<CR>' . s:current_char . s:append_search)
-  endfor
-
-  for s:repeat_char in s:repeat_chars
-    execute('nnoremap ' . s:repeat_char . ' :let g:_is_highlighted=v:true<CR>' . s:repeat_char)
-  endfor
-
-  nnoremap <expr> <CR> DoNoHL()
-endif
+nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
 
 " List occurences from this file
 nnoremap <leader>sf :call tj#list_occurrences()<CR>
