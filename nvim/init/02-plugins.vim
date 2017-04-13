@@ -190,8 +190,8 @@ Plug 'eagletmt/neco-ghc'
 Plug 'mhinz/vim-startify'
 " }}}
 " Status Line {{{
-Plug 'powerline/fonts', { 'do': './install.sh' }
 if g:airline_enabled
+    Plug 'powerline/fonts', { 'do': './install.sh' }
     Plug 'bling/vim-airline'
 endif
 Plug 'mkitt/tabline.vim'

@@ -962,8 +962,8 @@ function! s:update_impl(pull, force, args) abort
   endif
 
   let use_job = s:nvim || s:vim8
-  let python = (has('python') || has('python3'))
-  let ruby = v:false
+  let python = (has('python') || has('python3')) && !use_job
+  let ruby = has('ruby') && !use_job && (v:version >= 703 || v:version == 702 && has('patch374')) && !(s:is_win && has('gui_running')) && threads > 1 && s:check_ruby()
 
   let s:update = {
     \ 'start':   reltime(),
@@ -1005,10 +1005,10 @@ function! s:update_impl(pull, force, args) abort
       if s:mac_gui
         set noimd
       endif
-      if python
-        call s:update_python()
-      else
+      if ruby
         call s:update_ruby()
+      else
+        call s:update_python()
       endif
     catch
       let lines = getline(4, '$')
@@ -1330,7 +1330,7 @@ endwhile
 endfunction
 
 function! s:update_python()
-let py_exe = 'python3'
+let py_exe = has('python') ? 'python' : 'python3'
 execute py_exe "<< EOF"
 import datetime
 import functools

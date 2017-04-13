@@ -151,3 +151,7 @@ if &list
   " Useful as a helper
   nnoremap <leader>cl :call CycleListChars()<CR>
 endif
+
+" guicursor messing around
+" set guicursor=n:blinkwait175-blinkoff150-blinkon175-hor10
+" set guicursor=a:blinkon0
