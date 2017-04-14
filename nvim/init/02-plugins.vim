@@ -222,12 +222,13 @@ elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 endif
 
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 " Tagbar for registers basically
 Plug 'junegunn/vim-peekaboo'
 " }}}
 " Testing my plugins {{{
 Plug 'tjdevries/pastery.vim'
+Plug 'tjdevries/vat.nvim'
 if v:false
     Plug 'tjdevries/descriptive_maps.vim'
     Plug 'tjdevries/vim-vertex'

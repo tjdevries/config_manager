@@ -96,6 +96,10 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
     return '[No Name]'
   endif
 
+  if &buftype == 'nofile'
+    return nvim_buf_get_name(0)
+  endif
+
   let file_name = maktaba#path#Split(expand('%'))
   let my_pwd = maktaba#path#Split(substitute(getcwd(winnr(), tabpagenr()), "\n", '', 'g'))
   let result_name = ''

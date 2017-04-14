@@ -118,5 +118,7 @@ nnoremap <leader>sf :call tj#list_occurrences()<CR>
 " List occurences from a custom file
 nnoremap <leader>scf :call tj#list_occurrences(input('Search regex: '))<CR>
 
+nnoremap J <c-o>:call tj#join_lines()<CR>
+
 " Shrug ¯\_(ツ)_/¯
 inoremap ,shrug ¯\_(ツ)_/¯

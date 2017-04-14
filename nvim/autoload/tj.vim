@@ -204,3 +204,16 @@ function! tj#vimgrep_from_root(...) abort
   " call execute(':GrepperAg ' . expand('<cword>') . ' ' . tj#find_project_root() . '**')
   " call execute(':GrepperAg ' . expand('<cword>') . ' ' . tj#find_project_root() . '**')
 endfunction
+
+function! tj#join_lines() abort
+  if &filetype == 'vim'
+    " Check if the next line starts with /
+    let next_line = getline(line('.') + 1)
+    if next_line =~ '^\s*\\'
+      normal! Jxx
+      return
+    endif
+  endif
+
+  normal! J
+endfunction
