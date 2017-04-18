@@ -14,6 +14,7 @@ let g:my_snippet_manager = 'ultisnips'
 let g:my_tags_manager = 'gutentags'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'denite'
+let g:my_deoplete_enabled = v:false
 let g:airline_enabled = v:false
 " }}}
 
@@ -31,7 +32,9 @@ Plug 'tweekmonster/exception.vim'
 
 Plug 'https://github.com/haya14busa/vim-metarepeat'
 Plug 'rhysd/vim-clang-format'
-Plug 'lambdalisue/lista.nvim'
+if has('python3')
+    Plug 'lambdalisue/lista.nvim'
+endif
 
 " Investigating
 Plug 'tweekmonster/spellrotate.vim'
@@ -50,22 +53,25 @@ Plug 'chrisbra/Colorizer'                                         " Helpful tool
 " Colorscheme and appearance {{{
 Plug 'junegunn/goyo.vim'                                          " focusing mode
 Plug 'junegunn/limelight.vim'                                     " Extra focus mode
+Plug 'tjdevries/vim-inyoface'  " Comments in your face
 
 " I use this to make my colorscheme
 Plug 'tweekmonster/colorpal.vim'
-if isdirectory(expand('~/Git/gruvbox-tj'))
-    Plug '~/Git/gruvbox-tj/'
-else
-    Plug 'tjdevries/gruvbox-tj/'                                      " my gruvbox!
+" Old colorschemes
+if v:false
+    Plug 'altercation/vim-colors-solarized'                           " Solarized color scheme
+    Plug 'chriskempson/base16-vim'
+    Plug 'jacoborus/tender.vim'
+    Plug 'joshdick/onedark.vim'                                       " Atom type color scheme
+    Plug 'junegunn/seoul256.vim'                                      " seoul color scheme
+    Plug 'w0ng/vim-hybrid'
+    if isdirectory(expand('~/Git/gruvbox-tj'))
+        Plug '~/Git/gruvbox-tj/'
+    else
+        Plug 'tjdevries/gruvbox-tj/'                                      " my gruvbox!
+    endif
 endif
-Plug 'altercation/vim-colors-solarized'                           " Solarized color scheme
-Plug 'chriskempson/base16-vim'
-Plug 'jacoborus/tender.vim'
-Plug 'joshdick/onedark.vim'                                       " Atom type color scheme
-Plug 'junegunn/seoul256.vim'                                      " seoul color scheme
-Plug 'w0ng/vim-hybrid'
 
-Plug 'tjdevries/vim-inyoface'
 " }}}
 " Formatters {{{
 Plug 'google/vim-maktaba'
@@ -73,7 +79,7 @@ Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
 " }}}
 " Floobits {{{
-if has('python')
+if has('python2')
     Plug 'floobits/floobits-neovim'
 endif
 " }}}
@@ -159,31 +165,39 @@ if g:my_current_uniter ==? 'unite'
     Plug 'klen/unite-radio.vim'         " Play radio stations
     Plug 'tsukkee/unite-tag'            " Tag finder for unite
 elseif g:my_current_uniter ==? 'denite'
-    Plug 'Shougo/denite.nvim'
+    if has('python3')
+        Plug 'Shougo/denite.nvim'
+
+        Plug 'Shougo/neomru.vim'            " Most recently used files
+        if has('clipboard')
+            Plug 'Shougo/neoyank.vim'           " Yank ring for my uniter
+        endif
+    endif
 endif
 
-Plug 'Shougo/neomru.vim'            " Most recently used files
-if has('clipboard')
-    Plug 'Shougo/neoyank.vim'           " Yank ring for my uniter
-endif
 " }}}
 "
-Plug 'Shougo/deol.nvim'
+if has('python3')
+    Plug 'Shougo/deol.nvim'
+endif
 " Deoplete  {{{
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/context_filetype.vim'
-Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neoinclude.vim'
 
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
-Plug 'Shougo/neco-vim'                             "  Vim completion
-Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
-Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
-Plug 'eagletmt/neco-ghc'
-" Plug 'zchee/deoplete-clang'                        "  C-Family languages
-" Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
-" Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
+if has('python3') && g:my_deoplete_enabled
+    Plug 'Shougo/deoplete.nvim'
+
+    Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
+    Plug 'Shougo/neco-vim'                             "  Vim completion
+    Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
+    Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
+    Plug 'eagletmt/neco-ghc'
+    " Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+    " Plug 'zchee/deoplete-clang'                        "  C-Family languages
+    " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
+    " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
+endif
 " }}}
 " }}}
 " Startup {{{
@@ -222,9 +236,11 @@ elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 endif
 
-" Plug 'majutsushi/tagbar'
 " Tagbar for registers basically
-Plug 'junegunn/vim-peekaboo'
+" These were seriously slowing things down for me,
+" well they tagbar one was, peakaboo had a conflicting command
+" Plug 'majutsushi/tagbar'
+" Plug 'junegunn/vim-peekaboo'
 " }}}
 " Testing my plugins {{{
 Plug 'tjdevries/pastery.vim'
