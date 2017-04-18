@@ -193,6 +193,7 @@ CPHL InsertMode gray7 yellow bold
 " TODO: Get the templating thing to work with InsertMode
 CPHL ReplaceMode gray7 yellow bold,underline
 CPHL TerminalMode gray7 turquoise bold
+CPHL HelpDoc gray7 turquoise bold,italic
 
 " TODO: Template or make these slightly different or something
 execute('CPHL VisualMode' . s:visual_color)

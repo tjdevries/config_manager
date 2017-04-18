@@ -24,7 +24,7 @@ else " {{{ My statusline
 
     let s:custom_filename = v:true
 
-    function! SetStatusline()
+    function! SetStatusline() abort
         " Setup for variables
         let g:_active_buffer = bufnr('%')
 
@@ -39,7 +39,10 @@ else " {{{ My statusline
         endif
 
         if s:custom_filename
+            " let stl .= bufnr('%') . ' ' . bufnr(0) . ' ' . nvim_buf_get_number(0) . ' '
+            " let stl .= '%{#my_stl#get_file_hightlight(bufnr("%"))}'
             let stl .= '%{my_stl#get_file_name(4, 2)}'
+            let stl .= '%*'
         else
             let stl .= '%t'
         endif

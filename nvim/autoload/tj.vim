@@ -207,13 +207,100 @@ endfunction
 
 function! tj#join_lines() abort
   if &filetype == 'vim'
-    " Check if the next line starts with /
-    let next_line = getline(line('.') + 1)
-    if next_line =~ '^\s*\\'
-      normal! Jxx
+    if getline(line('.') + 1) =~ '^\s*\\'
+      let old_reg = getreg('/')
+      normal! J
+      call nvim_input('v/\s<CR>"_d')
+      call timer_start(100, {timer-> execute("call setreg('/', '" . old_reg . "')")})
       return
     endif
   endif
 
   normal! J
+endfunction
+
+function! tj#dict_to_formatted_json(dict) abort
+  if type(a:dict) != v:t_dict
+    return
+  endif
+
+  vnew
+  set buftype=nofile
+  set filetype=json
+
+  let g:buffer_number = nvim_buf_get_number(0)
+
+  call nvim_buf_set_lines(g:buffer_number, 1, -1, 1,
+        \ split(
+          \ system('echo '
+            \ . shellescape(tj#json_encode(a:dict))
+            \ . ' | python -m json.tool'),
+        \ "\n",
+        \ 1))
+
+  silent! call dictwatcherdel(a:dict, '*', 's:dict_watcher_func')
+
+  function! s:dict_watcher_func(d, k, z) abort
+    call nvim_buf_set_lines(g:buffer_number, 1, -1, 1,
+          \ split(
+            \ system('echo '
+              \ . shellescape(tj#json_encode(a:d))
+              \ . ' | python -m json.tool'),
+          \ "\n",
+          \ 1))
+  endfunction
+
+  call dictwatcheradd(a:dict, '*', function('s:dict_watcher_func'))
+endfunction
+
+function! tj#json_encode(val) abort
+  if type(a:val) == v:t_number
+    return a:val
+  elseif type(a:val) == v:t_string
+    let json = '"' . escape(a:val, '\"') . '"'
+    let json = substitute(json, "\r", '\\r', 'g')
+    let json = substitute(json, "\n", '\\n', 'g')
+    let json = substitute(json, "\t", '\\t', 'g')
+    let json = substitute(json, '\([[:cntrl:]]\)', '\=printf("\x%02d", char2nr(submatch(1)))', 'g')
+    return iconv(json, &encoding, "utf-8")
+  elseif type(a:val) == v:t_func
+    let s = substitute(string(a:val), 'function(', '', '')[:-2]
+
+    let args_split = split(s, ', ')
+
+    if len(args_split) <= 1
+      return tj#json_encode(substitute(args_split[0], "'", '', 'g'))
+    endif
+
+    let func_name = tj#json_encode(substitute(args_split[0], "'", '', 'g'))
+
+    let json = '['
+    let json .= func_name . ','
+
+    " TODO: Show context here for dict_functions
+    " execute 'let g:temp_dict = ' . join(args_split[1:], ', ')
+    " let args_split = [
+    "       \ g:temp_dict
+    "       \ ]
+    " let json .= tj#json_encode(g:temp_dict)
+
+    " In the meantime, just say "self"
+    let json .= '"self"'
+    let json .= ']'
+
+    return json
+  elseif type(a:val) == 3
+    return '[' . join(map(copy(a:val), 'tj#json_encode(v:val)'), ',') . ']'
+  elseif type(a:val) == v:t_dict
+    return '{' . join(map(
+          \ keys(a:val),
+          \ 'tj#json_encode(v:val).":".tj#json_encode(a:val[v:val])'), ',')
+        \ . '}'
+  elseif type(a:val) == v:t_bool
+    if a:val
+      return 'true'
+    else
+      return 'false'
+    endif
+  endif
 endfunction

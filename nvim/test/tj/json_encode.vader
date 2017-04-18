@@ -1,0 +1,23 @@
+
+Execute (Handle very simple dicts):
+  let test_dict = {'hello': 'world'}
+  AssertEqual "{\"hello\":\"world\"}", tj#json_encode(test_dict)
+
+Execute (Handle dicts with bools):
+  let test_dict = {'hello': 'world', 'truthy': v:true}
+  AssertEqual "{\"hello\":\"world\",\"truthy\":true}", tj#json_encode(test_dict)
+
+Execute (Handle dicts with funcrefs):
+  let test_dict = {'hello': 'world', 'truthy': v:true, 'my_func': function('tj#json_encode')}
+  AssertEqual "{\"hello\":\"world\"," .
+    \ "\"my_func\":\"tj#json_encode\"," .
+    \ "\"truthy\":true" .
+    \ "}", tj#json_encode(test_dict)
+
+Execute (Handle dicts with dict funcrefs):
+  function! ExampleDict() dict abort
+    return self.name
+  endfunction
+
+  let test_dict = {'name': 'hello', 'my_func': function('ExampleDict')}
+  AssertEqual '{"name":"hello","my_func":["ExampleDict","self"]}', tj#json_encode(test_dict)

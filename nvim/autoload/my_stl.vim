@@ -84,6 +84,14 @@ function! my_stl#get_user_color(mode) abort
   endif
 endfunction
 
+function! my_stl#get_file_hightlight(buffer_number) abort
+  if nvim_buf_get_option(a:buffer_number, 'filetype') == 'help'
+    return 'HelpDoc'
+  endif
+
+  return ''
+endfunction
+
 function! my_stl#get_file_name(name_length, relative_depth) abort
   " Quit for terminals
   if exists('b:term_title')
@@ -138,6 +146,14 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
 
   " I like UNIX lines :)
   let result_name = substitute(result_name, '\\', '/', 'g')
+
+  " All substitutions
+  let result_name = substitute(result_name, $HOME, '~', '')
+
+  " Filetype specifics here
+  if &filetype == 'help'
+    let result_name = substitute(result_name, '^.*doc/', 'doc/', '')
+  endif
 
   " a:name_length letters, then any word chacters followed by a slash
   " Replace the first string with that string and "/"
