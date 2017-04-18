@@ -228,9 +228,9 @@ function! tj#dict_to_formatted_json(dict) abort
   set buftype=nofile
   set filetype=json
 
-  let g:buffer_number = nvim_buf_get_number(0)
+  let l:buffer_number = nvim_buf_get_number(0)
 
-  call nvim_buf_set_lines(g:buffer_number, 1, -1, 1,
+  call nvim_buf_set_lines(l:buffer_number, 1, -1, 1,
         \ split(
           \ system('echo '
             \ . shellescape(tj#json_encode(a:dict))
@@ -240,8 +240,8 @@ function! tj#dict_to_formatted_json(dict) abort
 
   silent! call dictwatcherdel(a:dict, '*', 's:dict_watcher_func')
 
-  function! s:dict_watcher_func(d, k, z) abort
-    call nvim_buf_set_lines(g:buffer_number, 1, -1, 1,
+  function! s:dict_watcher_func(d, k, z) abort closure
+    call nvim_buf_set_lines(l:buffer_number, 1, -1, 1,
           \ split(
             \ system('echo '
               \ . shellescape(tj#json_encode(a:d))
