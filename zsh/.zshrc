@@ -49,8 +49,8 @@ zplug 'djui/alias-tips', use:"alias-tips.plugin.zsh"
 zplug 'joepvd/zsh-hints'
 
 # Async helper
-zplug 'mafredri/zsh-async', defer:2
-zplug 'intelfx/pure', defer:3
+# zplug 'mafredri/zsh-async', defer:2
+# zplug 'intelfx/pure', defer:3
 
 zplug load
 
