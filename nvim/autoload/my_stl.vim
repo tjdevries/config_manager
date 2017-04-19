@@ -29,7 +29,9 @@ let s:left_sep = ' ❯❯ '
 let s:right_sep = ' ❮❮ '
 let s:long_name = v:false
 let s:git_helper = 'gina'
+
 let s:tags_enabled = v:true
+let s:complex_tags_enabled = v:false
 
 function! my_stl#get_mode_highlight() abort
 
@@ -243,23 +245,27 @@ function! my_stl#get_tag_name() abort
   endif
 
   if g:_active_buffer == bufnr('%')
-    try
-      let w:_tag_declaration = tagbar#currenttag('%s', '', 'p')
-      let w:_tag_definition  = tagbar#currenttag('%s', '', 'f')
-      let w:_tag_signature   = tagbar#currenttag('%s', '', 's')
-    catch
-      return ''
-    endtry
-
-    let w:_my_stl_tag_name = ''
-    if winwidth('%') > len(w:_tag_declaration) * 8 && len(w:_tag_declaration) > 0
-      let w:_my_stl_tag_name .=  w:_tag_declaration 
-    elseif winwidth('%') > len(w:_tag_definition) * 4 && len(w:_tag_definition) > 0
-      let w:_my_stl_tag_name .= w:_tag_definition
-    elseif winwidth('%') > len(w:_tag_signature) * 2 && len(w:_tag_signature) > 0
-      let w:_my_stl_tag_name .= w:_tag_signature
+    if !s:complex_tags_enabled
+      let w:_my_stl_tag_name = tagbar#currenttag('%s', '', 'f')
     else
-      let w:_my_stl_tag_name .= ''
+      try
+        let w:_tag_declaration = tagbar#currenttag('%s', '', 'p')
+        let w:_tag_definition  = tagbar#currenttag('%s', '', 'f')
+        let w:_tag_signature   = tagbar#currenttag('%s', '', 's')
+      catch
+        return ''
+      endtry
+
+      let w:_my_stl_tag_name = ''
+      if winwidth('%') > len(w:_tag_declaration) * 8 && len(w:_tag_declaration) > 0
+        let w:_my_stl_tag_name .=  w:_tag_declaration 
+      elseif winwidth('%') > len(w:_tag_definition) * 4 && len(w:_tag_definition) > 0
+        let w:_my_stl_tag_name .= w:_tag_definition
+      elseif winwidth('%') > len(w:_tag_signature) * 2 && len(w:_tag_signature) > 0
+        let w:_my_stl_tag_name .= w:_tag_signature
+      else
+        let w:_my_stl_tag_name .= ''
+      endif
     endif
 
     if len(w:_my_stl_tag_name) > 0
