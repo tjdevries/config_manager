@@ -21,3 +21,23 @@ let g:vimwiki_list = [
             \ },
             \ ]
 
+
+" Complete paths with vimwiki
+function! CompleteVimwikiPath(word) abort
+
+  if maktaba#string#StartsWith(a:word, '[[/')
+    let globbed = map(
+          \ split(glob(g:vimwiki_path . a:word[3:] . '*'), "\n"),
+          \ {key, value -> substitute(value, '\\', '/', 'g')}
+          \ )
+    let choices = filter(map(
+            \ globbed,
+            \ {key, value -> value[len(g:vimwiki_path):]}),
+          \ 'v:val =~ "' . a:word[3:] . '"')
+    call complete(col('.') - len(a:word) + 3, choices)
+  endif
+
+  return ''
+endfunction
+
+inoremap <c-x><c-w> <C-O>h<C-O>:let g:my_complete_path = '<c-r><c-a>'<cr><esc>Ea<C-R>=CompleteVimwikiPath(g:my_complete_path)<CR>

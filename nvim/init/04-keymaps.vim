@@ -2,6 +2,7 @@ scriptencoding utf-8
 
 nnoremap <Up>          :echom "--> k <-- "<CR>
 nnoremap <Down>        :echom "--> j <-- "<CR>
+" Switch between tabs
 nnoremap <Right> gt
 nnoremap <Left>  gT
 
@@ -9,6 +10,10 @@ inoremap <Up>     <C-o>:echom "--> k <-- "<CR> """ don't let me move around like
 inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
 inoremap <Right>  <C-o>:echom "--> l <-- "<CR>
 inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
+
+" Opens line below or above the current line
+inoremap <S-CR> <C-O>o
+inoremap <C-CR> <C-O>O
 
 " Vim Galore recommended mappings
 " Make next and previous use smart history
@@ -32,9 +37,10 @@ nnoremap k gk
 nnoremap j gj
 
 " For moving quickly up and down,
-nnoremap gj /\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>
+" Goes to the first line above/below that isn't whitespace
 " Thanks to: http://vi.stackexchange.com/a/213
-nnoremap gk ?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>
+nnoremap gj :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
+nnoremap gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR> :let &lazyredraw=_<CR>
 
 " Map execute this line
 nnoremap <leader>x :exe getline(".")<CR>
@@ -118,7 +124,20 @@ nnoremap <leader>sf :call tj#list_occurrences()<CR>
 " List occurences from a custom file
 nnoremap <leader>scf :call tj#list_occurrences(input('Search regex: '))<CR>
 
-nnoremap J <c-o>:call tj#join_lines()<CR>
+nnoremap J :call tj#join_lines()<CR>
 
 " Shrug ¯\_(ツ)_/¯
 inoremap ,shrug ¯\_(ツ)_/¯
+
+" My own modeline
+nnoremap <leader>m :call execute(substitute(getline('.'), '.*vim', '', ''))<CR>
+
+" Epic {{{
+"
+" Go to code search from a tag in ``
+nnoremap <leader>gc :echo epic#goto_codesearch()<CR>
+
+" Go to snapper
+nnoremap <leader>ge :echo epic#goto_record_or_item()<CR>
+
+" }}}

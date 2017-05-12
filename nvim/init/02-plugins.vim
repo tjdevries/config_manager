@@ -20,6 +20,8 @@ let g:airline_enabled = v:false
 
 " Plugin management: Vim-plug
 call plug#begin(g:plugin_path)
+
+Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
 " To Learn: {{{
@@ -78,9 +80,13 @@ Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
 " }}}
-" Floobits {{{
+" Interactive Plugins {{{
 if has('python2')
     Plug 'floobits/floobits-neovim'
+endif
+
+if has('python3')
+    Plug 'bfredl/nvim-matrix'
 endif
 " }}}
 " Git Based Plugins {{{
@@ -145,6 +151,7 @@ Plug 'romainl/vim-qf'
 " Plug 'dannyob/quickfixstatus'
 " }}}
 " Searching {{{
+Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
 Plug 'tjdevries/edit_alternate.vim'
 " }}}

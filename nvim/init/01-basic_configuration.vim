@@ -29,11 +29,11 @@ if has('unix')
 else
   " Will need to figure out the best way to do this once I start using windows again
   let g:python_host_prog = 'C:\python'
-  let l:python_possibilities = [
+  let g:python3_possibilities = [
         \ 'C:\Program Files\Python35\python.exe',
         \ ]
 
-  for py_exe in l:python_possibilities
+  for py_exe in g:python3_possibilities
     if executable(py_exe)
       let g:python3_host_prog = py_exe
       break
@@ -57,6 +57,7 @@ set relativenumber                    " Show line numbers
 set number                            " But show the actual number for the line we're on
 set ignorecase                        " Ignore case when searching...
 set smartcase                         " ... unless there is a capital letter in the query
+set hidden                            " I like having buffers stay around
 
 let g:my_preview_enable = v:false
 if g:my_preview_enable
@@ -150,6 +151,11 @@ if &list
   " Cycle through list characters
   " Useful as a helper
   nnoremap <leader>cl :call CycleListChars()<CR>
+endif
+
+if !has('unix')
+  " I'd like to do this, but it seems like it breaks tags functionality
+  " set shell=powershell.exe
 endif
 
 " guicursor messing around

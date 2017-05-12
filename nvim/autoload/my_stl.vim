@@ -150,6 +150,9 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
   " All substitutions
   let result_name = substitute(result_name, $HOME, '~', '')
 
+  " Replace double slashes with one
+  let result_name = substitute(result_name, '//', '/', 'g')
+
   " Filetype specifics here
   if &filetype == 'help'
     let result_name = substitute(result_name, '^.*doc/', 'doc/', '')

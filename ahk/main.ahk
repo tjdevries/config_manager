@@ -6,4 +6,6 @@
 
 ^!r::Reload  ; Assign Ctrl+Alt+r as a hotkey to restart the script
 
+; My own abbreviations
 ::Visists::Visits
+::1o1::1-on-1

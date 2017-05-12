@@ -210,8 +210,11 @@ function! tj#join_lines() abort
     if getline(line('.') + 1) =~ '^\s*\\'
       let old_reg = getreg('/')
       normal! J
+      set lazyredraw
       call nvim_input('v/\s<CR>"_d')
       call timer_start(100, {timer-> execute("call setreg('/', '" . old_reg . "')")})
+      set nolazyredraw
+      nohl
       return
     endif
   endif
@@ -303,4 +306,40 @@ function! tj#json_encode(val) abort
       return 'false'
     endif
   endif
+endfunction
+
+function! tj#opt(option, val, to_execute) abort
+  call execute('let g:_ = &' . a:option)
+  call execute('let &' . a:option . ' = ' . a:val)
+  call execute('normal! ' . a:to_execute)
+  call execute('let &' . a:option . ' = g:_')
+endfunction
+
+function! tj#find_func(func_name) abort
+  " Only required if you don't want to save before going to function
+  set hidden
+
+  let result = split(execute('verbose function ' . a:func_name), "\n")
+  let file_name = substitute(result[1], '\s*Last set from ', '', '')
+  call execute(':e ' . file_name)
+  call search('function\%[!] ' . a:func_name)
+endfunction
+
+" my_stl#add_left_separator('asdf')
+
+nnoremap ,gf :call tj#find_func(expand('<cword>'))<CR>
+
+" Times the number of times a particular command takes to execute the specified number of times (in seconds).
+function! tj#profile( command, numberOfTimes )
+  " We don't want to be prompted by a message if the command being tried is
+  " an echo as that would slow things down while waiting for user input.
+  let more = &more
+  set nomore
+  let startTime = localtime()
+  for i in range( a:numberOfTimes )
+    execute a:command
+  endfor
+  let result = localtime() - startTime
+  let &more = more
+  return result
 endfunction

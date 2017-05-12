@@ -116,6 +116,9 @@ CPHL pythonImportedModule red,bright - bold
 
 CPHL BracelessIndent gray7,bright gray7,bright
 " }}}
+" {{{ M items
+CPHL mError red gray2 -
+" }}}
 " {{{ Python items
 CPHL pythonSelf violet,bright - - 
 CPHL pythonSelfArg gray3 - italic
