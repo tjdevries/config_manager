@@ -14,7 +14,7 @@ let g:my_snippet_manager = 'ultisnips'
 let g:my_tags_manager = 'gutentags'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'denite'
-let g:my_deoplete_enabled = v:false
+let g:my_deoplete_enabled = v:true
 let g:airline_enabled = v:false
 " }}}
 
@@ -252,8 +252,8 @@ endif
 " Testing my plugins {{{
 Plug 'tjdevries/pastery.vim'
 Plug 'tjdevries/vat.nvim'
+Plug 'tjdevries/descriptive_maps.vim'
 if v:false
-    Plug 'tjdevries/descriptive_maps.vim'
     Plug 'tjdevries/vim-vertex'
     Plug '~/Git/a_highlighter.nvim/'
     Plug 'tjdevries/a_highlighter.nvim'
