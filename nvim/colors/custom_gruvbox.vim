@@ -95,7 +95,7 @@ CPHL Typedef yellow - -
 CPHL Special cyan - -
 CPHL SpecialChar brown - -
 CPHL SpecialKey gray7,l+=0.99 - -
-CPHL NonText gray7,l+=0.99 - -
+CPHL NonText gray4 - -
 " }}}
 " Tab line {{{
 CPHL TabLine white gray1,add(white,30) none
@@ -115,9 +115,6 @@ CPHL pythonImportedClassDef yellow,dark - bold,italic
 CPHL pythonImportedModule red,bright - bold
 
 CPHL BracelessIndent gray7,bright gray7,bright
-" }}}
-" {{{ M items
-CPHL mError red gray2 -
 " }}}
 " {{{ Python items
 CPHL pythonSelf violet,bright - - 

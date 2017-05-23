@@ -233,6 +233,11 @@ function! tj#dict_to_formatted_json(dict) abort
 
   let l:buffer_number = nvim_buf_get_number(0)
 
+  if !has('unix')
+    let old_shell = &shell
+    set shell=powershell.exe
+  endif
+
   call nvim_buf_set_lines(l:buffer_number, 1, -1, 1,
         \ split(
           \ system('echo '
@@ -240,6 +245,10 @@ function! tj#dict_to_formatted_json(dict) abort
             \ . ' | python -m json.tool'),
         \ "\n",
         \ 1))
+
+  if !has('unix')
+    let &shell = old_shell
+  endif
 
   silent! call dictwatcherdel(a:dict, '*', 's:dict_watcher_func')
 
@@ -256,6 +265,8 @@ function! tj#dict_to_formatted_json(dict) abort
   call dictwatcheradd(a:dict, '*', function('s:dict_watcher_func'))
 endfunction
 
+" TODO: Replace several of the paths with simple `json_encode` functionality.
+" Probably would be faster?
 function! tj#json_encode(val) abort
   if type(a:val) == v:t_number
     return a:val
