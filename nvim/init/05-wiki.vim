@@ -24,7 +24,6 @@ let g:vimwiki_list = [
 
 " Complete paths with vimwiki
 function! CompleteVimwikiPath(word) abort
-
   if maktaba#string#StartsWith(a:word, '[[/')
     let globbed = map(
           \ split(glob(g:vimwiki_path . a:word[3:] . '*'), "\n"),
@@ -41,3 +40,6 @@ function! CompleteVimwikiPath(word) abort
 endfunction
 
 inoremap <c-x><c-w> <C-O>h<C-O>:let g:my_complete_path = '<c-r><c-a>'<cr><esc>Ea<C-R>=CompleteVimwikiPath(g:my_complete_path)<CR>
+
+" turn this_tag -> [:this_tag:]
+inoremap wtag <C-O>b[:<C-O>e<right>:]

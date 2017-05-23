@@ -18,6 +18,7 @@ $IE = $App.Windows() | where {$_.name -eq "Internet Explorer" } | select -First 
 If ($IE.HWND -gt 0) {
 } else {
   Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe"
+  $App = New-Object -ComObject shell.application
   $IE = $App.Windows() | where {$_.name -eq "Internet Explorer" } | select -First 1A
 }
 

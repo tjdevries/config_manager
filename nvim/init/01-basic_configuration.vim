@@ -134,8 +134,9 @@ if &list
   " ⇨
   let g:list_char_index = 0
   let g:list_char_options = [
-        \ 'tab:»·,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·',
+        \ 'tab:»\ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·',
         \ 'tab:»·,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·,space:␣',
+        \ 'tab:\ \ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·,space:␣',
         \ '',
         \ ]
   function! CycleListChars() abort
@@ -161,3 +162,9 @@ endif
 " guicursor messing around
 " set guicursor=n:blinkwait175-blinkoff150-blinkon175-hor10
 " set guicursor=a:blinkon0
+
+" disable netrw.vim
+let g:loaded_netrw             = 1
+let g:loaded_netrwPlugin       = 1
+let g:loaded_netrwSettings     = 1
+let g:loaded_netrwFileHandlers = 1

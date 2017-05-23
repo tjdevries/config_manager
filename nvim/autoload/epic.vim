@@ -89,8 +89,14 @@ function! epic#goto_record_or_item()
   " `Test This Thing`
 
   " yank work and place in `e` (for epic!) register
+  let old_options = getreg('e')
   normal m`"eyi```
-  let options = split(getreg('e'), ' ')
+
+  if old_options ==? getreg('e')
+    let options = split(matchstr(getline('.'), '[IR] \S\S\S [0-9]*'), ' ')
+  else
+    let options = split(getreg('e'), ' ')
+  endif
 
   let goto_type = s:none
 
@@ -124,4 +130,14 @@ function! epic#goto_record_or_item()
   elseif goto_type == s:item
     return s:open_putty(printf(";i %s %s\n", ini, id))
   endif
+endfunction
+
+
+function! epic#get_linux_name()
+  let file_name = expand('%')
+  let file_name = substitute(file_name, '\\', '/', 'g')
+  let file_name = substitute(file_name, '//', '/', 'g')
+  let file_name = substitute(file_name, 'epic-nfs', 'net_home', '')
+  call setreg('+', file_name)
+  return file_name
 endfunction
