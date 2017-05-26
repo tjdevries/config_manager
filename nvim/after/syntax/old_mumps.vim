@@ -129,7 +129,6 @@ if !exists("did_m_syntax_inits")
   let did_m_syntax_inits = 1
 
   " The default methods for hilighting.  Can be overridden later
-  hi! link mCommand  Statement
   hi! link mZCommand Statement
   hi! link mIntrFunc Statement
   hi! link mSpecialVar  Statement
@@ -143,7 +142,6 @@ if !exists("did_m_syntax_inits")
   hi! link mCmd      Statement
   hi! link mArgsSeg  Special
   hi! link mExpr  PreProc
-  hi! link mVar      Identifier
 
   if exists(':CPHL')
     CPHL mParen gray0 cyan
@@ -159,7 +157,6 @@ if !exists("did_m_syntax_inits")
   hi! link mString   String
   hi! link mNumber   Number
   hi! link mOperator Operator
-  hi! link mComment  Comment
 
   if exists(':CPHL')
     CPHL mError red gray2 -

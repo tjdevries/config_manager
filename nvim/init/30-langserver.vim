@@ -6,7 +6,7 @@ let g:langserver_executables = {
             \ },
       \ 'python': {
             \ 'name': 'sourcegraph/python-langserver',
-            \ 'cmd': [expand('~/bin/python-langserver/python-langserver.py')],
+            \ 'cmd': ['pyls']
             \ },
       \ 'javascript,typescript,jsx,tsx': {
             \ 'name': 'javascript-typescript',
@@ -17,3 +17,6 @@ let g:langserver_executables = {
             \ 'cmd': ['ocaml-language-server', '--stdio'],
             \ },
       \ }
+
+" Old python command
+" \ 'cmd': [expand('~/bin/python-langserver/python-langserver.py')],

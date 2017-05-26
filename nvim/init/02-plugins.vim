@@ -21,9 +21,10 @@ let g:airline_enabled = v:false
 " Plugin management: Vim-plug
 call plug#begin(g:plugin_path)
 
-Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
+" Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
+Plug 'tjdevries/mparse.nvim'
 " To Learn: {{{
 " Intriguing
 "
