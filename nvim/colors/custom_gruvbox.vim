@@ -209,3 +209,7 @@ endfunction
 " {{{ HTML & Markdown
 CPHL htmlH1 blue,dark - bold
 " }}}
+" }}}
+" {{{ Typescript
+CPHL TypeScriptReserved red - italic
+" }}}

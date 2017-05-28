@@ -16,6 +16,7 @@ let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'denite'
 let g:my_deoplete_enabled = v:true
 let g:airline_enabled = v:false
+let g:vat_enabled = v:false
 " }}}
 
 " Plugin management: Vim-plug
@@ -201,6 +202,7 @@ if has('python3') && g:my_deoplete_enabled
     Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
     Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
     Plug 'eagletmt/neco-ghc'
+    Plug 'mhartington/nvim-typescript'
     " Plug 'davidhalter/jedi-vim', { 'for': 'python' }
     " Plug 'zchee/deoplete-clang'                        "  C-Family languages
     " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
@@ -230,6 +232,8 @@ Plug 'elzr/vim-json', { 'for': 'json' }                                         
 Plug 'goodell/vim-mscgen'                                                                      " mscgen
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }                                              " yaml
 Plug 'PProvost/vim-ps1'
+Plug 'leafgarland/typescript-vim'
+Plug 'billyvg/tigris.nvim', { 'do': './install.sh' }
 
 " Too large or not helpful
 " Plug 'sheerun/vim-polyglot'                         " All the colors!
@@ -252,8 +256,12 @@ endif
 " }}}
 " Testing my plugins {{{
 Plug 'tjdevries/pastery.vim'
-Plug 'tjdevries/vat.nvim'
-Plug 'tjdevries/descriptive_maps.vim'
+
+if g:vat_enabled
+    Plug 'neovim/node-host', { 'do': 'npm install' }
+    Plug 'tjdevries/vat.nvim', { 'do': 'npm install' }
+endif
+
 if v:false
     Plug 'tjdevries/vim-vertex'
     Plug '~/Git/a_highlighter.nvim/'

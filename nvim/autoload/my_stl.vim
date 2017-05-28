@@ -30,7 +30,7 @@ let s:right_sep = ' ❮❮ '
 let s:long_name = v:false
 let s:git_helper = 'gina'
 
-let s:tags_enabled = v:true
+let s:tags_enabled = v:false
 let s:complex_tags_enabled = v:false
 
 function! my_stl#get_mode_highlight() abort
