@@ -2,6 +2,7 @@
 let nested_syntaxes = {
             \ 'python': 'python',
             \ 'c': 'c',
+            \ 'mumps': 'mumps',
             \ }
 
 let vimwiki_path = expand('~/Dropbox/wiki/')
@@ -43,3 +44,8 @@ inoremap <c-x><c-w> <C-O>h<C-O>:let g:my_complete_path = '<c-r><c-a>'<cr><esc>Ea
 
 " turn this_tag -> [:this_tag:]
 inoremap wtag <C-O>b[:<C-O>e<right>:]
+
+augroup tjVimWiki
+  autocmd!
+  au BufNewFile,BufRead *.wiki set foldmethod=marker
+augroup END

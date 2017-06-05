@@ -22,7 +22,10 @@ let g:vat_enabled = v:false
 " Plugin management: Vim-plug
 call plug#begin(g:plugin_path)
 
-" Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
+if !has('unix')
+    " Really not ready
+    " Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
+endif
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
 Plug 'tjdevries/mparse.nvim'
@@ -88,18 +91,20 @@ if has('python2')
 endif
 
 if has('python3')
+    " TODO: Get a matrix account...
     Plug 'bfredl/nvim-matrix'
 endif
 " }}}
 " Git Based Plugins {{{
 
 " Plug 'lambdalisue/vim-gita'
-Plug 'lambdalisue/gina.vim'  " gita replacement
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
+" Plug 'tpope/vim-fugitive'
+Plug 'lambdalisue/gina.vim'   " gita replacement
+Plug 'tpope/vim-rhubarb'      " completes issue names in commit messages
 Plug 'junegunn/gv.vim'
-Plug 'rhysd/committia.vim'      " Sweet message committer
-Plug 'airblade/vim-gitgutter'   " Signs in the side for changes/additions/deletions
+Plug 'rhysd/committia.vim'    " Sweet message committer
+Plug 'airblade/vim-gitgutter' " Signs in the side for changes/additions/deletions
+
 if v:false
     Plug 'moznion/github-commit-comment.vim'
     Plug 'SevereOverfl0w/deoplete-github'
@@ -125,8 +130,10 @@ let g:vim_markdown_fenced_languages = [
             \ ]
 " }}}
 " Neovim development {{{
-Plug 'tweekmonster/nvim-api-viewer'
-Plug 'tweekmonster/nvimdev.nvim'
+if has('unix')
+    Plug 'tweekmonster/nvim-api-viewer'
+    Plug 'tweekmonster/nvimdev.nvim'
+endif
 " }}}
 " Neovim-qt {{{
 Plug 'equalsraf/neovim-gui-shim'
@@ -248,29 +255,25 @@ elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 endif
 
+" Plug 'majutsushi/tagbar'
 " Tagbar for registers basically
 " These were seriously slowing things down for me,
 " well they tagbar one was, peakaboo had a conflicting command
-" Plug 'majutsushi/tagbar'
 " Plug 'junegunn/vim-peekaboo'
 " }}}
 " Testing my plugins {{{
 Plug 'tjdevries/pastery.vim'
-
 if g:vat_enabled
     Plug 'neovim/node-host', { 'do': 'npm install' }
     Plug 'tjdevries/vat.nvim', { 'do': 'npm install' }
 endif
-
 if v:false
     Plug 'tjdevries/vim-vertex'
-    Plug '~/Git/a_highlighter.nvim/'
     Plug 'tjdevries/a_highlighter.nvim'
     " This plugin is not ready
 endif
 " }}}
 " Testing plugins {{{
-Plug 'janko-m/vim-test'
 Plug 'junegunn/vader.vim'
 " }}}
 " Text Manipulation Based Plugins {{{
@@ -296,7 +299,6 @@ Plug 'nathanaelkane/vim-indent-guides'                       " See indentation g
 Plug 'sjl/gundo.vim'                " Undo helper
 " }}}
 " {{{ Vim Plugins
-Plug 'tweekmonster/nvim-api-viewer'
 " }}}
 " Web based plugins {{{
 Plug 'mattn/webapi-vim'
@@ -336,6 +338,5 @@ Plug 'vimwiki/vimwiki'
 call plug#end()
 
 " Load immediately {{{
-" call plug#load('descriptive_maps.vim')
 call plug#load('vim-abolish')
 " }}}

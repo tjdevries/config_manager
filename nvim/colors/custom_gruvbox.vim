@@ -95,7 +95,9 @@ CPHL Typedef yellow - -
 CPHL Special cyan - -
 CPHL SpecialChar brown - -
 CPHL SpecialKey gray7,l+=0.99 - -
-CPHL NonText gray4 - -
+CPHL NonText gray2 - -
+CPHL Whitespace gray7 - -
+
 " }}}
 " Tab line {{{
 CPHL TabLine white gray1,add(white,30) none
