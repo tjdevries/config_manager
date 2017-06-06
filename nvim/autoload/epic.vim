@@ -141,3 +141,13 @@ function! epic#get_linux_name()
   call setreg('+', file_name)
   return file_name
 endfunction
+
+function! epic#test() abort
+  vnew
+  let g:test_id = termopen(['zsh'], {'on_stdout': {id, data, event-> nvim_set_var('output', data)}})
+endfunction
+
+function! epic#send_stuff() abort
+  call jobsend(test_id, ";h e3p 155\r\n")
+endfunction
+

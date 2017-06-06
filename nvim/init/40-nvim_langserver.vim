@@ -6,5 +6,6 @@ let g:nvim_langserver_configuration = {
       \ 'go': {
         \ 'name': 'sourcegraph/go-langserver',
         \ 'cmd': 'langserver-go',
+        \ 'args': ['-logfile', 'lsp-go.txt'],
         \ },
       \ }
