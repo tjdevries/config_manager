@@ -28,7 +28,7 @@ if !has('unix')
 endif
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
-Plug 'tjdevries/mparse.nvim'
+" Plug 'tjdevries/mparse.nvim'
 " To Learn: {{{
 " Intriguing
 "
@@ -207,11 +207,19 @@ if has('python3') && g:my_deoplete_enabled
     Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
     Plug 'Shougo/neco-vim'                             "  Vim completion
     Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
-    Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
-    Plug 'eagletmt/neco-ghc'
-    Plug 'mhartington/nvim-typescript'
-    " Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+
     " Plug 'zchee/deoplete-clang'                        "  C-Family languages
+    " Gotta choose electric boogaloo
+    Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
+
+    " Works, but not using
+    " Plug 'eagletmt/neco-ghc'
+
+    " Can't seem to get to work on windows as of right now.
+    " Will make an issue if I can't figure it out.
+    if executable('tsc') && has('unix')
+        Plug 'mhartington/nvim-typescript'
+    endif
     " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
     " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
 endif
