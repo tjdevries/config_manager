@@ -25,7 +25,11 @@ elseif g:my_current_scheme ==? 'gruvbox-tj'
     set background=dark
     colorscheme gruvbox-tj
 elseif g:my_current_scheme ==? 'custom_gruvbox'
+
   let s:load_palette = 'tomorrow'
+
+  " TODO: Experiment with this more :)
+  " let s:load_palette = 'seabird_petrel'
 
   let g:gruvbox_palette = {
     \
@@ -73,13 +77,62 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
     \ 'blue'      : '81a2be',
     \   'aqua'    : '8ec07c',
     \   'cyan'    : '8abeb7',
-    \ 'purple'    : 'd3869b',
+    \ 'purple'    : '8e6fbd',
     \   'violet'  : 'b294bb',
     \ 'orange'    : 'de935f',
     \ 'brown'     : 'a3685a',
     \
     \ 'softwhite' : 'ebdbb2',
   \ }
+
+  let g:seabird_palette = {
+        \ 'black': '1d1f21',
+        \ 'gray0': '1d1f21',
+        \ 'gray1': '0b141a',
+        \ 'gray2': '1d252b',
+        \ 'gray3': '61707a',
+        \ 'gray4': '6d767d',
+        \ 'gray5': '787e82',
+        \ 'gray6': '808487',
+        \ 'gray7': 'e6eaed',
+        \
+        \ 'red': 'ff4053',
+        \ 'orange': 'ff6200',
+        \ 'yellow': 'bf8c00',
+        \ 'green': '11ab00',
+        \ 'teal': '00a5ab',
+        \ 'blue': '0099ff',
+        \ 'purple': '9854ff',
+        \ 'pink': 'ff549b',
+      \ }
+
+  let g:seabird_petrel_palette = {
+        \ 'black': '1d1f21',
+        \ 'gray0': '1d1f21',
+        \ 'gray1': '0b141a',
+        \ 'gray2': '1d252b',
+        \ 'gray3': '61707a',
+        \ 'gray4': '6d767d',
+        \ 'gray5': '787e82',
+        \ 'gray6': '808487',
+        \ 'gray7': 'e6eaed',
+        \
+        \ 'red':    'ba656d',
+        \ 'orange': 'b06d43',
+        \ 'yellow': '947b38',
+        \ 'green':  '3f8f36',
+        \ 'teal':   '35898c',
+        \ 'blue':   '4384b0',
+        \ 'purple': '8e6fbd',
+        \ 'pink':   '947b38',
+        \ 'violet': '9854ff',
+        \
+        \ 'aqua': '0099ff',
+        \ 'cyan': '00a5ab',
+        \
+      \ }
+
+        " \ 'softwhite': 'e6eaed',
 
 
   let g:colorpal_palette = g:{s:load_palette}_palette

@@ -132,12 +132,3 @@ inoremap ,shrug ¯\_(ツ)_/¯
 " My own modeline
 nnoremap <leader>m :call execute(substitute(getline('.'), '.*vim', '', ''))<CR>
 
-" Epic {{{
-"
-" Go to code search from a tag in ``
-nnoremap <leader>gc :echo epic#goto_codesearch()<CR>
-
-" Go to snapper
-nnoremap <leader>ge :echo epic#goto_record_or_item()<CR>
-
-" }}}

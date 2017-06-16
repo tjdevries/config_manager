@@ -22,6 +22,9 @@ let g:vat_enabled = v:false
 " Plugin management: Vim-plug
 call plug#begin(g:plugin_path)
 
+Plug 'tyru/vim-uglifier.vim'
+Plug 'vim-jp/vim-vimlparser'
+
 if !has('unix')
     " Really not ready
     " Plug 'C:\Users\tdevries\nvim_plug\vim-depends'

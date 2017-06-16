@@ -88,7 +88,7 @@ else
   call denite#custom#map('insert', ',t', '<denite:do_action:tabopen>', 'noremap')
 
   " }}}
-  " Buffer management {{{ 
+  " Buffer management {{{
   nnoremap <silent> <leader>il :<C-u>Denite -mode=insert line<CR>
   nnoremap <silent> <leader>uf :<C-u>Denite buffer<CR>
   nnoremap <silent> <leader>if :<C-u>Denite -mode=insert buffer<CR>
@@ -173,11 +173,14 @@ else
     if tj#buffer_cache('_stl_git_file', 'tj#is_git_file()')
       let s:cmd .= ":`systemlist('git rev-parse --show-toplevel')[0]`"
     endif
-    
+
     let s:cmd .= "\<CR> \<C-r>\<C-w>\<CR>"
     return s:cmd
   endfunction
 
   nnoremap <expr> <leader>fw MyDeniteGrep()
+  " }}}
+  " {{{ Wiki stuff
+  nnoremap ,wp :call execute('Denite file -path=' . g:vimwiki_path . '/projects')<CR>
   " }}}
 endif

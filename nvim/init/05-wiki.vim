@@ -5,8 +5,8 @@ let nested_syntaxes = {
             \ 'mumps': 'mumps',
             \ }
 
-let vimwiki_path = expand('~/Dropbox/wiki/')
-let export_path = expand('~/Dropbox/export/')
+let g:vimwiki_path = expand('~/Dropbox/wiki/')
+let g:export_path = expand('~/Dropbox/export/')
 
 
 let g:vimwiki_folding=''
@@ -41,6 +41,17 @@ function! CompleteVimwikiPath(word) abort
 endfunction
 
 inoremap <c-x><c-w> <C-O>h<C-O>:let g:my_complete_path = '<c-r><c-a>'<cr><esc>Ea<C-R>=CompleteVimwikiPath(g:my_complete_path)<CR>
+
+" Get the current folder of a vimwiki page
+function! GetVimwikiFolder() abort
+  let file_name = input('New file: ')
+  let current_file = substitute(expand('%:p:h'), '\\', '/', 'g')
+  let wiki_path = substitute(g:vimwiki_path, '\\', '/', 'g')
+
+  return '[[/' . substitute(current_file, wiki_path, '', 'g') . '/' . file_name . '|' . file_name . ']]'
+endfunction
+
+inoremap <leader>wf <C-O>:call nvim_input(GetVimwikiFolder())<CR>
 
 " turn this_tag -> [:this_tag:]
 inoremap wtag <C-O>b[:<C-O>e<right>:]
