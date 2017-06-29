@@ -218,6 +218,9 @@ if has('python3') && g:my_deoplete_enabled
     " Works, but not using
     " Plug 'eagletmt/neco-ghc'
 
+    " Emojis :)
+    Plug 'fszymanski/deoplete-emoji'
+
     " Can't seem to get to work on windows as of right now.
     " Will make an issue if I can't figure it out.
     if executable('tsc') && has('unix')
@@ -274,6 +277,7 @@ endif
 " }}}
 " Testing my plugins {{{
 Plug 'tjdevries/pastery.vim'
+Plug 'tjdevries/overlength.vim'
 if g:vat_enabled
     Plug 'neovim/node-host', { 'do': 'npm install' }
     Plug 'tjdevries/vat.nvim', { 'do': 'npm install' }

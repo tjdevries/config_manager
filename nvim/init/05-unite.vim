@@ -87,6 +87,13 @@ else
   call denite#custom#map('insert', ',s', '<denite:do_action:split>', 'noremap')
   call denite#custom#map('insert', ',t', '<denite:do_action:tabopen>', 'noremap')
 
+  " Highlighting
+  call denite#custom#option('default', {
+        \ 'highlight_matched_char': 'Underline',
+        \ 'highlight_matched_range': 'None',
+        \ 'highlight_mode_insert': 'Search',
+        \ })
+
   " }}}
   " Buffer management {{{
   nnoremap <silent> <leader>il :<C-u>Denite -mode=insert line<CR>
@@ -147,8 +154,9 @@ else
 
   call denite#custom#var('menu', 'menus', s:menus)
 
-  nnoremap <leader>en :Denite menu:init_vim -mode=insert<CR>
-  nnoremap <leader>ez :Denite menu:zsh -mode=insert<CR>
+  " Denite menu:init_vim -highlight-mode-insert=Search -highlight-matched-char=Underline -highlight-matched-range=Search
+  nnoremap <leader>en :Denite menu:init_vim -mode=insert -highlight-mode-insert=Search<CR>
+  nnoremap <leader>ez :Denite menu:zsh -mode=insert -highlight-mode-insert=Search<CR>
   nnoremap <leader>er :Denite file_mru<CR>
   " }}}
   " File searching {{{
@@ -179,8 +187,5 @@ else
   endfunction
 
   nnoremap <expr> <leader>fw MyDeniteGrep()
-  " }}}
-  " {{{ Wiki stuff
-  nnoremap ,wp :call execute('Denite file -path=' . g:vimwiki_path . '/projects')<CR>
   " }}}
 endif

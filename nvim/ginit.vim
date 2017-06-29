@@ -66,7 +66,9 @@ nnoremap <leader>+ :call <SID>change_gui_font_size('plus', v:false)<CR>
 nnoremap <leader>- :call <SID>change_gui_font_size('minus', v:false)<CR>
 nnoremap <leader><leader>f :call <SID>change_gui_font()<CR>
 
+" <leader>q for leader - Qt
+" <leader>w is for wikis
 " Toggle maximizing the window
-nnoremap <leader>wm :call GuiWindowMaximized(!g:GuiWindowMaximized)<CR>
+nnoremap <leader>qm :call GuiWindowMaximized(!g:GuiWindowMaximized)<CR>
 " Toggle full screening the window
-nnoremap <leader>wf :call GuiWindowFullScreen(!g:GuiWindowFullScreen)<CR>
+nnoremap <leader>qf :call GuiWindowFullScreen(!g:GuiWindowFullScreen)<CR>

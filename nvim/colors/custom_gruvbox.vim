@@ -1,4 +1,4 @@
-" Colorscheme originall designed around gruvbox
+" Colorscheme originally designed around gruvbox
 call colorpal#begin()
 set background=dark
 highlight clear
@@ -8,6 +8,146 @@ if exists('syntax_on')
 endif
 
 let g:colors_name = 'custom_gruvbox'
+
+" Standard syntax highlighting {{{
+CPHL Comment gray3 - italic
+
+CPHL Boolean orange,w+=20 - -
+CPHL Character red - -
+CPHL Conditional red - -
+CPHL Constant orange - -
+CPHL Define cyan - none
+CPHL Delimiter brown - -
+CPHL Float orange - -
+CPHL Identifier red,light - none
+CPHL Include cyan - -
+CPHL Keyword violet - -
+CPHL Label yellow - -
+CPHL Number orange - -
+CPHL Operator red,bright,bright,bright - -
+CPHL PreProc yellow - -
+CPHL Repeat red - -
+CPHL Statement red - -
+CPHL StorageClass yellow - -
+CPHL String green - -
+CPHL Structure violet - -
+CPHL Tag yellow - -
+CPHL Todo yellow gray1 -
+CPHL Type yellow - none
+CPHL Typedef yellow - -
+" }}}
+
+
+" {{{ Diff itms
+CPHL gitDiff gray6,dark,dark,dark - none
+
+CPHL DiffChange - gray7,subtract(red,100),dark -
+CPHL DiffText - red italic
+CPHL DiffDelete gray3 gray0
+CPHL DiffAdded green,dark,dark none none
+CPHL DiffRemoved red,bright none none
+" }}}
+" {{{ Function items
+CPHL Function blue,bright - bold
+CPHL pythonBuiltinFunc Function,dark,dark Function Function
+CPHL vimFunction Function,dark,dark Function Function
+CPHL vimAutoloadFunction Function,dark,dark Function -
+" }}}
+" {{{ Folded items
+CPHL Folded gray3,dark gray2,light - -
+" }}}
+" {{{ Grepper colors
+highlight Directory
+  \ ctermfg=216 ctermbg=NONE cterm=NONE guifg=#ffaf87 guibg=NONE gui=NONE
+highlight qfLineNr
+  \ ctermfg=238 ctermbg=NONE cterm=NONE guifg=#444444 guibg=NONE gui=NONE
+highlight qfSeparator
+  \ ctermfg=243 ctermbg=NONE cterm=NONE guifg=#767676 guibg=NONE gui=NONE
+" }}}
+" {{{ Impsort & Braceless highlights
+CPHL pythonImportedObject red,dark - bold
+CPHL pythonImportedFuncDef pythonBuiltinFunc,add(cyan,50) - bold
+CPHL pythonImportedClassDef yellow,dark - bold,italic
+CPHL pythonImportedModule red,bright - bold
+
+CPHL BracelessIndent gray7,bright gray7,bright
+" }}}
+" {{{ Parenth items
+CPHL MatchParen cyan gray0 - -
+" }}}
+" {{{ Python items
+CPHL pythonSelf violet,bright - - 
+CPHL pythonSelfArg gray3 - italic
+CPHL pythonOperator red - none
+
+CPHL pythonNone red,bright - -
+CPHL pythonBytes green - italic
+CPHL pythonRawBytes green - italic
+CPHL pythonBytesContent green - italic
+CPHL link pythonBytesError Error
+CPHL link pythonBytesEscape Special
+CPHL link pythonBytesEscapeError Error
+" }}}
+" {{{ Searching
+CPHL Search gray1 yellow none
+" }}}
+" Sneak colors {{{
+CPHL SneakPluginTarget blue,bright black,dark,dark,dark,dark bold
+" }}}
+" Special characters {{{
+CPHL Special cyan - -
+CPHL SpecialChar brown - -
+CPHL SpecialKey gray7,l+=0.99 - -
+CPHL NonText gray2 - -
+CPHL Whitespace gray7 - -
+
+" }}}
+" {{{ Startify
+CPHL StartifyBracket red - -
+CPHL StartifyFile red,dark - -
+CPHL StartifyNumber blue - -
+CPHL StartifyPath green,dark - -
+CPHL StartifySlash cyan - bold
+CPHL StartifySection yellow,bright - -
+CPHL StartifySpecial orange - -
+CPHL StartifyHeader orange - -
+CPHL StartifyFooter gray2 - -
+" }}}
+" Statusline Colors {{{
+" Primary Statusline Colors
+CPHL StatusLine gray2 blue -
+CPHL StatusLineNC gray3 gray1
+CPHL User1 gray7 yellow bold
+CPHL User2 gray7 red bold
+CPHL User3 gray7 green bold
+CPHL CommandMode gray7 green bold
+CPHL NormalMode gray7 red bold
+CPHL InsertMode gray7 yellow bold
+" TODO: Get the templating thing to work with InsertMode
+CPHL ReplaceMode gray7 yellow bold,underline
+CPHL TerminalMode gray7 turquoise bold
+CPHL HelpDoc gray7 turquoise bold,italic
+
+" TODO: Template or make these slightly different or something
+execute('CPHL VisualMode' . s:visual_color)
+execute('CPHL VisualLineMode' . s:visual_color)
+" {{{ Color printer help
+function! g:Color_printer() abort
+  for color_name in keys(g:colorpal_pallette)
+    execute('CPHL Temp ' . color_name . ' ' . color_name . ' - -')
+    echon color_name . ': ' | echohl Temp | echon color_name | echohl None | echon "\n"
+  endfor
+endfunction
+" }}}
+" {{{ HTML & Markdown
+CPHL htmlH1 blue,dark - bold
+" }}}
+" }}}
+" Tab line {{{
+CPHL TabLine white gray1,add(white,30) none
+CPHL TabLineFill white gray7,bright,bright,bright
+CPHL TablineSel white,bright gray1,bright bold
+" }}}
 " {{{ Terminal colors
 " *.foreground:   #c5c8c6
 " *.background:   #1d1f21
@@ -45,7 +185,10 @@ let g:terminal_color14 = '#8abeb7'
 let g:terminal_color7 = '#707880'
 let g:terminal_color15 = '#c5c8c6'
 " }}}
-" Vim editor colors
+" {{{ Typescript
+CPHL TypeScriptReserved red - italic
+" }}}
+" Vim Editor {{{
 CPHL PMenu gray4 gray2,multiply(white,20)
 CPHL PMenuSel gray0 yellow,bright
 CPHL PMenuSbar - gray0
@@ -63,78 +206,11 @@ CPHL EndOfBuffer gray3 - -
 
 let s:visual_color = ' - blue,dark,dark,dark,dark -'
 execute('CPHL Visual' . s:visual_color)
-
-" Standard syntax highlighting
-CPHL Comment gray3 - italic
-
-CPHL Boolean orange,w+=20 - -
-CPHL Character red - -
-CPHL Conditional red - -
-CPHL Constant orange - -
-CPHL Define cyan - none
-CPHL Delimiter brown - -
-CPHL Float orange - -
-CPHL Identifier red,light - none
-CPHL Include cyan - -
-CPHL Keyword violet - -
-CPHL Label yellow - -
-CPHL Number orange - -
-CPHL Operator red,bright,bright,bright - -
-CPHL PreProc yellow - -
-CPHL Repeat red - -
-CPHL Statement red - -
-CPHL StorageClass yellow - -
-CPHL String green - -
-CPHL Structure violet - -
-CPHL Tag yellow - -
-CPHL Todo yellow gray1 -
-CPHL Type yellow - none
-CPHL Typedef yellow - -
-
-" Special characters {{{
-CPHL Special cyan - -
-CPHL SpecialChar brown - -
-CPHL SpecialKey gray7,l+=0.99 - -
-CPHL NonText gray2 - -
-CPHL Whitespace gray7 - -
-
 " }}}
-" Tab line {{{
-CPHL TabLine white gray1,add(white,30) none
-CPHL TabLineFill white gray7,bright,bright,bright
-CPHL TablineSel white,bright gray1,bright bold
-" }}}
-" {{{ Function items
-CPHL Function blue,bright - bold
-CPHL pythonBuiltinFunc Function,dark,dark Function Function
-CPHL vimFunction Function,dark,dark Function Function
-CPHL vimAutoloadFunction Function,dark,dark Function -
-" }}}
-" {{{ Impsort & Braceless highlights
-CPHL pythonImportedObject red,dark - bold
-CPHL pythonImportedFuncDef pythonBuiltinFunc,add(cyan,50) - bold
-CPHL pythonImportedClassDef yellow,dark - bold,italic
-CPHL pythonImportedModule red,bright - bold
-
-CPHL BracelessIndent gray7,bright gray7,bright
-" }}}
-" {{{ Python items
-CPHL pythonSelf violet,bright - - 
-CPHL pythonSelfArg gray3 - italic
-CPHL pythonOperator red - none
-
-CPHL pythonNone red,bright - -
-CPHL pythonBytes green - italic
-CPHL pythonRawBytes green - italic
-CPHL pythonBytesContent green - italic
-CPHL link pythonBytesError Error
-CPHL link pythonBytesEscape Special
-CPHL link pythonBytesEscapeError Error
-" }}}
-" Vim items {{{
+" Vim Syntax {{{
 CPHL vimNotFunc purple,light - -
-CPHL vimLet purple,light - -
 CPHL vimCommand purple,light - -
+CPHL vimLet purple,light - -
 CPHL VimFuncVar purple
 CPHL VimIsCommand softwhite
 " Vimrc items {{{
@@ -148,70 +224,6 @@ CPHL CPHLBlank yellow,s-=.5 - -
 CPHL CPHLMod purple,s+=.5 - -
 " }}}
 " }}}
-" {{{ Parenth items
-CPHL MatchParen cyan gray0 - -
-" }}}
-" {{{ Folded items
-CPHL Folded gray0 gray5 - -
-" }}}
-" {{{ Startify
-CPHL StartifyBracket red - -
-CPHL StartifyFile red,dark - -
-CPHL StartifyNumber blue - -
-CPHL StartifyPath green,dark - -
-CPHL StartifySlash cyan - bold
-CPHL StartifySection yellow,bright - -
-CPHL StartifySpecial orange - -
-CPHL StartifyHeader orange - -
-CPHL StartifyFooter gray2 - -
-" }}}
-" {{{ Diff itms
-CPHL gitDiff gray6,dark,dark,dark - none
-
-CPHL DiffChange - gray7,subtract(red,100),dark -
-CPHL DiffText - red italic
-CPHL DiffDelete gray3 gray0
-CPHL DiffAdded green,dark,dark none none
-CPHL DiffRemoved red,bright none none
-" }}}
-" {{{ Grepper colors
-highlight Directory
-  \ ctermfg=216 ctermbg=NONE cterm=NONE guifg=#ffaf87 guibg=NONE gui=NONE
-highlight qfLineNr
-  \ ctermfg=238 ctermbg=NONE cterm=NONE guifg=#444444 guibg=NONE gui=NONE
-highlight qfSeparator
-  \ ctermfg=243 ctermbg=NONE cterm=NONE guifg=#767676 guibg=NONE gui=NONE
-" }}}
-" Sneak colors {{{
-CPHL SneakPluginTarget blue,bright black,dark,dark,dark,dark bold
-" }}}
-" Statusline Colors {{{
-CPHL User1 gray7 yellow bold
-CPHL User2 gray7 red bold
-CPHL User3 gray7 green bold
-CPHL CommandMode gray7 green bold
-CPHL NormalMode gray7 red bold
-CPHL InsertMode gray7 yellow bold
-" TODO: Get the templating thing to work with InsertMode
-CPHL ReplaceMode gray7 yellow bold,underline
-CPHL TerminalMode gray7 turquoise bold
-CPHL HelpDoc gray7 turquoise bold,italic
-
-" TODO: Template or make these slightly different or something
-execute('CPHL VisualMode' . s:visual_color)
-execute('CPHL VisualLineMode' . s:visual_color)
-" {{{ Color printer help
-function! g:Color_printer() abort
-  for color_name in keys(g:colorpal_pallette)
-    execute('CPHL Temp ' . color_name . ' ' . color_name . ' - -')
-    echon color_name . ': ' | echohl Temp | echon color_name | echohl None | echon "\n"
-  endfor
-endfunction
-" }}}
-" {{{ HTML & Markdown
-CPHL htmlH1 blue,dark - bold
-" }}}
-" }}}
-" {{{ Typescript
-CPHL TypeScriptReserved red - italic
+" {{{ Vimwiki Syntax
+CPHL VimwikiBold red - bold
 " }}}

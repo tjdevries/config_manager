@@ -146,14 +146,7 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
     let result_name = expand('%')
   endif
 
-  " I like UNIX lines :)
-  let result_name = substitute(result_name, '\\', '/', 'g')
-
-  " All substitutions
-  let result_name = substitute(result_name, $HOME, '~', '')
-
-  " Replace double slashes with one
-  let result_name = substitute(result_name, '//', '/', 'g')
+  let result_name = tj#standard_file_name(result_name)
 
   " Filetype specifics here
   if &filetype == 'help'

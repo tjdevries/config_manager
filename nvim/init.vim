@@ -28,6 +28,10 @@ function! s:source(dir) abort
   endfor
 endfunction
 
+if get(g:, 'gonvim_running', 0)
+  execute 'source ' . g:_vimrc_base . '/ginit.vim'
+endif
+
 call s:source('init')
 
 " vim:foldmethod=marker:foldlevel=0

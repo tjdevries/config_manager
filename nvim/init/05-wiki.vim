@@ -52,11 +52,13 @@ function! GetVimwikiFolder() abort
 endfunction
 
 inoremap <leader>wf <C-O>:call nvim_input(GetVimwikiFolder())<CR>
+nnoremap <leader>wf :call nvim_input(GetVimwikiFolder())<CR>
 
 " turn this_tag -> [:this_tag:]
 inoremap wtag <C-O>b[:<C-O>e<right>:]
 
 augroup tjVimWiki
   autocmd!
-  au BufNewFile,BufRead *.wiki set foldmethod=marker
+  au BufNewFile,BufRead,BufEnter *.wiki set foldmethod=marker
+  au BufWritePost *.wiki VimwikiRebuildTags
 augroup END

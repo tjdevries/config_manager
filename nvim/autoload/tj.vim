@@ -354,3 +354,18 @@ function! tj#profile( command, numberOfTimes )
   let &more = more
   return result
 endfunction
+
+function! tj#standard_file_name(file_name)
+  let result_name = copy(a:file_name)
+
+  " I like UNIX lines :)
+  let result_name = substitute(result_name, '\\', '/', 'g')
+
+  " All substitutions
+  let result_name = substitute(result_name, $HOME, '~', '')
+
+  " Replace double slashes with one
+  let result_name = substitute(result_name, '//', '/', 'g')
+
+  return result_name
+endfunction

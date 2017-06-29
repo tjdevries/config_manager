@@ -91,7 +91,7 @@ let s:goto_summary = 3
 let s:map_gotos = {
       \ s:goto_record: 'R \(\S\S\S\) \([0-9]*\)',
       \ s:goto_item: 'I \(\S\S\S\) \([0-9]*\)',
-      \ s:goto_summary: '^\(QAN\|DSN\|DLG\): \([0-9]*\)',
+      \ s:goto_summary: '\(QAN\|XDS\|DLG\)\s*: \([0-9]*\)',
       \ }
 
 let s:goto_default = s:goto_record
@@ -218,7 +218,7 @@ function! epic#add_timelog_info(dict, o_list) abort
   let extended_info = []
 
   let line_string = "\t- %-8s: %s"
-  let extended_info = ['filename', 'QAN', 'XDS', 'DLG']
+  let extended_info = ['filename', 'description', 'QAN', 'XDS', 'DLG']
 
   call filter(
         \ map(extended_info,
@@ -242,6 +242,7 @@ endfunction
 let s:default_epic_job = {
       \ 'id': -1,
       \ 'start': v:null,
+      \ 'description': '',
       \ 'filename': '',
       \ 'QAN': '',
       \ 'DLG': '',
@@ -253,19 +254,6 @@ let g:_epic_time_string = '%Y-%m-%d %H:%M'
 let g:epic#log_location = g:vimwiki_path . '/projects/timelog.wiki'
 
 function! epic#start_task(...) abort
-  let g:_epic_last_job = get(g:, '_epic_last_job', copy(s:default_epic_job))
-
-  if g:_epic_last_job.id && buffer_exists(g:_epic_last_job.id)
-    call epic#finish_task(g:_epic_last_job)
-  endif
-
-  let g:_epic_last_job.id = nvim_buf_get_number(0)
-  let g:_epic_last_job.start = localtime()
-  let g:_epic_last_job.filename = fnamemodify(nvim_buf_get_name(0), ':t')
-  let g:_epic_last_job.QAN = epic#get_id('QAN')
-  let g:_epic_last_job.DLG = epic#get_id('DLG')
-  let g:_epic_last_job.XDS = epic#get_id('XDS')
-
   if a:0 > 0
     let description = a:1
   else
@@ -276,41 +264,65 @@ function! epic#start_task(...) abort
     return
   endif
 
+  if a:0 > 1
+    let current_job = a:2
+  else
+    let current_job = get(g:, '_epic_last_job', copy(s:default_epic_job))
+  endif
+
+  if current_job.id && buffer_exists(current_job.id)
+    call epic#finish_task(current_job)
+  endif
+
+  let current_job.id = nvim_buf_get_number(0)
+  let current_job.start = localtime()
+  let current_job.filename = fnamemodify(nvim_buf_get_name(0), ':t')
+  let current_job.QAN = epic#get_id('QAN')
+  let current_job.DLG = epic#get_id('DLG')
+  let current_job.XDS = epic#get_id('XDS')
+  let current_job.description = description
+
   let start_description = [
         \ 'STRT: '
         \ . strftime(g:_epic_time_string)
         \ . ' : '
-        \ . description
+        \ . current_job.description
         \ ]
 
   call nvim_buf_set_lines(
-        \ g:_epic_last_job.id,
+        \ current_job.id,
         \ 0,
         \ -1,
         \ v:false,
-        \ nvim_buf_get_lines(g:_epic_last_job.id, 0, -1, v:false) + start_description
+        \ nvim_buf_get_lines(current_job.id, 0, -1, v:false) + start_description
         \ )
 
-  let timelog_description = epic#write_timelog_info(g:_epic_last_job, start_description)
+  let timelog_description = epic#write_timelog_info(current_job, start_description)
 endfunction
 
-function! epic#finish_task(job_config) abort
+function! epic#finish_task(...) abort
+  if a:0 > 0
+    let current_job = a:1
+  else
+    let current_job = get(g:, '_epic_last_job', copy(s:default_epic_job))
+  endif
+
   let finish_description = [
         \ 'DONE: ' 
         \ . strftime(g:_epic_time_string)
         \ . ' : Total minutes = '
-        \ . (localtime() - a:job_config.start) / 60
+        \ . (localtime() - current_job.start) / 60
         \ ]
 
   call nvim_buf_set_lines(
-        \ a:job_config.id,
+        \ current_job.id,
         \ 0,
         \ -1,
         \ v:false,
-        \ nvim_buf_get_lines(a:job_config.id, 0, -1, v:false) + finish_description
+        \ nvim_buf_get_lines(current_job.id, 0, -1, v:false) + finish_description
         \ )
 
-  let timelog_description = epic#write_timelog_info(g:_epic_last_job, finish_description)
+  let timelog_description = epic#write_timelog_info(current_job, finish_description)
 
   let g:_epic_last_job = copy(s:default_epic_job)
 endfunction
