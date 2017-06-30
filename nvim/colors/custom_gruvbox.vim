@@ -129,8 +129,10 @@ CPHL TerminalMode gray7 turquoise bold
 CPHL HelpDoc gray7 turquoise bold,italic
 
 " TODO: Template or make these slightly different or something
-execute('CPHL VisualMode' . s:visual_color)
-execute('CPHL VisualLineMode' . s:visual_color)
+let s:visual_color = ' - blue,dark,dark,dark,dark -'
+call execute('CPHL Visual' . s:visual_color)
+call execute('CPHL VisualMode ' . s:visual_color)
+call execute('CPHL VisualLineMode' . s:visual_color)
 " {{{ Color printer help
 function! g:Color_printer() abort
   for color_name in keys(g:colorpal_pallette)
@@ -203,9 +205,6 @@ CPHL Cursor gray0 gray5 -
 CPHL LineNr gray3 gray1 -
 CPHL SignColumn gray3 gray1 -
 CPHL EndOfBuffer gray3 - -
-
-let s:visual_color = ' - blue,dark,dark,dark,dark -'
-execute('CPHL Visual' . s:visual_color)
 " }}}
 " Vim Syntax {{{
 CPHL vimNotFunc purple,light - -

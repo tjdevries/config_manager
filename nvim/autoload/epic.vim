@@ -19,10 +19,13 @@ endfunction
 " TODO: Add the ability to do an emc2 edit action, like:
 " emc2://TRACK/ZQN/4162933?action=EDIT
 let s:category_mapper = {
+      \ 'ZQN': 'ZQN',
       \ 'QAN': 'ZQN',
       \ 'XDS': 'XDS',
       \ 'DLG': 'DLG',
+      \ 'PRJ': 'PRJ',
       \ }
+let s:category_search_string = '\(' . join(keys(s:category_mapper), '\|') . '\)\s*:\s*\([0-9]*\)'
 function! s:populate_emcsummary_url(version, category, number) abort
   return printf("http://emc2summary/GetSummaryReport.ashx/%s/%s/%s",
         \ a:version, s:category_mapper[a:category], a:number)
@@ -91,8 +94,9 @@ let s:goto_summary = 3
 let s:map_gotos = {
       \ s:goto_record: 'R \(\S\S\S\) \([0-9]*\)',
       \ s:goto_item: 'I \(\S\S\S\) \([0-9]*\)',
-      \ s:goto_summary: '\(QAN\|XDS\|DLG\)\s*: \([0-9]*\)',
+      \ s:goto_summary: s:category_search_string,
       \ }
+let g:map_gotos = s:map_gotos
 
 let s:goto_default = s:goto_record
 
