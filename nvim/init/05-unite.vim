@@ -188,4 +188,11 @@ else
 
   nnoremap <expr> <leader>fw MyDeniteGrep()
   " }}}
+  " Neo Yank
+  if exists('g:neoyank#limit')
+    nnoremap <leader>p :Denite neoyank<CR>
+  endif
+  " {{{ Wiki stuff
+  nnoremap ,wp :call execute('Denite file -path=' . g:vimwiki_path . '/projects')<CR>
+  " }}}
 endif
