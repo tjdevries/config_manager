@@ -33,6 +33,11 @@ endif
 Plug 'tjdevries/nvim-langserver-shim'
 " Plug 'tjdevries/mparse.nvim'
 " To Learn: {{{
+" Yup:
+" Plug 'https://github.com/AndrewRadev/linediff.vim'
+" Plug 'https://github.com/AndrewRadev/switch.vim'
+" Plug 'https://github.com/AndrewRadev/splitjoin.vim'
+"
 " Intriguing
 "
 " For narrowing regions of text to look at them alone
@@ -97,6 +102,10 @@ if has('python3')
     " TODO: Get a matrix account...
     Plug 'bfredl/nvim-matrix'
 endif
+" }}}
+" {{{ Games
+Plug 'johngrib/vim-game-snake'
+Plug 'johngrib/vim-game-code-break'
 " }}}
 " Git Based Plugins {{{
 
@@ -166,6 +175,7 @@ Plug 'romainl/vim-qf'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
 Plug 'tjdevries/edit_alternate.vim'
+Plug 'google/vim-searchindex'
 " }}}
 " Snippets {{{
 if g:my_snippet_manager ==? 'ultisnips'
@@ -242,6 +252,7 @@ endif
 Plug 'mkitt/tabline.vim'
 " }}}
 " Syntax Checkers {{{
+Plug 'w0rp/ale'
 " Plug 'benekastah/neomake'       " A better linter than syntastic?
 Plug 'alfredodeza/pytest.vim'   " Pytest helper
 " }}}
@@ -327,8 +338,6 @@ Plug 'tpope/vim-liquid'
 " Wiki {{{
 Plug 'vimwiki/vimwiki'
 " }}}
-
-
 " Old plugins... {{{
 " Task Warrior Plugins
 " Plug 'blindFS/vim-taskwarrior'
@@ -351,6 +360,9 @@ Plug 'vimwiki/vimwiki'
 " Plug 'tmhedberg/SimpylFold', { 'for': 'none' }  " Not used currently
 " }}}
 call plug#end()
+
+" Packadd plugins
+packadd vimball
 
 " Load immediately {{{
 call plug#load('vim-abolish')

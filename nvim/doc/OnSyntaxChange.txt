@@ -1,0 +1,127 @@
+*OnSyntaxChange.txt*    Generate events when moving onto / off a syntax group.
+
+		      ON SYNTAX CHANGE    by Ingo Karkat
+							  *OnSyntaxChange.vim*
+description			|OnSyntaxChange-description|
+usage				|OnSyntaxChange-usage|
+installation			|OnSyntaxChange-installation|
+limitations			|OnSyntaxChange-limitations|
+known problems			|OnSyntaxChange-known-problems|
+todo				|OnSyntaxChange-todo|
+history				|OnSyntaxChange-history|
+
+==============================================================================
+DESCRIPTION					  *OnSyntaxChange-description*
+
+This plugin can set up custom User events similar to the |InsertEnter| and
+|InsertLeave| events that fire when the cursor moves onto / off text that is
+matched by a particular syntax group. You can use a custom |:autocmd| to
+perform an action or change a Vim setting depending on the syntax under the
+cursor.
+
+HOW IT WORKS								     *
+
+The plugin checks for changes to the syntax group under the cursor whenever
+the cursor changes, and keeps track of the state using the event definition
+name. Having many definitions or complex syntaxes may slow down cursor
+movement noticeably, but the plugin takes care that only necessary hooks are
+installed in the proper scope. So as long as you only have buffer-local
+definitions, other buffers won't be affected at all.
+
+RELATED WORKS								     *
+
+- hookcursormoved (vimscript #2037) allows to call a registered function when
+  the syntax group under the cursor has changed, or a syntax group of a
+  particular name has been left. It also offers other hooks like change of
+  line number and movement into parentheses.
+
+==============================================================================
+USAGE							*OnSyntaxChange-usage*
+
+The following is an overview; you'll find the details directly in the
+implementation file .vim/autoload/OnSyntaxChange.vim.
+To set up User events for a particular syntax group, invoke:
+
+OnSyntaxChange#Install( name, syntaxItemPattern, isBufferLocal, mode )
+
+You need to give your event definition a name; it is used to differentiate
+different setups and is included in the event names that will be generated:
+    Syntax{name}Enter{MODE}
+    Syntax{name}Leave{MODE}
+
+The syntaxItemPattern is a regular expression that matches the syntax group;
+both the actual and effective names are considered (e.g. in Vimscript,
+"vimLineComment" is linked to "Comment").
+
+Events can be generated globally for all buffers, or just for a particular
+buffer; use the latter to create events for particular filetypes (via an
+:autocmd FileType or in a ~/.vim/ftplugin/{filetype}.vim script).
+
+The mode specifies whether the syntax check should only be performed in
+normal, insert, or any of both modes. For example: >
+    call OnSyntaxChange#Install('Comment', '^Comment$', 0, 'a')
+
+To handle the generated events, define one or more|:autocmd| for the |User|
+event, matching the event name, e.g. >
+    autocmd User SyntaxCommentEnterA unsilent echo "entered comment"
+    autocmd User SyntaxCommentLeaveA unsilent echo "left comment"
+<
+
+EXAMPLE						      *OnSyntaxChange-example*
+
+1. Enable 'list' when inside string (e.g. to see the difference between <Tab>
+   and <Space>).
+This should only affect both modes, so mode is "a". Let's do this only for C
+files: >
+    autocmd Filetype c call OnSyntaxChange#Install('CString', 'String$', 1, 'a')
+    autocmd Filetype c autocmd User SyntaxCStringEnterA setlocal list
+    autocmd Filetype c autocmd User SyntaxCStringLeaveA setlocal nolist
+<
+2. To disable the AutoComplPop plugin (vimscript #1879) when inside a
+   comment. (Inspired by http://stackoverflow.com/questions/10723499/)
+Let's do this globally. Since the completion only works in insert mode, use
+mode "i". >
+    call OnSyntaxChange#Install('Comment', '^Comment$', 0, 'i')
+    autocmd User SyntaxCommentEnterI silent! AcpLock
+    autocmd User SyntaxCommentLeaveI silent! AcpUnlock
+<
+==============================================================================
+INSTALLATION					 *OnSyntaxChange-installation*
+
+This script is packaged as a |vimball|. If you have the "gunzip" decompressor
+in your PATH, simply edit the *.vmb.gz package in Vim; otherwise, decompress
+the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
+vimball or via the |:UseVimball| command. >
+    vim OnSyntaxChange*.vmb.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES					 *OnSyntaxChange-dependencies*
+
+- Requires Vim 7.0 or higher.
+
+==============================================================================
+LIMITATIONS					  *OnSyntaxChange-limitations*
+
+KNOWN PROBLEMS				       *OnSyntaxChange-known-problems*
+
+TODO							 *OnSyntaxChange-todo*
+
+IDEAS							*OnSyntaxChange-ideas*
+
+==============================================================================
+HISTORY						      *OnSyntaxChange-history*
+
+1.01	17-Jan-2013
+Do not trigger modeline processing when triggering.
+
+1.00	25-May-2012
+First published version. Started development.
+
+==============================================================================
+Copyright: (C) 2012-2013 Ingo Karkat
+The VIM LICENSE applies to this script; see |copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
