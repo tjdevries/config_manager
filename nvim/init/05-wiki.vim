@@ -61,4 +61,8 @@ augroup tjVimWiki
   autocmd!
   au BufNewFile,BufRead,BufEnter *.wiki set foldmethod=marker
   au BufWritePost *.wiki VimwikiRebuildTags
+
+  " This is probably too often... but oh well
+  " Could perhaps even do it in a filetype
+  au BufNewfile,BufRead,BufEnter *.wiki nmap <buffer><expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "<Plug>VimwikiFollowLink"}()
 augroup END

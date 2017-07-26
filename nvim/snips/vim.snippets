@@ -33,3 +33,11 @@ if has_key(${1:a:response}, '$2')
   let l:$2_$3 = get($1['$2'], $3, $4)
 endif
 endsnippet
+
+snippet auto "Autoload function"
+""
+" $1
+function! `!v tj#easy_autoload()`$2 abort
+  $3
+endfunction
+endsnippet

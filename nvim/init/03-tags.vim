@@ -5,7 +5,6 @@ set tags=tags; " Enable ctags
 " Tag Go
 nnoremap <leader>tg <C-]>
 " Tag declaration, next, prev, menu
-nnoremap <leader>td 3<C-]>
 nnoremap <leader>tn :call tj#tag_mover('next')<CR>
 nnoremap <leader>tp :call tj#tag_mover('previous')<CR>
 nnoremap <leader>tm :tselect<CR>

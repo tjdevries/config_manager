@@ -37,7 +37,7 @@ fun! AnsiEsc#AnsiEsc(rebuild)
 "   call Dret("AnsiEsc#AnsiEsc")
    return
   endif
-  let bn= bufnr("%")
+  let bn = bufnr("%")
   if !exists("s:AnsiEsc_enabled_{bn}")
    let s:AnsiEsc_enabled_{bn}= 0
   endif

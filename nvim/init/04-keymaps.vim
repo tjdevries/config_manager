@@ -82,7 +82,7 @@ nnoremap <leader>h :lprevious<CR>
 nnoremap <leader>fs ^yt{$%"_ddI} /* <esc>pa*/<CR><esc>
 
 " Get autoload names easily
-inoremap <leader>au <c-O>:call tj#easy_autoload()<CR><esc>A
+imap <leader>au auto,e
 
 " Undo toggle
 nnoremap <leader>ut :GundoToggle<cr>

@@ -107,7 +107,7 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
   endif
 
   if &buftype == 'nofile'
-    return nvim_buf_get_name(0)
+    return bufname(0)
   endif
 
   let file_name = maktaba#path#Split(expand('%'))

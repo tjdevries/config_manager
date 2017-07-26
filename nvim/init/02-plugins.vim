@@ -62,6 +62,23 @@ Plug 'tpope/vim-projectionist'  " Alternate file editting and some helpful stuff
 Plug 'tpope/vim-scriptease'     " Vim help
 " }}}
 
+" Work Plugins
+if filereadable('F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim')
+    Plug 'F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim'
+endif
+
+if filereadable(expand('~/git/standard.vim/autoload/std.vim'))
+    Plug '~/git/standard.vim/'
+else
+    Plug 'tjdevries/standard.vim'
+endif
+
+if filereadable(expand('~/git/putty.vim/autoload/putty.vim'))
+    Plug '~/git/putty.vim/'
+else
+    Plug 'tjdevries/putty.vim'
+endif
+
 " Color helpers {{{
 Plug 'chrisbra/Colorizer'                                         " Helpful tool for visualizing colors
 " }}}
@@ -325,6 +342,7 @@ Plug 'nathanaelkane/vim-indent-guides'                       " See indentation g
 Plug 'sjl/gundo.vim'                " Undo helper
 " }}}
 " {{{ Vim Plugins
+Plug 'tjdevries/plib.vim'
 " }}}
 " Web based plugins {{{
 Plug 'mattn/webapi-vim'
@@ -366,4 +384,5 @@ packadd vimball
 
 " Load immediately {{{
 call plug#load('vim-abolish')
+call plug#load(
 " }}}

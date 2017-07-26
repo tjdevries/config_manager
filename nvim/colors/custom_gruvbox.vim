@@ -217,6 +217,8 @@ CPHL vimMapModKey cyan - -
 CPHL vimNotation cyan - -
 CPHL vimMapLHS yellow - -
 CPHL vimBracket cyan,negative - -
+CPHL vimMap darkseagreen4 - -
+CPHL nvimMap vimMap - -
 " }}}
 " CPHL items {{{
 CPHL CPHLBlank yellow,s-=.5 - -

@@ -9,3 +9,18 @@ endfunction
 
 " Really mess with someone when they press tab
 " inoremap <expr> <tab> jokes#random_tabstop()
+
+
+""
+" randomly leave insert mode after a few seconds
+function! jokes#random_normal() abort
+  if exists('*RandomNumber')
+    let time_limit = RandomNumber(5, 10)
+  else
+    let time_limit = 5
+  endif
+
+  call timer_start(time_limit, {-> execute('normal! <esc>')})
+endfunction
+" noremap i :call jokes#random_normal()<CR>i
+

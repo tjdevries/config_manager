@@ -56,7 +56,6 @@ function! tj#unite_file_lister(directory, prefix, ...) abort
   return unite_list
 endfunction
 
-
 ""
 " Helper function to do nice stuff with tags
 function! tj#tag_mover(direction) abort
@@ -65,19 +64,20 @@ endfunction
 
 ""
 " Helper to get autload functions easily
+" Used with my `auto` snippet
 function! tj#easy_autoload() abort
   if expand('%:p') =~# 'autoload'
     " Santize from windows
-    let autoload_name = substitute(expand('%:p'), '\\', '/', 'g')
-
+    let autoload_name = std#file#name(expand('%:p'))
     let autoload_name = split(autoload_name, 'autoload/')[-1]
-    let autoload_name = substitute(autoload_name, '\.vim', '', 'g')
+    let autoload_name = fnamemodify(autoload_name, ':r')
     let autoload_name = substitute(autoload_name, '/', '#', 'g')
     let autoload_name = autoload_name . '#'
 
-    put ='function! ' . autoload_name
-    norm! kJ
+    return autoload_name
   endif
+
+  return ''
 endfunction
 
 ""
@@ -355,17 +355,6 @@ function! tj#profile( command, numberOfTimes )
   return result
 endfunction
 
-function! tj#standard_file_name(file_name)
-  let result_name = copy(a:file_name)
-
-  " I like UNIX lines :)
-  let result_name = substitute(result_name, '\\', '/', 'g')
-
-  " All substitutions
-  let result_name = substitute(result_name, $HOME, '~', '')
-
-  " Replace double slashes with one
-  let result_name = substitute(result_name, '//', '/', 'g')
-
-  return result_name
+function! tj#standard_file_name(file_name) abort
+  return std#file#name(a:file_name)
 endfunction
