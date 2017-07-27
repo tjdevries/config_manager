@@ -132,3 +132,4 @@ inoremap ,shrug ¯\_(ツ)_/¯
 " My own modeline
 nnoremap <leader>m :call execute(substitute(getline('.'), '.*vim', '', ''))<CR>
 
+nnoremap <leader><leader>n :normal!<space>

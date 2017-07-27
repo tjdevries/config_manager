@@ -64,7 +64,7 @@ Plug 'tpope/vim-scriptease'     " Vim help
 
 " Work Plugins
 if filereadable('F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim')
-    Plug 'F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim'
+    Plug 'F:\\personal\\tdevries\\work_git\\epic.vim\'
 endif
 
 if filereadable(expand('~/git/standard.vim/autoload/std.vim'))

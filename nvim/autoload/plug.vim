@@ -1,4 +1,4 @@
-" vim-plug: Vim plugin manager
+"if vim-plug: Vim plugin manager
 " ============================
 "
 " Download plug.vim and put it in ~/.vim/autoload

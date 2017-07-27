@@ -24,3 +24,5 @@ function! jokes#random_normal() abort
 endfunction
 " noremap i :call jokes#random_normal()<CR>i
 
+" Unexpected write and quit
+" nnoremap :wq ggdGioopsies!<esc>:wq
