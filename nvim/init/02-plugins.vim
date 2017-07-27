@@ -384,5 +384,4 @@ packadd vimball
 
 " Load immediately {{{
 call plug#load('vim-abolish')
-call plug#load(
 " }}}

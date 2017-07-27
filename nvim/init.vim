@@ -10,7 +10,7 @@ let g:_vimrc_init = isdirectory(g:_vimrc_plugins)
 let g:_vimrc_sources = get(g:, '_vimrc_sources', {})
 
 if has('unix')
-    let g:plugin_path = '~/.config/vim_plug'
+    let g:plugin_path = expand('~/.config/vim_plug')
 else
     let g:plugin_path = expand('$HOME') . '\nvim_plug'
 endif
