@@ -31,7 +31,7 @@ if !has('unix')
 endif
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
-" Plug 'tjdevries/mparse.nvim'
+Plug 'tjdevries/mparse.nvim'
 " To Learn: {{{
 " Yup:
 " Plug 'https://github.com/AndrewRadev/linediff.vim'
@@ -61,8 +61,7 @@ Plug 'metakirby5/codi.vim'
 Plug 'tpope/vim-projectionist'  " Alternate file editting and some helpful stuff
 Plug 'tpope/vim-scriptease'     " Vim help
 " }}}
-
-" Work Plugins
+" Work Plugins {{{
 if filereadable('F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim')
     Plug 'F:\\personal\\tdevries\\work_git\\epic.vim\'
 endif
@@ -78,7 +77,7 @@ if filereadable(expand('~/git/putty.vim/autoload/putty.vim'))
 else
     Plug 'tjdevries/putty.vim'
 endif
-
+" }}}
 " Color helpers {{{
 Plug 'chrisbra/Colorizer'                                         " Helpful tool for visualizing colors
 " }}}

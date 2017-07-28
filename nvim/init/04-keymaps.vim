@@ -133,3 +133,11 @@ inoremap ,shrug ¯\_(ツ)_/¯
 nnoremap <leader>m :call execute(substitute(getline('.'), '.*vim', '', ''))<CR>
 
 nnoremap <leader><leader>n :normal!<space>
+
+" Basically commandline fixes for fat fingering
+cnoremap %:H %:h
+
+" But really I should use these instead
+cnoremap %H <C-R>=expand('%:h:p') . std#path#separator()<CR>
+cnoremap %T <C-R>=expand('%:t')<CR>
+cnoremap %P <C-R>=expand('%:p')<CR>
