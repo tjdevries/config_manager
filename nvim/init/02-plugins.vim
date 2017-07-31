@@ -192,6 +192,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
 Plug 'tjdevries/edit_alternate.vim'
 Plug 'google/vim-searchindex'
+Plug 'skywind3000/quickmenu.vim'
 " }}}
 " Snippets {{{
 if g:my_snippet_manager ==? 'ultisnips'
