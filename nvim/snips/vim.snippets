@@ -41,3 +41,46 @@ function! `!v tj#easy_autoload()`$2 abort
   $3
 endfunction
 endsnippet
+
+snippet snip_configuration "An entire configuration setup for a plugin"
+" Options are set using the api
+" call `!v tj#easy_autoload()`set(area, setting, value)
+"
+" and can be viewed with
+" call `!v tj#easy_autoload()`get(area, setting)
+"
+" to view the configuration dictionary
+" call `!v tj#easy_autoload()`#view()
+
+
+""
+" Configuration options for $1
+let s:plugin_configuration = {
+      \ 'defaults': {
+        \ },
+      \ }
+
+function! `!v tj#easy_autoload()`get(area, setting) abort
+  let config_area = has_key(s:plugin_configuration, a:area) ?
+    \ s:plugin_configuration[a:area] :
+    \ execute(printf('throw "[$1]. No key ''%s''"', a:area))
+
+  return has_key(config_area, a:setting) ?
+    \ config_area[a:setting] :
+    \ execute(printf('throw "[$1]. No setting ''%s'' for area ''%s''"', a:setting, a:area))
+endfunction
+
+function! `!v tj#easy_autoload()`set(area, setting, value) abort
+  let config_area = has_key(s:plugin_configuration, a:area) ?
+    \ s:plugin_configuration[a:area] :
+    \ execute(printf('throw "[$1]. No key ''%s''"', a:area))
+
+  return has_key(config_area, a:setting) ?
+    \ execute('let s:plugin_configuration[a:area][a:setting] = a:value') :
+    \ execute(printf('throw "[$1]. No setting ''%s'' for area ''%s''"', a:setting, a:area))
+endfunction
+
+function! `!v tj#easy_autoload()`view() abort
+  return copy(s:plugin_configuration)
+endfunction
+endsnippet

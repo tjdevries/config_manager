@@ -190,6 +190,9 @@ let g:terminal_color15 = '#c5c8c6'
 " {{{ Typescript
 CPHL TypeScriptReserved red - italic
 " }}}
+" Ultisnips {{{
+CPHL snipLeadingSpaces gray1 - -
+" }}}
 " Vim Editor {{{
 CPHL PMenu gray4 gray2,multiply(white,20)
 CPHL PMenuSel gray0 yellow,bright
