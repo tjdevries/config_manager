@@ -77,6 +77,12 @@ if filereadable(expand('~/git/putty.vim/autoload/putty.vim'))
 else
     Plug 'tjdevries/putty.vim'
 endif
+
+if filereadable(expand('~/git/conf.vim/autoload/conf.vim'))
+    Plug '~/git/conf.vim/'
+else
+    Plug 'tjdevries/conf.vim'
+endif
 " }}}
 " Color helpers {{{
 Plug 'chrisbra/Colorizer'                                         " Helpful tool for visualizing colors
