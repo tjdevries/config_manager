@@ -106,6 +106,12 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
     return '[No Name]'
   endif
 
+  " Special name for lookitt buffers
+  if &filetype ==? 'lookitt'
+    let name = nvim_buf_get_name(0)
+    return substitute(name[stridx(name, '[Putty'):], '\(.*\)@\(\w*\)\..*', '\1@\2', '')
+  endif
+
   if &buftype == 'nofile'
     return bufname(0)
   endif
