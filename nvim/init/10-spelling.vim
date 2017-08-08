@@ -45,3 +45,4 @@ iabbrev Cache Caché
 Abolish e3n E3N
 
 Abolish pattners patterns
+Abolish configuratoin configuration
