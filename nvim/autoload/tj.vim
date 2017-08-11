@@ -227,39 +227,16 @@ function! tj#dict_to_formatted_json(dict) abort
     return
   endif
 
-  vnew
-  set buftype=nofile
-  set filetype=json
+  call std#window#temp({'buftype': 'nofile', 'filetype': 'json', 'vertical': v:true})
 
   let l:buffer_number = nvim_buf_get_number(0)
 
-  if !has('unix')
-    let old_shell = &shell
-    set shell=powershell.exe
-  endif
-
-  call nvim_buf_set_lines(l:buffer_number, 1, -1, 1,
-        \ split(
-          \ system('echo '
-            \ . shellescape(tj#json_encode(a:dict))
-            \ . ' | python -m json.tool'),
-        \ "\n",
-        \ 1))
-
-  if !has('unix')
-    let &shell = old_shell
-  endif
+  call nvim_buf_set_lines(l:buffer_number, 0, -1, 1, std#json#format(tj#json_encode(a:dict)))
 
   silent! call dictwatcherdel(a:dict, '*', 's:dict_watcher_func')
 
   function! s:dict_watcher_func(d, k, z) abort closure
-    call nvim_buf_set_lines(l:buffer_number, 1, -1, 1,
-          \ split(
-            \ system('echo '
-              \ . shellescape(tj#json_encode(a:d))
-              \ . ' | python -m json.tool'),
-          \ "\n",
-          \ 1))
+    call nvim_buf_set_lines(l:buffer_number, 1, -1, 1, std#json#format(tj#json_encode(a:d)))
   endfunction
 
   call dictwatcheradd(a:dict, '*', function('s:dict_watcher_func'))
