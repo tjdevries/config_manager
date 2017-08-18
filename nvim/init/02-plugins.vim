@@ -266,6 +266,7 @@ endif
 " }}}
 " Startup {{{
 Plug 'mhinz/vim-startify'
+Plug 'tweekmonster/startuptime.vim'
 " }}}
 " Status Line {{{
 if g:airline_enabled

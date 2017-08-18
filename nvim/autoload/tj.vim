@@ -131,29 +131,11 @@ function! tj#buffer_cache(name, function, ...) abort
   " Set the timeout
   if a:0 > 0
     let timeout = a:1
-    let last_evaluated = get(b:, a:name . '_evaluated', 0)
   else
-    let timeout = v:false
+    let timeout = -1
   endif
 
-  if exists('b:' . a:name)
-    if timeout
-      if (localtime() - last_evaluated) > timeout
-        let b:{a:name} = eval(a:function)
-        let b:{a:name}_evaluated = localtime()
-      endif
-    endif
-
-    return b:{a:name}
-  else
-    let b:{a:name} = eval(a:function)
-
-    if timeout
-      let b:{a:name}_evaluated = localtime()
-    endif
-
-    return b:{a:name}
-  endif
+  return std#cache#get(b:, a:name, a:function, timeout)
 endfunction
 
 ""

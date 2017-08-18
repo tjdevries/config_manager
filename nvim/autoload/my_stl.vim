@@ -54,13 +54,7 @@ function! my_stl#get_mode() abort
       let l:leading_space = ' '
     endif
 
-    return ''
-          \ . my_stl#get_user_color(l:m)
-          \ . ' ['
-          \ . l:mode
-          \ . ']'
-          \ . l:leading_space
-          \ . '%*'
+    return printf('%s [%s]%s%%*', my_stl#get_user_color(l:m), l:mode, l:leading_space)
 endfunction
 
 function! my_stl#add_left_separator() abort
@@ -172,7 +166,7 @@ function! my_stl#get_git() abort
   let stl = ''
 
   " Check for git information
-  if tj#buffer_cache('_stl_git_file', 'tj#is_git_file()') 
+  if std#cache#get(b:, '_stl_git_file', funcref('tj#is_git_file'))
     " {{{  Git status
     if s:git_helper ==# 'fugitive'  " {{{
       if exists('*fugitive#head') && (
@@ -188,7 +182,7 @@ function! my_stl#get_git() abort
       endif
       let stl .= gita#statusline#format('%ln')[:5]
       let stl .= '/'
-      
+
       let l:branch_name = gita#statusline#format('%lb')[:5]
 
       if l:branch_name ==? 'master'
@@ -199,18 +193,27 @@ function! my_stl#get_git() abort
       endif
       " }}}
     elseif s:git_helper ==# 'gina'  " {{{
-      " TODO: Waiting for gina to have git status line
       let win_width = nvim_win_get_width(0)
-      if win_width > 120
-        let stl .= gina#component#repo#preset('fancy')
-      else
-        let stl .= gina#component#repo#branch()
-      endif
+
+      " TODO: Make wait time configurable
+      " Wait awhile between checking values. No need to check it so often
+      try
+        if win_width > 120
+          let stl .= std#cache#get(b:, '_stl_gina_fancy', funcref('gina#component#repo#preset', ['fancy']), 300)
+        else
+          let stl .= std#cache#get(b:, '_stl_gina_regular', funcref('gina#component#repo#branch'), 300)
+        endif
+      catch
+        try
+          call gina#component#repo#preset()
+        catch
+        endtry
+      endtry
     " }}}
     endif  " }}}
-
+    " {{{ Git diffs
     if exists('*GitGutterGetHunkSummary')
-        let results = GitGutterGetHunkSummary()
+        let results = std#cache#get(b:, '_stl_hunk_summary', funcref('GitGutterGetHunkSummary'), 60)
 
         if results != [0, 0, 0]
           let diff_symbols = ['+', '~', '-']
@@ -229,8 +232,8 @@ function! my_stl#get_git() abort
     if len(stl) > 0
       let stl .= my_stl#add_left_separator()
     endif
+  " }}}
   endif
-
   return stl
 endfunction
 
@@ -257,7 +260,7 @@ function! my_stl#get_tag_name() abort
 
       let w:_my_stl_tag_name = ''
       if winwidth('%') > len(w:_tag_declaration) * 8 && len(w:_tag_declaration) > 0
-        let w:_my_stl_tag_name .=  w:_tag_declaration 
+        let w:_my_stl_tag_name .=  w:_tag_declaration
       elseif winwidth('%') > len(w:_tag_definition) * 4 && len(w:_tag_definition) > 0
         let w:_my_stl_tag_name .= w:_tag_definition
       elseif winwidth('%') > len(w:_tag_signature) * 2 && len(w:_tag_signature) > 0
