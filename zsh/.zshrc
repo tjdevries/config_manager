@@ -31,7 +31,7 @@ source "$ZPLUG_HOME/init.zsh"
 ## Zsh Plugins
 zplug 'zplug/zplug', at:expand_glob
 
-# zplug "lib/history", from:oh-my-zsh, nice:0
+# zplug "lib/history", from:oh-my-zsh,
 zplug "lib/completion", from:oh-my-zsh, defer:0
 zplug "lib/directories", from:oh-my-zsh, defer:0
 zplug "lib/git", from:oh-my-zsh, defer:0
