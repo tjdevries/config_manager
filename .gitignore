@@ -6,6 +6,9 @@
 *tags
 
 nvim/.netrwhist
+
+configstore/*
+
 zsh/history
 zsh/.zcompdump*
 zsh/.zcompcache/*
