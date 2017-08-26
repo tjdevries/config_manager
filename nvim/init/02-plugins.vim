@@ -257,7 +257,7 @@ if has('python3') && g:my_deoplete_enabled
     " Can't seem to get to work on windows as of right now.
     " Will make an issue if I can't figure it out.
     if executable('tsc') && has('unix')
-        Plug 'mhartington/nvim-typescript'
+        Plug 'mhartington/nvim-typescript', {'for': 'typescript'}
     endif
     " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
     " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
