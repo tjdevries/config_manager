@@ -1,0 +1,15 @@
+snippet header "A header for a function"
+	;---------
+	; SCOPE: ${1:PRIVATE|INTERNAL|EPIC|PUBLIC}
+	; DESCRIPTION: $2
+	; PARAMETERS:
+	;   $3
+	; RETURNS: $4
+	; REVISION HISTORY:
+	;
+	;---------
+endsnippet
+
+snippet param "A parameter for a function"
+${1:name} (${2:I/O/IO},${3:REQ/OPT}) - ${4:<desc>}
+endsnippet
