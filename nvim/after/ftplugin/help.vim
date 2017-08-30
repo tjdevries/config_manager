@@ -1,12 +1,12 @@
-if exists('tj_loaded_after_help')
+if exists('b:tj_loaded_after_help')
     finish
 endif
-let g:tj_loaded_after_help = 1
+let b:tj_loaded_after_help = 1
 
-setlocal noexpandtab
+setlocal expandtab
 setlocal textwidth=78
-setlocal tabstop=8
-setlocal shiftwidth=8
+setlocal tabstop=4
+setlocal shiftwidth=4
 
 
 function! s:right_align() abort
