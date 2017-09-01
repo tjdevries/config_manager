@@ -221,7 +221,7 @@ elseif g:my_current_uniter ==? 'denite'
         Plug 'Shougo/denite.nvim'
 
         Plug 'Shougo/neomru.vim'            " Most recently used files
-        if has('clipboard')
+        if has('clipboard') && has('unix')
             Plug 'Shougo/neoyank.vim'           " Yank ring for my uniter
         endif
     endif
