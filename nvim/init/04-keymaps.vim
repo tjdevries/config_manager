@@ -47,7 +47,7 @@ nnoremap <leader>x :exe getline(".")<CR>
 " Execute this file
 vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
 nnoremap <leader><leader>x :w<CR>:source %<CR>
-nnoremap <leader><leader>v :Vader %<CR>
+nnoremap <leader><leader>v :w<CR>:Vader %<CR>
 
 " Remove whitespace
 nnoremap <leader>sws :%s/\s\+$//<CR>
@@ -118,6 +118,7 @@ if has('nvim')
 endif
 
 nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
+nnoremap <M-CR> :let v:hlsearch=!v:hlsearch<CR>
 
 " List occurences from this file
 nnoremap <leader>sf :call tj#list_occurrences()<CR>

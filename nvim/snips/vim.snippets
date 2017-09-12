@@ -84,3 +84,15 @@ function! `!v tj#easy_autoload()`view() abort
   return copy(s:plugin_configuration)
 endfunction
 endsnippet
+
+snippet conf_guard "Guard the file if it should not be loaded"
+if !exists('g:loaded_${1:plug_name}')
+  runtime! plugin/$1.vim
+endif
+
+if g:loaded_$1 == v:null
+  echoerr '[$1] Could not load because of setup issues. Check ":messages"'
+  finish
+endif
+
+endsnippet
