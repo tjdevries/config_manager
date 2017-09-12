@@ -132,8 +132,44 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
         \
       \ }
 
-        " \ 'softwhite': 'e6eaed',
 
+
+  " Register to set the values:
+  " f#lyw34jf'"_d$A'pA'€kb€kb'33k^
+
+  " Setup
+  let g:paletton_palette = copy(g:tomorrow_palette)
+  " Primary color:
+
+   let g:paletton_palette.red = 'EC5040'
+   let g:paletton_palette.red0 = 'FFBCB5'
+   let g:paletton_palette.red1 = 'FF8174'
+   let g:paletton_palette.red2 = 'C22414'
+   let g:paletton_palette.red3 = '850D00'
+
+  " Secondary color (1):
+
+   let g:paletton_palette.orange = 'EC9440'
+   let g:paletton_palette.orange0 = 'FFD9B5'
+   let g:paletton_palette.orange1 = 'FFB874'
+   let g:paletton_palette.orange2 = 'C26914'
+   let g:paletton_palette.orange3 = '854100'
+
+  " Secondary color (2):
+
+   let g:paletton_palette.blue = '2A8192'
+   let g:paletton_palette.blue0 = '9DD2DC'
+   let g:paletton_palette.blue1 = '51A0AE'
+   let g:paletton_palette.blue2 = '0F6777'
+   let g:paletton_palette.blue3 = '024552'
+
+  " Complement color:
+
+   let g:paletton_palette.green = '30B34D'
+   let g:paletton_palette.green0 = 'A5E9B4'
+   let g:paletton_palette.green1 = '5DCC75'
+   let g:paletton_palette.green2 = '0F922C'
+   let g:paletton_palette.green3 = '006516'
 
   let g:colorpal_palette = g:{s:load_palette}_palette
 
