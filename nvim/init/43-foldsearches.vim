@@ -65,14 +65,14 @@ function! FS_ToggleFoldAroundSearch (opts)
     " Turn on, if it's off...
     else
 
-        " Save old settings... {{{
+        " Save old settings... 
         let b:foldsearch.prevfoldmethod = &foldmethod
-        " {{{
+        " 
         let b:foldsearch.prevfoldexpr   = &foldexpr
-        " }}}
+        " 
         let b:foldsearch.prevfoldtext   = &foldtext
         let b:foldsearch.prevfoldlevel  = &foldlevel
-        " }}}
+        " 
 
         " Set up new behaviour...
         let &foldtext   = s:FOLDTEXT[folds_visible]
@@ -152,4 +152,4 @@ endfunction
 " Restore previous external compatibility options
 let &cpo = s:save_cpo
 
-nmap <silent> <expr>  zz  FS_ToggleFoldAroundSearch({'context':1})
+" nmap <silent> <expr>  zz  FS_ToggleFoldAroundSearch({'context':1})
