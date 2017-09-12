@@ -32,6 +32,8 @@ endif
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
 Plug 'tjdevries/mparse.nvim'
+
+Plug 'tjdevries/fold_search.vim'
 " To Learn: {{{
 " Yup:
 " Plug 'https://github.com/AndrewRadev/linediff.vim'
