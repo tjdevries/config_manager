@@ -166,7 +166,7 @@ function! my_stl#get_git() abort
   let stl = ''
 
   " Check for git information
-  if std#cache#get(b:, '_stl_git_file', funcref('tj#is_git_file'))
+  if std#cache#get(b:, '_stl_git_file', function('tj#is_git_file'))
     " {{{  Git status
     if s:git_helper ==# 'fugitive'  " {{{
       if exists('*fugitive#head') && (

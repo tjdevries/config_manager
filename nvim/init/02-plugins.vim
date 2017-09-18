@@ -1,5 +1,5 @@
 if exists('g:_did_vimrc_plugins')
-    finish
+  finish
 endif
 
 let g:_did_vimrc_plugins = 1
@@ -26,8 +26,8 @@ Plug 'tyru/vim-uglifier.vim'
 Plug 'vim-jp/vim-vimlparser'
 
 if !has('unix')
-    " Really not ready
-    " Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
+  " Really not ready
+  " Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
 endif
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
@@ -50,7 +50,7 @@ Plug 'tweekmonster/exception.vim'
 Plug 'https://github.com/haya14busa/vim-metarepeat'
 Plug 'rhysd/vim-clang-format'
 if has('python3')
-    Plug 'lambdalisue/lista.nvim'
+  Plug 'lambdalisue/lista.nvim'
 endif
 
 " Investigating
@@ -65,25 +65,25 @@ Plug 'tpope/vim-scriptease'     " Vim help
 " }}}
 " Work Plugins {{{
 if filereadable('F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim')
-    Plug 'F:\\personal\\tdevries\\work_git\\epic.vim\'
+  Plug 'F:\\personal\\tdevries\\work_git\\epic.vim\'
 endif
 
 if filereadable(expand('~/git/standard.vim/autoload/std.vim'))
-    Plug '~/git/standard.vim/'
+  Plug '~/git/standard.vim/'
 else
-    Plug 'tjdevries/standard.vim'
+  Plug 'tjdevries/standard.vim'
 endif
 
 if filereadable(expand('~/git/putty.vim/autoload/putty.vim'))
-    Plug '~/git/putty.vim/'
+  Plug '~/git/putty.vim/'
 else
-    Plug 'tjdevries/putty.vim'
+  Plug 'tjdevries/putty.vim'
 endif
 
 if filereadable(expand('~/git/conf.vim/autoload/conf.vim'))
-    Plug '~/git/conf.vim/'
+  Plug '~/git/conf.vim/'
 else
-    Plug 'tjdevries/conf.vim'
+  Plug 'tjdevries/conf.vim'
 endif
 " }}}
 " Color helpers {{{
@@ -98,17 +98,17 @@ Plug 'tjdevries/vim-inyoface'  " Comments in your face
 Plug 'tweekmonster/colorpal.vim'
 " Old colorschemes
 if v:false
-    Plug 'altercation/vim-colors-solarized'                           " Solarized color scheme
-    Plug 'chriskempson/base16-vim'
-    Plug 'jacoborus/tender.vim'
-    Plug 'joshdick/onedark.vim'                                       " Atom type color scheme
-    Plug 'junegunn/seoul256.vim'                                      " seoul color scheme
-    Plug 'w0ng/vim-hybrid'
-    if isdirectory(expand('~/Git/gruvbox-tj'))
-        Plug '~/Git/gruvbox-tj/'
-    else
-        Plug 'tjdevries/gruvbox-tj/'                                      " my gruvbox!
-    endif
+  Plug 'altercation/vim-colors-solarized'                           " Solarized color scheme
+  Plug 'chriskempson/base16-vim'
+  Plug 'jacoborus/tender.vim'
+  Plug 'joshdick/onedark.vim'                                       " Atom type color scheme
+  Plug 'junegunn/seoul256.vim'                                      " seoul color scheme
+  Plug 'w0ng/vim-hybrid'
+  if isdirectory(expand('~/Git/gruvbox-tj'))
+    Plug '~/Git/gruvbox-tj/'
+  else
+    Plug 'tjdevries/gruvbox-tj/'                                      " my gruvbox!
+  endif
 endif
 
 " }}}
@@ -119,12 +119,12 @@ Plug 'google/vim-glaive'
 " }}}
 " Interactive Plugins {{{
 if has('python2')
-    Plug 'floobits/floobits-neovim'
+  Plug 'floobits/floobits-neovim'
 endif
 
 if has('python3')
-    " TODO: Get a matrix account...
-    Plug 'bfredl/nvim-matrix'
+  " TODO: Get a matrix account...
+  Plug 'bfredl/nvim-matrix'
 endif
 " }}}
 " {{{ Games
@@ -142,9 +142,9 @@ Plug 'rhysd/committia.vim'    " Sweet message committer
 Plug 'airblade/vim-gitgutter' " Signs in the side for changes/additions/deletions
 
 if v:false
-    Plug 'moznion/github-commit-comment.vim'
-    Plug 'SevereOverfl0w/deoplete-github'
-    Plug '~/Git/githubapi-deoplete'
+  Plug 'moznion/github-commit-comment.vim'
+  Plug 'SevereOverfl0w/deoplete-github'
+  Plug '~/Git/githubapi-deoplete'
 endif
 " }}}
 " Grep helpers {{{
@@ -161,14 +161,14 @@ Plug 'mhinz/vim-grepper'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_fenced_languages = [
-            \ 'python=python',
-            \ 'json=json',
-            \ ]
+      \ 'python=python',
+      \ 'json=json',
+      \ ]
 " }}}
 " Neovim development {{{
 if has('unix')
-    Plug 'tweekmonster/nvim-api-viewer'
-    Plug 'tweekmonster/nvimdev.nvim'
+  Plug 'tweekmonster/nvim-api-viewer'
+  Plug 'tweekmonster/nvimdev.nvim'
 endif
 " }}}
 " Neovim-qt {{{
@@ -179,11 +179,11 @@ Plug 'rhysd/nyaovim-markdown-preview'
 Plug 'rhysd/nyaovim-mini-browser'
 Plug 'rhysd/nyaovim-popup-tooltip'
 if v:false
-    if isdirectory('~/Git/nyaovim-popup-menu')
-        Plug '~/Git/nyaovim-popup-menu'
-    else
-        Plug 'tjdevries/nyaovim-popup-menu'
-    endif
+  if isdirectory('~/Git/nyaovim-popup-menu')
+    Plug '~/Git/nyaovim-popup-menu'
+  else
+    Plug 'tjdevries/nyaovim-popup-menu'
+  endif
 endif
 " }}}
 " Presentation {{{
@@ -204,35 +204,35 @@ Plug 'skywind3000/quickmenu.vim'
 " }}}
 " Snippets {{{
 if g:my_snippet_manager ==? 'ultisnips'
-    Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
+  Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 elseif g:my_snippet_manager ==? 'neosnippet'
-    Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets' | Plug 'honza/vim-snippets'
+  Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets' | Plug 'honza/vim-snippets'
 endif
 " }}}
 " {{{1 Shougo
 " Unite {{{
 if g:my_current_uniter ==? 'unite'
-    Plug 'Shougo/vimproc.vim'
-    Plug 'Shougo/unite.vim'
-    Plug 'ujihisa/unite-colorscheme'    " Cycle through color schemes
+  Plug 'Shougo/vimproc.vim'
+  Plug 'Shougo/unite.vim'
+  Plug 'ujihisa/unite-colorscheme'    " Cycle through color schemes
 
-    Plug 'klen/unite-radio.vim'         " Play radio stations
-    Plug 'tsukkee/unite-tag'            " Tag finder for unite
+  Plug 'klen/unite-radio.vim'         " Play radio stations
+  Plug 'tsukkee/unite-tag'            " Tag finder for unite
 elseif g:my_current_uniter ==? 'denite'
-    if has('python3')
-        Plug 'Shougo/denite.nvim'
+  if has('python3')
+    Plug 'Shougo/denite.nvim'
 
-        Plug 'Shougo/neomru.vim'            " Most recently used files
-        if has('clipboard') && has('unix')
-            Plug 'Shougo/neoyank.vim'           " Yank ring for my uniter
-        endif
+    Plug 'Shougo/neomru.vim'            " Most recently used files
+    if has('clipboard') && has('unix')
+      Plug 'Shougo/neoyank.vim'           " Yank ring for my uniter
     endif
+  endif
 endif
 
 " }}}
 "
 if has('python3')
-    Plug 'Shougo/deol.nvim'
+  Plug 'Shougo/deol.nvim'
 endif
 " Deoplete  {{{
 Plug 'Shougo/echodoc.vim'
@@ -240,29 +240,29 @@ Plug 'Shougo/context_filetype.vim'
 Plug 'Shougo/neoinclude.vim'
 
 if has('python3') && g:my_deoplete_enabled
-    Plug 'Shougo/deoplete.nvim'
+  Plug 'Shougo/deoplete.nvim'
 
-    Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
-    Plug 'Shougo/neco-vim'                             "  Vim completion
-    Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
+  Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
+  Plug 'Shougo/neco-vim'                             "  Vim completion
+  Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
 
-    " Plug 'zchee/deoplete-clang'                        "  C-Family languages
-    " Gotta choose electric boogaloo
-    Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
+  " Plug 'zchee/deoplete-clang'                        "  C-Family languages
+  " Gotta choose electric boogaloo
+  Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
 
-    " Works, but not using
-    " Plug 'eagletmt/neco-ghc'
+  " Works, but not using
+  " Plug 'eagletmt/neco-ghc'
 
-    " Emojis :)
-    Plug 'fszymanski/deoplete-emoji'
+  " Emojis :)
+  Plug 'fszymanski/deoplete-emoji'
 
-    " Can't seem to get to work on windows as of right now.
-    " Will make an issue if I can't figure it out.
-    if executable('tsc') && has('unix')
-        Plug 'mhartington/nvim-typescript', {'for': 'typescript'}
-    endif
-    " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
-    " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
+  " Can't seem to get to work on windows as of right now.
+  " Will make an issue if I can't figure it out.
+  if executable('tsc') && has('unix')
+    Plug 'mhartington/nvim-typescript', {'for': 'typescript'}
+  endif
+  " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
+  " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
 endif
 " }}}
 " }}}
@@ -272,8 +272,8 @@ Plug 'tweekmonster/startuptime.vim'
 " }}}
 " Status Line {{{
 if g:airline_enabled
-    Plug 'powerline/fonts', { 'do': './install.sh' }
-    Plug 'bling/vim-airline'
+  Plug 'powerline/fonts', { 'do': './install.sh' }
+  Plug 'bling/vim-airline'
 endif
 Plug 'mkitt/tabline.vim'
 " }}}
@@ -298,12 +298,14 @@ Plug 'billyvg/tigris.nvim', { 'do': './install.sh' }
 " Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors
 " }}}
 " Tag Based Plugins {{{
-if g:my_tags_manager ==? 'gutentags'
+if executable('ctags')
+  if g:my_tags_manager ==? 'gutentags'
     Plug 'ludovicchabant/vim-gutentags'
-elseif g:my_tags_manager ==? 'vim-tags'
+  elseif g:my_tags_manager ==? 'vim-tags'
     Plug 'szw/vim-tags'
-elseif g:my_tags_manager ==? 'easytags'
+  elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+  endif
 endif
 
 " Plug 'majutsushi/tagbar'
@@ -316,13 +318,13 @@ endif
 Plug 'tjdevries/pastery.vim'
 Plug 'tjdevries/overlength.vim'
 if g:vat_enabled
-    Plug 'neovim/node-host', { 'do': 'npm install' }
-    Plug 'tjdevries/vat.nvim', { 'do': 'npm install' }
+  Plug 'neovim/node-host', { 'do': 'npm install' }
+  Plug 'tjdevries/vat.nvim', { 'do': 'npm install' }
 endif
 if v:false
-    Plug 'tjdevries/vim-vertex'
-    Plug 'tjdevries/a_highlighter.nvim'
-    " This plugin is not ready
+  Plug 'tjdevries/vim-vertex'
+  Plug 'tjdevries/a_highlighter.nvim'
+  " This plugin is not ready
 endif
 " }}}
 " Testing plugins {{{

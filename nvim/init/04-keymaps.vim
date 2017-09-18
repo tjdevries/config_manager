@@ -42,6 +42,8 @@ nnoremap j gj
 nnoremap gj :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
 nnoremap gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR> :let &lazyredraw=_<CR>
 
+" Run the last command
+nnoremap <leader><leader>c :<up>
 " Map execute this line
 nnoremap <leader>x :exe getline(".")<CR>
 " Execute this file

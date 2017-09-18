@@ -96,3 +96,24 @@ if g:loaded_$1 == v:null
 endif
 
 endsnippet
+
+snippet conf_check "Check if we have the correct files installed"
+let s:has_confvim = get(s:, 'has_confvim', stridx(&runtimepath, 'conf.vim') >= 0)
+let s:has_standardvim = get(s:, 'has_standardvim', stridx(&runtimepath, 'standard.vim') >= 0)
+
+let g:loaded_$2 = v:null
+if !s:has_confvim
+  echoerr '[${1:PLUG_NAME}] ${2:plug_name} requires the plugin "tjdevries/conf.vim". Please install it'
+  finish
+endif
+
+if !s:has_standardvim
+  echoerr '[$1] $2 requires the plugin "tjdevries/standard.vim". Please install it.'
+  finish
+endif
+
+let g:loaded_$2 = v:true
+
+" Load the config and get all the mappings as necessary
+runtime! autoload/$2/${3:conf}.vim
+endsnippet

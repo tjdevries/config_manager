@@ -1,3 +1,4 @@
+setlocal shiftwidth=2
 
 
 ""

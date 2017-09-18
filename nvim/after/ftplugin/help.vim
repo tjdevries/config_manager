@@ -1,8 +1,3 @@
-if exists('b:tj_loaded_after_help')
-    finish
-endif
-let b:tj_loaded_after_help = 1
-
 setlocal expandtab
 setlocal textwidth=78
 setlocal tabstop=4
