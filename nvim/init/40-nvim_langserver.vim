@@ -1,11 +1,13 @@
-let g:nvim_langserver_configuration = {
-      \ 'python': {
+if exists('*lsp#client#add')
+  " Add some clients
+  call lsp#client#add('python', {
         \ 'name': 'palantir/python-language-server',
-        \ 'cmd': 'pyls',
-        \ },
-      \ 'go': {
+        \ 'command': 'pyls',
+        \ 'arguments': [],
+        \ })
+  call lsp#client#add('go', {
         \ 'name': 'sourcegraph/go-langserver',
-        \ 'cmd': 'langserver-go',
-        \ 'args': ['-logfile', 'lsp-go.txt'],
-        \ },
-      \ }
+        \ 'command': 'langserver-go',
+        \ 'arguments': ['-logfile', 'lsp-go.txt'],
+        \ })
+end
