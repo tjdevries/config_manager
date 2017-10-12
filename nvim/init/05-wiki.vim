@@ -57,6 +57,22 @@ nnoremap <leader>wf :call nvim_input(GetVimwikiFolder())<CR>
 " turn this_tag -> [:this_tag:]
 inoremap wtag <C-O>b[:<C-O>e<right>:]
 
+function! s:map_enter() abort
+  if v:hlsearch
+    return execute(":nohl\<CR>")
+  endif
+
+  if getline('.') =~ '\s*- \[ \]'
+    return setline(line('.'), substitute(getline('.'), '^\(\s*- \)\[ \]', '\1[x]', ''))
+  endif
+
+  if getline('.') =~ '\s*- \[x\]'
+    return setline(line('.'), substitute(getline('.'), '^\(\s*- \)\[x\]', '\1[ ]', ''))
+  endif
+
+  return execute("normal <Plug>VimwikiFollowLink")
+endfunction
+
 augroup tjVimWiki
   autocmd!
   au BufNewFile,BufRead,BufEnter *.wiki set foldmethod=marker
@@ -64,5 +80,5 @@ augroup tjVimWiki
 
   " This is probably too often... but oh well
   " Could perhaps even do it in a filetype
-  au BufNewfile,BufRead,BufEnter *.wiki nmap <buffer><expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "<Plug>VimwikiFollowLink"}()
+  au BufNewfile,BufRead,BufEnter *.wiki nnoremap <buffer> <CR> :call <SID>map_enter()<CR>
 augroup END

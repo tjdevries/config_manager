@@ -16,7 +16,7 @@ endsnippet
 
 snippet printobj "Print the attributes of an object"
 for item in dir(${1:object}):
-	print(item, getattr($1, item))
+	print('{0:25}: {1}'.format(item, getattr($1, item)))
 endsnippet
 
 snippet def_fold "Define a function with folds automatically"

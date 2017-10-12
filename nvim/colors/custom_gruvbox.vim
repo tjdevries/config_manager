@@ -215,6 +215,7 @@ CPHL vimCommand purple,light - -
 CPHL vimLet purple,light - -
 CPHL VimFuncVar purple
 CPHL VimIsCommand softwhite
+CPHL vimCommentTitle red - bold
 " Vimrc items {{{
 CPHL vimMapModKey cyan - -
 CPHL vimNotation cyan - -

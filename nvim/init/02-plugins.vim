@@ -237,7 +237,9 @@ endif
 " Deoplete  {{{
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/context_filetype.vim'
-Plug 'Shougo/neoinclude.vim'
+if !has('win32')
+    Plug 'Shougo/neoinclude.vim'
+endif
 
 if has('python3') && g:my_deoplete_enabled
   Plug 'Shougo/deoplete.nvim'
@@ -365,7 +367,7 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'html']}
 Plug 'tpope/vim-liquid'
 " }}}
 " Wiki {{{
-Plug 'vimwiki/vimwiki'
+Plug 'tjdevries/vimwiki'
 " }}}
 " Old plugins... {{{
 " Task Warrior Plugins

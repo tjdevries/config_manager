@@ -3,3 +3,8 @@
 (
 d ^%ZeW
 )
+
+:*:dtool::
+(
+d ^%ZeRTOOLS
+)
