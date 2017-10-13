@@ -29,11 +29,10 @@ if !has('unix')
   " Really not ready
   " Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
 endif
+
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
-Plug 'tjdevries/mparse.nvim'
 
-Plug 'tjdevries/fold_search.vim'
 " To Learn: {{{
 " Yup:
 " Plug 'https://github.com/AndrewRadev/linediff.vim'
@@ -44,10 +43,11 @@ Plug 'tjdevries/fold_search.vim'
 "
 " For narrowing regions of text to look at them alone
 Plug 'chrisbra/NrrwRgn'
+
 " For figuring out exceptions
 Plug 'tweekmonster/exception.vim'
 
-Plug 'https://github.com/haya14busa/vim-metarepeat'
+Plug 'haya14busa/vim-metarepeat'
 Plug 'rhysd/vim-clang-format'
 if has('python3')
   Plug 'lambdalisue/lista.nvim'
@@ -63,28 +63,22 @@ Plug 'metakirby5/codi.vim'
 Plug 'tpope/vim-projectionist'  " Alternate file editting and some helpful stuff
 Plug 'tpope/vim-scriptease'     " Vim help
 " }}}
+" My General Plugins {{{
+Plug 'tjdevries/standard.vim'
+Plug 'tjdevries/conf.vim'
+
+Plug 'tjdevries/train.vim'
+
+" In development: Working on updating this
+Plug 'tjdevries/syntax_objects.vim'
+" }}}
 " Work Plugins {{{
 if filereadable('F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim')
   Plug 'F:\\personal\\tdevries\\work_git\\epic.vim\'
 endif
 
-if filereadable(expand('~/git/standard.vim/autoload/std.vim'))
-  Plug '~/git/standard.vim/'
-else
-  Plug 'tjdevries/standard.vim'
-endif
-
-if filereadable(expand('~/git/putty.vim/autoload/putty.vim'))
-  Plug '~/git/putty.vim/'
-else
-  Plug 'tjdevries/putty.vim'
-endif
-
-if filereadable(expand('~/git/conf.vim/autoload/conf.vim'))
-  Plug '~/git/conf.vim/'
-else
-  Plug 'tjdevries/conf.vim'
-endif
+Plug 'tjdevries/mparse.nvim'
+Plug 'tjdevries/putty.vim'
 " }}}
 " Color helpers {{{
 Plug 'chrisbra/Colorizer'                                         " Helpful tool for visualizing colors
@@ -201,6 +195,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'tjdevries/edit_alternate.vim'
 Plug 'google/vim-searchindex'
 Plug 'skywind3000/quickmenu.vim'
+Plug 'tjdevries/fold_search.vim'
 " }}}
 " Snippets {{{
 if g:my_snippet_manager ==? 'ultisnips'

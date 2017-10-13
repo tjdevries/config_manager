@@ -30,10 +30,11 @@ else
   " Will need to figure out the best way to do this once I start using windows again
   let g:python_host_prog = 'C:\python'
   let g:python3_possibilities = [
+        \  expand('$HOME') . '\AppData\Local\Programs\Python\Python36\python.exe',
+        \  expand('$HOME') . '\AppData\Local\Programs\Python\Python36-32\python.exe',
         \ 'python3',
         \ 'python3.6',
         \ 'C:\Program Files\Python35\python.exe',
-        \  expand('$HOME') . '\AppData\Local\Programs\Python\Python36\python.exe',
         \ ]
 
   for py_exe in g:python3_possibilities
