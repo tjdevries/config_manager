@@ -251,5 +251,15 @@ function! SyntaxNames() abort
   return l:syntax_list
 endfunction
 
+function! NewSyntaxNames() abort
+  let l:syntax_list = []
+  for id in synstack(line('.'), col('.'))
+    call add(l:syntax_list, synIDattr(synIDtrans(id), 'name'))
+  endfor
+
+  return l:syntax_list
+endfunction
+
 " Syntax help
 nnoremap <leader>sh :echo string(SyntaxNames())<CR>
+nnoremap <leader><leader>sh :echo string(NewSyntaxNames())<CR>

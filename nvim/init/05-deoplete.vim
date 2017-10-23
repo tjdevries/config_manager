@@ -42,3 +42,21 @@ let g:lua_define_completion_mappings = 0
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/x86_64-linux-gnu/libclang.so.1'
 let g:deoplete#sources#clang#clang_header = '/usr/include/clang/3.4/include/'
 " }}}
+" Rust configuration {{{
+if executable('racer')
+  " TODO: Handle windows
+  let g:deoplete#sources#rust#racer_binary = split(system('which racer'), "\n")[0]
+
+  if executable('rustc')
+    " if src installed via rustup, we can get it by running 
+    " rustc --print sysroot then appending the rest of the path
+    let rustc_root = systemlist('rustc --print sysroot')[0]
+    let rustc_src_dir = rustc_root . '/lib/rustlib/src/rust/src'
+    if isdirectory(rustc_src_dir)
+      let g:deoplete#sources#rust#rust_source_path = rustc_src_dir
+    elseif isdirectory(expand('~/git/rust/src/'))
+      let g:deoplete#sources#rust#rust_source_path = expand('~/git/rust/src/')
+    endif
+  endif
+endif
+" }}}

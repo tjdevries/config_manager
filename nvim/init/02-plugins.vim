@@ -181,7 +181,7 @@ if v:false
 endif
 " }}}
 " Presentation {{{
-Plug 'trapd00r/vimpoint'
+Plug 'tjdevries/vimpoint'
 " }}}
 " Quickfix Modifications {{{
 Plug 'romainl/vim-qf'
@@ -242,6 +242,10 @@ if has('python3') && g:my_deoplete_enabled
   Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
   Plug 'Shougo/neco-vim'                             "  Vim completion
   Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
+  if executable('racer') " TODO: Maybe check racer?
+    Plug 'rust-lang/rust.vim'                        " Realistically. we only need this when we have rust as well
+    Plug 'sebastianmarkow/deoplete-rust'             " Rust completion
+  endif
 
   " Plug 'zchee/deoplete-clang'                        "  C-Family languages
   " Gotta choose electric boogaloo
@@ -289,6 +293,7 @@ Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }                               
 Plug 'PProvost/vim-ps1'
 Plug 'leafgarland/typescript-vim'
 Plug 'billyvg/tigris.nvim', { 'do': './install.sh' }
+Plug 'cespare/vim-toml'
 
 " Too large or not helpful
 " Plug 'sheerun/vim-polyglot'                         " All the colors!
