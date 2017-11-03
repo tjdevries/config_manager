@@ -139,6 +139,10 @@ else
             \ {idx, val -> ['  ↳ Plug:' . val[0], val[1]]}
             \ ))
 
+  let s:menus.init_vim.file_candidates += [
+        \ ['scratch/', expand('~/.config/nvim/scratch')],
+        \ ]
+
   let s:menus.zsh = {
         \ 'description': 'Edit your import zsh configuration'
         \ }

@@ -144,3 +144,21 @@ cnoremap %:H %:h
 cnoremap %H <C-R>=expand('%:h:p') . std#path#separator()<CR>
 cnoremap %T <C-R>=expand('%:t')<CR>
 cnoremap %P <C-R>=expand('%:p')<CR>
+
+function! s:syntax_names() abort
+  let l:syntax_list = []
+  for id in synstack(line('.'), col('.'))
+    let base_name = synIDattr(id, 'name')
+    let trans_name = synIDattr(synIDtrans(id), 'name')
+
+    call add(l:syntax_list, base_name)
+    if !(base_name is trans_name)
+      call add(l:syntax_list, trans_name)
+    endif
+  endfor
+
+  return l:syntax_list
+endfunction
+
+" Syntax help
+nnoremap <leader>sh :echo string(<SID>syntax_names())<CR>
