@@ -30,6 +30,8 @@ if !has('unix')
   " Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
 endif
 
+Plug 'tjdevries/colorbuddy.vim'
+
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
 

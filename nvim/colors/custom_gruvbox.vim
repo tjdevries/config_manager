@@ -48,9 +48,9 @@ CPHL DiffAdded green,dark,dark none none
 CPHL DiffRemoved red,bright none none
 " }}}
 " {{{ Function items
-CPHL Function blue,bright - bold
+CPHL Function yellow - - bold
 CPHL pythonBuiltinFunc Function,dark,dark Function Function
-CPHL vimFunction Function,dark,dark Function Function
+CPHL vimFunction Function Function Function
 CPHL vimAutoloadFunction Function,dark,dark Function -
 " }}}
 " {{{ Folded items
@@ -210,8 +210,8 @@ CPHL SignColumn gray3 gray1 -
 CPHL EndOfBuffer gray3 - -
 " }}}
 " Vim Syntax {{{
-CPHL vimNotFunc purple,light - -
-CPHL vimCommand purple,light - -
+CPHL vimNotFunc blue - -
+CPHL vimCommand blue - -
 CPHL vimLet purple,light - -
 CPHL VimFuncVar purple
 CPHL VimIsCommand softwhite

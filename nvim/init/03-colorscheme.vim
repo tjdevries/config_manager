@@ -1,7 +1,4 @@
 syntax enable
-
-set cursorline    " Highlight the current line
-
 " Nyaovim configuration only
 if exists('g:nyaovim_version')
     set termguicolors
@@ -9,6 +6,7 @@ endif
 
 let g:my_current_scheme = 'custom_gruvbox'
 
+" {{{1 Old
 if g:my_current_scheme ==? 'gruvbox'
     let g:gruvbox_italic=1              " Turn on italics for gruvbox
     set background=dark
@@ -24,6 +22,7 @@ elseif g:my_current_scheme ==? 'gruvbox-tj'
 
     set background=dark
     colorscheme gruvbox-tj
+" {{{1 Custom Gruvbox
 elseif g:my_current_scheme ==? 'custom_gruvbox'
 
   let s:load_palette = 'tomorrow'
@@ -31,6 +30,7 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
   " TODO: Experiment with this more :)
   " let s:load_palette = 'seabird_petrel'
 
+  " {{{2 Gruvbox
   let g:gruvbox_palette = {
     \
     \ 'black'     : '282828',
@@ -45,19 +45,20 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
     \ 'white'     : 'f2e5bc',
     \
     \ 'red'       : 'fb4934',
-    \ 'green'     : 'b8bb26',
+    \ 'green'     : '2acf2a',
     \ 'yellow'    : 'fabd2f',
     \ 'blue'      : '83a598',
-    \   'aqua'    : '8ec07c',
-    \   'cyan'    : '8abeb7',
+    \ 'aqua'      : '8ec07c',
+    \ 'cyan'      : '8abeb7',
     \ 'purple'    : 'd3869b',
-    \   'violet'  : 'b294bb',
+    \ 'violet'    : 'b294bb',
     \ 'orange'    : 'fe8019',
     \ 'brown'     : 'a3685a',
     \
     \ 'softwhite' : 'ebdbb2',
   \ }
 
+  " {{{2 Tomorrow
   let g:tomorrow_palette = {
     \
     \ 'black'     : '1d1f21',
@@ -72,19 +73,20 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
     \ 'white'     : 'f2e5bc',
     \
     \ 'red'       : 'cc6666',
-    \ 'green'     : 'b5bd68',
+    \ 'green'     : '99cc99',
     \ 'yellow'    : 'f0c674',
     \ 'blue'      : '81a2be',
-    \   'aqua'    : '8ec07c',
-    \   'cyan'    : '8abeb7',
+    \ 'aqua'      : '8ec07c',
+    \ 'cyan'      : '8abeb7',
     \ 'purple'    : '8e6fbd',
-    \   'violet'  : 'b294bb',
+    \ 'violet'    : 'b294bb',
     \ 'orange'    : 'de935f',
     \ 'brown'     : 'a3685a',
     \
     \ 'softwhite' : 'ebdbb2',
   \ }
 
+  " {{{2 Seabird
   let g:seabird_palette = {
         \ 'black': '1d1f21',
         \ 'gray0': '1d1f21',
@@ -106,6 +108,7 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
         \ 'pink': 'ff549b',
       \ }
 
+  " {{{2 Seabird petrel
   let g:seabird_petrel_palette = {
         \ 'black': '1d1f21',
         \ 'gray0': '1d1f21',
@@ -137,7 +140,7 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
   " Register to set the values:
   " f#lyw34jf'"_d$A'pA'€kb€kb'33k^
 
-  " Setup
+  " Setup {{{2 Paletton
   let g:paletton_palette = copy(g:tomorrow_palette)
   " Primary color:
 
@@ -171,6 +174,7 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
    let g:paletton_palette.green2 = '0F922C'
    let g:paletton_palette.green3 = '006516'
 
+  " {{{2 Setup
   let g:colorpal_palette = g:{s:load_palette}_palette
 
 
@@ -183,6 +187,7 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
   \ }
 
   colorscheme custom_gruvbox
+" {{{1 More old
 elseif g:my_current_scheme ==? 'tender'
     set termguicolors
     set background=dark

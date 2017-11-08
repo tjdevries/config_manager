@@ -63,6 +63,10 @@ set ignorecase                        " Ignore case when searching...
 set smartcase                         " ... unless there is a capital letter in the query
 set hidden                            " I like having buffers stay around
 
+
+set cursorline    " Highlight the current line
+
+
 let g:my_preview_enable = v:false
 if g:my_preview_enable
   set completeopt+=preview              " Turn On preview
