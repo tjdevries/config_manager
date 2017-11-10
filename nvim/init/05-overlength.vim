@@ -1,5 +1,4 @@
 let overlength#default_overlength = 120
-ver
 let overlength#default_to_textwidth = 1
 let overlength#default_grace_length = 1
 
