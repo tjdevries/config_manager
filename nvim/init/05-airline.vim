@@ -19,7 +19,7 @@ if g:airline_enabled " {{{
     nnoremap <leader>at :AirlineToggle<CR>
     " }}}
 else " {{{ My statusline
-    let s:show_date = v:false
+    let s:show_date = v:true
     let s:show_git  = v:true
 
     let s:custom_filename = v:true
@@ -60,7 +60,7 @@ else " {{{ My statusline
 
         " let stl .= 'Active buffer: ' . string(g:_active_buffer) . ' || '
         if exists('*strftime') && s:show_date
-            let stl .= ' %{strftime("%b %d")}'
+            let stl .= ' %{strftime("%b %d, %H:%M")}'
         endif
 
         return stl
