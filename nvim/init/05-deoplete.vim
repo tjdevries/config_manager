@@ -5,7 +5,7 @@ let g:deoplete#enable_smart_case = 1
 
 " Github configuration {{{
 let g:deoplete#sources = {}
-let g:deoplete#sources.gitcommit=['github']
+let g:deoplete#sources.gitcommit = ['github']
 
 let g:deoplete#keyword_patterns = {}
 let g:deoplete#keyword_patterns.gitcommit = '.+'
@@ -39,16 +39,23 @@ let g:lua_define_completion_mappings = 0
 " let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
 " }}}
 " C family configuration {{{
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/x86_64-linux-gnu/libclang.so.1'
-let g:deoplete#sources#clang#clang_header = '/usr/include/clang/3.4/include/'
+let s:libclang_path = '/usr/lib/x86_64-linux-gnu/libclang.so.1'
+if filereadable(s:libclang_path)
+  let g:deoplete#sources#clang#libclang_path = s:libclang_path
+endif
+
+let s:clang_header = '/usr/include/clang/3.4/include/'
+if filereadable(s:clang_header)
+  let g:deoplete#sources#clang#clang_header = s:clang_header
+endif
 " }}}
 " Rust configuration {{{
 if executable('racer')
   " TODO: Handle windows
-  let g:deoplete#sources#rust#racer_binary = split(system('which racer'), "\n")[0]
+  let g:deoplete#sources#rust#racer_binary = systemlist('which racer')[0]
 
   if executable('rustc')
-    " if src installed via rustup, we can get it by running 
+    " if src installed via rustup, we can get it by running
     " rustc --print sysroot then appending the rest of the path
     let rustc_root = systemlist('rustc --print sysroot')[0]
     let rustc_src_dir = rustc_root . '/lib/rustlib/src/rust/src'

@@ -110,7 +110,7 @@ endif
 " }}}
 " Formatters {{{
 Plug 'google/vim-maktaba'
-Plug 'google/vim-codefmt'
+Plug 'google/vim-codefmt', { 'on': 'FormatCode' }
 Plug 'google/vim-glaive'
 " }}}
 " Interactive Plugins {{{
@@ -171,10 +171,11 @@ endif
 Plug 'equalsraf/neovim-gui-shim'
 " }}}
 " Nyaovim Plugins {{{
-Plug 'rhysd/nyaovim-markdown-preview'
-Plug 'rhysd/nyaovim-mini-browser'
-Plug 'rhysd/nyaovim-popup-tooltip'
 if v:false
+  Plug 'rhysd/nyaovim-markdown-preview'
+  Plug 'rhysd/nyaovim-mini-browser'
+  Plug 'rhysd/nyaovim-popup-tooltip'
+
   if isdirectory('~/Git/nyaovim-popup-menu')
     Plug '~/Git/nyaovim-popup-menu'
   else
@@ -294,7 +295,11 @@ Plug 'goodell/vim-mscgen'                                                       
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }                                              " yaml
 Plug 'PProvost/vim-ps1'
 Plug 'leafgarland/typescript-vim'
-Plug 'billyvg/tigris.nvim', { 'do': './install.sh' }
+
+if v:false
+  Plug 'billyvg/tigris.nvim', { 'do': './install.sh' }
+endif
+
 Plug 'cespare/vim-toml'
 
 " Too large or not helpful
@@ -326,6 +331,9 @@ if g:vat_enabled
   Plug 'tjdevries/vat.nvim', { 'do': 'npm install' }
 endif
 if v:false
+  " I think this is useless :)
+  Plug 'tjdevries/plib.vim'
+
   Plug 'tjdevries/vim-vertex'
   Plug 'tjdevries/a_highlighter.nvim'
   " This plugin is not ready
@@ -355,9 +363,6 @@ Plug 'nathanaelkane/vim-indent-guides'                       " See indentation g
 " }}}
 " Undo plugins {{{
 Plug 'sjl/gundo.vim'                " Undo helper
-" }}}
-" {{{ Vim Plugins
-Plug 'tjdevries/plib.vim'
 " }}}
 " Web based plugins {{{
 Plug 'mattn/webapi-vim'
