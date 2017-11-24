@@ -8,3 +8,8 @@ d ^%ZeW
 (
 d ^%ZeRTOOLS
 )
+
+:*:__sde::
+(
+ SmartData Element
+)

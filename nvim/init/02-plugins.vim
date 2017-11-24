@@ -30,7 +30,6 @@ if !has('unix')
   " Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
 endif
 
-Plug 'tjdevries/colorbuddy.vim'
 
 " Langerserver development
 Plug 'tjdevries/nvim-langserver-shim'
@@ -91,7 +90,11 @@ Plug 'junegunn/limelight.vim'                                     " Extra focus 
 Plug 'tjdevries/vim-inyoface'  " Comments in your face
 
 " I use this to make my colorscheme
-Plug 'tweekmonster/colorpal.vim'
+Plug 'tjdevries/colorbuddy.vim'
+
+" Original colorbuddy. Decided I wanted to waste a few weekends and make my own ;)
+" Plug 'tweekmonster/colorpal.vim'
+
 " Old colorschemes
 if v:false
   Plug 'altercation/vim-colors-solarized'                           " Solarized color scheme

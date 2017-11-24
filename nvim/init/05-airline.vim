@@ -55,6 +55,8 @@ else " {{{ My statusline
 
         let stl .= '%{my_stl#get_tag_name()}'
 
+        let stl .= &diff ? '[d]' : ''
+
         let stl .= '(%3.4l,%-3.4v)'
         let stl .= '%y'
 

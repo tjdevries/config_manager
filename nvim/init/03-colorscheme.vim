@@ -1,13 +1,18 @@
-syntax enable
 " Nyaovim configuration only
 if exists('g:nyaovim_version')
     set termguicolors
 endif
 
-let g:my_current_scheme = 'custom_gruvbox'
+let g:my_current_scheme = 'gruvbuddy'
 
+" Use gruvbuddy now :)
+if g:my_current_scheme ==? 'gruvbuddy'
+  let g:gruvbuddy_file = expand('<sfile>:p:h:h') . '/colors/gruvbuddy.lua'
+  if filereadable(g:gruvbuddy_file)
+    execute 'luafile ' g:gruvbuddy_file
+  endif
 " {{{1 Old
-if g:my_current_scheme ==? 'gruvbox'
+elseif g:my_current_scheme ==? 'gruvbox'
     let g:gruvbox_italic=1              " Turn on italics for gruvbox
     set background=dark
 
@@ -217,6 +222,7 @@ elseif g:my_current_scheme ==? 'base16'
     colorscheme base16-tomorrow
 endif
 
+" {{{1 Halo
 " Thanks to Justinmk for this.
 " Not currently using it though. I want to change some of the colors to make
 " it work my colorschemes more. And maybe have it wait until multiple presses.
