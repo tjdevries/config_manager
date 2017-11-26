@@ -127,14 +127,14 @@ function! LuaFoldText(...) abort
   if s:matches(start_line, s:test_start) || s:matches(start_line, s:nested_test_start)
     let match_list = matchlist(tr(start_line, "'", '"'), 'describe("\(.*\)"')
     return len(match_list) > 0 ?
-          \ printf('%sDescribe => %s', repeat(' ', v:foldlevel), match_list[1])
+          \ printf('%s🗄 Describe => %s', repeat(' ', v:foldlevel), match_list[1])
           \ : start_line
   endif
 
   if s:matches(start_line, s:test_case_start)
     let match_list = matchlist(tr(start_line, "'", '"'), 'it("\(.*\)"')
     return len(match_list) > 0 ?
-          \ printf('%sIt %s', repeat(' ', v:foldlevel), match_list[1])
+          \ printf('%s💼 It %s', repeat(' ', v:foldlevel), match_list[1])
           \ : start_line
   endif
 
