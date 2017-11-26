@@ -9,6 +9,7 @@ setlocal fillchars=fold:\
 
 " TODO: Handle nested describes?...
 let s:test_start = '^describe('
+let s:nested_test_start = '^\s\+describe('
 let s:test_case_start = '^\s*it('
 
 let s:object_start = '^local \S* = {}'
@@ -24,8 +25,8 @@ function! s:matches(line, expr) abort
 endfunction
 
 function! s:comment_level(line) abort
-  let g:comment_line[a:line] = str2nr(matchlist(a:line, '^\s*--\(\d*\)')[1])
-  return str2nr(matchlist(a:line, '^\s*--\(\d*\)')[1])
+  let result = matchlist(a:line, '^\s*--\(\d*\)')
+  return len(result) > 0 ? str2nr(result[1]) : 0
 endfunction
 
 function! LuaFoldExpr(line_number) abort
@@ -65,8 +66,12 @@ function! LuaFoldExpr(line_number) abort
     return ">1"
   endif
 
+  if s:matches(line, s:nested_test_start)
+    return "a1"
+  endif
+
   if s:matches(line, s:test_case_start)
-    return ">2"
+    return "a1"
   endif
 
   if s:matches(line, '^\s*end)$')
@@ -117,6 +122,20 @@ function! LuaFoldText(...) abort
 
   if s:matches(start_line, '^\s*--')
     return repeat('  ', v:foldlevel) . substitute(start_line, '^\s*--', '', '')
+  endif
+
+  if s:matches(start_line, s:test_start) || s:matches(start_line, s:nested_test_start)
+    let match_list = matchlist(tr(start_line, "'", '"'), 'describe("\(.*\)"')
+    return len(match_list) > 0 ?
+          \ printf('%sDescribe => %s', repeat(' ', v:foldlevel), match_list[1])
+          \ : start_line
+  endif
+
+  if s:matches(start_line, s:test_case_start)
+    let match_list = matchlist(tr(start_line, "'", '"'), 'it("\(.*\)"')
+    return len(match_list) > 0 ?
+          \ printf('%sIt %s', repeat(' ', v:foldlevel), match_list[1])
+          \ : start_line
   endif
 
 

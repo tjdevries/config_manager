@@ -1,5 +1,6 @@
 --1 Required imports
 -- luacheck: globals vim
+vim.api.nvim_command('set termguicolors')
 vim.api.nvim_command('set background=dark')
 -- luacheck: globals Color
 -- luacheck: globals c
