@@ -1,5 +1,3 @@
-
-
 setlocal foldmethod=expr
 setlocal foldexpr=LuaFoldExpr(v:lnum)
 setlocal foldtext=LuaFoldText()
@@ -33,6 +31,7 @@ function! LuaFoldExpr(line_number) abort
   let lnum = a:line_number
   let line = getline(lnum)
 
+  " TODO: Better 'import' catching and maybe make it level 2
   if lnum == 1
     return ">1"
   endif
@@ -125,16 +124,18 @@ function! LuaFoldText(...) abort
   endif
 
   if s:matches(start_line, s:test_start) || s:matches(start_line, s:nested_test_start)
+    let briefcase = std#os#has_windows() ? '[]' : '🗄'
     let match_list = matchlist(tr(start_line, "'", '"'), 'describe("\(.*\)"')
     return len(match_list) > 0 ?
-          \ printf('%s🗄 Describe => %s', repeat(' ', v:foldlevel), match_list[1])
+          \ printf('%s%s Describe => %s', repeat(' ', v:foldlevel), briefcase, match_list[1])
           \ : start_line
   endif
 
   if s:matches(start_line, s:test_case_start)
+    let emoji_character = std#os#has_windows() ? '>>' : '💼'
     let match_list = matchlist(tr(start_line, "'", '"'), 'it("\(.*\)"')
     return len(match_list) > 0 ?
-          \ printf('%s💼 It %s', repeat(' ', v:foldlevel), match_list[1])
+          \ printf('%s%s It %s', repeat(' ', v:foldlevel), emoji_character, match_list[1])
           \ : start_line
   endif
 

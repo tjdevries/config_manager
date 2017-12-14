@@ -40,6 +40,7 @@ Color.new('gray7',     '#ffffff')
 
 Color.new('white',     '#f2e5bc')
 Color.new('red',       '#cc6666')
+Color.new('pink',      '#feb6c1')
 Color.new('green',     '#99cc99')
 Color.new('yellow',    '#f0c674')
 Color.new('blue',      '#81a2be')
