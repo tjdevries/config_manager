@@ -19,10 +19,9 @@ if g:airline_enabled " {{{
     nnoremap <leader>at :AirlineToggle<CR>
     " }}}
 else " {{{ My statusline
-    let s:show_date = v:true
-    let s:show_git  = v:true
-
-    let s:custom_filename = v:true
+    let g:_show_date = v:true
+    let g:_show_git  = v:false
+    let g:_custom_filename = v:true
 
     function! SetStatusline() abort
         " Setup for variables
@@ -34,11 +33,11 @@ else " {{{ My statusline
         let stl .= '%*'
         let stl .= my_stl#add_left_separator()
 
-        if s:show_git
+        if g:_show_git
             let stl .= '%{my_stl#get_git()}'
         endif
 
-        if s:custom_filename
+        if g:_custom_filename
             " let stl .= bufnr('%') . ' ' . bufnr(0) . ' ' . nvim_buf_get_number(0) . ' '
             " let stl .= '%{#my_stl#get_file_hightlight(bufnr("%"))}'
             let stl .= '%{my_stl#get_file_name(4, 2)}'
@@ -61,7 +60,7 @@ else " {{{ My statusline
         let stl .= '%y'
 
         " let stl .= 'Active buffer: ' . string(g:_active_buffer) . ' || '
-        if exists('*strftime') && s:show_date
+        if exists('*strftime') && g:_show_date
             let stl .= ' %{strftime("%b %d, %H:%M")}'
         endif
 
