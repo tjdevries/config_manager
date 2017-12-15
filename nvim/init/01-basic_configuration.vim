@@ -79,7 +79,7 @@ endif
 set noequalalways                     " I don't like my windows changing all the time
 set splitright                        " Prefer windows splitting to the right
 set splitbelow                        " Prefer windows splitting to the bottom
-set updatetime=250                    " Make updates happen faster
+set updatetime=4000                   " Make updates happen faster
 
 " I wouldn't use this without my DoNoHL function
 set hlsearch
