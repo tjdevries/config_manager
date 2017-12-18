@@ -1,4 +1,4 @@
-if exists('*lsp#client#add')
+try
   " Add some clients
   call lsp#client#add('python', {
         \ 'name': 'palantir/python-language-server',
@@ -10,4 +10,6 @@ if exists('*lsp#client#add')
         \ 'command': 'langserver-go',
         \ 'arguments': ['-logfile', 'lsp-go.txt'],
         \ })
-end
+catch
+
+endtry

@@ -32,7 +32,7 @@ endif
 
 
 " Langerserver development
-Plug 'tjdevries/nvim-langserver-shim'
+" Plug 'tjdevries/nvim-langserver-shim'
 
 " To Learn: {{{
 " Yup:
@@ -320,7 +320,7 @@ if executable('ctags')
   endif
 endif
 
-" Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 " Tagbar for registers basically
 " These were seriously slowing things down for me,
 " well they tagbar one was, peakaboo had a conflicting command
