@@ -7,7 +7,7 @@ try
         \ })
   call lsp#client#add('go', {
         \ 'name': 'sourcegraph/go-langserver',
-        \ 'command': 'langserver-go',
+        \ 'command': 'go-langserver',
         \ 'arguments': ['-logfile', 'lsp-go.txt'],
         \ })
 catch
