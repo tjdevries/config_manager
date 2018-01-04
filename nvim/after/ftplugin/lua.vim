@@ -36,6 +36,10 @@ function! LuaFoldExpr(line_number) abort
     return ">1"
   endif
 
+  if s:matches(line, '^$')
+    return '='
+  endif
+
   if s:comment_level(line) > 0
     return ">" . s:comment_level(line)
   endif
@@ -108,7 +112,7 @@ function! LuaFoldText(...) abort
 
   if v:foldlevel == 2 && s:matches(start_line, s:object_property_start)
     let object = split(start_line, '\.')[0]
-    let name = split(split(start_line, '\.')[1], ' ')[0]
+    let name = join(split(split(start_line, ' ')[0], '\.')[1:], '.')
     let args = split(split(start_line, 'function(')[1], ' return')[0]
 
     let self_function = s:is_self_function(start_line)
