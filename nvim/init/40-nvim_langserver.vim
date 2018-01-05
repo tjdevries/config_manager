@@ -17,7 +17,6 @@ try
         \ 'arguments': ['-trace', '-logfile', expand('~/lsp-go.txt')],
         \ })
 
-  " call lsp#
   call lsp#server#add('rust', {
         \ 'name': 'rust/rls',
         \ 'command': 'rustup',

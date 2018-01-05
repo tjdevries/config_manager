@@ -238,7 +238,9 @@ endif
 " Deoplete  {{{
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/context_filetype.vim'
-if !has('win32')
+
+" if !has('win32')
+if v:false
     Plug 'Shougo/neoinclude.vim'
 endif
 
