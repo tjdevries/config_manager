@@ -3,7 +3,7 @@ setlocal foldexpr=LuaFoldExpr(v:lnum)
 setlocal foldtext=LuaFoldText()
 setlocal fillchars=fold:\ 
 
-
+" TODO: Add some highlighting of metamethods
 
 " TODO: Handle nested describes?...
 let s:test_start = '^describe('
