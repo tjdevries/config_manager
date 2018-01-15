@@ -1,15 +1,17 @@
 try
   " Add some clients
-  call lsp#client#add('python', {
+  call lsp#server#add('python', {
         \ 'name': 'palantir/python-language-server',
         \ 'command': 'pyls',
         \ 'arguments': [],
         \ })
-  call lsp#client#add('go', {
+  call lsp#server#add('go', {
         \ 'name': 'sourcegraph/go-langserver',
         \ 'command': 'go-langserver',
         \ 'arguments': ['-trace', '-logfile', expand('~/lsp-go.txt')],
         \ })
+
+  " call lsp#
 catch
 
 endtry
