@@ -5,6 +5,11 @@ try
         \ 'command': 'pyls',
         \ 'arguments': [],
         \ })
+  augroup LSP/me
+    au!
+    autocmd Filetype python setlocal omnifunc=lsp#completion#omni
+    autocmd Filetype python inoremap <buffer> <c-n> <c-r>=lsp#completion#complete()<CR>
+  augroup END
 
   call lsp#server#add('go', {
         \ 'name': 'sourcegraph/go-langserver',
