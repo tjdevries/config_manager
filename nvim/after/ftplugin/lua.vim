@@ -12,6 +12,7 @@ let s:test_case_start = '^\s*it('
 
 let s:object_start = '^local \S* = {}'
 let s:object_property_start = '^\S*\.\S* = function('
+let s:docstring_start = '^---'
 
 let s:local_function = '^local \S* = function('
 
@@ -36,13 +37,48 @@ function! LuaFoldExpr(line_number) abort
     return ">1"
   endif
 
+  let previous_line = getline(lnum - 1)
+  let next_line = getline(lnum + 1)
+
+  " Check to see if this should be included in whatever came before it.
+  " This way we suck up the empty lines
   if s:matches(line, '^$')
+    " if s:matches(next_line, s:object_property_start) ||
+    "       \ s:matches(next_line, '^---')
+    "   return -1
+    " endif
+
     return '='
   endif
 
+
+  " Just let empty lines handle whatever is coming next
+  " Unless there isn't an empty line, then we can sub 1
+  if s:matches(line, '^end$')
+    if s:matches(next_line, '^$')
+      return '='
+    endif
+
+    return "s1"
+  endif
+
+  "" Comment Handling
   if s:comment_level(line) > 0
     return ">" . s:comment_level(line)
   endif
+
+  if s:matches(line, s:docstring_start)
+    return '>2'
+  endif
+
+  if s:matches(line, '^--')
+    if s:matches(next_line, s:object_property_start)
+      return 's1'
+    else
+      return '='
+    endif
+  endif
+
 
   if s:matches(line, s:object_start)
     return ">1"
@@ -58,10 +94,6 @@ function! LuaFoldExpr(line_number) abort
 
   if s:matches(line, s:local_function)
     return ">2"
-  endif
-
-  if s:matches(line, '^end$')
-    return "s1"
   endif
 
   " *_spec.lua folders
@@ -110,7 +142,7 @@ function! LuaFoldText(...) abort
     return printf('Object: %s', split(start_line, ' ')[1])
   endif
 
-  if v:foldlevel == 2 && s:matches(start_line, s:object_property_start)
+  if s:matches(start_line, s:object_property_start)
     let object = split(start_line, '\.')[0]
     let name = join(split(split(start_line, ' ')[0], '\.')[1:], '.')
     let args = split(split(start_line, 'function(')[1], ' return')[0]
@@ -121,6 +153,10 @@ function! LuaFoldText(...) abort
     let separator = self_function ? ':' : '.'
 
     return printf('―→ %7s %-8s %s%s%-25s (%s', prefix, scope, object, separator, name, args)
+  endif
+
+  if s:matches(start_line, '^---')
+    return '===== ' . strpart(start_line, 4) . ' ====='
   endif
 
   if s:matches(start_line, '^\s*--')

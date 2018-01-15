@@ -1,10 +1,11 @@
 try
-  " Add some clients
+  " Add some servers
   call lsp#server#add('python', {
         \ 'name': 'palantir/python-language-server',
         \ 'command': 'pyls',
         \ 'arguments': [],
         \ })
+
   augroup LSP/me
     au!
     autocmd Filetype python setlocal omnifunc=lsp#completion#omni
@@ -23,6 +24,8 @@ try
         \ 'arguments': ['run', 'nightly', 'rls'],
         \ })
 
+  " call lsp#configure('textDocument/didChange', ['InsertLeave', 'TextChanged'])
+  " call lsp#conigure#option('request.timeout', 5)
 catch
 
 endtry
