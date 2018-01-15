@@ -207,4 +207,8 @@ else
   " Tags
   call denite#custom#source('tag', 'sorters', ['sorter_sublime'])
   nnoremap <leader>td :Denite tag:0<CR>
+
+  " Neo MRU
+  let g:neomru#do_validate = 0
+  let g:neomru#update_interval = 600
 endif

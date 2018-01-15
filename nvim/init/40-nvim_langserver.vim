@@ -5,6 +5,7 @@ try
         \ 'command': 'pyls',
         \ 'arguments': [],
         \ })
+
   call lsp#server#add('go', {
         \ 'name': 'sourcegraph/go-langserver',
         \ 'command': 'go-langserver',
@@ -12,6 +13,12 @@ try
         \ })
 
   " call lsp#
+  call lsp#server#add('rust', {
+        \ 'name': 'rust/rls',
+        \ 'command': 'rustup',
+        \ 'arguments': ['run', 'nightly', 'rls'],
+        \ })
+
 catch
 
 endtry
