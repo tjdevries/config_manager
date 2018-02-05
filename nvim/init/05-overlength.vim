@@ -8,6 +8,7 @@ call overlength#set_overlength('vimwiki', 0)
 call overlength#set_overlength('text', 0)
 call overlength#set_overlength('qf', 0)
 call overlength#set_overlength('term', 0)
+call overlength#set_overlength('html', 0)
 
 " Highlight only at 120 characters in vim, even though textwidth = 78
 call overlength#set_overlength('vim', 120)

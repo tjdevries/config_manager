@@ -1,5 +1,7 @@
 scriptencoding utf-8
 
+let g:init_base = fnamemodify(expand('$MYVRIMRC'), ':h')
+
 " Set our leader key to ,
 let g:mapleader=','
 

@@ -4,7 +4,7 @@ scriptencoding 'utf-8'
 " mode_result: ['long_string', 'short_string', optional - 'highlight type']
 let g:currentmode = {
     \ 'n'  : ['Normal', 'N', 'NormalMode'],
-    \ 'no' : ['N·OpPd', '' ],
+    \ 'no' : ['N·OpPd', '?', 'OpPending' ],
     \ 'v'  : ['Visual', 'V', 'VisualMode'],
     \ 'V'  : ['V·Line', 'Vl', 'VisualLineMode'],
     \ '' : ['V·Blck', 'Vb' ],
@@ -12,6 +12,7 @@ let g:currentmode = {
     \ 'S'  : ['S·Line', 'Sl' ],
     \ '' : ['S·Block', 'Sb' ],
     \ 'i'  : ['Insert', 'I', 'InsertMode'],
+    \ 'ic' : ['ICompl', 'Ic', 'ComplMode'],
     \ 'R'  : ['Rplace', 'R', 'ReplaceMode'],
     \ 'Rv' : ['VRplce', 'Rv' ],
     \ 'c'  : ['Cmmand', 'C', 'CommandMode'],
@@ -38,14 +39,24 @@ function! my_stl#get_mode_highlight() abort
 endfunction
 
 function! my_stl#get_mode() abort
-    let l:m = mode()
+    let l:m = mode(1)
+
+    " if l:m == 'no'
+    "   if &relativenumber
+    "     setlocal norelativenumber
+    "   endif
+    " else
+    "   if !&relativenumber
+    "     setlocal relativenumber
+    "   endif
+    " endif
 
     " Can have a longer name, with more info, or just a one letter name
     let l:mode_index = s:long_name ? 0 : 1
     if has_key(g:currentmode, l:m)
       let l:mode = g:currentmode[l:m][l:mode_index]
     else
-      let l:mode = g:currentmode['n'][l:mode_index]
+      let l:mode = '?'
     endif
 
     if len(l:mode) > 1
