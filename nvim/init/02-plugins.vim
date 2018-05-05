@@ -14,7 +14,7 @@ let g:my_snippet_manager = 'ultisnips'
 let g:my_tags_manager = 'gutentags'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'denite'
-let g:my_deoplete_enabled = v:false
+let g:my_deoplete_enabled = v:true
 let g:airline_enabled = v:false
 let g:vat_enabled = v:false
 " }}}
