@@ -169,6 +169,16 @@ Group.new('vimBracket', c.cyan:negative():light())
 Group.new('vimMap', c.seagreen)
 Group.new('nvimMap', g.vimMap)
 
+--2 Lua Syntax
+Group.new('luaStatement', c.yellow:dark(), nil, s.bold)
+Group.new('luaKeyword', c.orange:dark(), nil, s.bold)
+Group.new('luaMyKeyword', c.purple:light(), nil, s.bold)
+Group.new('luaSpecialFunctions', c.blue:light(), nil, nil)
+Group.new('luaMetatableEvents', c.purple, nil, nil)
+Group.new('luaMetatableArithmetic', g.luaMetatableEvents, g.luaMetatableEvents, g.luaMetatableEvents)
+Group.new('luaMetatableEquivalence', g.luaMetatableEvents, g.luaMetatableEvents, g.luaMetatableEvents)
+
+
 --1 Plugins
 --2 Diff
 Group.new('gitDiff', c.gray6:dark())

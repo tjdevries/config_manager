@@ -287,7 +287,7 @@ endif
 Plug 'mkitt/tabline.vim'
 " }}}
 " Syntax Checkers {{{
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 " Plug 'benekastah/neomake'       " A better linter than syntastic?
 Plug 'alfredodeza/pytest.vim'   " Pytest helper
 " }}}
