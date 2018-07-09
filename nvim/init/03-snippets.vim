@@ -25,6 +25,4 @@ elseif g:my_snippet_manager == 'neosnippet'
     let g:neosnippet#enable_snipmate_compatibility = 1
 
     imap <C-k>  <Plug>(neosnippet_expand_or_jump)
-else
-    echoerr "You have set your `g:my_snippet_manager`"
 endif

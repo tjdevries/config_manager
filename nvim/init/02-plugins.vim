@@ -10,7 +10,7 @@ let g:plug_timeout=60
 " }}}
 
 " Configure which plugins to use {{{
-let g:my_snippet_manager = 'ultisnips'
+let g:my_snippet_manager = ''
 let g:my_tags_manager = 'gutentags'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'denite'
@@ -22,8 +22,8 @@ let g:vat_enabled = v:false
 " Plugin management: Vim-plug
 call plug#begin(g:plugin_path)
 
-Plug 'tyru/vim-uglifier.vim'
-Plug 'vim-jp/vim-vimlparser'
+" Plug 'tyru/vim-uglifier.vim'
+" Plug 'vim-jp/vim-vimlparser'
 
 if !has('unix')
   " Really not ready
@@ -58,7 +58,7 @@ endif
 Plug 'tweekmonster/spellrotate.vim'
 
 " Interested
-Plug 'metakirby5/codi.vim'
+" Plug 'metakirby5/codi.vim'
 
 " Ill
 Plug 'tpope/vim-projectionist'  " Alternate file editting and some helpful stuff
@@ -117,11 +117,11 @@ Plug 'google/vim-codefmt', { 'on': 'FormatCode' }
 Plug 'google/vim-glaive'
 " }}}
 " Interactive Plugins {{{
-if has('python2')
+if has('python2') && v:false
   Plug 'floobits/floobits-neovim'
 endif
 
-if has('python3')
+if has('python3') && v:false
   " TODO: Get a matrix account...
   Plug 'bfredl/nvim-matrix'
 endif
@@ -138,7 +138,10 @@ Plug 'lambdalisue/gina.vim'   " gita replacement
 Plug 'tpope/vim-rhubarb'      " completes issue names in commit messages
 Plug 'junegunn/gv.vim'
 Plug 'rhysd/committia.vim'    " Sweet message committer
-Plug 'airblade/vim-gitgutter' " Signs in the side for changes/additions/deletions
+
+if has('unix')
+  Plug 'airblade/vim-gitgutter' " Signs in the side for changes/additions/deletions
+endif
 
 if v:false
   Plug 'moznion/github-commit-comment.vim'
@@ -187,7 +190,9 @@ if v:false
 endif
 " }}}
 " Presentation {{{
-Plug 'tjdevries/vimpoint'
+if v:false
+  Plug 'tjdevries/vimpoint'
+endif
 " }}}
 " Quickfix Modifications {{{
 Plug 'romainl/vim-qf'
@@ -224,6 +229,7 @@ elseif g:my_current_uniter ==? 'denite'
     Plug 'Shougo/denite.nvim'
 
     Plug 'Shougo/neomru.vim'            " Most recently used files
+
     if has('clipboard') && has('unix')
       Plug 'Shougo/neoyank.vim'           " Yank ring for my uniter
     endif
@@ -236,12 +242,9 @@ if has('python3')
   Plug 'Shougo/deol.nvim'
 endif
 " Deoplete  {{{
-Plug 'Shougo/echodoc.vim'
-Plug 'Shougo/context_filetype.vim'
-
-" if !has('win32')
-if v:false
-    Plug 'Shougo/neoinclude.vim'
+if has('unix')
+  Plug 'Shougo/echodoc.vim'
+  Plug 'Shougo/context_filetype.vim'
 endif
 
 if has('python3') && g:my_deoplete_enabled
@@ -250,12 +253,12 @@ if has('python3') && g:my_deoplete_enabled
   Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
   Plug 'Shougo/neco-vim'                             "  Vim completion
   Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
+
   if executable('racer') " TODO: Maybe check racer?
     Plug 'rust-lang/rust.vim'                        " Realistically. we only need this when we have rust as well
     Plug 'sebastianmarkow/deoplete-rust'             " Rust completion
   endif
 
-  " Plug 'zchee/deoplete-clang'                        "  C-Family languages
   " Gotta choose electric boogaloo
   Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
 
@@ -280,15 +283,13 @@ Plug 'mhinz/vim-startify'
 Plug 'tweekmonster/startuptime.vim'
 " }}}
 " Status Line {{{
-if g:airline_enabled
-  Plug 'powerline/fonts', { 'do': './install.sh' }
-  Plug 'bling/vim-airline'
-endif
 Plug 'mkitt/tabline.vim'
 " }}}
 " Syntax Checkers {{{
-Plug 'w0rp/ale'
-" Plug 'benekastah/neomake'       " A better linter than syntastic?
+if has('unix')
+  Plug 'w0rp/ale'
+endif
+
 Plug 'alfredodeza/pytest.vim'   " Pytest helper
 " }}}
 " Syntax Highlighters {{{
@@ -300,16 +301,11 @@ Plug 'goodell/vim-mscgen'                                                       
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }                                              " yaml
 Plug 'PProvost/vim-ps1'
 Plug 'leafgarland/typescript-vim'
+Plug 'cespare/vim-toml'
 
 if v:false
   Plug 'billyvg/tigris.nvim', { 'do': './install.sh' }
 endif
-
-Plug 'cespare/vim-toml'
-
-" Too large or not helpful
-" Plug 'sheerun/vim-polyglot'                         " All the colors!
-" Plug 'hdima/python-syntax', { 'for': 'python' }     " Python colors
 " }}}
 " Tag Based Plugins {{{
 if executable('ctags')
@@ -322,7 +318,9 @@ if executable('ctags')
   endif
 endif
 
-Plug 'majutsushi/tagbar'
+if has('unix')
+  Plug 'majutsushi/tagbar'
+endif
 " Tagbar for registers basically
 " These were seriously slowing things down for me,
 " well they tagbar one was, peakaboo had a conflicting command
@@ -335,13 +333,11 @@ if g:vat_enabled
   Plug 'neovim/node-host', { 'do': 'npm install' }
   Plug 'tjdevries/vat.nvim', { 'do': 'npm install' }
 endif
-if v:false
-  " I think this is useless :)
-  Plug 'tjdevries/plib.vim'
 
+if v:false
   Plug 'tjdevries/vim-vertex'
-  Plug 'tjdevries/a_highlighter.nvim'
   " This plugin is not ready
+  Plug 'tjdevries/a_highlighter.nvim'
 endif
 " }}}
 " Testing plugins {{{
@@ -382,12 +378,6 @@ Plug 'tpope/vim-liquid'
 Plug 'tjdevries/vimwiki'
 " }}}
 " Old plugins... {{{
-" Task Warrior Plugins
-" Plug 'blindFS/vim-taskwarrior'
-
-" Encryption
-" Plug 'd0c-s4vage/vim-morph'
-"
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
 " Plug 'scrooloose/syntastic'
 " Plug 'klen/python-mode', { 'for': 'python' } " Not sure I like this one
@@ -410,3 +400,4 @@ packadd vimball
 " Load immediately {{{
 call plug#load('vim-abolish')
 " }}}
+"

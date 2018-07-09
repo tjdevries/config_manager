@@ -15,3 +15,8 @@ function! PQARealRoutines() abort
   " Get the routine name at the top
   g/.*; ; ;/normal! ddggP
 endfunction
+
+try
+  call epic#conf#set('docs', 'initials', 'tjdv')
+
+endtry

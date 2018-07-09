@@ -1,11 +1,28 @@
 ""
 " 
-function! sql#execute_file() abort
+function! sql#execute_file(...) abort
+
+  if a:0 > 0
+    let db_name = a:1
+  else
+    let db_name = g:db_name
+  endif
+
+
   let current_file = expand('%:p')
-  new
-  call execute(printf('r !sqlcmd -d HP_2018Stage1QA_Sql -S square -i "%s" -y0 -s~', current_file))
+  let command = printf('r !runas /epic\tdevries sqlcmd -d %s -S square -i "%s" -y0 -s~', db_name, current_file)
+
+  if !has_key(b:, '__sql_result')
+    let b:__sql_result = std#window#temp()
+  endif
+
+  call std#window#goto(b:__sql_result)
+  call execute(command)
+
   Tabularize/\~
   silent! %s/\~/  |  /g
+
+  echo command
 endfunction
 
 let s:chunks = get(s:, 'chunks', [''])
@@ -78,6 +95,7 @@ function! sql#request(database_server, database_name, file_name, async, var) abo
         \ '-v',
         \ ]
 
+  let g:__sql_cmd = command
   call extend(command, variables)
 
   let results = ['']
@@ -93,4 +111,53 @@ function! sql#request(database_server, database_name, file_name, async, var) abo
   return results
 endfunction
 
-inoremap <c-tab> <C-R>=sql#complete_column_name()<CR>
+function! sql#format_clipboard() abort
+  normal! gg"_dG
+  normal! p
+  write
+  let lines = systemlist(['C:\Users\tdevries\AppData\Local\Programs\Python\Python36-32\Scripts\sqlformat.exe', expand('%:p'), '-r', '-a'])
+
+  call nvim_buf_set_lines(0, 0, -1, v:false, lines)
+
+  silent %s///g
+endfunction
+
+function! sql#find_bad_variables() abort
+  let lines = nvim_buf_get_lines(0, 0, -1, v:false)
+  let qf_list = []
+
+  let variable_starting_string = '@[^iosb]'
+
+  for index in range(len(lines))
+    let value = lines[index]
+    let text = value
+
+    let bad_var_column = match(value, variable_starting_string)
+    if bad_var_column < 0
+      continue
+    else
+      let text = matchstr(value, variable_starting_string . '\w*')
+    endif
+
+    call add(qf_list, {
+          \ 'bufnr': bufnr(0),
+          \ 'lnum': index + 1,
+          \ 'type': 'W',
+          \ 'text': text,
+          \ 'col': bad_var_column,
+          \ })
+  endfor
+
+  call setloclist(0, qf_list)
+
+  if len(qf_list) > 0
+    lopen
+  else
+    lclose
+  endif
+
+  return qf_list
+endfunction
+
+
+" inoremap <c-tab> <C-R>=sql#complete_column_name()<CR>

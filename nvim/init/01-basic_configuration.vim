@@ -29,6 +29,8 @@ if has('unix')
     let g:python3_host_prog = 'python3'
   endif
 else
+  let $PATH='C:\Users\tdevries\Downloads\Neovim\Neovim\bin\;' . $PATH
+
   " Will need to figure out the best way to do this once I start using windows again
   let g:python_host_prog = 'C:\python'
   let g:python3_possibilities = [

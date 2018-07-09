@@ -1,5 +1,6 @@
 --1 Required imports
 -- luacheck: globals vim
+vim.api.nvim_command('let g:colors_name = "gruvbuddy"')
 vim.api.nvim_command('set termguicolors')
 vim.api.nvim_command('set background=dark')
 -- luacheck: globals Color
@@ -40,9 +41,9 @@ Color.new('gray7',     '#ffffff')
 
 Color.new('white',     '#f2e5bc')
 Color.new('red',       '#cc6666')
-Color.new('pink',      '#feb6c1')
+Color.new('pink',      '#fef601')
 Color.new('green',     '#99cc99')
-Color.new('yellow',    '#f0be3c')
+Color.new('yellow',    '#f8fe7a')
 Color.new('blue',      '#81a2be')
 Color.new('aqua',      '#8ec07c')
 Color.new('cyan',      '#8abeb7')
@@ -73,7 +74,7 @@ Group.new('PMenuThumb', nil, c.gray4)
 Group.new('qfFileName', c.yellow, nil, s.bold)
 --2 Statusline Colors
 Group.new('StatusLine', c.gray2, c.blue, nil)
-Group.new('StatusLineNC', c.gray3, c.gray1)
+Group.new('StatusLineNC', c.gray3, c.gray1:light())
 Group.new('User1', c.gray7, c.yellow, s.bold)
 Group.new('User2', c.gray7, c.red, s.bold)
 Group.new('User3', c.gray7, c.green, s.bold)
@@ -89,10 +90,10 @@ Group.new('VisualMode', g.Visual, g.Visual)
 Group.new('VisualLineMode', g.Visual, g.Visual)
 
 --2 Special Characters
-Group.new('Special', c.cyan)
+Group.new('Special', c.purple:light(), nil, s.bold)
 Group.new('SpecialChar', c.brown)
 Group.new('NonText', c.gray2, nil, s.italic)
-Group.new('WhiteSpace', c.gray7)
+Group.new('WhiteSpace', c.purple)
 --2 Searching
 Group.new('Search', c.gray1, c.yellow)
 --2 Tabline
@@ -120,7 +121,7 @@ Group.new('Operator', c.red:light():light())
 Group.new('PreProc', c.yellow)
 Group.new('Repeat', c.red)
 Group.new('Repeat', c.red)
-Group.new('Statement', c.red)
+Group.new('Statement', c.red:dark(.1))
 Group.new('StorageClass', c.yellow)
 Group.new('String', c.green)
 Group.new('Structure', c.violet)
@@ -168,7 +169,6 @@ Group.new('vimNotation', c.cyan)
 Group.new('vimBracket', c.cyan:negative():light())
 Group.new('vimMap', c.seagreen)
 Group.new('nvimMap', g.vimMap)
-
 --2 Lua Syntax
 Group.new('luaStatement', c.yellow:dark(), nil, s.bold)
 Group.new('luaKeyword', c.orange:dark(), nil, s.bold)
@@ -177,8 +177,8 @@ Group.new('luaSpecialFunctions', c.blue:light(), nil, nil)
 Group.new('luaMetatableEvents', c.purple, nil, nil)
 Group.new('luaMetatableArithmetic', g.luaMetatableEvents, g.luaMetatableEvents, g.luaMetatableEvents)
 Group.new('luaMetatableEquivalence', g.luaMetatableEvents, g.luaMetatableEvents, g.luaMetatableEvents)
-
-
+--2 SQL Syntax
+Group.new('SqlKeyword', c.red)
 --1 Plugins
 --2 Diff
 Group.new('gitDiff', c.gray6:dark())

@@ -8,6 +8,12 @@ let g:startify_bookmarks = [
             \ '~/.config/nvim/init/04-keymaps.vim',
             \ '~/.config/nvim/init/05-startify.vim'
             \ ]
+
+
+if isdirectory('F:\personal\tdevries\')
+  call add(g:startify_bookmarks, 'F:/personal/tdevries/work_git')
+endif
+
 let g:startify_change_to_dir = 1
 let g:startify_list_order = [
   \ ['   LRU:'],

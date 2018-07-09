@@ -121,6 +121,13 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
     return bufname(0)
   endif
 
+  if has_key(b:, '__tj_file_name') && type(b:__tj_file_name) == v:t_dict
+    if &filetype == get(b:__tj_file_name, 'filetype', '')
+          \ && getcwd() == get(b:__tj_file_name, 'cwd', '')
+      return b:__tj_file_name.file_name
+    endif
+  endif
+
   let file_name = maktaba#path#Split(expand('%'))
   let my_pwd = maktaba#path#Split(substitute(getcwd(winnr(), tabpagenr()), "\n", '', 'g'))
   let result_name = ''
@@ -167,7 +174,14 @@ function! my_stl#get_file_name(name_length, relative_depth) abort
   " a:name_length letters, then any word chacters followed by a slash
   " Replace the first string with that string and "/"
   " Do it for all of them
-  return substitute(result_name, '\(' . repeat('[^/]', a:name_length) . '\)[^/]*/', '\1/', 'g')
+  let file_name = substitute(result_name, '\(' . repeat('[^/]', a:name_length) . '\)[^/]*/', '\1/', 'g')
+
+  let b:__tj_file_name = {
+        \ 'file_name': file_name,
+        \ 'filetype': &filetype,
+        \ 'cwd': getcwd(),
+        \ }
+  return file_name
 endfunction
 
 function! my_stl#get_git() abort

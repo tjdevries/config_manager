@@ -6,7 +6,7 @@ nnoremap <Down>        :echom "--> j <-- "<CR>
 nnoremap <Right> gt
 nnoremap <Left>  gT
 
-inoremap <Up>     <C-o>:echom "--> k <-- "<CR> """ don't let me move around like that...
+inoremap <Up>     <C-o>:echom "--> k <-- "<CR>
 inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
 inoremap <Right>  <C-o>:echom "--> l <-- "<CR>
 inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
@@ -40,7 +40,7 @@ nnoremap j gj
 " Goes to the first line above/below that isn't whitespace
 " Thanks to: http://vi.stackexchange.com/a/213
 nnoremap gj :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
-nnoremap gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR> :let &lazyredraw=_<CR>
+nnoremap gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
 
 " Run the last command
 nnoremap <leader><leader>c :<up>
@@ -144,6 +144,7 @@ cnoremap %:H %:h
 cnoremap %H <C-R>=expand('%:h:p') . std#path#separator()<CR>
 cnoremap %T <C-R>=expand('%:t')<CR>
 cnoremap %P <C-R>=expand('%:p')<CR>
+cnoremap E<S-space> e<space>
 
 function! s:syntax_names() abort
   let l:syntax_list = []
