@@ -1,3 +1,9 @@
+
+if !isdirectory($VIMRUNTIME . '/lua/lsp/')
+  finish
+end
+
+
 " Add some servers
 call lsp#server#add('python', 'pyls', {'name': 'palantir/python-language-server'})
 

@@ -1,6 +1,7 @@
 *~
 *.pdf
 *swp
+*pyc
 *.no
 *grive
 *tags

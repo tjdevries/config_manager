@@ -18,5 +18,5 @@ endfunction
 
 try
   call epic#conf#set('docs', 'initials', 'tjdv')
-
+catch
 endtry
