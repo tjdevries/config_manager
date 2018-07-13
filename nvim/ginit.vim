@@ -1,3 +1,4 @@
+
 " My nvim-qt specific configuration
 
 if has('win32')

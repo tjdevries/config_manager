@@ -3,9 +3,13 @@ if !isdirectory($VIMRUNTIME . '/lua/lsp/')
   finish
 end
 
-
 " Add some servers
 call lsp#server#add('python', 'pyls', {'name': 'palantir/python-language-server'})
+
+lua require('lsp.api')
+lua vim.lsp.config.log.set_outfile('~/test/logfile_lsp.txt')
+lua vim.lsp.config.log.set_file_level('trace')
+lua vim.lsp.config.log.set_console_level('info')
 
 " call lsp#server#add('go',
 "       \ ['go-langserver', '-trace', '-logfile', expand('~/lsp-go.txt')],
@@ -24,19 +28,22 @@ call lsp#server#add('python', 'pyls', {'name': 'palantir/python-language-server'
 "       \ 'arguments': [],
 "       \ })
 
-" \ 'command': 'typescript-language-server',
-" \ 'arguments': ['--stdio'],
-" call lsp#server#add('typescript', 
-"       \ ['node', expand('~/git/javascript-typescript-langserver/lib/language-server-stdio')],
-"       \ {
-"         \ 'name': 'typescript-language-server',
-"         \ 'callbacks': {
-"           \ 'root_uri': { server -> lsp#util#find_root_uri('tsconfig.json')},
-"           \ },
-"       \ })
+function! s:handle_publish_diagnostics() abort
+  let loc_list = getloclist(0)
 
-augroup LSP/me
+  if loc_list == []
+    lclose
+    return
+  endif
+
+  lopen
+  wincmd p
+endfunction
+
+augroup LSP/test
   au!
+
+  autocmd User LSP/textDocument/publishDiagnostics/notification call s:handle_publish_diagnostics()
 
   for ft in ['python', 'go', 'rust', 'lua', 'typescript']
     call execute(

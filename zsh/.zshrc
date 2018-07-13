@@ -4,17 +4,18 @@ export SHELL=/bin/zsh
 
 # Something for me to see where aliases get defined
 # Use 256 colors
-export TERM=xterm-256color
+# export TERM=xterm-256color
 export LANG=en_US.UTF8
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 ## Import locations
 export ZSH=~/.config/oh-my-zsh/
 export ZSH_CUSTOM=~/.config/zsh/
-export CONFIG_HOME=$HOME/.config
-export ZPLUG_HOME=$CONFIG_HOME/zplug
 export ZSH_HOME=$CONFIG_HOME/zplug
 export ZSH_ENV_HOME=$HOME/
+
+export CONFIG_HOME=$HOME/.config
+
 export NVIM_HOME=$CONFIG_HOME/nvim
 
 ## ZSH options
@@ -23,41 +24,61 @@ setopt hist_ignore_space
 
 ## ZSH environment options
 export DISABLE_LS_COLORS='true'
-# eval "$(dircolors ~/.config/zsh/dircolors/gruvbox.dircolors)"
 
-## Zplug {{{
-source "$ZPLUG_HOME/init.zsh"
+export ZSH_PLUGIN_MANAGER='antigen'
 
-## Zsh Plugins
-zplug 'zplug/zplug', at:expand_glob
+if [[ $ZSH_PLUGIN_MANAGER = 'zplug' ]]; then
+  ## Zplug {{{
+  export ZPLUG_HOME=$CONFIG_HOME/zplug
 
-# zplug "lib/history", from:oh-my-zsh,
-zplug "lib/completion", from:oh-my-zsh, defer:0
-zplug "lib/directories", from:oh-my-zsh, defer:0
-zplug "lib/git", from:oh-my-zsh, defer:0
-# zplug "lib/theme-and-appearance", from:oh-my-zsh, nice:0
+  source "$ZPLUG_HOME/init.zsh"
 
-zplug 'zsh-users/zsh-autosuggestions', defer:3
-zplug 'zsh-users/zsh-completions', defer:3
-# zplug 'zsh-users/zsh-syntax-highlighting', nice:19
+  ## Zsh Plugins
+  zplug 'zplug/zplug', at:expand_glob
 
-# Nice gitignore helper
-zplug 'voronkovich/gitignore.plugin.zsh'
+  # zplug "lib/history", from:oh-my-zsh,
+  zplug "lib/completion", from:oh-my-zsh, defer:2
+  zplug "lib/directories", from:oh-my-zsh, defer:2
+  zplug "lib/git", from:oh-my-zsh, defer:2
+  # zplug "lib/theme-and-appearance", from:oh-my-zsh, nice:0
 
-# Various hints
-zplug 'djui/alias-tips', use:"alias-tips.plugin.zsh"
-zplug 'joepvd/zsh-hints'
+  zplug 'zsh-users/zsh-autosuggestions', defer:3
+  zplug 'zsh-users/zsh-completions', defer:3
+  # zplug 'zsh-users/zsh-syntax-highlighting', nice:19
 
-# Async helper
-# zplug 'mafredri/zsh-async', defer:2
-# zplug 'intelfx/pure', defer:3
+  # Nice gitignore helper
+  zplug 'voronkovich/gitignore.plugin.zsh'
 
-zplug load
+  # Various hints
+  zplug 'djui/alias-tips', use:"alias-tips.plugin.zsh"
+  zplug 'joepvd/zsh-hints'
 
-if zplug check zsh-users/zsh-autosuggestions; then
+  # Async helper
+  # zplug 'mafredri/zsh-async', defer:2
+  # zplug 'intelfx/pure', defer:3
+
+  zplug load
+
+  if zplug check zsh-users/zsh-autosuggestions; then
+    bindkey '^ ' autosuggest-accept
+    bindkey '^n' autosuggest-accept
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
+  fi
+elif [[ $ZSH_PLUGIN_MANAGER = 'antigen' ]]; then
+  source $CONFIG_HOME/antigen/antigen.zsh
+
+  antigen bundle 'zsh-users/zsh-syntax-highlighting'
+  antigen bundle 'zsh-users/zsh-autosuggestions'
+  antigen bundle 'zsh-users/zsh-completions'
+
+  antigen apply
+
+  # antigen theme robbyrussell
+
   bindkey '^ ' autosuggest-accept
   bindkey '^n' autosuggest-accept
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
+
 fi
 
 
