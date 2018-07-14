@@ -302,6 +302,7 @@ Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }                               
 Plug 'PProvost/vim-ps1'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/vim-toml'
+Plug 'Glench/Vim-Jinja2-Syntax'
 
 if v:false
   Plug 'billyvg/tigris.nvim', { 'do': './install.sh' }
