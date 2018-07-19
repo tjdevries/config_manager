@@ -70,7 +70,7 @@ function! s:map_enter() abort
     return setline(line('.'), substitute(getline('.'), '^\(\s*- \)\[x\]', '\1[ ]', ''))
   endif
 
-  return execute("normal <Plug>VimwikiFollowLink")
+  return execute("normal <Plug>VimwikiFollowLink<CR>")
 endfunction
 
 augroup tjVimWiki
