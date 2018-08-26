@@ -17,6 +17,8 @@ let g:my_current_uniter = 'denite'
 let g:my_deoplete_enabled = v:true
 let g:airline_enabled = v:false
 let g:vat_enabled = v:false
+
+let g:builtin_lsp = v:true
 " }}}
 
 " Plugin management: Vim-plug
@@ -247,7 +249,7 @@ if has('unix')
   Plug 'Shougo/context_filetype.vim'
 endif
 
-if has('python3') && g:my_deoplete_enabled
+if has('python3') && g:my_deoplete_enabled && !g:builtin_lsp
   Plug 'Shougo/deoplete.nvim'
 
   Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
@@ -286,7 +288,7 @@ Plug 'tweekmonster/startuptime.vim'
 Plug 'mkitt/tabline.vim'
 " }}}
 " Syntax Checkers {{{
-if has('unix')
+if has('unix') && !g:builtin_lsp
   Plug 'w0rp/ale'
 endif
 
