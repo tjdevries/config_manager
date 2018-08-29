@@ -11,6 +11,7 @@ call lsp#server#add('lua', 'lua-lsp')
 lua require('lsp.api').config.log.set_file_level('debug')
 lua require('lsp.api').config.log.set_outfile('~/debug_file.txt')
 
+" autocmd User LSP/textDocument/references/post echom { -> &filetype == 'qf' ? execute('wincmd p') . 'EXECUTED' : '' }()
 
 " call lsp#server#add('go',
 "       \ ['go-langserver', '-trace', '-logfile', expand('~/lsp-go.txt')],

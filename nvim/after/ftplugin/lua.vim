@@ -52,6 +52,11 @@ function! LuaFoldExpr(line_number) abort
   endif
 
 
+  if s:matches(line, '^--\W*\d')
+    return matchstr(line, '\d')
+  endif
+
+
   " Just let empty lines handle whatever is coming next
   " Unless there isn't an empty line, then we can sub 1
   if s:matches(line, '^end$')
