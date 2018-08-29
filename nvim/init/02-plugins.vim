@@ -40,7 +40,6 @@ endif
 " Yup:
 " Plug 'https://github.com/AndrewRadev/linediff.vim'
 " Plug 'https://github.com/AndrewRadev/switch.vim'
-" Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 "
 " Intriguing
 "

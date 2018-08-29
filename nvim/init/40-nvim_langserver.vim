@@ -4,11 +4,13 @@ if !isdirectory($VIMRUNTIME . '/lua/lsp/')
 end
 
 " Add some servers
-call lsp#server#add('python', 'pyls', {'name': 'palantir/python-language-server'})
+call lsp#server#add('python',
+      \ ['pyls', '-v', '-v', '--log-file', '/home/tjdevries/test/python_ls_log.txt'],
+      \ {'name': 'palantir/python-language-server'}
+      \ )
 call lsp#server#add('lua', 'lua-lsp')
 
-lua require('lsp.api').config.log.set_file_level('debug')
-lua require('lsp.api').config.log.set_outfile('~/debug_file.txt')
+lua require('lsp.api').config.callbacks.set_option('textDocument/publishDiagnostics', 'auto_quickfix_list', true)
 
 " autocmd User LSP/textDocument/references/post echom { -> &filetype == 'qf' ? execute('wincmd p') . 'EXECUTED' : '' }()
 

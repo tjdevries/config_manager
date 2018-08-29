@@ -53,7 +53,7 @@ function! LuaFoldExpr(line_number) abort
 
 
   if s:matches(line, '^--\W*\d')
-    return matchstr(line, '\d')
+    return '>' . matchstr(line, '\d')
   endif
 
 
