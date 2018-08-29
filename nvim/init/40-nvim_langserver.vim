@@ -5,6 +5,12 @@ end
 
 " Add some servers
 call lsp#server#add('python', 'pyls', {'name': 'palantir/python-language-server'})
+call lsp#server#add('lua', 'lua-lsp')
+
+lua require('lsp.api').config.log.set_file_level('debug')
+lua require('lsp.api').config.log.set_outfile('~/debug_file.txt')
+
+" autocmd User LSP/textDocument/references/post echom { -> &filetype == 'qf' ? execute('wincmd p') . 'EXECUTED' : '' }()
 
 lua require('lsp.api')
 lua vim.lsp.config.log.set_outfile('~/test/logfile_lsp.txt')

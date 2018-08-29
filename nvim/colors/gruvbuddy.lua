@@ -160,7 +160,7 @@ Group.new('vimCommand', c.blue)
 Group.new('vimLet', c.purple:light())
 Group.new('vimFuncVar', c.purple)
 Group.new('vimCommentTitle', c.red, nil, s.bold)
-Group.new('vimIsCommand', c.softwhite)
+Group.new('vimIsCommand', g.vimLet)
 
 Group.new('vimMapModKey', c.cyan)
 Group.new('vimNotation', c.cyan)
