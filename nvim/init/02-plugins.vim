@@ -294,6 +294,7 @@ endif
 Plug 'alfredodeza/pytest.vim'   " Pytest helper
 " }}}
 " Syntax Highlighters {{{
+Plug 'neovimhaskell/haskell-vim'
 Plug 'justinmk/vim-syntax-extra'                                                               " C, bison, flex
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }                                   " javascript
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'html', 'htmldjango'] } " javascript extra
