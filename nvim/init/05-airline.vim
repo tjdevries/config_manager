@@ -40,6 +40,8 @@ else " {{{ My statusline
         if g:_custom_filename
             " let stl .= bufnr('%') . ' ' . bufnr(0) . ' ' . nvim_buf_get_number(0) . ' '
             " let stl .= '%{#my_stl#get_file_hightlight(bufnr("%"))}'
+            let stl .='%{my_stl#get_warehouse_dlg()}'
+
             let stl .= '%{my_stl#get_file_name(4, 2)}'
             let stl .= '%*'
         else

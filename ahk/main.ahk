@@ -9,3 +9,8 @@
 ; My own abbreviations
 ::Visists::Visits
 ::1o1::1-on-1
+
+
+^!E::
+    Run cmd.exe /c %clipboard%
+return

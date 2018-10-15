@@ -202,6 +202,8 @@ Group.new('StartifySection', c.yellow:light())
 Group.new('StartifySpecial', c.orange)
 Group.new('StartifyHeader', c.orange)
 Group.new('StartifyFooter', c.gray2)
+--2 Vimwiki
+Group.new('VimwikiBold', c.red, nil, s.bold)
 --1 TODO:
 -- CPHL SneakPluginTarget blue,bright black,dark,dark,dark,dark bold
 -- CPHL htmlH1 blue,dark - bold

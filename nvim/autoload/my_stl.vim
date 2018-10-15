@@ -326,6 +326,20 @@ endfunction
 "       \ ])
 
 
+function! my_stl#get_warehouse_dlg() abort
+  let file_name = expand('%:p')
+  if match(file_name, 'Warehouse') < 0
+    return ''
+  endif
+
+  let parsed_split = split(matchstr(file_name, '\d*\\Warehouse'), '\\')
+  if len(parsed_split) > 0
+    return '[' . parsed_split[0] . '] '
+  end
+
+  return ''
+endfunction
+
 " {{{ Old functions
 function! my_stl#change_user_color(num) abort
   if (mode() =~# '\v(n|no)')
