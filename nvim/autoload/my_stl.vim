@@ -77,6 +77,10 @@ function! my_stl#add_right_separator() abort
 endfunction
 
 function! my_stl#get_user_color(mode) abort
+  if !has_key(g:currentmode, a:mode)
+    return ''
+  endif
+
   if len(g:currentmode[a:mode]) > 2
     let l:color_code = g:currentmode[a:mode][2]
 
