@@ -25,3 +25,7 @@ You can see it in:
 `colors/gruvbuddy.lua`
 
 The main gist is that you can make Groups and Colors, and use them (with styles) to inherit from other groups and update those live. You can also make them lighter or darker compared to a parent group.
+
+#### Neovim Built-in LSP
+
+You can check in `init/40-nvim_langserver.vim` to see the configuration I use for the built-in language server implementation for neovim. It is from github.com/neovim/pulls/6856
