@@ -4,10 +4,8 @@ This is TJ's configuration repo. Feel free to use whatever you would like from i
 
 Major areas include:
 
-## Neovim / Vim
+## Neovim
 
-Check the `nvim` folder for configuration. The Vim folder is very out of date.
+Check the `nvim` folder for configuration. For more instruction, see the README there.
 
-## Shell
-
-I don't really use bash anymore. I'm using zsh these days. Check that folder for configuration
+Ignore the vim folder, it's out-of-date.
