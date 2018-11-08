@@ -181,6 +181,8 @@ Group.new('luaMetatableArithmetic', g.luaMetatableEvents, g.luaMetatableEvents, 
 Group.new('luaMetatableEquivalence', g.luaMetatableEvents, g.luaMetatableEvents, g.luaMetatableEvents)
 --2 SQL Syntax
 Group.new('SqlKeyword', c.red)
+--2 HTML Syntax
+Group.new('htmlH1', c.blue:dark(), nil, s.bold)
 --1 Plugins
 --2 Diff
 Group.new('gitDiff', c.gray6:dark())
