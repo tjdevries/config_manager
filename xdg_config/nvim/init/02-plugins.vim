@@ -194,6 +194,7 @@ endif
 if v:false
   Plug 'tjdevries/vimpoint'
 endif
+Plug 'trapd00r/vimpoint'
 " }}}
 " Quickfix Modifications {{{
 Plug 'romainl/vim-qf'
