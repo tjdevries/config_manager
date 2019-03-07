@@ -5,8 +5,18 @@
 *.no
 *grive
 *tags
+*zwc
 
 nvim/.netrwhist
+xdg_config/nvim/.netrwhist
+xdg_config/vim_plug/*
+
+xdg_config/Qt/*
+xdg_config/QtProject/*
+xdg_config/pulse/*
+
+xdg_config/zsh/.zcompdump
+xdg_config/zsh/history
 
 configstore/*
 
