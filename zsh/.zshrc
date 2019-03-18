@@ -188,6 +188,9 @@ else
   export EDITOR=vim
 fi
 
+export NVM_DIR="/home/tjdevries/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 
 # {{{ Default configuration options
 # Uncomment the following line to use case-sensitive completion.
@@ -242,9 +245,9 @@ export HISTFILE=$HOME/.config/zsh/history
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Pyenv configuration
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:/opt/Freescale/KDS_v3/toolchain/bin:$PATH"
-eval "$(pyenv init -)"
+# export PYENV_ROOT="/home/tjdevries/.pyenv"
+# export PATH="$PYENV_ROOT/bin:/opt/Freescale/KDS_v3/toolchain/bin:$PATH"
+# eval "$(pyenv init -)"
 
 # Rvm configuration
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

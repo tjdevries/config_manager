@@ -55,7 +55,24 @@ filetype plugin indent on
 
 set wildignore+=*.o,*~,*.pyc,*pycache* " Ignore compiled files
 set wildignore+=__pycache__
-set wildmode=longest,list,full        " Complete the longest common string,
+
+if has('nvim-0.4')
+  " Use cool floating wildmenu options
+  set pumblend=17
+
+  set wildmode-=list
+  set wildmode+=longest
+  set wildmode+=full
+
+  set wildoptions+=pum
+else
+  set wildmode=longest,list,full
+
+  " Vim Galore recommended mappings
+  " Make next and previous use smart history
+  cnoremap <C-N> <Up>
+  cnoremap <C-P> <Down>
+end
 " then list them, then full
 set noshowmode
 set cmdheight=1                       " Height of the command bar

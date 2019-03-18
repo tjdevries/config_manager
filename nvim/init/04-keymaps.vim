@@ -1,7 +1,7 @@
 scriptencoding utf-8
 
-nnoremap <Up>          :echom "--> k <-- "<CR>
-nnoremap <Down>        :echom "--> j <-- "<CR>
+nnoremap <Up> <C-y>
+nnoremap <Down> <C-e>
 " Switch between tabs
 nnoremap <Right> gt
 nnoremap <Left>  gT
@@ -14,11 +14,6 @@ inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
 " Opens line below or above the current line
 inoremap <S-CR> <C-O>o
 inoremap <C-CR> <C-O>O
-
-" Vim Galore recommended mappings
-" Make next and previous use smart history
-cnoremap <C-N> <Up>
-cnoremap <C-P> <Down>
 
 
 " call describe("mode", "remap", ...)

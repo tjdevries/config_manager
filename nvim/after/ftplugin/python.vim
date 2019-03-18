@@ -1,4 +1,8 @@
 
+set expandtab
+set shiftwidth=4
+" set 
+
 " {{{ Completion
 " setlocal omnifunc=jedi#completions
 " let g:jedi#completions_enabled = 0

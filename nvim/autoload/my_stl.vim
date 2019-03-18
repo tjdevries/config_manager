@@ -26,8 +26,10 @@ let g:currentmode = {
     \ }
 
 let s:current_mode_color = ''
-let s:left_sep = ' ❯❯ '
-let s:right_sep = ' ❮❮ '
+" let s:left_sep = ' ❯❯ '
+" let s:right_sep = ' ❮❮ '
+let s:left_sep = ' >> '
+let s:right_spe = ' << '
 let s:long_name = v:false
 let s:git_helper = 'gina'
 

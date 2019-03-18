@@ -18,7 +18,7 @@ let g:my_deoplete_enabled = v:true
 let g:airline_enabled = v:false
 let g:vat_enabled = v:false
 
-let g:builtin_lsp = v:true
+let g:builtin_lsp = v:false
 " }}}
 
 " Plugin management: Vim-plug
@@ -152,6 +152,7 @@ endif
 " }}}
 " Grep helpers {{{
 Plug 'mhinz/vim-grepper'
+Plug 'wsdjeg/FlyGrep.vim'
 " }}}
 " Markdown Plugins {{{
 
@@ -289,7 +290,7 @@ Plug 'mkitt/tabline.vim'
 " }}}
 " Syntax Checkers {{{
 if has('unix') && !g:builtin_lsp
-  Plug 'w0rp/ale'
+  " Plug 'w0rp/ale'
 endif
 
 Plug 'alfredodeza/pytest.vim'   " Pytest helper
@@ -360,7 +361,7 @@ Plug 'tpope/vim-characterize'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim' " Easy sideways movement
 
-Plug 'tweekmonster/impsort.vim', {'for': 'python'}
+" Plug 'tweekmonster/impsort.vim', {'for': 'python'}
 Plug 'tweekmonster/braceless.vim', {'on': 'BracelessEnable'}
 
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }     " Get python alignment to work correctly
@@ -381,6 +382,13 @@ Plug 'tpope/vim-liquid'
 " Wiki {{{
 Plug 'tjdevries/vimwiki'
 " }}}
+"
+" Language client (Not-builtin)
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+"
 " Old plugins... {{{
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
 " Plug 'scrooloose/syntastic'
