@@ -43,8 +43,20 @@ nnoremap <leader><leader>c :<up>
 nnoremap <leader>x :exe getline(".")<CR>
 " Execute this file
 vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
-nnoremap <leader><leader>x :w<CR>:source %<CR>
 nnoremap <leader><leader>v :w<CR>:Vader %<CR>
+
+function! s:save_and_exec() abort
+  if &filetype == 'vim'
+    :silent! write
+    :source %
+  elseif &filetype == 'lua'
+    :silent! write
+    :luafile %
+  endif
+
+  return
+endfunction
+nnoremap <leader><leader>x :call <SID>save_and_exec()<CR>
 
 " Remove whitespace
 nnoremap <leader>sws :%s/\s\+$//<CR>

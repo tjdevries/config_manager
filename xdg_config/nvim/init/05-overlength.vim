@@ -1,3 +1,10 @@
+""" 
+" # Overlength.vim
+"
+" Overlength.vim is a plugin I wrote that handles suggesting line lengths in a
+" less intrusive way than some of the built-in ways that vim provides.
+"""
+
 let overlength#default_overlength = 120
 let overlength#default_to_textwidth = 1
 let overlength#default_grace_length = 1

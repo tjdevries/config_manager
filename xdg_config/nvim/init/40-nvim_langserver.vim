@@ -2,7 +2,11 @@
 if !g:builtin_lsp
   let g:LanguageClient_serverCommands = {
         \ 'python': ['pyls']
+        \ 'lua': ['lua-lsp']
         \ }
+
+  let g:LanguageClient_selectionUI_autoOpen = 0
+  let g:LanguageClient_diagnosticsSignsMax = 0
 
   nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 
@@ -18,7 +22,6 @@ if !g:builtin_lsp
 
   finish
 end
-
 
 if !isdirectory($VIMRUNTIME . '/lua/lsp/')
   finish

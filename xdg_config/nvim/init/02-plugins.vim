@@ -140,6 +140,8 @@ Plug 'tpope/vim-rhubarb'      " completes issue names in commit messages
 Plug 'junegunn/gv.vim'
 Plug 'rhysd/committia.vim'    " Sweet message committer
 
+Plug 'rhysd/git-messenger.vim'  " Floating windows are awesome :)
+
 if has('unix')
   Plug 'airblade/vim-gitgutter' " Signs in the side for changes/additions/deletions
 endif
@@ -250,6 +252,13 @@ if has('unix')
   Plug 'Shougo/context_filetype.vim'
 endif
 
+if !g:builtin_lsp
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+endif
+
 if has('python3') && g:my_deoplete_enabled && !g:builtin_lsp
   Plug 'Shougo/deoplete.nvim'
 
@@ -338,6 +347,8 @@ if g:vat_enabled
   Plug 'neovim/node-host', { 'do': 'npm install' }
   Plug 'tjdevries/vat.nvim', { 'do': 'npm install' }
 endif
+
+Plug 'tjdevries/descriptive_maps.vim'
 
 if v:false
   Plug 'tjdevries/vim-vertex'
