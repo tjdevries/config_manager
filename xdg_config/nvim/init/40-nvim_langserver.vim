@@ -1,3 +1,13 @@
+
+
+let g:LanguageClient_selectionUI_autoOpen = 0
+let g:LanguageClient_diagnosticsSignsMax = 0
+let g:LanguageClient_serverCommands = {
+      \ 'lua': ['lua-lsp']
+      \ }
+
+finish
+
 if !isdirectory($VIMRUNTIME . '/lua/lsp/')
   finish
 end
