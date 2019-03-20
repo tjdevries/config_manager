@@ -244,11 +244,6 @@ export HISTFILE=$HOME/.config/zsh/history
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Pyenv configuration
-# export PYENV_ROOT="/home/tjdevries/.pyenv"
-# export PATH="$PYENV_ROOT/bin:/opt/Freescale/KDS_v3/toolchain/bin:$PATH"
-# eval "$(pyenv init -)"
-
 # Rvm configuration
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 

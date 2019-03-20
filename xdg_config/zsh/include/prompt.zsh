@@ -180,7 +180,14 @@ my_current_directory() {
 
 # precmd_functions+=(precmd_prompt)
 
-PROMPT='%B%t%b %n@%m:%0~# '
+function get_pyenv_version {
+  if [ $PYENV_VERSION ]; then
+    print '('$PYENV_VERSION')'
+  fi
+}
+
+setopt prompt_subst
+PROMPT='$(get_pyenv_version) %B%t%b %n:%0~# '
 
 # # Get the async plugin up and running
 # source $ZPLUG_HOME/repos/mafredri/zsh-async/async.zsh

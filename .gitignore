@@ -19,6 +19,10 @@ xdg_config/zsh/.zcompdump
 xdg_config/zsh/history
 
 configstore/*
+xdg_config/configstore/*
+xdg_config/dconf/*
+xdg_config/google-chrome-unstable/*
+xdg_config/mimeapps.list
 
 zsh/history
 zsh/.zcompdump*

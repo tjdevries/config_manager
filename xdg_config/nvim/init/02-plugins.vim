@@ -170,6 +170,8 @@ let g:vim_markdown_fenced_languages = [
       \ 'python=python',
       \ 'json=json',
       \ ]
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 " }}}
 " Neovim development {{{
 if has('unix')

@@ -30,3 +30,18 @@ pip_update() {
     echo "Updating python packages..."
     pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
 }
+
+function cd {
+  builtin cd $1
+
+  script_name="$CONFIG_HOME/cd_scripts/`pwd | xargs basename`"
+  if [ -e ${script_name}.zsh ]; then
+    source ${script_name}.zsh
+  fi
+}
+
+function manage {
+  cd ~/sourceress;
+
+  python web/manage.py "$@"
+}

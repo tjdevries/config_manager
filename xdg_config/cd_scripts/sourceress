@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Set the default environment variables
+pyenv activate sourceress
+
+source ~/sourceress/scripts/use_environment.sh default

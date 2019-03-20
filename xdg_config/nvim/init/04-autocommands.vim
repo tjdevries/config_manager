@@ -1,8 +1,8 @@
 " {{{ Braceless Vim
 augroup MyBraceless
   au!
-  autocmd FileType haml,yaml,coffee BracelessEnable +indent +fold +highlight
-  autocmd FileType python BracelessEnable +highlight
+  " autocmd FileType haml,yaml,coffee BracelessEnable +indent +fold +highlight
+  " autocmd FileType python BracelessEnable +highlight
 augroup END
 " }}}
 

@@ -1,14 +1,17 @@
 
 if !g:builtin_lsp
   let g:LanguageClient_serverCommands = {
-        \ 'python': ['pyls']
-        \ 'lua': ['lua-lsp']
+        \ 'python': ['pyls'],
+        \ 'lua': ['lua-lsp'],
         \ }
 
   let g:LanguageClient_selectionUI_autoOpen = 0
   let g:LanguageClient_diagnosticsSignsMax = 0
 
   nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+
+  nnoremap <leader>rr :call LanguageClient#textDocument_references()<CR>
+  nnoremap <leader>wr :call LanguageClient#workspace_symbol()<CR>
 
   " Or map each action separately
   nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
