@@ -10,8 +10,7 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 ## Import locations
 export ZSH=~/.config/oh-my-zsh/
-export ZSH_CUSTOM=~/.config/zsh/
-export ZSH_HOME=$CONFIG_HOME/zplug
+export ZSH_CUSTOM=~/.config/zsh/custom/
 export ZSH_ENV_HOME=$HOME/
 
 export CONFIG_HOME=$HOME/.config
@@ -23,12 +22,17 @@ setopt functionargzero
 setopt hist_ignore_space
 
 ## ZSH environment options
-export DISABLE_LS_COLORS='true'
+# export DISABLE_LS_COLORS='true'
 
-export ZSH_PLUGIN_MANAGER='antigen'
+export ZSH_PLUGIN_MANAGER='oh-my-zsh'
 
-if [[ $ZSH_PLUGIN_MANAGER = 'zplug' ]]; then
-  ## Zplug {{{
+
+function git_clone_or_update() {
+  git clone "$1" "$2" 2>/dev/null && print 'Update status: Success' || (cd "$2"; git pull)
+}
+
+if [[ $ZSH_PLUGIN_MANAGER = 'zplug' ]]; then # {{{
+  export ZSH_HOME=$CONFIG_HOME/zplug
   export ZPLUG_HOME=$CONFIG_HOME/zplug
 
   source "$ZPLUG_HOME/init.zsh"
@@ -64,7 +68,8 @@ if [[ $ZSH_PLUGIN_MANAGER = 'zplug' ]]; then
     bindkey '^n' autosuggest-accept
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
   fi
-elif [[ $ZSH_PLUGIN_MANAGER = 'antigen' ]]; then
+  ## }}}
+elif [[ $ZSH_PLUGIN_MANAGER = 'antigen' ]]; then # {{{
   source $CONFIG_HOME/antigen/antigen.zsh
 
   antigen bundle 'zsh-users/zsh-syntax-highlighting'
@@ -78,7 +83,79 @@ elif [[ $ZSH_PLUGIN_MANAGER = 'antigen' ]]; then
   bindkey '^ ' autosuggest-accept
   bindkey '^n' autosuggest-accept
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
+  # }}}
+elif [[ $ZSH_PLUGIN_MANAGER = 'oh-my-zsh' ]]; then
+  function update_custom_plugins {
+    print '========================================'
+    print 'Instaling bullet train...'
+    print ''
+    wget http://raw.github.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme \
+      -O $ZSH_CUSTOM/themes/bullet-train.zsh-theme
 
+    print '========================================'
+    print 'Installing spaceship prompt...'
+    print ''
+    git_clone_or_update https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" 
+    ln -sf "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+
+    print '========================================'
+    print 'Installing zsh-autosuggestions'
+    git_clone_or_update https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+
+    print '========================================'
+    print 'Installing zsh-syntax-highlighting'
+    git_clone_or_update https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+
+  }
+
+
+  ZSH_THEME="spaceship"
+
+  export CASE_SENSITIVE=false
+  export HYPHEN_INSENSITIVE=true
+
+  export DISABLE_AUTO_UPDATE=false
+  export UPDATE_ZSH_DAYS=5
+
+  # Test:
+  # ENABLE_CORRECTION="true"
+
+  # Uncomment the following line if you want to disable marking untracked files
+  # under VCS as dirty. This makes repository status check for large repositories
+  # much, much faster.
+  # DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+
+  # Uncomment the following line if you want to change the command execution time
+  # stamp shown in the history command output.
+  # You can set one of the optional three formats:
+  # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+  # or set a custom format using the strftime function format specifications,
+  # see 'man strftime' for details.
+  # HIST_STAMPS="mm/dd/yyyy"
+
+  plugins=(
+    git
+    pyenv
+    debian
+
+    git-auto-fetch
+  )
+
+  if [[ -f "$ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+    plugins+=('zsh-autosuggestions')
+  fi
+
+  if [[ -f "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+    plugins+=('zsh-syntax-highlighting')
+  fi
+
+  # Pre Source updates (TODO: Add to some smarter custom sources)
+  GIT_AUTO_FETCH_INTERVAL=1200 #in seconds
+
+  source $ZSH/oh-my-zsh.sh
+
+  bindkey '^n' autosuggest-accept
 fi
 
 
@@ -88,9 +165,17 @@ sources=(
   'aliases'
   'functions'
   'git'
-  'prompt'
   'pyenv'
 )
+
+if [[ $ZSH_PLUGIN_MANAGER =~ 'oh-my-zsh' ]]; then
+  # TODO: This comparison isn't working?
+  # sources+=('prompt')
+fi
+
+if [[ $ZSH_THEME = 'spaceship' ]]; then
+  sources+=('spaceship')
+fi
 
 for s in "${sources[@]}"; do
   source $HOME/.config/zsh/include/${s}.zsh
@@ -98,7 +183,6 @@ done
 
 
 # Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=5
 export LC_ALL=en_US.UTF-8
 
 
@@ -188,37 +272,10 @@ else
   export EDITOR=vim
 fi
 
-export NVM_DIR="/home/tjdevries/.nvm"
+export NVM_DIR=$HOME/".nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 
-# {{{ Default configuration options
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -226,14 +283,7 @@ export NVM_DIR="/home/tjdevries/.nvm"
 # HIST_STAMPS="mm/dd/yyyy"
 export HISTSIZE=100000000
 export SAVEHIST=$HISTSIZE
-export HISTFILE=$HOME/.config/zsh/history
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export HISTFILE=$HOME/.local/zsh_history
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"

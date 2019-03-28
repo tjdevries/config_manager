@@ -1,11 +1,13 @@
 
 " My nvim-qt specific configuration
 
-if has('win32')
-  Guifont! Consolas:h10
-else
-  Guifont! Fira Mono for Powerline:h10
-  " Guifont! Fira Mono Medium for Powerline:h10
+if exists(':Guifont') && v:false
+  if has('win32')
+    Guifont! Consolas:h10
+  else
+    Guifont! Fira Mono for Powerline:h10
+    " Guifont! Fira Mono Medium for Powerline:h10
+  endif
 endif
 
 " Always use true colors in nvim-qt

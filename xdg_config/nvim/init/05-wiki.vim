@@ -17,7 +17,7 @@ let g:vimwiki_list = [
                 \ 'template_path': export_path . 'html/vimwiki-theme/templates/',
                 \ 'template_default': 'default',
                 \ 'template_ext': '.html',
-                \ 'auto_export': 1,
+                \ 'auto_export': 0,
                 \ 'nested_syntaxes': nested_syntaxes,
             \ },
             \ ]
@@ -74,9 +74,9 @@ function! s:map_enter() abort
 endfunction
 
 augroup tjVimWiki
-  autocmd!
+  au!
   au BufNewFile,BufRead,BufEnter *.wiki set foldmethod=marker
-  au BufWritePost *.wiki VimwikiRebuildTags
+  " au BufWritePost *.wiki VimwikiRebuildTags
 
   " This is probably too often... but oh well
   " Could perhaps even do it in a filetype

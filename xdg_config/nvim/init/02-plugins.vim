@@ -14,7 +14,7 @@ let g:my_snippet_manager = ''
 let g:my_tags_manager = 'gutentags'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'denite'
-let g:my_deoplete_enabled = v:true
+let g:my_deoplete_enabled = v:false
 let g:airline_enabled = v:false
 let g:vat_enabled = v:false
 
@@ -83,12 +83,21 @@ Plug 'tjdevries/mparse.nvim'
 Plug 'tjdevries/putty.vim'
 " }}}
 " Color helpers {{{
-Plug 'chrisbra/Colorizer'                                         " Helpful tool for visualizing colors
+if has('nvim-0.4')
+  " Floating windows w/ color
+  Plug 'RRethy/vim-hexokinase'
+else
+  " Helpful tool for visualizing colors
+  Plug 'chrisbra/Colorizer'
+endif
 " }}}
 " Colorscheme and appearance {{{
-Plug 'junegunn/goyo.vim'                                          " focusing mode
-Plug 'junegunn/limelight.vim'                                     " Extra focus mode
-Plug 'tjdevries/vim-inyoface'  " Comments in your face
+" focusing mode
+Plug 'junegunn/goyo.vim'
+" Extra focus mode
+Plug 'junegunn/limelight.vim'
+" Comments in your face
+Plug 'tjdevries/vim-inyoface'
 
 " I use this to make my colorscheme
 Plug 'tjdevries/colorbuddy.vim'
@@ -255,10 +264,12 @@ if has('unix')
 endif
 
 if !g:builtin_lsp
-  Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+
+  " Plug 'autozimu/LanguageClient-neovim', {
+  "   \ 'branch': 'next',
+  "   \ 'do': 'bash install.sh',
+  "   \ }
 endif
 
 if has('python3') && g:my_deoplete_enabled && !g:builtin_lsp
@@ -396,12 +407,6 @@ Plug 'tpope/vim-liquid'
 Plug 'tjdevries/vimwiki'
 " }}}
 "
-" Language client (Not-builtin)
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-"
 " Old plugins... {{{
 " Plug 'TheZoq2/neovim-auto-autoread'     " Autoread files in neovim, use AutoreadLoop
 " Plug 'scrooloose/syntastic'
@@ -411,8 +416,8 @@ Plug 'autozimu/LanguageClient-neovim', {
 " maybe?
 " YouCompleteMe, not using right now. Went for Deoplete
 " Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
-" Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
-" Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
+Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
+Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
 " Plug 'Rykka/riv.vim'
 " Folding
 " Plug 'tmhedberg/SimpylFold', { 'for': 'none' }  " Not used currently

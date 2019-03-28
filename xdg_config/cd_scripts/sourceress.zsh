@@ -1,3 +1,4 @@
+#!/bin/bash
 
 print '> Setting up sourceress env'
 
@@ -6,8 +7,17 @@ if [[ $PYENV_VERSION != 'sourceress' ]]; then
     pyenv activate sourceress
 fi
 
-_psql_status=`service postgresql status`
-if [[ $_psql_status == *"down"* ]]; then
+if python -c 'import envdir'; then
+else
+    # For some reason cython isn't included...
+    pip install --upgrade cython
+
+    pip install -r requirements.txt
+    pip install -r requirements_dev.txt
+fi
+
+service postgresql status
+if [[ $? -ne 0 ]]; then
     print ' ==> Starting postgresql'
     sudo service postgresql start
 fi

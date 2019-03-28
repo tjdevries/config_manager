@@ -1,4 +1,11 @@
 
+
+if !g:builtin_lsp
+  nmap gd <Plug>(coc-definition)
+
+  finish
+endif
+
 if !g:builtin_lsp
   let g:LanguageClient_serverCommands = {
         \ 'python': ['pyls'],
