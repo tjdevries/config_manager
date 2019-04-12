@@ -1,5 +1,13 @@
+" Should probably find a way to link this if we have coc.nvim?...
+augroup DisableDeoplete
+  au!
+  for ft in ['python', 'lua', 'json']
+    call execute(printf('autocmd FileType %s let b:deoplete_disable_auto_complete = 1', ft))
+  endfor
+augroup END
+
 " General configuration
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case = 1
 

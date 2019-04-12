@@ -1,3 +1,16 @@
+function! s:FindMap() abort
+  let keymap = nvim_get_keymap('n')
+
+  for mapping in keymap
+    if stridx(mapping.rhs, 'wiki') > -1
+      echo mapping.rhs
+    endif
+  endfor
+endfunction
+
+" echo string(filter(keymap, { k, v -> stridx(v.rhs, '<plug>(wiki') > -1 }))
+let g:mkdp_command_for_global = 1
+
 " Set my normal wiki to a dropbox location
 let nested_syntaxes = {
             \ 'python': 'python',
@@ -6,10 +19,38 @@ let nested_syntaxes = {
             \ }
 
 let g:vimwiki_path = expand('~/Dropbox/wiki/')
+let g:wiki_root = g:vimwiki_path
+
 let g:export_path = expand('~/Dropbox/export/')
 
+" New wiki
+let g:wiki_journal = {
+      \ 'name': 'journal',
+      \ 'frequency': 'weekly',
+      \ 'date_format': {
+        \ 'weekly': '%Y_w%V'
+        \ },
+      \ }
 
-let g:vimwiki_folding=''
+let g:wiki_mappings_use_defaults = 1
+let g:wiki_mappings_global = {
+      \ '<plug>(wiki-index)': '<leader>ww',
+      \ '<plug>(wiki-journal-index)': '<leader>wj',
+      \ }
+
+let g:wiki_mappings_local = {
+      \ '<plug>(wiki-journal-prev)': '<c-Down>',
+      \ '<plug>(wiki-journal-next)': '<c-Up>',
+      \ '<plug>(wiki-link-next)' : '<leader><tab>',
+      \ '<plug>(wiki-link-return)' : '<leader><bs>',
+      \ }
+
+" \ '<plug>(wiki-link-open-split)' : '<c-w><cr>',
+
+
+
+" Old wiki
+let g:vimwiki_folding = ''
 let g:vimwiki_list = [
             \ {
                 \ 'path': vimwiki_path,
@@ -70,7 +111,13 @@ function! s:map_enter() abort
     return setline(line('.'), substitute(getline('.'), '^\(\s*- \)\[x\]', '\1[ ]', ''))
   endif
 
-  return execute("normal <Plug>VimwikiFollowLink<CR>")
+  " TODO: Should I cache this?
+  let keymap = nvim_get_keymap('n')
+  if has_key(keymap, '<Plug>(wiki-link-open)')
+    return execute("normal <Plug>(wiki-link-open)")
+  else
+    return execute("normal <Plug>VimwikiFollowLink<CR>")
+  endif
 endfunction
 
 augroup tjVimWiki

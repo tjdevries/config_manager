@@ -34,3 +34,6 @@ alias offcampus='ssh tjd33@cs-ssh.calvin.edu'
 # {{{ Tree aliases
 alias pt='tree -I "__pycache__|*.pyc" --dirsfirst -v'
 # }}}
+# {{{ Git Aliases
+alias gout='git checkout'
+# }}}

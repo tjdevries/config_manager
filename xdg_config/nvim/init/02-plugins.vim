@@ -58,9 +58,6 @@ endif
 " Investigating
 Plug 'tweekmonster/spellrotate.vim'
 
-" Interested
-" Plug 'metakirby5/codi.vim'
-
 " Ill
 Plug 'tpope/vim-projectionist'  " Alternate file editting and some helpful stuff
 Plug 'tpope/vim-scriptease'     " Vim help
@@ -74,7 +71,14 @@ Plug 'tjdevries/train.vim'
 " In development: Working on updating this
 Plug 'tjdevries/syntax_objects.vim'
 " }}}
+" Python Work Plugins {{{
+if has('python3')
+  Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+endif
+Plug 'tjdevries/nycharm'
+" }}}
 " Work Plugins {{{
+
 if filereadable('F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim')
   Plug 'F:\\personal\\tdevries\\work_git\\epic.vim\'
 endif
@@ -216,6 +220,13 @@ Plug 'romainl/vim-qf'
 " Don't think I'm using this one
 " Plug 'dannyob/quickfixstatus'
 " }}}
+" {{{ REPL Plugins
+Plug 'Vigemus/iron.nvim'
+
+" Interested
+" Plug 'metakirby5/codi.vim'
+
+" }}}
 " Searching {{{
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
@@ -264,6 +275,12 @@ if has('unix')
 endif
 
 if !g:builtin_lsp
+  Plug 'tjdevries/coc-zsh'
+  Plug 'neoclide/coc-neco'
+
+  Plug 'Shougo/neoinclude.vim'
+  Plug 'jsfaint/coc-neoinclude'
+
   Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
   " Plug 'autozimu/LanguageClient-neovim', {
@@ -272,12 +289,17 @@ if !g:builtin_lsp
   "   \ }
 endif
 
-if has('python3') && g:my_deoplete_enabled && !g:builtin_lsp
+Plug 'Shougo/neco-vim'
+
+if has('python3') && g:my_deoplete_enabled
   Plug 'Shougo/deoplete.nvim'
 
-  Plug 'zchee/deoplete-jedi',  { 'for': 'python' }   "  Python
-  Plug 'Shougo/neco-vim'                             "  Vim completion
-  Plug 'Shougo/neco-syntax'                          "  Vim syntax completion
+  " Plug 'zchee/deoplete-jedi',  { 'for': 'python' }
+  Plug 'Shougo/neco-syntax'
+
+  if executable('zsh')
+    Plug 'deoplete-plugins/deoplete-zsh'
+  endif
 
   if executable('racer') " TODO: Maybe check racer?
     Plug 'rust-lang/rust.vim'                        " Realistically. we only need this when we have rust as well
@@ -404,7 +426,8 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'html']}
 Plug 'tpope/vim-liquid'
 " }}}
 " Wiki {{{
-Plug 'tjdevries/vimwiki'
+" Plug 'tjdevries/vimwiki'
+Plug 'lervag/wiki.vim'
 " }}}
 "
 " Old plugins... {{{

@@ -359,5 +359,20 @@ function! tj#visual_code_review() abort
   call setreg('*', final_string)
 endfunction
 
+function! tj#get_python_classes() abort
+  if ! (&filetype == 'python')
+    echoerr 'Cannot run this outside of python'
+    return
+  endif
+
+  silent g/^\s\+/normal dd
+  silent g/^from/normal dd
+  silent g/^import/normal dd
+  silent g/^def/normal dd
+  silent g/^$/normal dd
+
+  silent %s/class \(\w*\).*/\1,/
+endfunction
+
 vnoremap yc <c-r>:call tj#visual_code_review()<CR>
 xnoremap yc <c-r>:call tj#visual_code_review()<CR>

@@ -117,6 +117,7 @@ else
         \ ['  ginit.vim', '~/.config/nvim/ginit.vim'],
         \ ['after/', '~/.config/nvim/after/'],
         \ ['autoload/', '~/.config/nvim/autoload/'],
+        \ ['colors/', '~/.config/nvim/colors/'],
         \ ]
 
   call extend(s:menus.init_vim.file_candidates, tj#unite_file_lister(g:_vimrc_base . '/autoload', '  ↳'))

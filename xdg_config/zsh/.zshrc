@@ -1,7 +1,6 @@
 # Set the shell to zsh
 export SHELL=/bin/zsh
 
-
 # Something for me to see where aliases get defined
 # Use 256 colors
 # export TERM=xterm-256color
@@ -311,3 +310,11 @@ codi() {
     hi NonText ctermfg=0 |\
     Codi $syntax" "$@"
 }
+
+if [[ -f "$HOME/.zsh_local" ]]; then
+  source ~/.zsh_local
+fi
+
+
+# Required for deoplete stuff
+zmodload zsh/zpty
