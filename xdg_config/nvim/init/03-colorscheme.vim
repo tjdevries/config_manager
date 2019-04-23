@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " Nyaovim configuration only
 if exists('g:nyaovim_version')
     set termguicolors
@@ -143,7 +145,7 @@ elseif g:my_current_scheme ==? 'custom_gruvbox'
 
 
   " Register to set the values:
-  " f#lyw34jf'"_d$A'pA'�kb�kb'33k^
+  " f#lyw34jf'"_d$A'pA'kbkb'33k^
 
   " Setup {{{2 Paletton
   let g:paletton_palette = copy(g:tomorrow_palette)
@@ -274,3 +276,10 @@ endfunction
 " Syntax help
 nnoremap <leader>sh :echo string(SyntaxNames())<CR>
 nnoremap <leader><leader>sh :echo string(NewSyntaxNames())<CR>
+
+
+" Some color helpers :)
+
+let g:Hexokinase_ftAutoload = ['*']
+let g:Hexokinase_virtualText = '██████'
+" let g:Hexokinase_highlighters = ['virtual', 'sign_column']

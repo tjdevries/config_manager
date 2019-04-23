@@ -210,7 +210,9 @@ Group.new('VimwikiBold', c.red, nil, s.bold)
 -- CPHL SneakPluginTarget blue,bright black,dark,dark,dark,dark bold
 -- CPHL htmlH1 blue,dark - bold
 --
---
+--  Coc
+-- Group.new('CocErrorHighlight', nil, nil, nil)
+Group.new('CocWarningHighlight', nil, nil, nil)
 --
 --  Semshi
 --

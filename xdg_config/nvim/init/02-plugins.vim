@@ -76,6 +76,9 @@ if has('python3')
   Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 endif
 Plug 'tjdevries/nycharm'
+
+" Pytest mapper
+Plug 'alfredodeza/pytest.vim'
 " }}}
 " Work Plugins {{{
 
@@ -336,8 +339,6 @@ Plug 'mkitt/tabline.vim'
 if has('unix') && !g:builtin_lsp
   " Plug 'w0rp/ale'
 endif
-
-Plug 'alfredodeza/pytest.vim'   " Pytest helper
 " }}}
 " Syntax Highlighters {{{
 Plug 'neovimhaskell/haskell-vim'

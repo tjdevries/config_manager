@@ -1,9 +1,5 @@
 {
-
     "diagnostic.refreshOnInsertMode": true,
 
     "suggest.triggerAfterInsertEnter": true,
-
-    "pyls.plugins.pycodestyle.maxLineLength": 240,
-    "pyls.plugins.pydocstyle.ignore": [ "C0301", "E731", "W05111" ],
 }
