@@ -73,7 +73,7 @@ Plug 'tjdevries/syntax_objects.vim'
 " }}}
 " Python Work Plugins {{{
 if has('python3')
-  Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+  " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 endif
 Plug 'tjdevries/nycharm'
 

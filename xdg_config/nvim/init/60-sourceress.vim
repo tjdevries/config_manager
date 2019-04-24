@@ -38,9 +38,17 @@ function! CheckTypes() abort
   return s:check_types()
 endfunction
 
+function! FormatBlack() abort
+  echo system('black --line-length 119 --target-version py36 ' . expand('%:p'))
+  " call jobstart('black --line-length 119 --target-version py36  ' . expand('%:p'),
+  "       \ { on_
+  " e %
+endfunction
+
 augroup SourceressAuto
   au!
-  autocmd BufWritePost *.py :Semshi highlight
+  " autocmd BufWritePost *.py :call system('black --line-length 119 --target-version py36 ' . expand('%:p'))
+  " autocmd BufWritePost *.py :Semshi highlight
 
   " TODO: Get this to work correctly
   " autocmd BufWritePost *.py :call <SID>check_types()

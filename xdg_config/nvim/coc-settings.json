@@ -1,4 +1,5 @@
 {
+    "python.venvPath": "~/.pyenv/",
     "diagnostic.refreshOnInsertMode": true,
 
     "suggest.triggerAfterInsertEnter": true,

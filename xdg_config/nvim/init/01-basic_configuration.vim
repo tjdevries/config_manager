@@ -26,7 +26,7 @@ if has('unix')
   if glob('~/.pyenv/versions/neovim3/bin/python') != ''
     let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
   else
-    let g:python3_host_prog = 'python3'
+    let g:python3_host_prog = systemlist('which python3')[0]
   endif
 else
   let $PATH='C:\Users\tdevries\Downloads\Neovim\Neovim\bin\;' . $PATH
