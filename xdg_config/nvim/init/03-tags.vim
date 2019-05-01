@@ -20,7 +20,11 @@ endif
 " }}}
 
 if g:my_tags_manager ==? 'gutentags'
-    " No config
+    let g:loaded_gentags#gtags = v:true
+
+    let g:gen_tags#ctags_prune = v:false
+    let g:gen_tags#ctags_opts = ['--exclude=.mypy', '--exclue=node_modules']
+
 elseif g:my_tags_manager ==? 'vim-tags'
     " No config
 elseif g:my_tags_manager ==? 'easytags'
@@ -28,5 +32,6 @@ elseif g:my_tags_manager ==? 'easytags'
     let g:easytags_async = 1    " Background support for easy tags
     let g:easytags_event = ['BufWritePost'] " Update the tags after writing
 else
-    echoerr "You've set your tags manager to something new"
+    echoerr "You've set your tags manager to something newn
+    "
 endif

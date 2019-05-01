@@ -9,3 +9,7 @@ nnoremap <leader>test :call fzf#run({'source': 'rg --files', 'sink': 'vnew', 'di
 
 " TODO: This doesn't seem to do anything
 nnoremap <leader>stest :call fzf#run({'source': 'rg', 'sink': 'vnew', 'dir': expand('~/sourceress/web/tests/')})<CR>
+
+nnoremap <leader>ff :call fzf#run({'source': 'rg --files', 'sink': 'e'})<CR>
+" nnoremap <leader>ft :call fzf#run({'source': 'git ls-files \| rg', 'sink': 'e'})<CR>
+nnoremap <leader>ft :call fzf#run({'source': 'rg -', 'sink': 'e'})<CR>

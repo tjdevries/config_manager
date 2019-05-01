@@ -286,6 +286,8 @@ if !g:builtin_lsp
 
   Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
+  Plug 'peitalin/vim-jsx-typescript'
+
   " Plug 'autozimu/LanguageClient-neovim', {
   "   \ 'branch': 'next',
   "   \ 'do': 'bash install.sh',
@@ -333,7 +335,10 @@ Plug 'mhinz/vim-startify'
 Plug 'tweekmonster/startuptime.vim'
 " }}}
 " Status Line {{{
-Plug 'mkitt/tabline.vim'
+" Inspiration for my tabline
+" Plug 'mkitt/tabline.vim'
+
+Plug 'tjdevries/tabline.nvim'
 " }}}
 " Syntax Checkers {{{
 if has('unix') && !g:builtin_lsp
@@ -360,7 +365,8 @@ endif
 " Tag Based Plugins {{{
 if executable('ctags')
   if g:my_tags_manager ==? 'gutentags'
-    Plug 'ludovicchabant/vim-gutentags'
+    " Plug 'ludovicchabant/vim-gutentags'
+    Plug 'jsfaint/gen_tags.vim'
   elseif g:my_tags_manager ==? 'vim-tags'
     Plug 'szw/vim-tags'
   elseif g:my_tags_manager ==? 'easytags'

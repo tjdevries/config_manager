@@ -51,6 +51,8 @@ else " {{{ My statusline
         let stl .= '%( [%M%R%H%W]%q%)'
         let stl .= '%*'
 
+        let stl .= '%{my_stl#get_current_func()}'
+
         " Right section
         let stl .= '%='
 

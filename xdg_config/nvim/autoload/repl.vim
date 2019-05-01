@@ -1,8 +1,29 @@
 
 function! repl#send_all(term_id) abort
+  call chansend(a:term_id, "%cpaste\n")
+  sleep 200m
   call chansend(a:term_id, nvim_buf_get_lines(0, 0, -1, v:false))
+  sleep 200m
+  call chansend(a:term_id, "\n--\n")
 endfunction
 
+function! repl#send_line(term_id) abort
+  call chansend(a:term_id, getline('.'). "\n")
+endfunction
+
+function! repl#_find_repl() abort
+  let windows = nvim_tabpage_list_wins(0)
+
+  for vis_win in windows
+    let buf_num = nvim_win_get_buf(vis_win)
+
+    if nvim_buf_get_option(buf_num, 'filetype') == 'term'
+      return nvim_buf_get_var(buf_num, 'terminal_job_id')
+    endif
+  endfor
+
+  return -1
+endfunction
 
 function! repl#_django_get_model() abort
   let raw_line = getline('.')

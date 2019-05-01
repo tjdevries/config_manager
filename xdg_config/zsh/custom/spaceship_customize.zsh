@@ -1,8 +1,25 @@
 # Prefix
-export SPACESHIP_PROMPT_DEFAULT_PREFIX='❯ '
+if [ $IS_SSH ]; then
+  # Prompt replacement symbols
+  export SPACESHIP_PROMPT_DEFAULT_PREFIX='/ '
+  export SPACESHIP_CHAR_SYMBOL='-> '
+
+  # Git replacement symbols
+  export SPACESHIP_GIT_SYMBOL='git:'
+
+  export SPACESHIP_GIT_STATUS_UNTRACKED='?'
+  export SPACESHIP_GIT_STATUS_AHEAD='^'
+  export SPACESHIP_GIT_STATUS_BEHIND='v'
+  export SPACESHIP_GIT_STATUS_DIVERGED='<diverged>'
+else
+  export SPACESHIP_PROMPT_DEFAULT_PREFIX='❯ '
+fi
 
 # Time
 export SPACESHIP_TIME_SHOW=true
+
+# Pyenv
+SPACESHIP_PYENV_SYMBOL="pyenv:"
 
 SPACESHIP_PROMPT_ORDER=(
   user

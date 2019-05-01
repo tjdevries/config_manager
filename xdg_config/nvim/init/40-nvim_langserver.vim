@@ -3,6 +3,8 @@
 if !g:builtin_lsp
   nmap gd <Plug>(coc-definition)
 
+  inoremap <silent><expr> <c-space> coc#refresh()
+
   finish
 endif
 

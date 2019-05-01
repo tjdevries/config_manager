@@ -105,6 +105,16 @@ function! my_stl#get_file_hightlight(buffer_number) abort
   return ''
 endfunction
 
+function! my_stl#get_current_func() abort
+  let stl = ''
+  if has_key(b:, 'coc_current_function')
+      let stl .= my_stl#add_left_separator()
+      let stl .= get(b:, 'coc_current_function', '')
+  endif
+
+  return stl
+endfunction
+
 function! my_stl#get_file_name(name_length, relative_depth) abort
   " Quit for terminals
   if exists('b:term_title')

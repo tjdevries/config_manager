@@ -1,6 +1,12 @@
 {
-    "python.venvPath": "~/.pyenv/",
     "diagnostic.refreshOnInsertMode": true,
 
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+    "coc.preferences.hoverTarget": "float",
+
+    "suggest.timeout": 5000,
+    "suggest.autoTrigger": "always",
     "suggest.triggerAfterInsertEnter": true,
+
+    "python.jediEnabled": false,
 }

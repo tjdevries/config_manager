@@ -25,3 +25,25 @@ endfunction
 function! term_test#json()
   call tj#dict_to_formatted_json(s:last_response)
 endfunction
+
+
+function! term_test#pstree() abort
+  if nvim_buf_get_option(0, 'filetype') != 'term'
+    return
+  endif
+
+  let result = systemlist(['pstree', nvim_buf_get_var(0, 'terminal_job_pid'), '-A', '-T', '-u', '-g', '-a'])
+
+  let recent = result[-1]
+  let recent = trim(recent)
+  let recent = substitute(recent, '^`-', '', '')
+
+  let name = split(recent, ',')[0]
+  let args = get(split(recent, ' '), 1, ' ')
+
+  " echo name
+  " echo args
+
+  return name . ' ' . args
+endfunction
+
