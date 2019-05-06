@@ -27,3 +27,10 @@ if [[ $SOURCERESS_URL == '' ]]; then
     print ' ==> Sourcing default env variables'
     source ~/sourceress/scripts/use_environment.sh default
 fi
+
+# Set PYTHONPATH
+if [[ $PYTHONPATH == '' ]]; then
+    print ' ==> setting PYTHONPATH'
+    export PYTHONPATH=web:core:deploy
+fi
+

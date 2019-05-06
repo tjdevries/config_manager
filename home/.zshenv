@@ -14,7 +14,7 @@ fi
 
 
 # Determine if we are an SSH connection
-if [ -n "$SSH_CLIENT"] || [ -n "$SSH_TTY" ]; then
+if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
     export IS_SSH=true
 else
     case $(ps -o comm= -p $PPID) in
