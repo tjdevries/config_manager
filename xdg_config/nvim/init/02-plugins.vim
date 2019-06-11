@@ -11,7 +11,7 @@ let g:plug_timeout=60
 
 " Configure which plugins to use {{{
 let g:my_snippet_manager = ''
-let g:my_tags_manager = 'gutentags'
+let g:my_tags_manager = 'vista'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'denite'
 let g:my_deoplete_enabled = v:false
@@ -336,9 +336,12 @@ Plug 'tweekmonster/startuptime.vim'
 " }}}
 " Status Line {{{
 " Inspiration for my tabline
-" Plug 'mkitt/tabline.vim'
+if v:false
+  Plug 'tjdevries/tabline.nvim'
+else
+  Plug 'mkitt/tabline.vim'
+endif
 
-Plug 'tjdevries/tabline.nvim'
 " }}}
 " Syntax Checkers {{{
 if has('unix') && !g:builtin_lsp
@@ -371,6 +374,9 @@ if executable('ctags')
     Plug 'szw/vim-tags'
   elseif g:my_tags_manager ==? 'easytags'
     Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+  elseif g:my_tags_manager ==? 'vista'
+    Plug 'jsfaint/gen_tags.vim'
+    Plug 'liuchengxu/vista.vim'
   endif
 endif
 

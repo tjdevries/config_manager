@@ -56,6 +56,7 @@ else " {{{ My statusline
         " Right section
         let stl .= '%='
 
+        let stl .= '%{my_stl#coc_status()}'
         let stl .= '%{my_stl#get_tag_name()}'
 
         let stl .= &diff ? '[d]' : ''

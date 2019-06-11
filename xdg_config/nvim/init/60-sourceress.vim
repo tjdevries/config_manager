@@ -53,3 +53,23 @@ augroup SourceressAuto
   " TODO: Get this to work correctly
   " autocmd BufWritePost *.py :call <SID>check_types()
 augroup END
+
+
+function! SetupSync()
+  tabnew
+
+  " Start syncing
+  call termopen("python deploy/commands/manage_deployment.py dev_tjdevries tjdevries sync_to_env web",
+        \ {'cwd': expand('~/sourceress/')}
+        \ )
+
+  " Bot left -> export_types
+  new
+  " TODO: export_types
+
+  " Bot right -> npm builder
+  vnew
+  call termopen("npm run start-watch",
+        \ {'cwd': expand('~/sourceress/web/app/')}
+        \ )
+endfunction

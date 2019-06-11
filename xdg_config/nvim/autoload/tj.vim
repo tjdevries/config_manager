@@ -357,6 +357,8 @@ function! tj#visual_code_review() abort
   endfor
 
   call setreg('*', final_string)
+  call setreg('+', final_string)
+  let g:_visual_code_yank = final_string
 endfunction
 
 function! tj#get_python_classes() abort

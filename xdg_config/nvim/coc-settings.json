@@ -9,4 +9,6 @@
     "suggest.triggerAfterInsertEnter": true,
 
     "python.jediEnabled": false,
+    "python.venvPath": "~/.pyenv/",
+    "_python.pythonPath": "~/.pyenv/shims/python"
 }

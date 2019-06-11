@@ -11,6 +11,9 @@ if [ $IS_SSH ]; then
   export SPACESHIP_GIT_STATUS_AHEAD='^'
   export SPACESHIP_GIT_STATUS_BEHIND='v'
   export SPACESHIP_GIT_STATUS_DIVERGED='<diverged>'
+
+  # Pyenv
+  SPACESHIP_PYENV_SYMBOL="pyenv:"
 else
   export SPACESHIP_PROMPT_DEFAULT_PREFIX='❯ '
 fi
@@ -18,8 +21,6 @@ fi
 # Time
 export SPACESHIP_TIME_SHOW=true
 
-# Pyenv
-SPACESHIP_PYENV_SYMBOL="pyenv:"
 
 SPACESHIP_PROMPT_ORDER=(
   user

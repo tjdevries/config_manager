@@ -13,8 +13,9 @@ export ZSH_CUSTOM=~/.config/zsh/custom/
 export ZSH_ENV_HOME=$HOME/
 
 export CONFIG_HOME=$HOME/.config
-
 export NVIM_HOME=$CONFIG_HOME/nvim
+
+export XDG_CONFIG_HOME=$HOME/.config/
 
 ## ZSH options
 setopt functionargzero

@@ -3,27 +3,27 @@ scriptencoding 'utf-8'
 " Dictionary of type:
 " mode_result: ['long_string', 'short_string', optional - 'highlight type']
 let g:currentmode = {
-    \ 'n'  : ['Normal', 'N', 'NormalMode'],
-    \ 'no' : ['N·OpPd', '?', 'OpPending' ],
-    \ 'v'  : ['Visual', 'V', 'VisualMode'],
-    \ 'V'  : ['V·Line', 'Vl', 'VisualLineMode'],
-    \ '' : ['V·Blck', 'Vb' ],
-    \ 's'  : ['Select', 'S' ],
-    \ 'S'  : ['S·Line', 'Sl' ],
-    \ '' : ['S·Block', 'Sb' ],
-    \ 'i'  : ['Insert', 'I', 'InsertMode'],
-    \ 'ic' : ['ICompl', 'Ic', 'ComplMode'],
-    \ 'R'  : ['Rplace', 'R', 'ReplaceMode'],
-    \ 'Rv' : ['VRplce', 'Rv' ],
-    \ 'c'  : ['Cmmand', 'C', 'CommandMode'],
-    \ 'cv' : ['Vim Ex', 'E' ],
-    \ 'ce' : ['Ex (r)', 'E' ],
-    \ 'r'  : ['Prompt', 'P' ],
-    \ 'rm' : ['More  ', 'M' ],
-    \ 'r?' : ['Cnfirm', 'Cn'],
-    \ '!'  : ['Shell ', 'S'],
-    \ 't'  : ['Term  ', 'T', 'TerminalMode'],
-    \ }
+      \ 'n'  : ['Normal', 'N', 'NormalMode'],
+      \ 'no' : ['N·OpPd', '?', 'OpPending' ],
+      \ 'v'  : ['Visual', 'V', 'VisualMode'],
+      \ 'V'  : ['V·Line', 'Vl', 'VisualLineMode'],
+      \ '' : ['V·Blck', 'Vb' ],
+      \ 's'  : ['Select', 'S' ],
+      \ 'S'  : ['S·Line', 'Sl' ],
+      \ '' : ['S·Block', 'Sb' ],
+      \ 'i'  : ['Insert', 'I', 'InsertMode'],
+      \ 'ic' : ['ICompl', 'Ic', 'ComplMode'],
+      \ 'R'  : ['Rplace', 'R', 'ReplaceMode'],
+      \ 'Rv' : ['VRplce', 'Rv' ],
+      \ 'c'  : ['Cmmand', 'C', 'CommandMode'],
+      \ 'cv' : ['Vim Ex', 'E' ],
+      \ 'ce' : ['Ex (r)', 'E' ],
+      \ 'r'  : ['Prompt', 'P' ],
+      \ 'rm' : ['More  ', 'M' ],
+      \ 'r?' : ['Cnfirm', 'Cn'],
+      \ '!'  : ['Shell ', 'S'],
+      \ 't'  : ['Term  ', 'T', 'TerminalMode'],
+      \ }
 
 let s:current_mode_color = ''
 " let s:left_sep = ' ❯❯ '
@@ -41,33 +41,33 @@ function! my_stl#get_mode_highlight() abort
 endfunction
 
 function! my_stl#get_mode() abort
-    let l:m = mode(1)
+  let l:m = mode(1)
 
-    " if l:m == 'no'
-    "   if &relativenumber
-    "     setlocal norelativenumber
-    "   endif
-    " else
-    "   if !&relativenumber
-    "     setlocal relativenumber
-    "   endif
-    " endif
+  " if l:m == 'no'
+  "   if &relativenumber
+  "     setlocal norelativenumber
+  "   endif
+  " else
+  "   if !&relativenumber
+  "     setlocal relativenumber
+  "   endif
+  " endif
 
-    " Can have a longer name, with more info, or just a one letter name
-    let l:mode_index = s:long_name ? 0 : 1
-    if has_key(g:currentmode, l:m)
-      let l:mode = g:currentmode[l:m][l:mode_index]
-    else
-      let l:mode = '?'
-    endif
+  " Can have a longer name, with more info, or just a one letter name
+  let l:mode_index = s:long_name ? 0 : 1
+  if has_key(g:currentmode, l:m)
+    let l:mode = g:currentmode[l:m][l:mode_index]
+  else
+    let l:mode = '?'
+  endif
 
-    if len(l:mode) > 1
-      let l:leading_space = ''
-    else
-      let l:leading_space = ' '
-    endif
+  if len(l:mode) > 1
+    let l:leading_space = ''
+  else
+    let l:leading_space = ' '
+  endif
 
-    return printf('%s [%s]%s%%*', my_stl#get_user_color(l:m), l:mode, l:leading_space)
+  return printf('%s [%s]%s%%*', my_stl#get_user_color(l:m), l:mode, l:leading_space)
 endfunction
 
 function! my_stl#add_left_separator() abort
@@ -108,8 +108,8 @@ endfunction
 function! my_stl#get_current_func() abort
   let stl = ''
   if has_key(b:, 'coc_current_function')
-      let stl .= my_stl#add_left_separator()
-      let stl .= get(b:, 'coc_current_function', '')
+    let stl .= my_stl#add_left_separator()
+    let stl .= get(b:, 'coc_current_function', '')
   endif
 
   return stl
@@ -211,11 +211,11 @@ function! my_stl#get_git() abort
     " {{{  Git status
     if s:git_helper ==# 'fugitive'  " {{{
       if exists('*fugitive#head') && (
-                  \ exists('b:git_dir')
-                  \ || len(fugitive#head(8)) > 0
-                  \ )
-          let stl .= "\ue0a0 "
-          let stl .= fugitive#head(8)
+            \ exists('b:git_dir')
+            \ || len(fugitive#head(8)) > 0
+            \ )
+        let stl .= "\ue0a0 "
+        let stl .= fugitive#head(8)
       endif " }}}
     elseif s:git_helper ==# 'gita'  " {{{
       if !has('win32')
@@ -250,30 +250,30 @@ function! my_stl#get_git() abort
         catch
         endtry
       endtry
-    " }}}
+      " }}}
     endif  " }}}
     " {{{ Git diffs
     if exists('*GitGutterGetHunkSummary')
-        let results = std#cache#get(b:, '_stl_hunk_summary', funcref('GitGutterGetHunkSummary'), 60)
+      let results = std#cache#get(b:, '_stl_hunk_summary', funcref('GitGutterGetHunkSummary'), 60)
 
-        if results != [0, 0, 0]
-          let diff_symbols = ['+', '~', '-']
+      if results != [0, 0, 0]
+        let diff_symbols = ['+', '~', '-']
 
-          let diff_line = ''
-          for i in range(3)
-              if results[i] > 0
-                  let diff_line .= l:diff_symbols[i] . string(results[i]) . ', '
-              endif
-          endfor
+        let diff_line = ''
+        for i in range(3)
+          if results[i] > 0
+            let diff_line .= l:diff_symbols[i] . string(results[i]) . ', '
+          endif
+        endfor
 
-          let stl .= ' [' . diff_line[:-3] . ']'
-        endif
+        let stl .= ' [' . diff_line[:-3] . ']'
+      endif
     endif
 
     if len(stl) > 0
       let stl .= my_stl#add_left_separator()
     endif
-  " }}}
+    " }}}
   endif
   return stl
 endfunction
@@ -324,7 +324,7 @@ function! my_stl#system_to_buf_var(variable, system_command) abort
 
   let b:_stl_job_id_{a:variable} = jobstart(a:system_command, {
         \ 'on_stdout': {job_id, result, event ->
-          \ execute('let b:' . a:variable . ' = result') },
+        \ execute('let b:' . a:variable . ' = result') },
         \ })
 
   return b:stl_job_id
@@ -354,6 +354,24 @@ function! my_stl#get_warehouse_dlg() abort
   end
 
   return ''
+endfunction
+
+function! my_stl#coc_status() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+
+  if empty(info) | return '' | endif
+
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+
+  "  . ' ' . get(g:, 'coc_status', '')
+  return join(msgs, ' ')
 endfunction
 
 " {{{ Old functions
