@@ -193,7 +193,7 @@ endif
 " set guicursor=a:blinkon0
 
 " disable netrw.vim
-let g:loaded_netrw             = 1
-let g:loaded_netrwPlugin       = 1
-let g:loaded_netrwSettings     = 1
-let g:loaded_netrwFileHandlers = 1
+" let g:loaded_netrw             = 1
+" let g:loaded_netrwPlugin       = 1
+" let g:loaded_netrwSettings     = 1
+" let g:loaded_netrwFileHandlers = 1
