@@ -55,6 +55,8 @@ xdg_config/cef_user_data/*
 xdg_config/gtk-2.0/*
 xdg_config/mono.addins/*
 xdg_config/unity3d/*
+xdg_config/libreoffice/
+xdg_config/menus/
 
 xdg_config/oh-my-zsh/*
 xdg_config/zsh/custom/themes/*
