@@ -60,3 +60,25 @@ alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commi
 
 # Oops savers
 alias gundo='git reset HEAD~'
+
+
+# Rebase master onto current branch
+gmrebase() {
+    echo "==> Checking out master..."
+    git checkout master
+    echo ""
+    echo "==> Updating master..."
+    git pull
+    echo ""
+    echo "==> Checking back to original branch"
+    git checkout -
+    echo ""
+    echo "==> Rebasing master onto $(git rev-parse --abbrev-ref HEAD)"
+    git rebase $(git rev-parse --abbrev-ref HEAD)
+    echo ""
+}
+
+
+gpo() {
+    git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
+}

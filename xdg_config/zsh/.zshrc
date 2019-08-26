@@ -182,7 +182,6 @@ for s in "${sources[@]}"; do
 done
 
 
-# Uncomment the following line to change how often to auto-update (in days).
 export LC_ALL=en_US.UTF-8
 
 
