@@ -63,13 +63,16 @@ function! SetupSync()
         \ {'cwd': expand('~/sourceress/')}
         \ )
 
-  " Bot left -> export_types
-  new
-  " TODO: export_types
-
   " Bot right -> npm builder
   vnew
   call termopen("npm run start-watch",
         \ {'cwd': expand('~/sourceress/web/app/')}
         \ )
+
+  " Bot left -> export_types
+  "     Would not mind doing this in a better way... but this seems to work
+  new
+  term
+  sleep 1
+  call nvim_input("icd ~/sourceress<CR>python web/manage.py export_types<CR>")
 endfunction
