@@ -1,6 +1,18 @@
 
 
 if !g:builtin_lsp
+  " TODO: Could probably add a bunch of these for typecript + react.
+  "     Not sure exactly how I got those to work last time.
+
+  let g:coc_global_extensions = [
+        \ 'coc-python',
+        \ 'coc-json',
+        \ 'coc-tag',
+        \ 'coc-emoji',
+        \ 'coc-syntax',
+        \ 'coc-vimlsp',
+        \ ]
+
   nmap gd <Plug>(coc-definition)
 
   inoremap <silent><expr> <c-space> coc#refresh()

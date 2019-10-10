@@ -9,16 +9,10 @@ sudo apt-get install -y make cmake git
 # Neovim dependencies
 sudo apt-get install -y gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
 
+wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash
+
 # Half the time, I can't get ninja-build to install
 # ninja-build
-
-# Pyenv dependencies
-sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-    xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
-
-# Pyenv
-curl https://pyenv.run | bash
 
 
 # LibQt5 Requirements.
@@ -33,3 +27,4 @@ curl https://pyenv.run | bash
 #     qt5-default
 
 # Seems like best way is to just run instaler from qt...
+

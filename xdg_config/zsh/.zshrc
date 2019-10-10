@@ -117,6 +117,8 @@ elif [[ $ZSH_PLUGIN_MANAGER = 'oh-my-zsh' ]]; then
   export DISABLE_AUTO_UPDATE=false
   export UPDATE_ZSH_DAYS=5
 
+  source $XDG_CONFIG_HOME/oh-my-zsh/oh-my-zsh.sh
+
   # Test:
   # ENABLE_CORRECTION="true"
 
@@ -152,8 +154,6 @@ elif [[ $ZSH_PLUGIN_MANAGER = 'oh-my-zsh' ]]; then
 
   # Pre Source updates (TODO: Add to some smarter custom sources)
   GIT_AUTO_FETCH_INTERVAL=1200 #in seconds
-
-  source $ZSH/oh-my-zsh.sh
 
   bindkey '^n' autosuggest-accept
 fi
@@ -243,7 +243,12 @@ if [ -d /usr/local/go/bin/ ]; then
     export GOPATH=~/go
     export GOBIN=$GOPATH/bin
     export PATH=$PATH:/usr/local/go/bin:$GOBIN
+elif [ -d ~/.go/bin/ ]; then
+  export GOPATH=~/.go
+  export GOBIN=$GOTHPATH/bin
+  export PATH=$PATH:~/.go/bin
 fi
+
 # }}}
 # {{{2 Haskell
 export HASKELLPATH="$HOME/.cabal/bin"
