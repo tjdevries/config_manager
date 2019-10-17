@@ -117,8 +117,6 @@ elif [[ $ZSH_PLUGIN_MANAGER = 'oh-my-zsh' ]]; then
   export DISABLE_AUTO_UPDATE=false
   export UPDATE_ZSH_DAYS=5
 
-  source $XDG_CONFIG_HOME/oh-my-zsh/oh-my-zsh.sh
-
   # Test:
   # ENABLE_CORRECTION="true"
 
@@ -152,10 +150,17 @@ elif [[ $ZSH_PLUGIN_MANAGER = 'oh-my-zsh' ]]; then
     plugins+=('zsh-syntax-highlighting')
   fi
 
+  # Setup oh-my-zsh
+  source $XDG_CONFIG_HOME/oh-my-zsh/oh-my-zsh.sh
+
   # Pre Source updates (TODO: Add to some smarter custom sources)
   GIT_AUTO_FETCH_INTERVAL=1200 #in seconds
 
+
+  # Important keybindings.
+  #     NOTE: For some reason, this has to be after we source oh-my-zsh.sh?... Haven't figured out why.
   bindkey '^n' autosuggest-accept
+  bindkey '^ ' autosuggest-execute
 fi
 
 
