@@ -45,3 +45,8 @@ function manage {
 
   python web/manage.py "$@"
 }
+
+
+function generate_attrs {
+  python web/manage.py generate_attr_constructors -f $1
+}

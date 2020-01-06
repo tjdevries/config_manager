@@ -44,6 +44,14 @@ xdg_config/pgcli/*
 xdg_config/totem/*
 xdg_config/veonim/*
 xdg_config/google-chrome/*
+xdg_config/Pinta/
+xdg_config/Tandem/
+xdg_config/deluge/
+xdg_config/evince/
+xdg_config/htop/
+xdg_config/kitty/
+xdg_config/transmission/
+xdg_config/vlc/
 
 xdg_config/.mono/*
 xdg_config/Mumble/*
