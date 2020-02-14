@@ -14,11 +14,11 @@ let g:my_snippet_manager = ''
 let g:my_tags_manager = 'vista'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'denite'
-let g:my_deoplete_enabled = v:false
+let g:my_deoplete_enabled = v:true
 let g:airline_enabled = v:false
 let g:vat_enabled = v:false
 
-let g:builtin_lsp = v:false
+let g:builtin_lsp = v:true
 " }}}
 
 " Plugin management: Vim-plug
@@ -31,6 +31,27 @@ if !has('unix')
   " Really not ready
   " Plug 'C:\Users\tdevries\nvim_plug\vim-depends'
 endif
+
+
+" Local plugins
+if filereadable(expand("~/plugins/viki/readme.md"))
+  Plug '~/plugins/viki/'
+else
+  " TODO: Push to github
+endif
+
+if file_readable(expand("~/plugins/pyne/readme.md"))
+  Plug '~/plugins/pyne/'
+else
+  "TODO: Push to
+endif
+
+if file_readable(expand("~/plugins/neovimpyter/README.md"))
+  Plug '~/plugins/neovimpyter/'
+else
+  " TODO: Push to github
+endif
+
 
 
 " Langerserver development
@@ -81,6 +102,8 @@ Plug 'tjdevries/nycharm'
 Plug 'alfredodeza/pytest.vim'
 " }}}
 " Work Plugins {{{
+
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 if filereadable('F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim')
   Plug 'F:\\personal\\tdevries\\work_git\\epic.vim\'
@@ -292,6 +315,14 @@ if !g:builtin_lsp
   "   \ 'branch': 'next',
   "   \ 'do': 'bash install.sh',
   "   \ }
+else
+  " Yo, we got lsp now
+  Plug 'neovim/nvim-lsp'
+
+  if g:my_deoplete_enabled
+    Plug 'Shougo/deoplete-lsp'
+  endif
+
 endif
 
 Plug 'Shougo/neco-vim'
@@ -325,8 +356,7 @@ if has('python3') && g:my_deoplete_enabled
   if executable('tsc') && has('unix')
     Plug 'mhartington/nvim-typescript', {'for': 'typescript'}
   endif
-  " Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
-  " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'html', 'htmldjango'] }
+
 endif
 " }}}
 " }}}
@@ -360,6 +390,7 @@ Plug 'PProvost/vim-ps1'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/vim-toml'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'tpope/vim-liquid'
 
 if v:false
   Plug 'billyvg/tigris.nvim', { 'do': './install.sh' }
@@ -450,8 +481,6 @@ Plug 'lervag/wiki.vim'
 " Plug 'ervandew/supertab',     {  'for': 'python' }    " Completion thing
 " Plug 'dbsr/vimpy', { 'for': 'python' ]        " Removes unused imports
 " maybe?
-" YouCompleteMe, not using right now. Went for Deoplete
-" Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --gocode-completer' }
 Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
 Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
 " Plug 'Rykka/riv.vim'

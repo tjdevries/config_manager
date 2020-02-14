@@ -19,7 +19,7 @@ let nested_syntaxes = {
             \ }
 
 let g:vimwiki_path = expand('~/Dropbox/wiki/')
-let g:wiki_root = g:vimwiki_path
+" let g:wiki_root = g:vimwiki_path
 
 let g:export_path = expand('~/Dropbox/export/')
 
@@ -129,3 +129,5 @@ augroup tjVimWiki
   " Could perhaps even do it in a filetype
   au BufNewfile,BufRead,BufEnter *.wiki nnoremap <buffer> <CR> :call <SID>map_enter()<CR>
 augroup END
+
+" let g:wiki_home = $HOME .. '/.local/wiki/'

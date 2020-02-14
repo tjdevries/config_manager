@@ -18,7 +18,7 @@ call overlength#set_overlength('term', 0)
 call overlength#set_overlength('html', 0)
 call overlength#set_overlength('startify', 0)
 
-call overlength#set_overlength('vim', 120)
+call overlength#set_overlength('vim', 140)
 call overlength#set_overlength('help', 81)
 call overlength#set_overlength('mumps', 180)
 call overlength#set_overlength('sql', 200)

@@ -29,3 +29,9 @@ nnoremap <silent><leader>ds <Esc>:Pytest session<CR>
 let g:vimpy_remove_unused = 1
 " autocmd BufWritePre *.py :%s/\s\+$//e
 " }}}
+
+if g:builtin_lsp && !g:my_deoplete_enabled
+  setlocal omnifunc=lsp#omnifunc
+endif
+
+silent! call LoadPyne()
