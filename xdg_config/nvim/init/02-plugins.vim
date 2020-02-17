@@ -95,8 +95,10 @@ Plug 'tjdevries/syntax_objects.vim'
 " Python Work Plugins {{{
 if has('python3')
   " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+  "
+  " I gave up on this plugin for now
+  " Plug 'tjdevries/nycharm'
 endif
-Plug 'tjdevries/nycharm'
 
 " Pytest mapper
 Plug 'alfredodeza/pytest.vim'
@@ -372,6 +374,8 @@ else
   Plug 'mkitt/tabline.vim'
 endif
 
+Plug 'ryanoasis/vim-devicons'
+
 " }}}
 " Syntax Checkers {{{
 if has('unix') && !g:builtin_lsp
@@ -482,10 +486,11 @@ Plug 'lervag/wiki.vim'
 " Plug 'dbsr/vimpy', { 'for': 'python' ]        " Removes unused imports
 " maybe?
 Plug 'junegunn/fzf', { 'do': './install --all'}     " Fuzzy Searcher
-Plug 'junegunn/fzf.vim'                             " Fuzzy Search NOW WITH VIM!
-" Plug 'Rykka/riv.vim'
+Plug 'yuki-ycino/fzf-preview.vim'
+
 " Folding
 " Plug 'tmhedberg/SimpylFold', { 'for': 'none' }  " Not used currently
+
 " }}}
 call plug#end()
 
