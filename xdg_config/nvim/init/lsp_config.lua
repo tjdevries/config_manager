@@ -1,7 +1,8 @@
 
-
 local vim = vim
-local nvim_lsp = require'nvim_lsp'
+local nvim_lsp = require('nvim_lsp')
+
+-- vim.lsp.set_log_level(0)
 
 nvim_lsp.pyls.setup({
     enable=true,
@@ -15,7 +16,26 @@ nvim_lsp.pyls.setup({
 
 nvim_lsp.vimls.setup({})
 
+
+local sumneko_settings = {
+    runtime={
+        version="LuaJIT",
+    },
+    diagnostics={
+        enable=true,
+        globals={"vim"},
+    }
+}
+
+-- nvim-lsp overrides workspace/configuration callback
+--  and makes it difficult to set any other way than this.
+sumneko_settings.Lua = vim.deepcopy(sumneko_settings)
+
 nvim_lsp.sumneko_lua.setup({
+    -- Lua LSP configuration
+    settings=sumneko_settings,
+
+    -- Runtime configurations
     filetypes = {"lua"},
     cmd = {
         "/home/tj/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/Linux/lua-language-server",
@@ -24,6 +44,9 @@ nvim_lsp.sumneko_lua.setup({
     }
 })
 
+
+nvim_lsp.tsserver.setup({
+})
 
 -- Override some callbacks for my personal preference
 local override = require("custom.lsp_override").override

@@ -6,7 +6,7 @@ local floating_text = require("custom.floating_text")
 
 local M = {}
 
-M._use_custom = true
+M._use_custom = false
 M._should_display = true
 
 function M.set_diagnostic_display(value)

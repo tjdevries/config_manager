@@ -10,7 +10,7 @@ let g:plug_timeout=60
 " }}}
 
 " Configure which plugins to use {{{
-let g:my_snippet_manager = ''
+let g:my_snippet_manager = 'ultisnips'
 let g:my_tags_manager = 'vista'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_current_uniter = 'denite'
@@ -47,9 +47,16 @@ else
 endif
 
 if file_readable(expand("~/plugins/neovimpyter/README.md"))
-  Plug '~/plugins/neovimpyter/'
+  " Plug '~/plugins/neovimpyter/'
 else
   " TODO: Push to github
+endif
+
+
+if file_readable(expand("~/plugins/standard.lua/README.md"))
+  Plug '~/plugins/standard.lua/'
+else
+  Plug 'tjdevries/standard.lua'
 endif
 
 
@@ -265,7 +272,10 @@ Plug 'tjdevries/fold_search.vim'
 " }}}
 " Snippets {{{
 if g:my_snippet_manager ==? 'ultisnips'
-  Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
+  Plug 'sirver/ultisnips'
+
+  " TODO: Will consider adding this back, but really should make my own snippets that I'll remember :)
+  " Plug 'honza/vim-snippets'
 elseif g:my_snippet_manager ==? 'neosnippet'
   Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets' | Plug 'honza/vim-snippets'
 endif
@@ -325,6 +335,8 @@ else
     Plug 'Shougo/deoplete-lsp'
   endif
 
+  " Cool tags based viewer
+  Plug 'liuchengxu/vista.vim'
 endif
 
 Plug 'Shougo/neco-vim'

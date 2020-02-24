@@ -34,4 +34,9 @@ if g:builtin_lsp && !g:my_deoplete_enabled
   setlocal omnifunc=lsp#omnifunc
 endif
 
-silent! call LoadPyne()
+" silent! call LoadPyne()
+
+augroup MyPythonAutos
+  au!
+  autocmd BufWritePost *.py :call execute("!python -m pyfixfmt --file-glob " . expand("%:p")) | e
+augroup END
