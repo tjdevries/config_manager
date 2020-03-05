@@ -1,0 +1,8 @@
+# Neovim should be able to run anywhere
+pynvim
+
+# Get python language server up & running
+python-language-server[all]
+
+# Upgrade pip while we're at it.
+pip

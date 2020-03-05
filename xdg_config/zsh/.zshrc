@@ -266,6 +266,8 @@ if [ -f ~/.rvm/scripts/rvm ]; then
 else
   export HAS_RVM=false
 fi
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
 # }}}
 # {{{ Rust
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -323,6 +325,15 @@ codi() {
 
 if [[ -f "$HOME/.zsh_local" ]]; then
   source ~/.zsh_local
+fi
+
+
+if [[ -d "$HOME/.dotnet/" ]]; then
+  export PATH="$HOME/.dotnet/:$PATH"
+fi
+
+if [[ -d "$HOME/.poetry/bin/" ]]; then
+  export PATH="$HOME/.poetry/bin/:$PATH"
 fi
 
 

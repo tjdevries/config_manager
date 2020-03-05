@@ -4,7 +4,14 @@ This is TJ's configuration repo. Feel free to use whatever you would like from i
 
 Major areas include:
 
-## Neovim
+## xdg_config
+
+This area contains configuration I want to share between machines that will go to `$XDG_CONFIG_HOME` (generally, `~/.config`).
+
+
+Subdirectories include:
+
+### Neovim
 
 Check the `nvim` folder for configuration. For more instruction, see the README there.
 

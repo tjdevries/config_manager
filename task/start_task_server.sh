@@ -1,3 +1,0 @@
-#!/bin/bash
-
-taskdctl start

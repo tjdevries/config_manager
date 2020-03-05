@@ -5,7 +5,13 @@
 [core]
     editor = nvim
     excludesfile = /home/tj/.gitignore_global
-	autocrlf = input
+    ; autocrlf = input
+
+[pull]
+    rebase = true
+
+[rebase]
+    autoStash = true
 
 [alias]
     # Thanks r00k, this creates a pretty graph view of the log
