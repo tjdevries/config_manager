@@ -30,7 +30,7 @@ let g:vimpy_remove_unused = 1
 " autocmd BufWritePre *.py :%s/\s\+$//e
 " }}}
 
-if g:builtin_lsp && !g:my_deoplete_enabled
+if g:builtin_lsp
   setlocal omnifunc=lsp#omnifunc
 endif
 
@@ -38,5 +38,14 @@ endif
 
 augroup MyPythonAutos
   au!
-  autocmd BufWritePost *.py :call execute("!python -m pyfixfmt --file-glob " . expand("%:p")) | e
+  autocmd BufWritePost * :call PythonAuto()
+
+  " Only for our special .status.py files
+  autocmd BufWritePost * :call nb_sync#sync()
 augroup END
+
+
+nnoremap <buffer> <space><space>x :call nb_sync#execute()<CR>
+
+" nnoremap <buffer> <space>i :lua require('apyrori').insert_match(vim.api.nvim_call_function('expand', {'<cword>'}))<CR>
+" nnoremap <buffer> <M-i> :lua require('apyrori').insert_match(vim.api.nvim_call_function('expand', {'<cword>'}))<CR>

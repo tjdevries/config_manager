@@ -40,7 +40,16 @@ nnoremap gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\
 " Run the last command
 nnoremap <leader><leader>c :<up>
 " Map execute this line
-nnoremap <leader>x :exe getline(".")<CR>
+function! s:executor() abort
+  if &ft == 'lua'
+    call execute(printf(":lua %s", getline(".")))
+  else
+    exe getline(">")
+  endif
+endfunction
+
+nnoremap <leader>x :call <SID>executor()<CR>
+
 " Execute this file
 vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
 nnoremap <leader><leader>v :w<CR>:Vader %<CR>

@@ -378,3 +378,16 @@ endfunction
 
 vnoremap yc <c-r>:call tj#visual_code_review()<CR>
 xnoremap yc <c-r>:call tj#visual_code_review()<CR>
+
+
+function! tj#show_all_values_matching_str(str) abort
+  let results = []
+
+  for [key, value] in items(g:)
+    if match(key, a:str) > -1
+      call add(results, [key, value])
+    endif
+  endfor
+
+  return join(results, "\n")
+endfunction

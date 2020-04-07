@@ -1,3 +1,7 @@
+if isdirectory(expand('~/plugins/manillua.nvim/'))
+  finish
+endif
+
 setlocal foldmethod=expr
 setlocal foldexpr=LuaFoldExpr(v:lnum)
 setlocal foldtext=LuaFoldText()
@@ -11,7 +15,7 @@ let s:nested_test_start = '^\s\+describe('
 let s:test_case_start = '^\s*it('
 
 let s:object_start = '^local \S* = {}'
-let s:object_property_start = '^\S*\.\S* = function('
+let s:object_property_start = '^\S*\.\S* = function(\|^function \S*\.\S*('
 let s:docstring_start = '^---'
 
 let s:local_function = '^local \S* = function('
@@ -20,7 +24,11 @@ let s:file_return = '^return'
 
 
 function! s:matches(line, expr) abort
-  return match(a:line, a:expr) != -1
+  if type(a:expr) == v:t_string
+    return match(a:line, a:expr) != -1
+  elseif type(a:expr) == v:t_list
+    return len(filter(copy(a:expr), {idx, val -> s:matches(line, val)})) > 0
+  endif
 endfunction
 
 function! s:comment_level(line) abort
@@ -40,87 +48,21 @@ function! LuaFoldExpr(line_number) abort
   let previous_line = getline(lnum - 1)
   let next_line = getline(lnum + 1)
 
-  " Check to see if this should be included in whatever came before it.
-  " This way we suck up the empty lines
-  if s:matches(line, '^$')
-    " if s:matches(next_line, s:object_property_start) ||
-    "       \ s:matches(next_line, '^---')
-    "   return -1
-    " endif
-
-    return '='
-  endif
-
-
   if s:matches(line, '^--\W*\d')
     return '>' . matchstr(line, '\d')
   endif
 
-
-  " Just let empty lines handle whatever is coming next
-  " Unless there isn't an empty line, then we can sub 1
-  if s:matches(line, '^end$')
-    if s:matches(next_line, '^$')
-      return '='
-    endif
-
-    return "s1"
-  endif
 
   "" Comment Handling
   if s:comment_level(line) > 0
     return ">" . s:comment_level(line)
   endif
 
-  if s:matches(line, s:docstring_start)
-    return '>2'
-  endif
-
-  if s:matches(line, '^--')
-    if s:matches(next_line, s:object_property_start)
-      return 's1'
-    else
-      return '='
-    endif
-  endif
-
-
-  if s:matches(line, s:object_start)
-    return ">1"
-  endif
-
-  if s:matches(line, s:object_property_start)
-    return ">2"
-  endif
-
-  if s:matches(line, s:file_return)
-    return ">1"
-  endif
 
   if s:matches(line, s:local_function)
     return ">2"
   endif
 
-  " *_spec.lua folders
-  if s:matches(line, s:test_start)
-    return ">1"
-  endif
-
-  if s:matches(line, s:nested_test_start)
-    return "a1"
-  endif
-
-  if s:matches(line, s:test_case_start)
-    return "a1"
-  endif
-
-  if s:matches(line, '^\s*end)$')
-    return "s1"
-  endif
-
-  if s:matches(line, '^\s*before_each')
-    return "a1"
-  endif
 
   return "="
 endfunction
@@ -148,9 +90,18 @@ function! LuaFoldText(...) abort
   endif
 
   if s:matches(start_line, s:object_property_start)
-    let object = split(start_line, '\.')[0]
-    let name = join(split(split(start_line, ' ')[0], '\.')[1:], '.')
-    let args = split(split(start_line, 'function(')[1], ' return')[0]
+    call add(g:lua_folds, start_line)
+
+    if s:matches(start_line, '^function')
+      let important = matchlist(start_line, '^function \(.*\)(')[1]
+      let object = split(important, '\.')[0]
+      let name = split(important, '\.')[1]
+      let args = "...)"
+    else
+      let object = split(start_line, '\.')[0]
+      let name = join(split(split(start_line, ' ')[0], '\.')[1:], '.')
+      let args = split(split(start_line, 'function(')[1], ' return')[0]
+    endif
 
     let self_function = s:is_self_function(start_line)
     let prefix = self_function ? '' : 'static'

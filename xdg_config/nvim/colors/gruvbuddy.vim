@@ -1,2 +1,1 @@
-
-execute 'luafile ' g:gruvbuddy_file
+" Nothing is required here... check the lua file :)

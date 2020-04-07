@@ -1,3 +1,5 @@
+call plug#load('vim-abolish')
+
 let g:abolish_save_file = expand('<sfile>')
 
 if !exists(':Abolish')

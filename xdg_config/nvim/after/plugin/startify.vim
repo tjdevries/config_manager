@@ -2,11 +2,6 @@ let g:startify_bookmarks = [
             \ '~/.zshrc',
             \ '~/.config/nvim/init.vim',
             \ '~/.config/nvim/init/',
-            \ '~/.config/nvim/init/00-todo.vim',
-            \ '~/.config/nvim/init/01-basic_configuration.vim',
-            \ '~/.config/nvim/init/02-plugins.vim',
-            \ '~/.config/nvim/init/04-keymaps.vim',
-            \ '~/.config/nvim/init/05-startify.vim'
             \ ]
 
 

@@ -12,7 +12,7 @@ let overlength#default_grace_length = 1
 " Disable highlighting in markdown.
 call overlength#set_overlength('markdown', 0)
 call overlength#set_overlength('vimwiki', 0)
-call overlength#set_overlength('text', 0)
+call overlength#set_overlength('text', 80)
 call overlength#set_overlength('qf', 0)
 call overlength#set_overlength('term', 0)
 call overlength#set_overlength('html', 0)

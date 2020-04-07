@@ -1,3 +1,4 @@
+finish
 
 let g:langserver_executables = {
       \ 'go': {

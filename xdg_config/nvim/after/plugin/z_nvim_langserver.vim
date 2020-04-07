@@ -1,4 +1,4 @@
-
+finish
 
 if !g:builtin_lsp
   " TODO: Could probably add a bunch of these for typecript + react.
