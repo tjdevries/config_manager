@@ -254,7 +254,9 @@ Plug 'tjdevries/fold_search.vim'
 " }}}
 " Snippets {{{
 if g:my_snippet_manager ==? 'ultisnips'
-  Plug 'sirver/ultisnips'
+  if has('python3')
+    Plug 'sirver/ultisnips'
+  endif
 
   " TODO: Will consider adding this back, but really should make my own snippets that I'll remember :)
   " Plug 'honza/vim-snippets'

@@ -1,5 +1,9 @@
 scriptencoding utf-8
 
+if !has('python3')
+  finish
+endif
+
 " General Settings {{{
 
 augroup MyDenite
