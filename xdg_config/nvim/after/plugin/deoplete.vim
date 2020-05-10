@@ -1,3 +1,5 @@
+finish
+
 if !g:builtin_lsp
   " Should probably find a way to link this if we have coc.nvim?...
   augroup DisableDeoplete

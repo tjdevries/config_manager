@@ -5,6 +5,10 @@
 " less intrusive way than some of the built-in ways that vim provides.
 """
 
+if !get(g:, 'loaded_overlength')
+    finish
+endif
+
 let overlength#default_overlength = 120
 let overlength#default_to_textwidth = 1
 let overlength#default_grace_length = 1

@@ -25,7 +25,6 @@ let g:plug_timeout=60
 let g:my_snippet_manager = 'ultisnips'
 let g:my_current_scheme = 'gruvbox-tj'
 let g:my_deoplete_enabled = v:false
-let g:airline_enabled = v:false
 
 let g:builtin_lsp = v:true
 " }}}
@@ -42,26 +41,18 @@ endfunction
 call plug#begin(g:plugin_path)
 
 " Local plugins {{{
-if filereadable(expand("~/plugins/viki/readme.md"))
-  Plug '~/plugins/viki/'
-else
-  " TODO: Push to github
-endif
 
 " TODO: vimptyer
 " TODO: pyne
 
-
-if file_readable(expand("~/plugins/standard.lua/README.md"))
-  Plug '~/plugins/standard.lua/'
-else
-  Plug 'tjdevries/standard.lua'
-endif
-
+call s:local_plug('colorbuddy.vim')
+call s:local_plug('gruvbuddy.nvim')
+call s:local_plug('plenary.nvim')
 call s:local_plug('luvjob.nvim')
 call s:local_plug('apyrori.nvim')
 call s:local_plug('py_package.nvim')
 call s:local_plug('manillua.nvim')
+call s:local_plug('riki.nvim')
 
 " }}}
 " To Learn: {{{
@@ -95,13 +86,8 @@ Plug 'tpope/vim-scriptease'     " Vim help
 " Yo, we got lsp now
 Plug 'neovim/nvim-lsp'
 
-if g:my_deoplete_enabled
-  Plug 'Shougo/deoplete-lsp'
-else
-  Plug 'haorenW1025/completion-nvim'
-
-  set completeopt=menuone,noinsert,noselect
-endif
+Plug 'haorenW1025/completion-nvim'
+Plug 'haorenW1025/diagnostic-nvim'
 
 " Cool tags based viewer
 Plug 'liuchengxu/vista.vim'
@@ -109,8 +95,6 @@ Plug 'liuchengxu/vista.vim'
 " Debug adapter protocol
 Plug 'puremourning/vimspector'
 
-" Better diagnostics
-Plug 'haorenW1025/diagnostic-nvim'
 " }}}
 " My General Plugins {{{
 Plug 'tjdevries/standard.vim'
@@ -122,25 +106,18 @@ Plug 'tjdevries/train.vim'
 Plug 'tjdevries/syntax_objects.vim'
 " }}}
 " Python Work Plugins {{{
-if has('python3')
-  " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-  "
-  " I gave up on this plugin for now
-  " Plug 'tjdevries/nycharm'
-endif
-
 " Pytest mapper
 Plug 'alfredodeza/pytest.vim'
+" }}}
+" Demo Plugins {{{
+Plug 'tweekmonster/haunted.vim'
 " }}}
 " Epic (the company) Plugins {{{
 
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
-if filereadable('F:\personal\tdevries\work_git\epic.vim\plugin\epic.vim')
-  Plug 'F:\\personal\\tdevries\\work_git\\epic.vim\'
-endif
-
-Plug 'tjdevries/mparse.nvim'
+" You'll never write M again -- hopefully ;)
+" Plug 'tjdevries/mparse.nvim'
 Plug 'tjdevries/putty.vim'
 " }}}
 " Color helpers {{{
@@ -159,8 +136,6 @@ Plug 'junegunn/limelight.vim'
 " Comments in your face
 Plug 'tjdevries/vim-inyoface'
 
-" I use this to make my colorscheme
-Plug 'tjdevries/colorbuddy.vim'
 
 " }}}
 " Formatters {{{
@@ -192,12 +167,6 @@ Plug 'rhysd/git-messenger.vim'  " Floating windows are awesome :)
 
 if has('unix')
   Plug 'airblade/vim-gitgutter' " Signs in the side for changes/additions/deletions
-endif
-
-if v:false
-  Plug 'moznion/github-commit-comment.vim'
-  Plug 'SevereOverfl0w/deoplete-github'
-  Plug '~/Git/githubapi-deoplete'
 endif
 " }}}
 " Markdown Plugins {{{
@@ -251,17 +220,12 @@ Plug 'tjdevries/edit_alternate.vim'
 Plug 'google/vim-searchindex'
 Plug 'skywind3000/quickmenu.vim'
 Plug 'tjdevries/fold_search.vim'
+
+" Plug 'abarker/cyfolds', { 'do': 'cd python3 && python setup.py build_ext --inplace' }
 " }}}
 " Snippets {{{
-if g:my_snippet_manager ==? 'ultisnips'
-  if has('python3')
-    Plug 'sirver/ultisnips'
-  endif
-
-  " TODO: Will consider adding this back, but really should make my own snippets that I'll remember :)
-  " Plug 'honza/vim-snippets'
-elseif g:my_snippet_manager ==? 'neosnippet'
-  Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets' | Plug 'honza/vim-snippets'
+if has('python3')
+  Plug 'sirver/ultisnips'
 endif
 " }}}
 " {{{ Shougo
@@ -276,10 +240,7 @@ if has('python3')
   endif
 endif
 " }}}
-"
-if has('python3')
-  Plug 'Shougo/deol.nvim'
-endif
+
 " Deoplete  {{{
 if has('unix')
   Plug 'Shougo/echodoc.vim'
@@ -287,11 +248,10 @@ if has('unix')
 endif
 
 
-Plug 'Shougo/neco-vim'
-
 if has('python3') && g:my_deoplete_enabled
   Plug 'Shougo/deoplete.nvim'
 
+  Plug 'Shougo/neco-vim'
   " Plug 'zchee/deoplete-jedi',  { 'for': 'python' }
   Plug 'Shougo/neco-syntax'
 
@@ -418,7 +378,7 @@ let g:init_base = fnamemodify(expand('$MYVRIMRC'), ':h')
 " Set our leader key to ,
 let g:mapleader=','
 
-" Set important paths
+" Set important paths {{{
 if has('unix')
   " You have to set these up using pip install.
   " I usually do something with pyenv, since I find it easy
@@ -462,7 +422,7 @@ else
   endfor
 
   " let g:loaded_ruby_provider = 1
-endif
+endif " }}}
 
 filetype plugin indent on
 
@@ -498,14 +458,14 @@ set ignorecase                        " Ignore case when searching...
 set smartcase                         " ... unless there is a capital letter in the query
 set hidden                            " I like having buffers stay around
 
-set cursorline    " Highlight the current line
+set cursorline                        " Highlight the current line
 
 
 let g:my_preview_enable = v:false
 if g:my_preview_enable
-  set completeopt+=preview              " Turn On preview
+  set completeopt+=preview            " Turn On preview
 else
-  set completeopt-=preview              " Turn off preview
+  set completeopt-=preview            " Turn off preview
 endif
 
 set noequalalways                     " I don't like my windows changing all the time
@@ -594,7 +554,7 @@ if &list
   nnoremap <leader>cl :call CycleListChars()<CR>
 endif
 
-lua require('gruvbuddy')
+lua require('colorbuddy').colorscheme('gruvbuddy')
 
 " guicursor messing around
 " set guicursor=n:blinkwait175-blinkoff150-blinkon175-hor10

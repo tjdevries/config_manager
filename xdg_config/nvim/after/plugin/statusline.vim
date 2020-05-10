@@ -1,3 +1,7 @@
+if get(g:, 'demo')
+    finish
+endif
+
 let g:_show_date = v:true
 let g:_show_git  = v:true
 let g:_custom_filename = v:true

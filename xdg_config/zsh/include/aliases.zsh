@@ -37,3 +37,7 @@ alias pt='tree -I "__pycache__|*.pyc" --dirsfirst -v'
 # {{{ Git Aliases
 alias gout='git checkout'
 # }}}
+#
+#
+# Wiki Aliases
+alias viki='cd ~/viki/; nvim'

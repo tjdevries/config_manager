@@ -4,6 +4,10 @@ function! PythonAuto() abort
     return
   endif
 
-  call execute("!python -m pyfixfmt --file-glob " . expand("%:p"))
+  if get(b:, 'nofmt', v:false)
+    return
+  endif
+
+  let g:auto_python = system("~/.pyenv/shims/python -m pyfixfmt --file-glob " . expand("%:p"))
   edit
 endfunction

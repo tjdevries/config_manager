@@ -1,13 +1,12 @@
 local vim = vim
 local nvim_lsp = require('nvim_lsp')
 
-
 vim.fn.nvim_set_var('diagnostic_enable_virtual_text', 1)
 vim.fn.nvim_set_var('diagnostic_insert_delay', 1)
 
 local custom_attach = function(...)
-    require('diagnostic').on_attach(...)
     require('completion').on_attach(...)
+    require('diagnostic').on_attach(...)
 
     local mapper = function(mode, key, result)
         vim.fn.nvim_buf_set_keymap(0, mode, key, result, {noremap=true, silent=true})
@@ -37,7 +36,9 @@ nvim_lsp.pyls.setup({
     on_attach=custom_attach
 })
 
-nvim_lsp.vimls.setup({})
+nvim_lsp.vimls.setup({
+    on_attach = custom_attach,
+})
 
 
 local sumneko_settings = {
@@ -46,7 +47,9 @@ local sumneko_settings = {
     },
     diagnostics={
         enable=true,
-        globals={"vim"},
+        globals={
+            "vim", "Color", "c", "Group", "g", "s", "describe", "it", "before_each", "after_each"
+        },
     },
 }
 sumneko_settings.Lua = vim.deepcopy(sumneko_settings)

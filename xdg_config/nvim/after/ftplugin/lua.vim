@@ -1,71 +1,10 @@
+nnoremap <buffer> gf <cmd>:lua require('find_require').find_require()<CR>
+
+setlocal shiftwidth=2
+
 if isdirectory(expand('~/plugins/manillua.nvim/'))
   finish
 endif
-
-setlocal foldmethod=expr
-setlocal foldexpr=LuaFoldExpr(v:lnum)
-setlocal foldtext=LuaFoldText()
-setlocal fillchars=fold:\ 
-
-" TODO: Add some highlighting of metamethods
-
-" TODO: Handle nested describes?...
-let s:test_start = '^describe('
-let s:nested_test_start = '^\s\+describe('
-let s:test_case_start = '^\s*it('
-
-let s:object_start = '^local \S* = {}'
-let s:object_property_start = '^\S*\.\S* = function(\|^function \S*\.\S*('
-let s:docstring_start = '^---'
-
-let s:local_function = '^local \S* = function('
-
-let s:file_return = '^return'
-
-
-function! s:matches(line, expr) abort
-  if type(a:expr) == v:t_string
-    return match(a:line, a:expr) != -1
-  elseif type(a:expr) == v:t_list
-    return len(filter(copy(a:expr), {idx, val -> s:matches(line, val)})) > 0
-  endif
-endfunction
-
-function! s:comment_level(line) abort
-  let result = matchlist(a:line, '^\s*--\(\d*\)')
-  return len(result) > 0 ? str2nr(result[1]) : 0
-endfunction
-
-function! LuaFoldExpr(line_number) abort
-  let lnum = a:line_number
-  let line = getline(lnum)
-
-  " TODO: Better 'import' catching and maybe make it level 2
-  if lnum == 1
-    return ">1"
-  endif
-
-  let previous_line = getline(lnum - 1)
-  let next_line = getline(lnum + 1)
-
-  if s:matches(line, '^--\W*\d')
-    return '>' . matchstr(line, '\d')
-  endif
-
-
-  "" Comment Handling
-  if s:comment_level(line) > 0
-    return ">" . s:comment_level(line)
-  endif
-
-
-  if s:matches(line, s:local_function)
-    return ">2"
-  endif
-
-
-  return "="
-endfunction
 
 function! s:is_self_function(line)
   if s:matches(a:line, 'self')

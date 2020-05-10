@@ -336,6 +336,12 @@ if [[ -d "$HOME/.poetry/bin/" ]]; then
   export PATH="$HOME/.poetry/bin/:$PATH"
 fi
 
+if [[ -d "$XDG_CONFIG_HOME/bin" ]]; then
+  export PATH="$XDG_CONFIG_HOME/bin:$PATH"
+fi
+
 
 # Required for deoplete stuff
 zmodload zsh/zpty
+
+source /home/tj/.config/broot/launcher/bash/br

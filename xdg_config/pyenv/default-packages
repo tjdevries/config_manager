@@ -3,6 +3,8 @@ pynvim
 
 # Get python language server up & running
 python-language-server[all]
+pyls-mypy
+future
 
 # Upgrade pip while we're at it.
 pip

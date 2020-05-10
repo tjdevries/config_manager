@@ -17,6 +17,11 @@ sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
     xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
 
+# TODO: Add update flag
+#   Can optionally pull from the repos and do any post processing if necessary
+
+
+mkdir -p ~/build
 
 # {{{ Python tools
 
@@ -46,8 +51,21 @@ if ! [ -x "$(command -v cargo)" ]; then
 fi
 
 cargo install \
-    git-trim \
-    ripgrep
+	git-trim \
+	ripgrep \
+	broot
+
+# Alacritty
+# TODO: Disable this and switch to kitty, since it seems to play better for me for some reason
+if ! [ -d ~/build/alacritty/ ];  then
+    sudo apt install -y \
+	cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev python3
+
+    git clone https://github.com/alacritty/alacritty.git ~/build/alacritty
+    # Not sure about this command...
+    $(cd ~/build/alacritty/; cargo build --release; cargo install --path alacritty alacritty)
+
+fi
 
 # }}}
 

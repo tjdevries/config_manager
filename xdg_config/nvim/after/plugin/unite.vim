@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-if !has('python3')
+if !has('python3') || !get(g:, 'loaded_denite')
   finish
 endif
 
