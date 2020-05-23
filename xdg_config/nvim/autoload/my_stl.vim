@@ -207,74 +207,78 @@ function! my_stl#get_git() abort
   let stl = ''
 
   " Check for git information
-  if std#cache#get(b:, '_stl_git_file', function('tj#is_git_file'))
-    " {{{  Git status
-    if s:git_helper ==# 'fugitive'  " {{{
-      if exists('*fugitive#head') && (
-            \ exists('b:git_dir')
-            \ || len(fugitive#head(8)) > 0
-            \ )
-        let stl .= "\ue0a0 "
-        let stl .= fugitive#head(8)
-      endif " }}}
-    elseif s:git_helper ==# 'gita'  " {{{
-      if !has('win32')
-        let stl .= "\ue0a0 "
+  try
+    if std#cache#get(b:, '_stl_git_file', function('tj#is_git_file'))
+      " {{{  Git status
+      if s:git_helper ==# 'fugitive'  " {{{
+	if exists('*fugitive#head') && (
+	      \ exists('b:git_dir')
+	      \ || len(fugitive#head(8)) > 0
+	      \ )
+	  let stl .= "\ue0a0 "
+	  let stl .= fugitive#head(8)
+	endif " }}}
+      elseif s:git_helper ==# 'gita'  " {{{
+	if !has('win32')
+	  let stl .= "\ue0a0 "
+	endif
+	let stl .= gita#statusline#format('%ln')[:5]
+	let stl .= '/'
+
+	let l:branch_name = gita#statusline#format('%lb')[:5]
+
+	if l:branch_name ==? 'master'
+	  let stl .= l:branch_name
+	else
+	  let stl .= l:branch_name
+	  " let stl .= '%#WarningMsg#' . l:branch_name . '%0*'
+	endif
+	" }}}
+      elseif s:git_helper ==# 'gina'  " {{{
+	let win_width = nvim_win_get_width(0)
+
+	" TODO: Make wait time configurable
+	" Wait awhile between checking values. No need to check it so often
+	try
+	  if win_width > 120
+	    let stl .= std#cache#get(b:, '_stl_gina_fancy', funcref('gina#component#repo#preset', ['fancy']), 300)
+	  else
+	    let stl .= std#cache#get(b:, '_stl_gina_regular', funcref('gina#component#repo#branch'), 300)
+	  endif
+	catch
+	  try
+	    call gina#component#repo#preset()
+	  catch
+	  endtry
+	endtry
+	" }}}
+      endif  " }}}
+      " {{{ Git diffs
+      if exists('*GitGutterGetHunkSummary')
+	let results = std#cache#get(b:, '_stl_hunk_summary', funcref('GitGutterGetHunkSummary'), 60)
+
+	if results != [0, 0, 0]
+	  let diff_symbols = ['+', '~', '-']
+
+	  let diff_line = ''
+	  for i in range(3)
+	    if results[i] > 0
+	      let diff_line .= l:diff_symbols[i] . string(results[i]) . ', '
+	    endif
+	  endfor
+
+	  let stl .= ' [' . diff_line[:-3] . ']'
+	endif
       endif
-      let stl .= gita#statusline#format('%ln')[:5]
-      let stl .= '/'
 
-      let l:branch_name = gita#statusline#format('%lb')[:5]
-
-      if l:branch_name ==? 'master'
-        let stl .= l:branch_name
-      else
-        let stl .= l:branch_name
-        " let stl .= '%#WarningMsg#' . l:branch_name . '%0*'
+      if len(stl) > 0
+	let stl .= my_stl#add_left_separator()
       endif
       " }}}
-    elseif s:git_helper ==# 'gina'  " {{{
-      let win_width = nvim_win_get_width(0)
-
-      " TODO: Make wait time configurable
-      " Wait awhile between checking values. No need to check it so often
-      try
-        if win_width > 120
-          let stl .= std#cache#get(b:, '_stl_gina_fancy', funcref('gina#component#repo#preset', ['fancy']), 300)
-        else
-          let stl .= std#cache#get(b:, '_stl_gina_regular', funcref('gina#component#repo#branch'), 300)
-        endif
-      catch
-        try
-          call gina#component#repo#preset()
-        catch
-        endtry
-      endtry
-      " }}}
-    endif  " }}}
-    " {{{ Git diffs
-    if exists('*GitGutterGetHunkSummary')
-      let results = std#cache#get(b:, '_stl_hunk_summary', funcref('GitGutterGetHunkSummary'), 60)
-
-      if results != [0, 0, 0]
-        let diff_symbols = ['+', '~', '-']
-
-        let diff_line = ''
-        for i in range(3)
-          if results[i] > 0
-            let diff_line .= l:diff_symbols[i] . string(results[i]) . ', '
-          endif
-        endfor
-
-        let stl .= ' [' . diff_line[:-3] . ']'
-      endif
     endif
+  catch
+  endtry
 
-    if len(stl) > 0
-      let stl .= my_stl#add_left_separator()
-    endif
-    " }}}
-  endif
   return stl
 endfunction
 

@@ -6,6 +6,8 @@ let g:_show_date = v:true
 let g:_show_git  = v:true
 let g:_custom_filename = v:true
 
+lua vim.g.statusline_lsp_exists = pcall(function() return require("lsp_config") end)
+
 function! SetStatusline() abort
     " Setup for variables
     let g:_active_buffer = bufnr('%')
@@ -36,10 +38,17 @@ function! SetStatusline() abort
 
     let stl .= '%{my_stl#get_current_func()}'
 
-    " Right section
     let stl .= '%='
 
-    let stl .= '%{my_stl#coc_status()}'
+    if g:statusline_lsp_exists
+      let stl .= '%#NvimOperator#'
+      let stl .= '%{v:lua.StatusLineLSP()}'
+      let stl .= '%* '
+    endif
+
+    " Right section
+    " let stl .= '%='
+
     let stl .= '%{my_stl#get_tag_name()}'
 
     let stl .= &diff ? '[d]' : ''

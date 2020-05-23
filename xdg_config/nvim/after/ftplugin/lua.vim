@@ -1,6 +1,7 @@
 nnoremap <buffer> gf <cmd>:lua require('find_require').find_require()<CR>
 
 setlocal shiftwidth=2
+setlocal formatoptions-=o
 
 if isdirectory(expand('~/plugins/manillua.nvim/'))
   finish

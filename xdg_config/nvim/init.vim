@@ -53,6 +53,7 @@ call s:local_plug('apyrori.nvim')
 call s:local_plug('py_package.nvim')
 call s:local_plug('manillua.nvim')
 call s:local_plug('riki.nvim')
+call s:local_plug('express_line.nvim')
 
 " }}}
 " To Learn: {{{
@@ -88,6 +89,8 @@ Plug 'neovim/nvim-lsp'
 
 Plug 'haorenW1025/completion-nvim'
 Plug 'haorenW1025/diagnostic-nvim'
+
+Plug 'wbthomason/lsp-status.nvim'
 
 " Cool tags based viewer
 Plug 'liuchengxu/vista.vim'
@@ -339,7 +342,7 @@ Plug 'tpope/vim-speeddating'    " Handle changing of dates in a nicer manner
 Plug 'tpope/vim-commentary'     " Easily comment out lines or objects
 Plug 'tpope/vim-repeat'         " Repeat actions better
 Plug 'tpope/vim-abolish'        " Cool things with words!
-Plug 'tpope/vim-sleuth'         " Easier tab handling
+" Plug 'tpope/vim-sleuth'         " Easier tab handling
 Plug 'kana/vim-textobj-user' | Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'tpope/vim-characterize'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -471,7 +474,7 @@ endif
 set noequalalways                     " I don't like my windows changing all the time
 set splitright                        " Prefer windows splitting to the right
 set splitbelow                        " Prefer windows splitting to the bottom
-set updatetime=4000                   " Make updates happen faster
+set updatetime=1000                   " Make updates happen faster
 
 " I wouldn't use this without my DoNoHL function
 set hlsearch

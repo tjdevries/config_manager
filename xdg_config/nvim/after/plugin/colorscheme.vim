@@ -3,7 +3,7 @@ scriptencoding utf-8
 set termguicolors
 
 " Load colorizer
-lua require('colorizer').setup()
+lua _ = pcall(function() return require('colorizer').setup() end)
 
 " {{{ Halo
 " Thanks to Justinmk for this.
@@ -45,6 +45,7 @@ function! SyntaxNames() abort
 
   return l:syntax_list
 endfunction
+nnoremap <leader>sh :echo string(SyntaxNames())<CR>
 
 function! NewSyntaxNames() abort
   let l:syntax_list = []
@@ -56,5 +57,4 @@ function! NewSyntaxNames() abort
 endfunction
 
 " Syntax help
-nnoremap <leader>sh :echo string(SyntaxNames())<CR>
 nnoremap <leader><leader>sh :echo string(NewSyntaxNames())<CR>
