@@ -192,7 +192,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 " Neovim development {{{
 if has('unix')
   Plug 'tweekmonster/nvim-api-viewer'
-  Plug 'tweekmonster/nvimdev.nvim'
+  " Plug 'tweekmonster/nvimdev.nvim'
 endif
 " }}}
 " Neovim-qt {{{

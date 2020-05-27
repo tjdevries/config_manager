@@ -1,6 +1,8 @@
 local nvim_lsp = require('nvim_lsp')
 local lsp_status = require('lsp-status')
 
+require('vim.lsp.log').set_level("trace")
+
 vim.g.diagnostic_enable_virtual_text = 1
 vim.g.diagnostic_insert_delay = 1
 
@@ -45,7 +47,7 @@ local setup_progress = function(client)
   -- If the client is a documentSymbolProvider, set up an autocommand to update the containing function
   if client.resolved_capabilities.document_symbol then
     vim.api.nvim_command('augroup lsp_aucmds')
-    vim.api.nvim_command('  au CursorHold <buffer> lua require("lsp-status").update_current_function()')
+    vim.api.nvim_command('  au CursorHold,BufEnter <buffer> lua require("lsp-status").update_current_function()')
     vim.api.nvim_command('augroup END')
   end
 end
@@ -118,10 +120,13 @@ nvim_lsp.sumneko_lua.setup({
 })
 
 nvim_lsp.tsserver.setup({
+  cmd = {"typescript-language-server", "--stdio"},
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
   on_attach=custom_attach
 })
 
 nvim_lsp.clangd.setup({
+  cmd = {"clangd", "--background-index"},
   on_attach=custom_attach
 })
 
@@ -199,64 +204,72 @@ vim.g.indicator_hint = '❗'
 vim.g.indicator_ok = ''
 vim.g.spinner_frames = {'⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷'}
 
+vim.g.should_show_diagnostics_in_statusline = false
+
 function StatusLineLSP()
   if #vim.lsp.buf_get_clients() == 0 then
     return ''
   end
 
-  local diagnostics = lsp_status.diagnostics()
-  local buf_messages = lsp_status.messages()
-  local only_hint = true
-  local some_diagnostics = false
   local status_parts = {}
-  if diagnostics.errors and diagnostics.errors > 0 then
-    table.insert(status_parts, vim.g.indicator_errors .. ' ' .. diagnostics.errors)
-    only_hint = false
-    some_diagnostics = true
-  end
+  local base_status = ''
 
-  if diagnostics.warnings and diagnostics.warnings > 0 then
-    table.insert(status_parts, vim.g.indicator_warnings .. ' ' .. diagnostics.warnings)
-    only_hint = false
-    some_diagnostics = true
-  end
+  local some_diagnostics = false
+  local only_hint = true
 
-  if diagnostics.info and diagnostics.info > 0 then
-    table.insert(status_parts, vim.g.indicator_info .. ' ' .. diagnostics.info)
-    only_hint = false
-    some_diagnostics = true
-  end
-
-  if diagnostics.hints and diagnostics.hints > 0 then
-    table.insert(status_parts, vim.g.indicator_hint .. ' ' .. diagnostics.hints)
-    some_diagnostics = true
-  end
-
-  local msgs = {}
-  for _, msg in ipairs(buf_messages) do
-    local name = aliases[msg.name] or msg.name
-    local client_name = '[' .. name .. ']'
-    if msg.progress then
-      local contents = msg.title
-      if msg.message then
-        contents = contents .. ' ' .. msg.message
-      end
-
-      if msg.percentage then
-        contents = contents .. ' (' .. msg.percentage .. ')'
-      end
-
-      if msg.spinner then
-        contents = vim.g.spinner_frames[(msg.spinner % #vim.g.spinner_frames) + 1] .. ' ' .. contents
-      end
-
-      table.insert(msgs, client_name .. ' ' .. contents)
-    else
-      table.insert(msgs, client_name .. ' ' .. msg.content)
+  if vim.g.should_show_diagnostics_in_statusline then
+    local diagnostics = lsp_status.diagnostics()
+    local buf_messages = lsp_status.messages()
+    if diagnostics.errors and diagnostics.errors > 0 then
+      table.insert(status_parts, vim.g.indicator_errors .. ' ' .. diagnostics.errors)
+      only_hint = false
+      some_diagnostics = true
     end
+
+    if diagnostics.warnings and diagnostics.warnings > 0 then
+      table.insert(status_parts, vim.g.indicator_warnings .. ' ' .. diagnostics.warnings)
+      only_hint = false
+      some_diagnostics = true
+    end
+
+    if diagnostics.info and diagnostics.info > 0 then
+      table.insert(status_parts, vim.g.indicator_info .. ' ' .. diagnostics.info)
+      only_hint = false
+      some_diagnostics = true
+    end
+
+    if diagnostics.hints and diagnostics.hints > 0 then
+      table.insert(status_parts, vim.g.indicator_hint .. ' ' .. diagnostics.hints)
+      some_diagnostics = true
+    end
+
+    local msgs = {}
+    for _, msg in ipairs(buf_messages) do
+      local name = aliases[msg.name] or msg.name
+      local client_name = '[' .. name .. ']'
+      if msg.progress then
+        local contents = msg.title
+        if msg.message then
+          contents = contents .. ' ' .. msg.message
+        end
+
+        if msg.percentage then
+          contents = contents .. ' (' .. msg.percentage .. ')'
+        end
+
+        if msg.spinner then
+          contents = vim.g.spinner_frames[(msg.spinner % #vim.g.spinner_frames) + 1] .. ' ' .. contents
+        end
+
+        table.insert(msgs, client_name .. ' ' .. contents)
+      else
+        table.insert(msgs, client_name .. ' ' .. msg.content)
+      end
+    end
+
+    base_status = vim.trim(table.concat(status_parts, ' ') .. ' ' .. table.concat(msgs, ' '))
   end
 
-  local base_status = vim.trim(table.concat(status_parts, ' ') .. ' ' .. table.concat(msgs, ' '))
   local symbol = ' 🇻' .. ((some_diagnostics and only_hint) and '' or ' ')
   local current_function = vim.b.lsp_current_function
   if current_function and current_function ~= '' then
