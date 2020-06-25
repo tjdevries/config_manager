@@ -126,7 +126,6 @@ call denite#custom#var('menu', 'menus', s:menus)
 " TODO: Figure out the highlighting and other stuff I had in old denite
 " Denite menu:init_vim -highlight-mode-insert=Search -highlight-matched-char=Underline -highlight-matched-range=Search
 
-nnoremap <leader>en :Denite menu:init_vim<CR>
 nnoremap <leader>ez :Denite menu:zsh<CR>
 nnoremap <leader>er :Denite file_mru<CR>
 

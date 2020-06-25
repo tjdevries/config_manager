@@ -21,6 +21,7 @@ call overlength#set_overlength('qf', 0)
 call overlength#set_overlength('term', 0)
 call overlength#set_overlength('html', 0)
 call overlength#set_overlength('startify', 0)
+call overlength#set_overlength('man', 0)
 
 call overlength#set_overlength('vim', 140)
 call overlength#set_overlength('help', 81)

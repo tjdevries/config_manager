@@ -8,10 +8,16 @@ end
 -- Load required packages
 local neorocks = require("plenary.neorocks")
 
-neorocks.setup_hererocks()
+-- Run the first time to install it
+if false then
+  neorocks.install('penlight', 'pl')
+  neorocks.install('luasocket', 'socket')
+end
 
-neorocks.ensure_installed('penlight', 'pl', true)
-neorocks.ensure_installed('lua-cjson', 'cjson', true)
+neorocks.ensure_installed('penlight', 'pl')
+neorocks.ensure_installed('lua-cjson', 'cjson')
+neorocks.ensure_installed('luasocket', 'socket')
+neorocks.ensure_installed('moses', 'moses')
 
 -- Cool highlighting courtesy of @clason
 vim.cmd[[augroup LuaHighlight]]

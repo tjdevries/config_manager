@@ -1,31 +1,41 @@
 local nvim_lsp = require('nvim_lsp')
-local lsp_status = require('lsp-status')
 
-require('vim.lsp.log').set_level("trace")
+-- Can set this lower if needed.
+-- require('vim.lsp.log').set_level("debug")
+
+local Diagnostic = require("vim.lsp.actions").Diagnostic
+DiagnosticOverride = Diagnostic.handle_publish_diagnostics.with { should_underline = false, update_in_insert = false}
+
+vim.lsp.callbacks["textDocument/publishDiagnostics"] = DiagnosticOverride
 
 vim.g.diagnostic_enable_virtual_text = 1
 vim.g.diagnostic_insert_delay = 1
 
-lsp_status.config {
-  select_symbol = function(cursor_pos, symbol)
-    if symbol.valueRange then
-      local value_range = {
-        ["start"] = {
-          character = 0,
-          line = vim.fn.byte2line(symbol.valueRange[1])
-        },
-        ["end"] = {
-          character = 0,
-          line = vim.fn.byte2line(symbol.valueRange[2])
-        }
-      }
-
-      return require("lsp-status.util").in_range(cursor_pos, value_range)
-    end
-  end
-}
 
 local do_progress = false
+local lsp_status
+if do_progress then
+  lsp_status = require('lsp-status')
+
+  lsp_status.config {
+    select_symbol = function(cursor_pos, symbol)
+      if symbol.valueRange then
+        local value_range = {
+          ["start"] = {
+            character = 0,
+            line = vim.fn.byte2line(symbol.valueRange[1])
+          },
+          ["end"] = {
+            character = 0,
+            line = vim.fn.byte2line(symbol.valueRange[2])
+          }
+        }
+
+        return require("lsp-status.util").in_range(cursor_pos, value_range)
+      end
+    end
+  }
+end
 local setup_progress = function(client)
   if do_progress then
     lsp_status.register_progress()
@@ -52,9 +62,18 @@ local setup_progress = function(client)
   end
 end
 
+pcall(function()
+  Location = require('vim.lsp.actions').Location
+
+  OnLoc = {}
+  OnLoc.highlight = Location.highlight.with { timeout = 2000 }
+end)
+
 local custom_attach = function(client)
   require('completion').on_attach(client)
-  require('diagnostic').on_attach(client)
+
+  -- TODO: Temp removed to test diagnostic stuff.
+  -- require('diagnostic').on_attach(client)
 
   local mapper = function(mode, key, result)
     vim.fn.nvim_buf_set_keymap(0, mode, key, result, {noremap=true, silent=true})
@@ -67,12 +86,26 @@ local custom_attach = function(client)
   mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   mapper('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
 
+  -- TODO: Decide if these are good.
+  mapper('n', '<space>pd', ':PrevDiagnostic<CR>')
+  mapper('n', '<space>nd', ':NextDiagnostic<CR>')
+
+  mapper(
+    'n',
+    '<space>dg',
+    '<cmd>lua vim.lsp.buf.definition { callbacks = { Location.jump_first, OnLoc.highlight } }<CR>'
+  )
+
+  mapper(
+    'n',
+    '<space>dp',
+    '<cmd>lua vim.lsp.buf.definition { callbacks = Location.preview.with { lines_below = 5 } }<CR>'
+  )
+
   mapper('i', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 
   -- Not sure if this is right
-  vim.cmd("setlocal omnifunc=lsp#omnifunc")
-
-  setup_progress(client)
+  vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 end
 
 nvim_lsp.pyls.setup({
@@ -130,27 +163,6 @@ nvim_lsp.clangd.setup({
   on_attach=custom_attach
 })
 
-
---1
-if false then
-  -- Override some callbacks for my personal preference
-  local override = require("custom.lsp_override").override
-
-  -- I want to test out haorenW1025/diagnostic-nvim first
-  override("textDocument/publishDiagnostics", require("custom.diagnostics").handle_diagnostics)
-
-  _ = [[
-  " Helpful overrides for diagnostics
-
-  " [D]iagnostics [E]nable
-  nnoremap <silent> <space>de <cmd>lua require("custom.diagnostics").set_diagnostic_display(true)<CR>
-  " [D]iagnostics [D]isable
-  nnoremap <silent> <space>dd <cmd>lua require("custom.diagnostics").set_diagnostic_display(false)<CR>
-
-  " [D]iagnostics [C]ustom
-  nnoremap <silent> <space>dc <cmd>lua require("custom.diagnostics").use_custom(nil)<CR>
-  ]]
-end
 
 -- require 'nvim_lsp'.pyls_ms.setup{
 --     init_options = {

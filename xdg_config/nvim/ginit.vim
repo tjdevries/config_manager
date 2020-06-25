@@ -77,3 +77,16 @@ if !g:fvim_loaded
   " Toggle full screening the window
   nnoremap <leader>qf :call GuiWindowFullScreen(!g:GuiWindowFullScreen)<CR>
 endif
+
+if get(g:, 'fvim_loaded', v:false)
+  FVimBackgroundOpacity 1.00
+  FVimBackgroundAltOpacity 1.00
+  FVimUIPopupMenu v:false
+
+  FVimFontAntialias v:true
+  FVimFontAutohint v:true
+  FVimFontHintLevel 'full'
+  FVimFontLigature v:true
+  " FVimFontLineHeight '+1.0' " can be 'default', '14.0', '-1.0' etc.
+  FVimFontSubpixel v:true
+endif

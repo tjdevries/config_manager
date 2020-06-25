@@ -45,6 +45,7 @@ call plug#begin(g:plugin_path)
 " TODO: vimptyer
 " TODO: pyne
 
+call s:local_plug('vim9jit')
 call s:local_plug('colorbuddy.vim')
 call s:local_plug('gruvbuddy.nvim')
 call s:local_plug('plenary.nvim')
@@ -88,7 +89,7 @@ Plug 'tpope/vim-scriptease'     " Vim help
 Plug 'neovim/nvim-lsp'
 
 Plug 'haorenW1025/completion-nvim'
-Plug 'haorenW1025/diagnostic-nvim'
+" Plug 'haorenW1025/diagnostic-nvim'
 
 Plug 'wbthomason/lsp-status.nvim'
 
@@ -228,7 +229,7 @@ Plug 'tjdevries/fold_search.vim'
 " }}}
 " Snippets {{{
 if has('python3')
-  Plug 'sirver/ultisnips'
+  " Plug 'sirver/ultisnips'
 endif
 " }}}
 " {{{ Shougo
@@ -558,6 +559,8 @@ if &list
 endif
 
 lua require('colorbuddy').colorscheme('gruvbuddy')
+
+set noswapfile
 
 " guicursor messing around
 " set guicursor=n:blinkwait175-blinkoff150-blinkon175-hor10
