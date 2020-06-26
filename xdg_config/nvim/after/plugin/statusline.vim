@@ -2,6 +2,11 @@ if get(g:, 'demo')
     finish
 endif
 
+if !has('nvim-0.5')
+  echo 'This is too old of an nvim to use this'
+  finish
+endif
+
 let g:_show_date = v:true
 let g:_show_git  = v:true
 let g:_custom_filename = v:true
