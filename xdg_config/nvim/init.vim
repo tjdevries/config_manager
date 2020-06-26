@@ -5,7 +5,6 @@ scriptencoding utf-8
 " Plugin configuration in ./after/plugin/
 
 let g:_vimrc_base = expand('<sfile>:p:h')
-let g:_vimrc_plugins = g:_vimrc_base . '/after/plugin'
 
 if has('unix')
     let g:plugin_path = expand('~/.config/vim_plug')
@@ -54,6 +53,9 @@ call s:local_plug('apyrori.nvim')
 call s:local_plug('py_package.nvim')
 call s:local_plug('manillua.nvim')
 call s:local_plug('riki.nvim')
+call s:local_plug('cyclist.vim')
+
+" STREAM: We should do this some time.
 call s:local_plug('express_line.nvim')
 
 " }}}
@@ -64,7 +66,10 @@ call s:local_plug('express_line.nvim')
 "
 " Intriguing
 "
+"
 " For narrowing regions of text to look at them alone
+" TODO: Figure out some good ways to use this on stream
+"   so that there isn't so much text on the screen.
 Plug 'chrisbra/NrrwRgn'
 
 " For figuring out exceptions
@@ -80,33 +85,58 @@ endif
 Plug 'tweekmonster/spellrotate.vim'
 
 " Ill
+" STREAM: Show setting up projectionist to link to test files and others.
 Plug 'tpope/vim-projectionist'  " Alternate file editting and some helpful stuff
+
+" :Messages <- view messages in quickfix list
+" :Verbose  <- view verbose output in preview window.
+" :Time     <- measure how long it takes to run some stuff.
 Plug 'tpope/vim-scriptease'     " Vim help
 " }}}
 " LSP {{{
 
-" Yo, we got lsp now
+" Configurations for neovim lsp.
+"   neovim/neovim has all of the LSP code.
 Plug 'neovim/nvim-lsp'
 
+" TODO: vsnip ?
 Plug 'haorenW1025/completion-nvim'
 " Plug 'haorenW1025/diagnostic-nvim'
 
 Plug 'wbthomason/lsp-status.nvim'
 
 " Cool tags based viewer
+"   :Vista  <-- Opens up a really cool sidebar with info about file.
 Plug 'liuchengxu/vista.vim'
 
 " Debug adapter protocol
+"   Have not yet checked this out, but looks awesome.
 Plug 'puremourning/vimspector'
 
 " }}}
 " My General Plugins {{{
+
 Plug 'tjdevries/standard.vim'
 Plug 'tjdevries/conf.vim'
 
+" STREAM: Train.vim
 Plug 'tjdevries/train.vim'
 
+" STREAM: Show off edit_alternate.vim
+Plug 'tjdevries/edit_alternate.vim'
+
+" TODO: Maybe we can remove these.
+" Plug 'tjdevries/mparse.nvim'
+" Plug 'tjdevries/putty.vim'
+" Formatters {{{
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt', { 'on': 'FormatCode' }
+Plug 'google/vim-glaive'
+" }}}
+
 " In development: Working on updating this
+"   Instead, you'd want to use tree-sitter these days.
+"   STREAM: Switch to tree-sitter for syntax object movements.
 Plug 'tjdevries/syntax_objects.vim'
 " }}}
 " Python Work Plugins {{{
@@ -116,16 +146,14 @@ Plug 'alfredodeza/pytest.vim'
 " Demo Plugins {{{
 Plug 'tweekmonster/haunted.vim'
 " }}}
-" Epic (the company) Plugins {{{
+" Plugins {{{
 
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
-" You'll never write M again -- hopefully ;)
-" Plug 'tjdevries/mparse.nvim'
-Plug 'tjdevries/putty.vim'
 " }}}
 " Color helpers {{{
 if has('nvim-0.4')
+  " Shows colors in the neovim window. Very fast & Very nice.
   Plug 'norcalli/nvim-colorizer.lua'
 else
   " Helpful tool for visualizing colors
@@ -139,22 +167,10 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 " Comments in your face
 Plug 'tjdevries/vim-inyoface'
-
-
-" }}}
-" Formatters {{{
-Plug 'google/vim-maktaba'
-Plug 'google/vim-codefmt', { 'on': 'FormatCode' }
-Plug 'google/vim-glaive'
 " }}}
 " Interactive Plugins {{{
 if has('python2') && v:false
   Plug 'floobits/floobits-neovim'
-endif
-
-if has('python3') && v:false
-  " TODO: Get a matrix account...
-  Plug 'bfredl/nvim-matrix'
 endif
 " }}}
 " {{{ Games
@@ -167,9 +183,12 @@ Plug 'tpope/vim-rhubarb'      " completes issue names in commit messages
 Plug 'junegunn/gv.vim'
 Plug 'rhysd/committia.vim'    " Sweet message committer
 
+" config: ./after/plugin/gitmessenger.vim
 Plug 'rhysd/git-messenger.vim'  " Floating windows are awesome :)
 
 if has('unix')
+  " STREAM: PLUGIN: vim-gitgutter in lua, using libuv and other file stuff.
+  " TODO: Check out vim-signify
   Plug 'airblade/vim-gitgutter' " Signs in the side for changes/additions/deletions
 endif
 " }}}
@@ -201,42 +220,38 @@ Plug 'equalsraf/neovim-gui-shim'
 " }}}
 " Presentation {{{
 "
-" TODO: Will probably switch to lookatme for presentations, since it's awesome
 if v:false
+  " For now, I use lookatme instead of these, but it would be fun to try and
+  " do this again... :)
   Plug 'tjdevries/vimpoint'
+  Plug 'trapd00r/vimpoint'
 endif
-Plug 'trapd00r/vimpoint'
 " }}}
 " Quickfix Modifications {{{
 Plug 'romainl/vim-qf'
 " }}}
 " {{{ REPL Plugins
-Plug 'Vigemus/iron.nvim'
-
-" Interested
-" Plug 'metakirby5/codi.vim'
+" TODO: Repl plugins:
+"   - 'Vigemus/iron.nvim'
+"   - 'metakirby5/codi.vim'
+"   - 'sillybun/vim-repl'
+"   - 'jpalardy/vim-slime' ?
 
 " }}}
 " Searching {{{
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
-Plug 'tjdevries/edit_alternate.vim'
 Plug 'google/vim-searchindex'
 Plug 'skywind3000/quickmenu.vim'
 Plug 'tjdevries/fold_search.vim'
 
+" TODO: Check out if the issues were resolved for this plugin.
 " Plug 'abarker/cyfolds', { 'do': 'cd python3 && python setup.py build_ext --inplace' }
-" }}}
-" Snippets {{{
-if has('python3')
-  " Plug 'sirver/ultisnips'
-endif
 " }}}
 " {{{ Shougo
 " Denite {{{
 if has('python3')
   Plug 'Shougo/denite.nvim'
-
   Plug 'Shougo/neomru.vim'            " Most recently used files
 
   if has('clipboard') && has('unix')
@@ -256,7 +271,6 @@ if has('python3') && g:my_deoplete_enabled
   Plug 'Shougo/deoplete.nvim'
 
   Plug 'Shougo/neco-vim'
-  " Plug 'zchee/deoplete-jedi',  { 'for': 'python' }
   Plug 'Shougo/neco-syntax'
 
   if executable('zsh')
@@ -282,12 +296,18 @@ if has('python3') && g:my_deoplete_enabled
   if executable('tsc') && has('unix')
     Plug 'mhartington/nvim-typescript', {'for': 'typescript'}
   endif
-
 endif
 " }}}
 " }}}
 " Startup {{{
+" Little know features:
+"   :SSave
+"   :SLoad
+"       These are wrappers for mksession that work great. I never have to use
+"       mksession anymore or worry about where things are saved / loaded from.
 Plug 'mhinz/vim-startify'
+
+" Better profiling output for startup.
 Plug 'tweekmonster/startuptime.vim'
 " }}}
 " Status Line {{{
@@ -298,6 +318,7 @@ else
   Plug 'mkitt/tabline.vim'
 endif
 
+" Just adds pretty icons
 Plug 'ryanoasis/vim-devicons'
 " }}}
 " Syntax Configs {{{
@@ -532,31 +553,29 @@ endif
 " Listchars
 set list
 
-if &list
-  " Some fun characters:
-  " ▸
-  " ⇨
-  let g:list_char_index = 0
-  let g:list_char_options = [
-        \ 'tab:»\ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·',
-        \ 'tab:»·,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·,space:␣',
-        \ 'tab:\ \ ,eol:↲,nbsp:␣,extends:…,precedes:<,extends:>,trail:·,space:␣',
-        \ '',
-        \ ]
-  function! CycleListChars() abort
-    execute 'set listchars=' . g:list_char_options[
-            \ float2nr(
-              \ fmod(g:list_char_index, len(g:list_char_options))
-            \ )
-          \ ]
+call cyclist#add_listchar_option_set('limited', {
+        \ 'eol': '↲',
+        \ 'tab': '» ',
+        \ 'trail': '·',
+        \ 'extends': '<',
+        \ 'precedes': '>',    
+        \ 'conceal': '┊',
+        \ 'nbsp': '␣',
+        \ })
 
-    let g:list_char_index += 1
-  endfunction
+call cyclist#add_listchar_option_set('busy', {
+        \ 'eol': '↲',
+        \ 'tab': '»·',
+        \ 'space': '␣',
+        \ 'trail': '-',
+        \ 'extends': '☛',
+        \ 'precedes': '☚',    
+        \ 'conceal': '┊',
+        \ 'nbsp': '☠',
+        \ })
 
-  " Cycle through list characters
-  " Useful as a helper
-  nnoremap <leader>cl :call CycleListChars()<CR>
-endif
+nmap <leader>cl <Plug>CyclistNext
+
 
 lua require('colorbuddy').colorscheme('gruvbuddy')
 

@@ -20,7 +20,7 @@ neorocks.ensure_installed('luasocket', 'socket')
 neorocks.ensure_installed('moses', 'moses')
 
 -- Cool highlighting courtesy of @clason
-vim.cmd[[augroup LuaHighlight]]
-vim.cmd[[  au!]]
-vim.cmd[[  au TextYankPost * silent! lua require'vim.highlight'.on_yank()]]
-vim.cmd[[augroup END]]
+vim.cmd [[augroup LuaHighlight]]
+vim.cmd [[  au!]]
+vim.cmd [[  au TextYankPost * silent! lua return (not vim.v.event.visual) and require'vim.highlight'.on_yank()]]
+vim.cmd [[augroup END]]
