@@ -1,0 +1,41 @@
+{
+  "workspace": [
+    {
+      "path": "/home/tj",
+      "mainwin": {
+        "x": 2078,
+        "y": 152,
+        "w": 1653,
+        "h": 906,
+        "state": "Normal",
+        "BackgroundComposition": "none",
+        "CustomTitleBar": false
+      }
+    },
+    {
+      "path": "/home/tj/build/neovim",
+      "mainwin": {
+        "x": 1990,
+        "y": 64,
+        "w": 3770,
+        "h": 2096,
+        "state": "Maximized",
+        "BackgroundComposition": "none",
+        "CustomTitleBar": false
+      }
+    },
+    {
+      "path": "/home/tj/git/config_manager/xdg_config",
+      "mainwin": {
+        "x": 1990,
+        "y": 27,
+        "w": 3770,
+        "h": 2096,
+        "state": "Maximized",
+        "BackgroundComposition": "none",
+        "CustomTitleBar": false
+      }
+    }
+  ],
+  "Logging": null
+}

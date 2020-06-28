@@ -33,6 +33,12 @@ xdg_config/user-dirs.locale
 xdg_config/yelp/
 xdg_config/enchant/
 xdg_config/gedit/
+xdg_config/BraveSoftware/
+xdg_config/Gitter/
+xdg_config/Jackbox Games/
+xdg_config/Microsoft/
+xdg_config/obs-studio/
+
 
 xdg_config/QtProject.conf
 xdg_config/Hyper/*

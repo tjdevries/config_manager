@@ -55,6 +55,10 @@ call s:local_plug('manillua.nvim')
 call s:local_plug('riki.nvim')
 call s:local_plug('cyclist.vim')
 
+" STREAM: Train.vim
+call s:local_plug('train.vim')
+
+
 " STREAM: We should do this some time.
 call s:local_plug('express_line.nvim')
 
@@ -99,8 +103,13 @@ Plug 'tpope/vim-scriptease'     " Vim help
 "   neovim/neovim has all of the LSP code.
 Plug 'neovim/nvim-lsp'
 
-" TODO: vsnip ?
+" STREAM: Show how these work.
+" STREAM: Figure out how to use snippets better
 Plug 'haorenW1025/completion-nvim'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+
+" TODO: Merge in my LSP PR...
 " Plug 'haorenW1025/diagnostic-nvim'
 
 Plug 'wbthomason/lsp-status.nvim'
@@ -118,9 +127,6 @@ Plug 'puremourning/vimspector'
 
 Plug 'tjdevries/standard.vim'
 Plug 'tjdevries/conf.vim'
-
-" STREAM: Train.vim
-Plug 'tjdevries/train.vim'
 
 " STREAM: Show off edit_alternate.vim
 Plug 'tjdevries/edit_alternate.vim'
@@ -552,30 +558,6 @@ endif
 
 " Listchars
 set list
-
-call cyclist#add_listchar_option_set('limited', {
-        \ 'eol': '↲',
-        \ 'tab': '» ',
-        \ 'trail': '·',
-        \ 'extends': '<',
-        \ 'precedes': '>',    
-        \ 'conceal': '┊',
-        \ 'nbsp': '␣',
-        \ })
-
-call cyclist#add_listchar_option_set('busy', {
-        \ 'eol': '↲',
-        \ 'tab': '»·',
-        \ 'space': '␣',
-        \ 'trail': '-',
-        \ 'extends': '☛',
-        \ 'precedes': '☚',    
-        \ 'conceal': '┊',
-        \ 'nbsp': '☠',
-        \ })
-
-nmap <leader>cl <Plug>CyclistNext
-
 
 lua require('colorbuddy').colorscheme('gruvbuddy')
 
