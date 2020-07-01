@@ -67,6 +67,10 @@ pcall(function()
 
   OnLoc = {}
   OnLoc.highlight = Location.highlight.with { timeout = 2000 }
+
+  SDiagnostic = require('vim.lsp.structures').Diagnostic
+
+  vim.cmd [[nnoremap <leader>dn <cmd>lua SDiagnostic.buf_move_next_diagnostic()<CR>]]
 end)
 
 local custom_attach = function(client)
@@ -85,6 +89,8 @@ local custom_attach = function(client)
   mapper('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
   mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   mapper('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+
+  mapper('n', '<space>sl', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>')
 
   -- TODO: Decide if these are good.
   mapper('n', '<space>pd', ':PrevDiagnostic<CR>')

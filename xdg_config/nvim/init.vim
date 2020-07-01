@@ -54,6 +54,7 @@ call s:local_plug('py_package.nvim')
 call s:local_plug('manillua.nvim')
 call s:local_plug('riki.nvim')
 call s:local_plug('cyclist.vim')
+call s:local_plug('bandaid.nvim')
 
 " STREAM: Train.vim
 call s:local_plug('train.vim')
@@ -558,6 +559,8 @@ endif
 
 " Listchars
 set list
+
+syntax enable
 
 lua require('colorbuddy').colorscheme('gruvbuddy')
 

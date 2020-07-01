@@ -6,7 +6,7 @@ setlocal shiftwidth=4
 
 function! s:right_align() abort
   let text = matchstr(getline('.'), '^\s*\zs.\+\ze\s*$')
-  let remainder = (&l:textwidth + 1) - len(text)
+  let remainder = (&l:textwidth + 2) - len(text)
   call setline(line('.'), repeat(' ', remainder).text)
   undojoin
 endfunction
