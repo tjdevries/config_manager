@@ -19,4 +19,7 @@ nnoremap <space><space> <cmd>FzfPreviewFromResources project git directory buffe
 " ANKI: Call Fzf Preview File Plugins
 nnoremap <space>fp      <cmd>FzfPreviewDirectoryFiles ~/plugins/<CR>
 
+" ANKI: Call Fzf Preview on all plugins.
+nnoremap <space>fa      <cmd>FzfPreviewDirectoryFiles ~/.config/vim_plug/<CR>
+
 nnoremap <leader>en     <cmd>FzfPreviewDirectoryFiles ~/.config/nvim<CR>

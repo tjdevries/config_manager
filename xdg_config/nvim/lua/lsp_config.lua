@@ -1,83 +1,26 @@
 local nvim_lsp = require('nvim_lsp')
+local nvim_status = require('lsp-status')
+local completion = require('completion')
+
+local status = require('tj.status')
 
 -- Can set this lower if needed.
 -- require('vim.lsp.log').set_level("debug")
 
-local Diagnostic = require("vim.lsp.actions").Diagnostic
-DiagnosticOverride = Diagnostic.handle_publish_diagnostics.with { should_underline = false, update_in_insert = false}
+Diagnostic = vim.lsp.actions.Diagnostic
+Location = vim.lsp.actions.Location
 
-vim.lsp.callbacks["textDocument/publishDiagnostics"] = DiagnosticOverride
+-- Turn on status.
+status.activate()
 
-vim.g.diagnostic_enable_virtual_text = 1
-vim.g.diagnostic_insert_delay = 1
-
-
-local do_progress = false
-local lsp_status
-if do_progress then
-  lsp_status = require('lsp-status')
-
-  lsp_status.config {
-    select_symbol = function(cursor_pos, symbol)
-      if symbol.valueRange then
-        local value_range = {
-          ["start"] = {
-            character = 0,
-            line = vim.fn.byte2line(symbol.valueRange[1])
-          },
-          ["end"] = {
-            character = 0,
-            line = vim.fn.byte2line(symbol.valueRange[2])
-          }
-        }
-
-        return require("lsp-status.util").in_range(cursor_pos, value_range)
-      end
-    end
-  }
-end
-local setup_progress = function(client)
-  if do_progress then
-    lsp_status.register_progress()
-
-    -- Register the client for messages
-    lsp_status.register_client(client.name)
-  end
-
-  -- Set up autocommands for refreshing the statusline when LSP information changes
-  vim.api.nvim_command('augroup lsp_aucmds')
-  vim.api.nvim_command('  au! * <buffer>')
-  if do_progress then
-    vim.api.nvim_command('  au User LspDiagnosticsChanged redrawstatus!')
-    vim.api.nvim_command('  au User LspMessageUpdate      redrawstatus!')
-    vim.api.nvim_command('  au User LspStatusUpdate       redrawstatus!')
-  end
-  vim.api.nvim_command('augroup END')
-
-  -- If the client is a documentSymbolProvider, set up an autocommand to update the containing function
-  if client.resolved_capabilities.document_symbol then
-    vim.api.nvim_command('augroup lsp_aucmds')
-    vim.api.nvim_command('  au CursorHold,BufEnter <buffer> lua require("lsp-status").update_current_function()')
-    vim.api.nvim_command('augroup END')
-  end
-end
-
-pcall(function()
-  Location = require('vim.lsp.actions').Location
-
-  OnLoc = {}
-  OnLoc.highlight = Location.highlight.with { timeout = 2000 }
-
-  SDiagnostic = require('vim.lsp.structures').Diagnostic
-
-  vim.cmd [[nnoremap <leader>dn <cmd>lua SDiagnostic.buf_move_next_diagnostic()<CR>]]
-end)
+vim.lsp.callbacks["textDocument/publishDiagnostics"] = Diagnostic.handle_publish_diagnostics.with {
+  should_underline = false,
+  update_in_insert = false
+}
 
 local custom_attach = function(client)
-  require('completion').on_attach(client)
-
-  -- TODO: Temp removed to test diagnostic stuff.
-  -- require('diagnostic').on_attach(client)
+  completion.on_attach(client)
+  status    .on_attach(client)
 
   local mapper = function(mode, key, result)
     vim.fn.nvim_buf_set_keymap(0, mode, key, result, {noremap=true, silent=true})
@@ -98,15 +41,28 @@ local custom_attach = function(client)
 
   mapper(
     'n',
-    '<space>dg',
-    '<cmd>lua vim.lsp.buf.definition { callbacks = { Location.jump_first, OnLoc.highlight } }<CR>'
+    '<space>gd',
+    '<cmd>lua vim.lsp.buf.definition { callbacks = { Location.jump_first, Location.highlight.with { timeout = 300 } } }<CR>'
   )
 
   mapper(
     'n',
-    '<space>dp',
+    '<space>pd',
     '<cmd>lua vim.lsp.buf.definition { callbacks = Location.preview.with { lines_below = 5 } }<CR>'
   )
+
+  mapper(
+    'n',
+    '<leader>dn',
+    '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_next_diagnostic()<CR>'
+  )
+
+  mapper(
+    'n',
+    '<leader>dp',
+    '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_prev_diagnostic()<CR>'
+  )
+
 
   mapper('i', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 
@@ -166,10 +122,27 @@ nvim_lsp.tsserver.setup({
 
 nvim_lsp.clangd.setup({
   cmd = {"clangd", "--background-index"},
-  on_attach=custom_attach
+  on_attach = custom_attach,
+
+  -- Required for lsp-status
+  init_options = {
+    clangdFileStatus = true
+  },
+  callbacks = nvim_status.extensions.clangd.setup(),
+  capabilities = nvim_status.capabilities,
 })
 
 
+
+vim.g.indicator_errors = ''
+vim.g.indicator_warnings = ''
+vim.g.indicator_info = '🛈'
+vim.g.indicator_hint = '!'
+vim.g.indicator_ok = ''
+vim.g.spinner_frames = {'⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷'}
+
+--[[
+Example settings, have not messed around with too many of these.
 -- require 'nvim_lsp'.pyls_ms.setup{
 --     init_options = {
 --         interpreter = {
@@ -180,9 +153,6 @@ nvim_lsp.clangd.setup({
 --         }
 --     }
 -- }
-
-_ = [[
-Example settings, have not messed around with too many of these.
 let settings = {
   \   "pyls" : {
     \     "enable" : v:true,
@@ -213,90 +183,5 @@ let settings = {
             \       "rope_completion" : { "enabled" : v:true, },
             \       "yapf" : { "enabled" : v:true, },
             \     }}}
-            ]]
+--]]
 
-vim.g.indicator_errors = ''
-vim.g.indicator_warnings = ''
-vim.g.indicator_info = '🛈'
-vim.g.indicator_hint = '❗'
-vim.g.indicator_ok = ''
-vim.g.spinner_frames = {'⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷'}
-
-vim.g.should_show_diagnostics_in_statusline = false
-
-function StatusLineLSP()
-  if #vim.lsp.buf_get_clients() == 0 then
-    return ''
-  end
-
-  local status_parts = {}
-  local base_status = ''
-
-  local some_diagnostics = false
-  local only_hint = true
-
-  if vim.g.should_show_diagnostics_in_statusline then
-    local diagnostics = lsp_status.diagnostics()
-    local buf_messages = lsp_status.messages()
-    if diagnostics.errors and diagnostics.errors > 0 then
-      table.insert(status_parts, vim.g.indicator_errors .. ' ' .. diagnostics.errors)
-      only_hint = false
-      some_diagnostics = true
-    end
-
-    if diagnostics.warnings and diagnostics.warnings > 0 then
-      table.insert(status_parts, vim.g.indicator_warnings .. ' ' .. diagnostics.warnings)
-      only_hint = false
-      some_diagnostics = true
-    end
-
-    if diagnostics.info and diagnostics.info > 0 then
-      table.insert(status_parts, vim.g.indicator_info .. ' ' .. diagnostics.info)
-      only_hint = false
-      some_diagnostics = true
-    end
-
-    if diagnostics.hints and diagnostics.hints > 0 then
-      table.insert(status_parts, vim.g.indicator_hint .. ' ' .. diagnostics.hints)
-      some_diagnostics = true
-    end
-
-    local msgs = {}
-    for _, msg in ipairs(buf_messages) do
-      local name = aliases[msg.name] or msg.name
-      local client_name = '[' .. name .. ']'
-      if msg.progress then
-        local contents = msg.title
-        if msg.message then
-          contents = contents .. ' ' .. msg.message
-        end
-
-        if msg.percentage then
-          contents = contents .. ' (' .. msg.percentage .. ')'
-        end
-
-        if msg.spinner then
-          contents = vim.g.spinner_frames[(msg.spinner % #vim.g.spinner_frames) + 1] .. ' ' .. contents
-        end
-
-        table.insert(msgs, client_name .. ' ' .. contents)
-      else
-        table.insert(msgs, client_name .. ' ' .. msg.content)
-      end
-    end
-
-    base_status = vim.trim(table.concat(status_parts, ' ') .. ' ' .. table.concat(msgs, ' '))
-  end
-
-  local symbol = ' 🇻' .. ((some_diagnostics and only_hint) and '' or ' ')
-  local current_function = vim.b.lsp_current_function
-  if current_function and current_function ~= '' then
-    symbol = symbol .. '(' .. current_function .. ') '
-  end
-
-  if base_status ~= '' then
-    return symbol .. base_status .. ' '
-  end
-
-  return symbol .. vim.g.indicator_ok .. ' '
-end

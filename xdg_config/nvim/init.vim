@@ -469,6 +469,8 @@ if has('nvim-0.4')
   set wildmode+=longest
   set wildmode+=full
 
+  " Makes floating PopUpMenu for completing stuff on the command line.
+  "     Very similar to completing in insert mode.
   set wildoptions+=pum
 else
   set wildmode=longest,list,full
@@ -493,12 +495,7 @@ set hidden                            " I like having buffers stay around
 set cursorline                        " Highlight the current line
 
 
-let g:my_preview_enable = v:false
-if g:my_preview_enable
-  set completeopt+=preview            " Turn On preview
-else
-  set completeopt-=preview            " Turn off preview
-endif
+set completeopt-=preview              " Turn off preview
 
 set noequalalways                     " I don't like my windows changing all the time
 set splitright                        " Prefer windows splitting to the right
@@ -542,22 +539,7 @@ set belloff=all
 " Always have the clipboard be the same as my regular clipboard
 set clipboard+=unnamedplus
 
-" Configure Inccommand
-if exists('&inccommand')
-  set inccommand=split
-
-  function! CycleIncCommand() abort
-    if &inccommand ==? 'split'
-      set inccommand=nosplit
-    else
-      set inccommand=split
-    endif
-  endfunction
-
-  nnoremap <leader>ci :call CycleIncCommand()<CR>
-endif
-
-" Listchars
+set inccommand=split
 set list
 
 syntax enable

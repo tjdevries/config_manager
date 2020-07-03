@@ -33,6 +33,7 @@ call overlength#set_overlength('help', 81)
 call overlength#set_overlength('mumps', 180)
 call overlength#set_overlength('sql', 200)
 call overlength#set_overlength('python', 240)
+call overlength#set_overlength('lua', 140)
 
 " Some of my own "made up" filetypes
 call overlength#set_overlength('lookitt', 0)

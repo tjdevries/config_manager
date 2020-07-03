@@ -1,3 +1,7 @@
+-- TODO: Make this work real nice.
+--  It would be a good plugin
+--  - hot_reload.nvim
+--  - hotline_bling.nvim
 local system_modules = {
     "fiber",
     "ffi",

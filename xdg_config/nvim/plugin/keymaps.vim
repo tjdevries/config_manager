@@ -1,5 +1,9 @@
 scriptencoding utf-8
 
+" This is where most of my basic keymapping goes.
+"
+"   Plugin keymaps will all be found in `./after/plugin/*`
+
 nnoremap <Up> <C-y>
 nnoremap <Down> <C-e>
 " Switch between tabs
@@ -39,21 +43,21 @@ nnoremap gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\
 
 " Run the last command
 nnoremap <leader><leader>c :<up>
+
 " Map execute this line
 function! s:executor() abort
   if &ft == 'lua'
     call execute(printf(":lua %s", getline(".")))
-  else
+  elseif &ft == 'vim'
     exe getline(">")
   endif
 endfunction
-
 nnoremap <leader>x :call <SID>executor()<CR>
 
-" Execute this file
 vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
 nnoremap <leader><leader>v :w<CR>:Vader %<CR>
 
+" Execute this file
 function! s:save_and_exec() abort
   if &filetype == 'vim'
     :silent! write
@@ -134,13 +138,22 @@ if has('nvim')
     tnoremap <C-Space> <Space>
 endif
 
+" Clears hlsearch after doing a search, otherwise just does normal <CR> stuff
 nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
-nnoremap <M-CR> :let v:hlsearch=!v:hlsearch<CR>
 
-" List occurences from this file
-nnoremap <leader>sf :call tj#list_occurrences()<CR>
-" List occurences from a custom file
-nnoremap <leader>scf :call tj#list_occurrences(input('Search regex: '))<CR>
+if v:false
+  " TODO: Explore why I wrote this for someone and why I thought it was good.
+  augroup complete_tab_search
+    autocmd!
+    autocmd CmdlineEnter /,\? :set incsearch
+    autocmd CmdlineLeave /,\? :set noincsearch
+
+    autocmd CmdlineEnter /,\? :cnoremap <TAB> <C-R><C-W>
+    autocmd CmdlineLeave /,\? :cunmap <TAB>
+  augroup END
+endif
+
+nnoremap <M-CR> :let v:hlsearch=!v:hlsearch<CR>
 
 nnoremap J :call tj#join_lines()<CR>
 
@@ -160,21 +173,3 @@ cnoremap %H <C-R>=expand('%:h:p') . std#path#separator()<CR>
 cnoremap %T <C-R>=expand('%:t')<CR>
 cnoremap %P <C-R>=expand('%:p')<CR>
 cnoremap E<S-space> e<space>
-
-function! s:syntax_names() abort
-  let l:syntax_list = []
-  for id in synstack(line('.'), col('.'))
-    let base_name = synIDattr(id, 'name')
-    let trans_name = synIDattr(synIDtrans(id), 'name')
-
-    call add(l:syntax_list, base_name)
-    if !(base_name is trans_name)
-      call add(l:syntax_list, trans_name)
-    endif
-  endfor
-
-  return l:syntax_list
-endfunction
-
-" Syntax help
-nnoremap <leader>sh :echo string(<SID>syntax_names())<CR>
