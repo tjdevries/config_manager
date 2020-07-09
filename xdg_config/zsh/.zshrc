@@ -283,8 +283,13 @@ else
   export EDITOR=vim
 fi
 
-export NVM_DIR=$HOME/".nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# Don't want nvm for now.
+# export NVM_DIR=$HOME/".nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+if hash yarn 2>/dev/null; then
+    export PATH="$PATH:$(yarn global bin)"
+fi
 
 
 
@@ -345,3 +350,6 @@ fi
 zmodload zsh/zpty
 
 source /home/tj/.config/broot/launcher/bash/br
+
+# Use nvim as manpager `:h Man`
+export MANPAGER='nvim +Man!'

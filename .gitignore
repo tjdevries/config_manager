@@ -85,3 +85,14 @@ xdg_config/zsh/custom/plugins/*
 zsh/history
 zsh/.zcompdump*
 zsh/.zcompcache/*
+
+
+xdg_config/.mypy_cache/*
+xdg_config/Mendeley Ltd./*
+xdg_config/MonoGame/*
+xdg_config/discord/*
+xdg_config/eog/*
+xdg_config/gh/*
+xdg_config/google-musicmanager/*
+xdg_config/teams/*
+xdg_config/yarn/*

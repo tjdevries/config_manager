@@ -113,8 +113,10 @@ nnoremap <leader>ut :GundoToggle<cr>
 inoremap <leader>nr <c-o>:py import vim, random; vim.current.line += str(random.randint(0,9))<CR><esc>A
 
 " Helpful delete/change into blackhole buffer
-nmap <leader>d "bd
-nmap <leader>c "bc
+nmap <leader>d "_d
+nmap <leader>c "_c
+nmap <space>d "_d
+nmap <space>c "_c
 
 " Change the working directory for everybody
 nnoremap <leader>cd :windo lcd 

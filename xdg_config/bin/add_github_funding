@@ -1,0 +1,5 @@
+mkdir -p ./.github
+echo "github: tjdevries" > ./.github/FUNDING.yml
+git add .github
+git commit -m "meta: Add github funding"
+git push

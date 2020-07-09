@@ -1,0 +1,13 @@
+"Convex";"Having an outline or surface curved like the exterior of a circle or sphere."
+"<b>Hessian</b>";"A&nbsp;<a href=""https://en.wikipedia.org/wiki/Square_matrix"">square matrix</a> of second-order <a href=""https://en.wikipedia.org/wiki/Partial_derivative"">partial derivatives</a> of a scalar-valued <a href=""https://en.wikipedia.org/wiki/Function_(mathematics)"">function</a>, or <a href=""https://en.wikipedia.org/wiki/Scalar_field"">scalar field</a>. It describes the local curvature of a function of many variables"
+"ML Flattness";"The size of the connectedregion around the minimum where the training loss remains low"
+"Eigenvector &amp; Eigenvalue";"An <b>eigenvector</b>&nbsp;or <b>characteristic vector</b> of a <a href=""https://en.wikipedia.org/wiki/Linear_map"">linear transformation</a> is a nonzero <a href=""https://en.wikipedia.org/wiki/Vector_space"">vector</a> that changes at most by a <a href=""https://en.wikipedia.org/wiki/Scalar_(mathematics)"">scalar</a> factor when that linear transformation is applied to it.  The corresponding <b>eigenvalue</b> is the factor by which the eigenvector is scaled."
+"Frobenius Norm";"<img src=""NumberedEquation1.gif""><div><br></div><div>Square Root of the sum of the absolute squares of an <i>m x n </i>matrix.</div>"
+
+Softmax Classifier; TODO
+Cross Entropy Loss; TODO
+InfoNCE Loss; TODO
+"Sequence to Sequence Model";"Takes a sequence of inputs => Encoder => (passes the context) => Decoder => sequence of outputs. Commonly used for language translation."
+"Word Embedding";"Turn words into vector spaces. They can capture a lot of meaning/semantic information of the words. For example, `king - man + woman = queen`"
+"How does the context differ in an Attention Model vs. Original Seq2Seq Model?";"In an Attention Model, ALL of the hidden states are passed in the context, rather than just the last hidden state."
+"What are the four vectors of self attention in a transformer?";"Embedding, Query (Q), Keys (K), Values (V)"

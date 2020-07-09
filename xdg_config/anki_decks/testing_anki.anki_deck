@@ -1,0 +1,6 @@
+"Test Double";"Generic term for any kind of pretend object used in place of a real object for testing purposes. Comes from stunt double";
+"Dummy Object";"Object that is passed around but never actually used. Usually to fill parameter lists";
+"Fake";"Objects actually have working implementations, but usually take some shortcut which makes them not suitable for production. In-memory database is a good example";
+"Stubs";"Provide canned answers to calls made during the test. Usually does not respond to anything outside what's programmed in for the test";
+"Spies";"Stubs that record some information about how they were called. Example: Email service that checks how many messages it was sent";
+"Mocks";"Objects pre-programmed with expectations which form a specification of the calls they are expected to receive";

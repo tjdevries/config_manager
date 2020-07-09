@@ -1,0 +1,147 @@
+
+###############################################################
+# This configuration file lets you
+# - define new commands
+# - change the shortcut or triggering keys of built-in verbs
+# - change the colors
+# - set default values for flags
+#
+# Configuration documentation is available at
+#     https://dystroy.org/broot
+###############################################################
+
+###############################################################
+# Default flags
+# You can set up flags you want broot to start with by
+# default, for example `default_flags="ihp"` if you usually want
+# to see hidden and gitignored files and the permissions (then
+# if you don't want the hidden files you can launch `br -H`)
+# A popular flag is the `g` one which displays git related info.
+#
+default_flags = ""
+
+###############################################################
+# Verbs and shortcuts
+
+# If $EDITOR isn't set on your computer, you should either set it using
+#  something similar to
+#   export EDITOR=/usr/bin/nvim
+#  or just replace it with your editor of choice in the 'execution'
+#  pattern.
+# Example:
+#  execution = "/usr/bin/nvim {file}"
+#
+[[verbs]]
+invocation = "edit"
+key = "F2"
+shortcut = "e"
+execution = "$EDITOR {file}"
+
+[[verbs]]
+key = "ctrl-c"
+execution = ":quit"
+
+[[verbs]]
+invocation = "create {subpath}"
+execution = "$EDITOR {directory}/{subpath}"
+
+[[verbs]]
+invocation = "git_diff"
+shortcut = "gd"
+execution = "git diff {file}"
+
+# If $PAGER isn't set on your computer, you should either set it
+#  or just replace it with your viewer of choice in the 'execution'
+#  pattern.
+# Example:
+#  execution = "less {file}"
+[[verbs]]
+name = "view"
+invocation = "view"
+execution = "$PAGER {file}"
+
+# If you uncomment the two next shortcuts, the left
+# and right arrow keys will be used to go to the parent
+# directory or to open a selected one:
+#
+# [[verbs]]
+# key = "left"
+# execution = ":parent"
+#
+# [[verbs]]
+# key = "right"
+# execution = ":focus"
+
+# Another popular set of shorctuts for going up and down:
+#
+# [[verbs]]
+# key = "ctrl-j"
+# execution = ":line_down"
+#
+# [[verbs]]
+# key = "ctrl-k"
+# execution = ":line_up"
+#
+# [[verbs]]
+# key = "ctrl-d"
+# execution = ":page_down"
+#
+# [[verbs]]
+# key = "ctrl-u"
+# execution = ":page_up"
+
+# If you develop using git, you might like to often switch
+# to the "git status" filter:
+#
+# [[verbs]]
+# key = "ctrl-g"
+# execution = ":toggle_git_status"
+
+###############################################################
+# Skin
+# If you want to change the colors of broot,
+# uncomment the following bloc and start messing
+# with the various values.
+# Note that some of those colors might not correcly
+# render on terminals with low capabilities.
+#
+
+# [skin]
+# default = "gray(20) gray(1)"
+# tree = "rgb(89, 73, 101) none"
+# file = "gray(21) none"
+# directory = "rgb(255, 152, 0) none bold"
+# exe = "rgb(17, 164, 181) none"
+# link = "Magenta none"
+# pruning = "rgb(89, 73, 101) none Italic"
+# perm__ = "gray(5) None"
+# perm_r = "ansi(94) None"
+# perm_w = "ansi(132) None"
+# perm_x = "ansi(65) None"
+# owner = "gray(12) none"
+# group = "gray(12) none"
+# selected_line = "none gray(3)"
+# char_match = "yellow none"
+# file_error = "Red none"
+# flag_label = "gray(16) none"
+# flag_value = "rgb(255, 152, 0) none bold"
+# input = "White none"
+# status_error = "Red gray(2)"
+# status_job = "ansi(220) gray(5)"
+# status_normal = "gray(20) gray(3)"
+# status_italic = "rgb(255, 152, 0) None"
+# status_bold = "rgb(255, 152, 0) None bold"
+# status_code = "ansi(229) gray(5)"
+# status_ellipsis = "gray(19) gray(1)"
+# scrollbar_track = "rgb(80, 50, 0) none"
+# scrollbar_thumb = "rgb(255, 187, 0) none"
+# help_paragraph = "gray(20) none"
+# help_bold = "rgb(255, 187, 0) none bold"
+# help_italic = "Magenta rgb(30, 30, 40) italic"
+# help_code = "gray(21) gray(3)"
+# help_headers = "rgb(255, 187, 0) none"
+
+# You may find other skins on
+#  https://dystroy.org/broot/documentation/configuration/#colors
+# for example a skin suitable for white backgrounds
+

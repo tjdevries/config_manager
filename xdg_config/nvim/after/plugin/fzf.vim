@@ -3,6 +3,11 @@
 nnoremap <leader><leader>f :call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(expand("<cword>")), 1, 0)<CR>
 nnoremap <leader><leader>F :call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(expand("<cWORD>")), 1, 0)<CR>
 
+
+" Other helpful shortcuts:
+"   To scroll the file, you can use <c-d> and <c-u>. This scrolls in the
+"   preview window.
+
 " ANKI: Call FZF Preview Project Files
 nnoremap <space>ff      <cmd>FzfPreviewProjectFiles<CR>
 " ANKI: Call FZF Preview Buffers

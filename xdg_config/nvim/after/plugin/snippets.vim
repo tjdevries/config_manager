@@ -1,20 +1,31 @@
 
-" Configuration for custom snips
-let g:UltiSnipsSnippetsDir = "~/.config/nvim/snips"
-let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snips"]
+let g:vsnip_extra_mapping = v:true
+let g:vsnip_snippet_dir = expand("~/.config/nvim/snips/vsnip")
 
-" Trigger configuration.
-let g:UltiSnipsExpandTrigger = '<leader>e'
-let g:UltiSnipsJumpForwardTrigger = '<leader>r'
-let g:UltiSnipsJumpBackwardTrigger = '<leader>w'
+imap <leader>e <Plug>(vsnip-expand)
+imap <M-n> <Plug>(vsnip-jump-next)
+smap <M-n> <Plug>(vsnip-jump-next)
+imap <M-p> <Plug>(vsnip-jump-prev)
+smap <M-p> <Plug>(vsnip-jump-prev)
 
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit='vertical'
+if v:false
+  " Configuration for custom snips
+  let g:UltiSnipsSnippetsDir = "~/.config/nvim/snips"
+  let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snips"]
 
-" Use Python Version
-let g:UltiSnipsUsePythonVersion = 3
+  " Trigger configuration.
+  let g:UltiSnipsExpandTrigger = '<leader>e'
+  let g:UltiSnipsJumpForwardTrigger = '<leader>r'
+  let g:UltiSnipsJumpBackwardTrigger = '<leader>w'
 
-let g:ultisnips_python_style="google"
+  " If you want :UltiSnipsEdit to split your window.
+  let g:UltiSnipsEditSplit='vertical'
+
+  " Use Python Version
+  let g:UltiSnipsUsePythonVersion = 3
+
+  let g:ultisnips_python_style="google"
+endif
 
 " if g:my_snippet_manager == 'neosnippet'
 "     let g:neosnippet#snippets_directory = [

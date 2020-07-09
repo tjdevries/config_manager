@@ -1,0 +1,28 @@
+column_limit: 120
+indent_width: 2
+use_tab: false
+continuation_indent_width: 2
+align_args: true
+break_after_functioncall_lp: true
+break_before_functioncall_rp: true
+
+align_parameter: false
+break_after_functiondef_lp: true
+break_before_functiondef_rp: true
+
+chop_down_parameter: true
+chop_down_table: true
+chop_down_kv_table: true
+
+double_quote_to_single_quote: true
+
+spaces_before_call: 1
+
+# Table
+table_sep: ','
+extra_sep_at_table_end: true
+column_table_limit: 80
+
+# need to think about these exactly...
+keep_simple_control_block_one_line: true
+keep_simple_function_one_line: true

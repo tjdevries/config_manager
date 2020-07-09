@@ -1,0 +1,9 @@
+{
+    "PrintObject": {
+        "prefix": ["po"],
+        "body": [
+            "println!(\"{:?}\", $1);"
+        ],
+        "description": "Print Object"
+    }
+}

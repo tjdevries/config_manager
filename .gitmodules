@@ -1,3 +1,0 @@
-[submodule "xdg_config/nvim/pack/start/packer.nvim"]
-	path = xdg_config/nvim/pack/start/packer.nvim
-	url = https://github.com/wbthomason/packer.nvim

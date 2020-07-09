@@ -6,6 +6,7 @@ local status = require('tj.status')
 
 -- Can set this lower if needed.
 -- require('vim.lsp.log').set_level("debug")
+-- require('vim.lsp.log').set_level("trace")
 
 Diagnostic = vim.lsp.actions.Diagnostic
 Location = vim.lsp.actions.Location
@@ -132,7 +133,11 @@ nvim_lsp.clangd.setup({
   capabilities = nvim_status.capabilities,
 })
 
-
+nvim_lsp.rust_analyzer.setup({
+  cmd = {"rust-analyzer"},
+  filetypes = {"rust"},
+  on_attach = custom_attach,
+})
 
 vim.g.indicator_errors = ''
 vim.g.indicator_warnings = ''

@@ -1,0 +1,10 @@
+How is inner product written?; 〈x, y〉
+Property 1 of Inner Product: </br> 〈 𝓤 + 𝓥, 𝓦 〉=; 〈 𝓤 , 𝓦  〉+ 〈 𝓥 , 𝓦  〉
+Property 2 of Inner Product: </br> 〈 α 𝓥 , 𝓦 〉=; α〈 𝓥 , 𝓦  〉
+Property 3 of Inner Product: </br> 〈 𝓥 , 𝓦 〉= 〈 𝓦,  𝓥〉
+Property 4 of Inner Product: </br> 〈 𝓥 , 𝓥 〉>= ?; 0. And 0 iff 𝓥 = 0
+In Euclidean Space, the inner product is given by the: ; dot product.
+The outer product is written as; 𝓤 ⊗ 𝓥
+Given 𝓤 (Vector of size M) and 𝓥 (Vector of size N), what are the dimensions of 𝓤 ⊗ 𝓥?; m x n
+Given 𝓤 (Vector of size M) and 𝓥 (Vector of size N), how are the values of 𝓤 ⊗ 𝓥 defined?; Each element of 𝓤 is multipled by each element of 𝓥
+The tensor product is also known as the _____ _______; outer product

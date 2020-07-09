@@ -71,7 +71,7 @@ function! GoText(...) abort
   return foldtext()
 endfunction
 
-set foldmethod=expr
-set foldexpr=GoFolder()
-set foldtext=GoText()
+setlocal foldmethod=expr
+setlocal foldexpr=GoFolder()
+setlocal foldtext=GoText()
 
