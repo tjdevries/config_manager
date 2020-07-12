@@ -1,4 +1,3 @@
-
 function! PythonAuto() abort
   if &filetype != 'python'
     return

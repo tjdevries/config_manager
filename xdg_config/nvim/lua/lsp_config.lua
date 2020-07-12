@@ -117,7 +117,14 @@ nvim_lsp.sumneko_lua.setup({
 
 nvim_lsp.tsserver.setup({
   cmd = {"typescript-language-server", "--stdio"},
-  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx"
+  },
   on_attach=custom_attach
 })
 

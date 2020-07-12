@@ -1,6 +1,10 @@
 scriptencoding utf-8
 
-if !has('python3') || !get(g:, 'loaded_denite')
+" I no longer use denite, but I like my config here, so I'm going to leave it
+" here. Also, in the future, maybe I will try and use it again. I like the way
+" Shougo makes plugins. It is really cool.
+
+if !has('python3') || !get(g:, 'loaded_denite') || v:true
   finish
 endif
 

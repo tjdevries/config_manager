@@ -2,6 +2,8 @@ scriptencoding utf-8
 
 set termguicolors
 
+lua require('colorbuddy').colorscheme('gruvbuddy')
+
 " Load colorizer
 lua _ = pcall(function() return require('colorizer').setup() end)
 

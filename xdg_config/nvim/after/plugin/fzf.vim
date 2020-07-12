@@ -7,7 +7,10 @@ nnoremap <leader><leader>F :call fzf#vim#grep("rg --column --line-number --no-he
 " Other helpful shortcuts:
 "   To scroll the file, you can use <c-d> and <c-u>. This scrolls in the
 "   preview window.
+"
 
+" ANKI: Call Buffer stuff
+nnoremap <space>fb      <cmd>Buffers<CR>
 " ANKI: Call FZF Preview Project Files
 nnoremap <space>ff      <cmd>FzfPreviewProjectFiles<CR>
 " ANKI: Call FZF Preview Buffers
