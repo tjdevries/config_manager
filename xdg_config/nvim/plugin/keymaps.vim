@@ -1,5 +1,9 @@
 scriptencoding utf-8
 
+" TODO:
+"   Make a mapping that I like for helpclose
+"   Make a better mapping to jump back to last buffer <c-^>
+
 " This is where most of my basic keymapping goes.
 "
 "   Plugin keymaps will all be found in `./after/plugin/*`

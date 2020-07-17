@@ -8,6 +8,10 @@ nnoremap <leader><leader>F :call fzf#vim#grep("rg --column --line-number --no-he
 "   To scroll the file, you can use <c-d> and <c-u>. This scrolls in the
 "   preview window.
 "
+"   To negate something, you can use "!" at the beginning of the pattern.
+"   To search from beginning, you can use "^" (converse is "$")
+"   To exact match, you can use "'"
+
 
 " ANKI: Call Buffer stuff
 nnoremap <space>fb      <cmd>Buffers<CR>

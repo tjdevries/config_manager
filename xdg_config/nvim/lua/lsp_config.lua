@@ -24,7 +24,7 @@ local custom_attach = function(client)
   status    .on_attach(client)
 
   local mapper = function(mode, key, result)
-    vim.fn.nvim_buf_set_keymap(0, mode, key, result, {noremap=true, silent=true})
+    vim.fn.nvim_buf_set_keymap(0, mode, key, result, {noremap = true, silent = true})
   end
 
   mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
@@ -41,27 +41,27 @@ local custom_attach = function(client)
   mapper('n', '<space>nd', ':NextDiagnostic<CR>')
 
   mapper(
-    'n',
-    '<space>gd',
-    '<cmd>lua vim.lsp.buf.definition { callbacks = { Location.jump_first, Location.highlight.with { timeout = 300 } } }<CR>'
+  'n',
+  '<space>gd',
+  '<cmd>lua vim.lsp.buf.definition { callbacks = { Location.jump_first, Location.highlight.with { timeout = 300 } } }<CR>'
   )
 
   mapper(
-    'n',
-    '<space>pd',
-    '<cmd>lua vim.lsp.buf.definition { callbacks = Location.preview.with { lines_below = 5 } }<CR>'
+  'n',
+  '<space>pd',
+  '<cmd>lua vim.lsp.buf.definition { callbacks = Location.preview.with { lines_below = 5 } }<CR>'
   )
 
   mapper(
-    'n',
-    '<leader>dn',
-    '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_next_diagnostic()<CR>'
+  'n',
+  '<leader>dn',
+  '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_next_diagnostic()<CR>'
   )
 
   mapper(
-    'n',
-    '<leader>dp',
-    '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_prev_diagnostic()<CR>'
+  'n',
+  '<leader>dp',
+  '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_prev_diagnostic()<CR>'
   )
 
 
@@ -72,37 +72,45 @@ local custom_attach = function(client)
 end
 
 nvim_lsp.pyls.setup({
-  enable=true,
-  plugins={
-    pyls_mypy={
-      enabled=true,
-      live_mode=false
+  enable = true,
+  plugins = {
+    pyls_mypy = {
+      enabled = true,
+      live_mode = false
     }
   },
-  on_attach=custom_attach
+  on_attach = custom_attach
 })
 
 nvim_lsp.vimls.setup({
   on_attach = custom_attach,
 })
 
-
-local sumneko_settings = {
-  runtime={
-    version="LuaJIT",
-  },
-  diagnostics={
-    enable=true,
-    globals={
-      "vim", "Color", "c", "Group", "g", "s", "describe", "it", "before_each", "after_each"
-    },
-  },
-}
-sumneko_settings.Lua = vim.deepcopy(sumneko_settings)
-
 nvim_lsp.sumneko_lua.setup({
   -- Lua LSP configuration
-  settings=sumneko_settings,
+  settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT",
+
+        -- TODO: Figure out how to get plugins here.
+        path = vim.split(package.path, ';'),
+        -- path = {package.path},
+      },
+      diagnostics = {
+        enable = true,
+        globals = {
+          "vim", "Color", "c", "Group", "g", "s", "describe", "it", "before_each", "after_each"
+        },
+      },
+      workspace = {
+        library = {
+          [vim.fn.expand("~/build/neovim/runtime/lua")] = true,
+          [vim.fn.expand("~/build/neovim/src/nvim/lua")] = true,
+        },
+      },
+    }
+  },
 
   -- Runtime configurations
   filetypes = {"lua"},
@@ -112,7 +120,7 @@ nvim_lsp.sumneko_lua.setup({
     "/home/tj/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
   },
 
-  on_attach=custom_attach
+  on_attach = custom_attach
 })
 
 nvim_lsp.tsserver.setup({
@@ -125,7 +133,7 @@ nvim_lsp.tsserver.setup({
     "typescriptreact",
     "typescript.tsx"
   },
-  on_attach=custom_attach
+  on_attach = custom_attach
 })
 
 nvim_lsp.clangd.setup({
@@ -166,34 +174,34 @@ Example settings, have not messed around with too many of these.
 --     }
 -- }
 let settings = {
-  \   "pyls" : {
-    \     "enable" : v:true,
-    \     "trace" : { "server" : "verbose", },
-    \     "commandPath" : "",
-    \     "configurationSources" : [ "pycodestyle" ],
-    \     "plugins" : {
-      \       "jedi_completion" : { "enabled" : v:true, },
-      \       "jedi_hover" : { "enabled" : v:true, },
-      \       "jedi_references" : { "enabled" : v:true, },
-      \       "jedi_signature_help" : { "enabled" : v:true, },
-      \       "jedi_symbols" : {
-        \         "enabled" : v:true,
-        \         "all_scopes" : v:true,
-        \       },
-        \       "mccabe" : {
-          \         "enabled" : v:true,
-          \         "threshold" : 15,
-          \       },
-          \       "preload" : { "enabled" : v:true, },
-          \       "pycodestyle" : { "enabled" : v:true, },
-          \       "pydocstyle" : {
-            \         "enabled" : v:false,
-            \         "match" : "(?!test_).*\\.py",
-            \         "matchDir" : "[^\\.].*",
-            \       },
-            \       "pyflakes" : { "enabled" : v:true, },
-            \       "rope_completion" : { "enabled" : v:true, },
-            \       "yapf" : { "enabled" : v:true, },
-            \     }}}
+\   "pyls" : {
+\     "enable" : v:true,
+\     "trace" : { "server" : "verbose", },
+\     "commandPath" : "",
+\     "configurationSources" : [ "pycodestyle" ],
+\     "plugins" : {
+\       "jedi_completion" : { "enabled" : v:true, },
+\       "jedi_hover" : { "enabled" : v:true, },
+\       "jedi_references" : { "enabled" : v:true, },
+\       "jedi_signature_help" : { "enabled" : v:true, },
+\       "jedi_symbols" : {
+\         "enabled" : v:true,
+\         "all_scopes" : v:true,
+\       },
+\       "mccabe" : {
+\         "enabled" : v:true,
+\         "threshold" : 15,
+\       },
+\       "preload" : { "enabled" : v:true, },
+\       "pycodestyle" : { "enabled" : v:true, },
+\       "pydocstyle" : {
+\         "enabled" : v:false,
+\         "match" : "(?!test_).*\\.py",
+\         "matchDir" : "[^\\.].*",
+\       },
+\       "pyflakes" : { "enabled" : v:true, },
+\       "rope_completion" : { "enabled" : v:true, },
+\       "yapf" : { "enabled" : v:true, },
+\     }}}
 --]]
 

@@ -1,5 +1,7 @@
 package.loaded['packer'] = nil
 
+vim.cmd [[packadd packer.nvim]]
+
 local packer = require('packer')
 
 return packer.startup(
@@ -33,6 +35,7 @@ return packer.startup(
     local_use 'express_line.nvim'
     local_use 'overlength.vim'
     local_use 'pastery.vim'
+    local_use 'telescope.nvim'
 
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
@@ -111,6 +114,10 @@ return packer.startup(
       use 'PProvost/vim-ps1'
       use 'cespare/vim-toml'
       use 'Glench/Vim-Jinja2-Syntax'
+
+      -- Lua {{{
+        use 'euclidianAce/BetterLua.vim'
+      -- }}}
 
       -- Typescript {{{
         -- TODO: Should probably only load these when necessary.
