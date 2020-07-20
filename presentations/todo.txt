@@ -1,0 +1,14 @@
+Presentation Wish List:
+
+- [ ] Design principles of Lua
+    - Goal being, understand why Lua is made the way it is.
+    - As well as understanding the tradeoffs that happen because of these
+        decisions
+- [ ] Why did Neovim choose Lua
+    - Timers / Async / Callbacks
+        - Copy some examples / docs from `luv`
+- [ ] Why do I use .*vim editor
+- [ ] Why do I use Neovim compared to Vim
+
+- [ ] How to set up lua stuff in vim
+- [ ] nvim-lsp video
