@@ -2,6 +2,30 @@
 vim.cmd [[packadd packer.nvim]]
 vim._update_package_paths()
 
+local packer_exists = pcall(require, 'packer')
+
+if not packer_exists then
+  -- TODO: Maybe handle windows better?
+
+  local directory = string.format(
+    '%s/site/pack/packer/opt/',
+    vim.fn.stdpath('data')
+  )
+
+  vim.fn.mkdir(directory, 'p')
+
+  local out = vim.fn.system(string.format(
+    'git clone %s %s',
+    'https://github.com/wbthomason/packer.nvim',
+    directory .. '/packer.nvim'
+  ))
+
+  print(out)
+  print("Downloading packer.nvim...")
+
+  return
+end
+
 return require('packer').startup({
   function(use)
     local local_use = function(plug_path)
@@ -196,6 +220,7 @@ return require('packer').startup({
 
     use {'junegunn/fzf', run = './install --all' }     -- Fuzzy Searcher
     use {'junegunn/fzf.vim'}
+    -- use {'yuki-ycino/fzf-preview.vim', run = 'yarn global add' }
     use {'yuki-ycino/fzf-preview.vim', run = 'npm install' }
 
     use 'lervag/wiki.vim'
@@ -203,7 +228,17 @@ return require('packer').startup({
   config = {
     display = {
       open_fn = function(name)
-        local float_win = require('plenary.window.float').percentage_range_window(0.8, 0.8)
+        -- Can only use plenary when we have our plugins.
+        --  We can only get plenary when we don't have our plugins ;)
+        local ok, float_win = pcall(function()
+          return require('plenary.window.float').percentage_range_window(0.8, 0.8)
+        end)
+
+        if not ok then
+          vim.cmd [[65vnew  [packer] ]]
+
+          return vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf()
+        end
 
         local bufnr = float_win.buf
         local win = float_win.win
