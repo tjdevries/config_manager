@@ -26,7 +26,7 @@ if not packer_exists then
   return
 end
 
-return require('packer').startup({
+return require('packer').startup {
   function(use)
     local local_use = function(plug_path)
       if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. plug_path)) == 1 then
@@ -250,7 +250,7 @@ return require('packer').startup({
       end
     },
   }
-})
+}
 
 --[[ Replacements Needed
 " Plug 'https://github.com/AndrewRadev/linediff.vim'
