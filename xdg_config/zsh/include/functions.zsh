@@ -64,3 +64,13 @@ function demogif {
 
   termtosvg -g "$width"x"$height" $2 -c "nvim -u ~/git/config_manager/test/demo_init.vim $1"
 }
+
+function nvimgif {
+  local width="${3:=132}"
+  local height="${4:=24}"
+
+  # Set terminal size
+  printf '\033[8;'$height';'$width't'
+
+  termtosvg -g "$width"x"$height" $2 -c "nvim $1"
+}

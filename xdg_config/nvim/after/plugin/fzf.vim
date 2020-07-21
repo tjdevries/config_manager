@@ -12,6 +12,7 @@ nnoremap <leader><leader>F :call fzf#vim#grep("rg --column --line-number --no-he
 "   To search from beginning, you can use "^" (converse is "$")
 "   To exact match, you can use "'"
 
+let g:fzf_preview_use_dev_icons = 1
 
 " ANKI: Call Buffer stuff
 nnoremap <space>fb      <cmd>Buffers<CR>

@@ -96,3 +96,15 @@ xdg_config/gh/*
 xdg_config/google-musicmanager/*
 xdg_config/teams/*
 xdg_config/yarn/*
+
+
+xdg_config/GIMP/
+xdg_config/alacritty/
+xdg_config/asciinema/
+xdg_config/calibre/
+xdg_config/com.github.xournalpp.xournalpp/
+xdg_config/font-manager/
+xdg_config/neofetch/
+xdg_config/nvm/
+xdg_config/oh-my-zsh/
+xdg_config/qmk/

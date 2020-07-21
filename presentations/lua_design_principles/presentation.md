@@ -284,6 +284,8 @@ A nice result of this, is that it is obvious what should happen when an error oc
 - Language complexity is limited by the ability to express it via the Lua-C API.
     - No operators like `+=`. Multiple reasons:
         - Difficult to write this exact thing inside of the stack-based Lua-C API.
+        - It doesn't play nice with multiple assignment:
+            - What should `a, b, c += MyFunction()` do?
         - How many times should the keys be looked up in `my_table.x += 1`. Once or twice?
             - Obvious    : `my_table.x = my_table.x + 1`
             - Not Obvious: `my_table.x += 1`

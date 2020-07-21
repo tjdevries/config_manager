@@ -44,3 +44,10 @@ PQA
 DLG
 DXR
 datalink
+#mbeddability
+Embeddability/!
+Embeddability
+LuaJIT
+Lua
+API
+userdata

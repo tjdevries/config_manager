@@ -100,7 +100,12 @@ nvim_lsp.sumneko_lua.setup({
       diagnostics = {
         enable = true,
         globals = {
-          "vim", "Color", "c", "Group", "g", "s", "describe", "it", "before_each", "after_each"
+          -- Neovim
+          "vim",
+          -- Colorbuddy
+          "Color", "c", "Group", "g", "s",
+          -- Busted
+          "describe", "it", "before_each", "after_each"
         },
       },
       workspace = {

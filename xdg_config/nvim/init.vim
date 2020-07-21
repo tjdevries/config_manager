@@ -29,7 +29,6 @@ let g:builtin_lsp = v:true
 " }}}
 
 " Packadd plugins
-packadd packer.nvim
 packadd vimball
 
 lua require('plugins')

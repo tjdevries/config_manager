@@ -106,6 +106,9 @@ elif [[ $ZSH_PLUGIN_MANAGER = 'oh-my-zsh' ]]; then
     print 'Installing zsh-syntax-highlighting'
     git_clone_or_update https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
 
+    print '========================================'
+    print 'Installing zsh-nvm'
+    git_clone_or_update https://github.com/lukechilds/zsh-nvm "$ZSH_CUSTOM/plugins/zsh-nvm"
   }
 
 
@@ -148,6 +151,10 @@ elif [[ $ZSH_PLUGIN_MANAGER = 'oh-my-zsh' ]]; then
 
   if [[ -f "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
     plugins+=('zsh-syntax-highlighting')
+  fi
+
+  if [[ -f "$ZSH_CUSTOM/plugins/zsh-nvm/README.md" ]]; then
+    plugins+=('zsh-nvm')
   fi
 
   # Setup oh-my-zsh
@@ -283,9 +290,9 @@ else
   export EDITOR=vim
 fi
 
-# Don't want nvm for now.
-# export NVM_DIR=$HOME/".nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export NVM_COMPLETION=true
+export NVM_DIR=$HOME/".nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 if hash yarn 2>/dev/null; then
     export PATH="$PATH:$(yarn global bin)"
