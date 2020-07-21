@@ -27,7 +27,7 @@ local function handle_bufread(names)
     local path = plugins[name].path
     for _, dir in ipairs({ 'ftdetect', 'ftplugin', 'after/ftdetect', 'after/ftplugin' }) do
       if #vim.fn.finddir(dir, path) > 0 then
-        vim.api.nvim_command('doautocmd BufRead')
+        vim.cmd('doautocmd BufRead')
         return
       end
     end
@@ -73,16 +73,17 @@ _packer_load = function(names, cause)
   end
 
   for cmd, _ in pairs(del_cmds) do
-    vim.api.nvim_command('silent! delcommand ' .. cmd)
+    vim.cmd('silent! delcommand ' .. cmd)
   end
 
   for key, _ in pairs(del_maps) do
-    vim.api.nvim_command(fmt('silent! %sunmap %s', key[1], key[2]))
+    vim.cmd(fmt('silent! %sunmap %s', key[1], key[2]))
   end
 
   for _, name in ipairs(names) do
     if not plugins[name].loaded then
-      vim.api.nvim_command('packadd ' .. name)
+      vim.cmd('packadd ' .. name)
+      vim._update_package_paths()
       if plugins[name].config then
         for _i, config_line in ipairs(plugins[name].config) do
           loadstring(config_line)()
@@ -92,7 +93,7 @@ _packer_load = function(names, cause)
       if plugins[name].after then
         for _, after_name in ipairs(plugins[name].after) do
           handle_after(after_name, name)
-          vim.api.nvim_command('redraw')
+          vim.cmd('redraw')
         end
       end
 
@@ -104,7 +105,7 @@ _packer_load = function(names, cause)
 
   if cause.cmd then
     local lines = cause.l1 == cause.l2 and '' or (cause.l1 .. ',' .. cause.l2)
-    vim.api.nvim_command(fmt('%s%s%s %s', lines, cause.cmd, cause.bang, cause.args))
+    vim.cmd(fmt('%s%s%s %s', lines, cause.cmd, cause.bang, cause.args))
   elseif cause.keys then
     local keys = cause.keys
     local extra = ''
@@ -132,21 +133,24 @@ _packer_load = function(names, cause)
     -- characters \<Plug> rather than the special <Plug> key.
     vim.fn.feedkeys(string.gsub(cause.keys, '^<Plug>', '\\<Plug>') .. extra)
   elseif cause.event then
-    vim.api.nvim_command(fmt('doautocmd <nomodeline> %s', cause.event))
+    vim.cmd(fmt('doautocmd <nomodeline> %s', cause.event))
   elseif cause.ft then
-    vim.api.nvim_command(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeplugin', cause.ft))
-    vim.api.nvim_command(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeindent', cause.ft))
+    vim.cmd(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeplugin', cause.ft))
+    vim.cmd(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeindent', cause.ft))
   end
 end
 
 -- Pre-load configuration
 -- Post-load configuration
 -- Conditional loads
+vim._update_package_paths()
 END
 
 function! s:load(names, cause) abort
   call luaeval('_packer_load(_A[1], _A[2])', [a:names, a:cause])
 endfunction
+
+" Runtimepath customization
 
 " Load plugins in order defined by `after`
 
@@ -161,5 +165,3 @@ augroup packer_load_aucmds
   au FileType javascript ++once call s:load(['vim-javascript', 'JavaScript-Indent'], { "ft": "javascript" })
   " Event lazy-loads
 augroup END
-
-" Runtimepath customization
