@@ -1,21 +1,33 @@
 [user]
-    name = TJ DeVries
-    email = devries.timothyj@gmail.com
+  name = TJ DeVries
+  email = devries.timothyj@gmail.com
 
 [core]
-    editor = nvim
-    excludesfile = /home/tj/.gitignore_global
+  editor = nvim
+  excludesfile = /home/tj/.gitignore_global
+
+  pager = delta
     ; autocrlf = input
 
 [pull]
-    rebase = true
+  rebase = true
 
 [rebase]
-    autoStash = true
+  autoStash = true
 
 [alias]
     # Thanks r00k, this creates a pretty graph view of the log
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 
 [push]
-    default = current
+  default = current
+
+[delta]
+  line-numbers = true
+  syntax-theme = gruvbox
+  side-by-side = true
+
+  file-modified-label = modified:
+
+[interactive]
+  diffFilter = delta --color-only

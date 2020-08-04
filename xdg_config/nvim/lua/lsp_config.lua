@@ -29,10 +29,14 @@ local custom_attach = function(client)
 
   mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
   mapper('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>')
-  mapper('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
   mapper('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
   mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   mapper('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+
+  -- if not vim.api.nvim_buf_get_keymap(0, 'n')['K'] then
+  if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'lua' then
+    mapper('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+  end
 
   mapper('n', '<space>sl', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>')
 
@@ -86,46 +90,14 @@ nvim_lsp.vimls.setup({
   on_attach = custom_attach,
 })
 
-nvim_lsp.sumneko_lua.setup({
-  -- Lua LSP configuration
-  settings = {
-    Lua = {
-      runtime = {
-        version = "LuaJIT",
+-- Load lua configuration from nlua.
+require('nlua.lsp.nvim').setup(nvim_lsp, {
+  on_attach = custom_attach,
 
-        -- TODO: Figure out how to get plugins here.
-        path = vim.split(package.path, ';'),
-        -- path = {package.path},
-      },
-      diagnostics = {
-        enable = true,
-        globals = {
-          -- Neovim
-          "vim",
-          -- Colorbuddy
-          "Color", "c", "Group", "g", "s",
-          -- Busted
-          "describe", "it", "before_each", "after_each"
-        },
-      },
-      workspace = {
-        library = {
-          [vim.fn.expand("~/build/neovim/runtime/lua")] = true,
-          [vim.fn.expand("~/build/neovim/src/nvim/lua")] = true,
-        },
-      },
-    }
-  },
-
-  -- Runtime configurations
-  filetypes = {"lua"},
-  cmd = {
-    "/home/tj/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/Linux/lua-language-server",
-    "-E",
-    "/home/tj/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"
-  },
-
-  on_attach = custom_attach
+  globals = {
+    -- Colorbuddy
+    "Color", "c", "Group", "g", "s",
+  }
 })
 
 nvim_lsp.tsserver.setup({

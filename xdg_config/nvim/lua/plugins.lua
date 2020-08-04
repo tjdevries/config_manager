@@ -1,4 +1,4 @@
--- Only required if you have packer in your `opt` pack
+-- On ly required if you have packer in your `opt` pack
 vim.cmd [[packadd packer.nvim]]
 vim._update_package_paths()
 
@@ -6,6 +6,9 @@ local packer_exists = pcall(require, 'packer')
 
 if not packer_exists then
   -- TODO: Maybe handle windows better?
+  if vim.fn.input("Download Packer? (y for yes)") ~= "y" then
+    return
+  end
 
   local directory = string.format(
     '%s/site/pack/packer/opt/',
@@ -37,6 +40,7 @@ return require('packer').startup {
     end
 
     -- My Plugins
+    local_use 'nlua.nvim'
     local_use 'vim9jit'
     local_use 'colorbuddy.vim'
     local_use 'gruvbuddy.nvim'
@@ -54,9 +58,10 @@ return require('packer').startup {
     local_use 'overlength.vim'
     local_use 'pastery.vim'
     local_use 'telescope.nvim'
+    local_use 'command_and_conquer.nvim'
 
     -- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = true}
+    -- use {'wbthomason/packer.nvim', opt = true}
 
     -- PRACTICE: {{{
     use 'tpope/vim-projectionist'  -- STREAM: Alternate file editting and some helpful stuff
@@ -64,7 +69,7 @@ return require('packer').startup {
     -- For narrowing regions of text to look at them alone
     use 'chrisbra/NrrwRgn' -- Figure out some good ways to use this on stream
 
-    use 'rhysd/vim-clang-format'
+    use {'rhysd/vim-clang-format', rocks = { 'lua-cjson', 'lpeg', 'asdf' }}
     use 'tweekmonster/spellrotate.vim'
     use 'haya14busa/vim-metarepeat'  -- Never figured out how to use this, but looks like fun.
     -- }}}
@@ -175,6 +180,10 @@ return require('packer').startup {
     --   Have not yet checked this out, but looks awesome.
     use 'puremourning/vimspector'
     -- }}}
+    -- TREE SITTER: {{{
+    use 'nvim-treesitter/nvim-treesitter'
+
+    -- }}}
     -- NAVIGATION: {{{
     -- STREAM: Show off edit_alternate.vim
     use 'tjdevries/edit_alternate.vim'
@@ -201,6 +210,7 @@ return require('packer').startup {
     -- GIT: {{{
     -- gita replacement
     use 'lambdalisue/gina.vim'
+    use 'kdheepak/lazygit.nvim'
 
     -- Sweet message committer
     use 'rhysd/committia.vim'

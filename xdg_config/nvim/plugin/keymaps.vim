@@ -127,7 +127,8 @@ nnoremap <leader>cd :windo lcd
 
 if has('nvim')
     " Make esc leave terminal mode
-    tnoremap <Esc> <C-\><C-n>
+    tnoremap <leader><Esc> <C-\><C-n>
+    tnoremap <Esc><Esc> <C-\><C-n>
 
     " Easy moving between the buffers
     tnoremap <A-h> <C-\><C-n><C-w>h

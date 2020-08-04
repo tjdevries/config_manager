@@ -8,12 +8,6 @@ local plugins = {
     only_setup = false,
     path = "/home/tj/.local/share/nvim/site/pack/packer/opt/JavaScript-Indent"
   },
-  ["packer.nvim"] = {
-    loaded = false,
-    only_sequence = false,
-    only_setup = false,
-    path = "/home/tj/.local/share/nvim/site/pack/packer/opt/packer.nvim"
-  },
   ["vim-javascript"] = {
     loaded = false,
     only_sequence = false,

@@ -252,13 +252,14 @@ install_zplug() {
 # {{{1 Language specific configuration
 # {{{2 Go
 if [ -d /usr/local/go/bin/ ]; then
-    export GOPATH=~/go
-    export GOBIN=$GOPATH/bin
-    export PATH=$PATH:/usr/local/go/bin:$GOBIN
+  export GOPATH=~/go
+  export GOBIN="$GOPATH/bin"
+  export PATH="$PATH:/usr/local/go/bin:$GOBIN"
 elif [ -d ~/.go/bin/ ]; then
-  export GOPATH=~/.go
-  export GOBIN=$GOTHPATH/bin
-  export PATH=$PATH:~/.go/bin
+  export GOPATH="$HOME/.gopath"
+  export GOROOT="$HOME/.go"
+  export GOBIN="$GOPATH/bin"
+  export PATH="$PATH:$GOPATH/bin"
 fi
 
 # }}}
@@ -286,6 +287,13 @@ export PATH=~/.npm-global/bin:$PATH
 #
 if hash nvim 2>/dev/null; then
   export EDITOR=nvim
+
+  if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
+
+    export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+    export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+  fi
 else
   export EDITOR=vim
 fi

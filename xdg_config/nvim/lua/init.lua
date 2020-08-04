@@ -5,22 +5,19 @@ if not ok then
   return
 end
 
--- Load required packages
-local neorocks = require("plenary.neorocks")
+-- TODO: Experiment with lua tree sitter and make it the coolest ever.
+require('tj.treesitter')
 
 -- Run the first time to install it
 if false then
+  -- Load required packages
+  local neorocks = require("plenary.neorocks")
+
   neorocks.install('penlight', 'pl')
   neorocks.install('luasocket', 'socket')
+
+  neorocks.ensure_installed('penlight', 'pl')
+  neorocks.ensure_installed('lua-cjson', 'cjson')
+  neorocks.ensure_installed('luasocket', 'socket')
+  neorocks.ensure_installed('moses', 'moses')
 end
-
-neorocks.ensure_installed('penlight', 'pl')
-neorocks.ensure_installed('lua-cjson', 'cjson')
-neorocks.ensure_installed('luasocket', 'socket')
-neorocks.ensure_installed('moses', 'moses')
-
--- Cool highlighting courtesy of @clason
-vim.cmd [[augroup LuaHighlight]]
-vim.cmd [[  au!]]
-vim.cmd [[  au TextYankPost * silent! lua return (not vim.v.event.visual) and require'vim.highlight'.on_yank()]]
-vim.cmd [[augroup END]]

@@ -174,6 +174,10 @@ syntax enable
 
 set noswapfile
 
+if has('nvim') && executable('nvr')
+  let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+endif
+
 " guicursor messing around
 " set guicursor=n:blinkwait175-blinkoff150-blinkon175-hor10
 " set guicursor=a:blinkon0

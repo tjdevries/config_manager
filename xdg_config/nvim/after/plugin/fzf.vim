@@ -29,10 +29,14 @@ nnoremap <space>gw      <cmd>call execute(':FzfPreviewProjectGrep ' . expand("<c
 " ANKI: Call FZF Preview Tons of Things
 nnoremap <space><space> <cmd>FzfPreviewFromResources project git directory buffer project_mru<CR>
 
+nnoremap <space>fd      <cmd>FzfPreviewDirectoryFiles<CR>
+
 " ANKI: Call Fzf Preview File Plugins
 nnoremap <space>fp      <cmd>FzfPreviewDirectoryFiles ~/plugins/<CR>
 
 " ANKI: Call Fzf Preview on all plugins.
-nnoremap <space>fa      <cmd>FzfPreviewDirectoryFiles ~/.config/vim_plug/<CR>
+nnoremap <space>fa      <cmd>FzfPreviewDirectoryFiles ~/.local/share/nvim/site/pack/packer/start/<CR>
 
 nnoremap <leader>en     <cmd>FzfPreviewDirectoryFiles ~/.config/nvim<CR>
+
+nnoremap <leader>fc     <cmd>FzfPreviewDirectoryFiles ~/.config/<CR>
