@@ -1,3 +1,7 @@
+if !get(g:, 'loaded_dirvish', v:false)
+  finish
+endif
+
 let g:DevIconsArtifactFixChar = '            '
 let g:DevIconsAppendArtifactFix = 1
 

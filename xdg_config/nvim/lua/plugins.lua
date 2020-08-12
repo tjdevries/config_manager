@@ -28,11 +28,12 @@ end
 
 return require('packer').startup {
   function(use)
-    local local_use = function(plug_path)
+    local local_use = function(plug_path, home)
+      home = home or 'tjdevries'
       if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. plug_path)) == 1 then
         use("~/plugins/" .. plug_path)
       else
-        use('tjdevries/' .. plug_path)
+        use(string.format('%s/%s', home, plug_path))
       end
     end
 
@@ -47,20 +48,21 @@ return require('packer').startup {
     local_use 'apyrori.nvim'
     local_use 'py_package.nvim'
     local_use 'manillua.nvim'
-    local_use 'riki.nvim'
     local_use 'cyclist.vim'
     local_use 'bandaid.nvim'
-    local_use 'popup.nvim'
     local_use 'train.vim'
     local_use 'express_line.nvim'
     local_use 'overlength.vim'
     local_use 'pastery.vim'
-    local_use 'telescope.nvim'
     local_use 'command_and_conquer.nvim'
 
     local_use 'lsp_extensions.nvim'
 
     -- pcall(use, '~/plugins/scrollnv')
+    local_use('telescope.nvim', 'nvim-lua')
+    local_use('popup.nvim', 'nvim-lua')
+
+    -- local_use 'riki.nvim'
 
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
@@ -214,6 +216,10 @@ return require('packer').startup {
     -- NAVIGATION: {{{
     -- STREAM: Show off edit_alternate.vim
     use 'tjdevries/edit_alternate.vim'
+
+    use 'kyazdani42/nvim-web-devicons'
+    use 'kyazdani42/nvim-tree.lua'
+    use 'justinmk/vim-dirvish'
 
     use 'google/vim-searchindex'
 
