@@ -41,6 +41,7 @@ return require('packer').startup {
 
     -- My Plugins
     local_use 'nlua.nvim'
+    local_use 'vlog.nvim'
     local_use 'vim9jit'
     local_use 'colorbuddy.vim'
     local_use 'gruvbuddy.nvim'
@@ -122,6 +123,9 @@ return require('packer').startup {
     -- Undo helper
     use 'sjl/gundo.vim'
 
+    -- Make cool signs for your files
+    use 'johannesthyssen/vim-signit'
+
     --   FOCUSING: {{{
     use 'junegunn/goyo.vim'
     use 'junegunn/limelight.vim'
@@ -181,7 +185,8 @@ return require('packer').startup {
     use 'puremourning/vimspector'
     -- }}}
     -- TREE SITTER: {{{
-    use 'nvim-treesitter/nvim-treesitter'
+    local_use 'nvim-treesitter'
+    use 'nvim-treesitter/playground'
 
     -- }}}
     -- NAVIGATION: {{{
@@ -191,6 +196,8 @@ return require('packer').startup {
     use 'justinmk/vim-dirvish'
 
     use 'google/vim-searchindex'
+
+    use 'pechorin/any-jump.vim'
     -- }}}
     -- TEXT MANIUPLATION {{{
     use 'godlygeek/tabular'        -- Quickly align text by pattern
@@ -224,6 +231,8 @@ return require('packer').startup {
     end
     -- }}}
 
+    use 'untitled-ai/jupyter_ascending.vim'
+
     use 'tjdevries/standard.vim'
     use 'tjdevries/conf.vim'
     use 'junegunn/vader.vim'
@@ -234,6 +243,7 @@ return require('packer').startup {
     use {'yuki-ycino/fzf-preview.vim', run = 'npm install' }
 
     use 'lervag/wiki.vim'
+    use 'ihsanturk/neuron.vim'
   end,
   config = {
     display = {

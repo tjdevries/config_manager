@@ -1,3 +1,9 @@
+"      __________________    __
+"     /_  __/ ____/ ____/   / /    TJ DeVries
+"      / / / __/ / __/ __  / /     https://github.com/tjdevries
+"     / / / /___/ /___/ /_/ /      https://twitch.tv/teej_dv
+"    /_/ /_____/_____/\____/
+"
 scriptencoding utf-8
 
 " Neovim specific configuration file
@@ -45,7 +51,7 @@ if has('unix')
   "
   " $ pyenv install 3.5.2
   " $ pyenv virtualenv 3.5.2 neovim3
-  " ... 
+  " ...
   "
   " Something like that
   if glob('~/.pyenv/versions/neovim2/bin/python') != ''

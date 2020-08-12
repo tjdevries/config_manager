@@ -17,10 +17,4 @@ nnoremap <silent><leader>ds <Esc>:Pytest session<CR>
 augroup MyPythonAutos
   au!
   autocmd BufWritePost * :call PythonAuto()
-
-  " Only for our special .status.py files
-  autocmd BufWritePost * :call nb_sync#sync()
 augroup END
-
-
-nnoremap <buffer> <space><space>x :call nb_sync#execute()<CR>

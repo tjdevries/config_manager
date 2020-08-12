@@ -8,8 +8,8 @@ local status = require('tj.status')
 -- require('vim.lsp.log').set_level("debug")
 -- require('vim.lsp.log').set_level("trace")
 
-Diagnostic = vim.lsp.actions.Diagnostic
-Location = vim.lsp.actions.Location
+Diagnostic = require('vim.lsp.actions').Diagnostic
+Location = require('vim.lsp.actions').Location
 
 -- Turn on status.
 status.activate()
