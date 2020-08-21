@@ -1,12 +1,12 @@
 
 -- Load lsp config
 local ok, _ = pcall(function() require('lsp_config') end)
-if not ok then
-  return
-end
 
 -- TODO: Experiment with lua tree sitter and make it the coolest ever.
 require('tj.treesitter')
+
+require('tj.statusline')
+require('tj.snippets')
 
 -- Run the first time to install it
 if false then

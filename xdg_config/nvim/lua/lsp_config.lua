@@ -2,36 +2,51 @@ local nvim_lsp = require('nvim_lsp')
 local nvim_status = require('lsp-status')
 local completion = require('completion')
 
-local status = require('tj.status')
+local status = require('tj.lsp_status')
 
 -- Can set this lower if needed.
 -- require('vim.lsp.log').set_level("debug")
 -- require('vim.lsp.log').set_level("trace")
 
-Diagnostic = require('vim.lsp.actions').Diagnostic
-Location = require('vim.lsp.actions').Location
+local mapper = function(mode, key, result)
+  vim.fn.nvim_buf_set_keymap(0, mode, key, result, {noremap = true, silent = true})
+end
+
+local setup_custom_diagnostics = function()
+  Diagnostic = require('vim.lsp.actions').Diagnostic
+  Location = require('vim.lsp.actions').Location
+
+  vim.lsp.callbacks["textDocument/publishDiagnostics"] = Diagnostic.handle_publish_diagnostics.with {
+    should_underline = false,
+    update_in_insert = false
+  }
+
+  mapper(
+    'n',
+    '<leader>dn',
+    '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_next_diagnostic()<CR>'
+  )
+
+  mapper(
+    'n',
+    '<leader>dp',
+    '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_prev_diagnostic()<CR>'
+  )
+end
 
 -- Turn on status.
 status.activate()
 
-vim.lsp.callbacks["textDocument/publishDiagnostics"] = Diagnostic.handle_publish_diagnostics.with {
-  should_underline = false,
-  update_in_insert = false
-}
-
 local custom_attach = function(client)
   completion.on_attach(client)
   status    .on_attach(client)
-
-  local mapper = function(mode, key, result)
-    vim.fn.nvim_buf_set_keymap(0, mode, key, result, {noremap = true, silent = true})
-  end
 
   mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
   mapper('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>')
   mapper('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
   mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   mapper('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+  mapper('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 
   -- if not vim.api.nvim_buf_get_keymap(0, 'n')['K'] then
   if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'lua' then
@@ -40,34 +55,17 @@ local custom_attach = function(client)
 
   mapper('n', '<space>sl', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>')
 
-  -- TODO: Decide if these are good.
-  mapper('n', '<space>pd', ':PrevDiagnostic<CR>')
-  mapper('n', '<space>nd', ':NextDiagnostic<CR>')
-
   mapper(
-  'n',
-  '<space>gd',
-  '<cmd>lua vim.lsp.buf.definition { callbacks = { Location.jump_first, Location.highlight.with { timeout = 300 } } }<CR>'
+    'n',
+    '<space>gd',
+    '<cmd>lua vim.lsp.buf.definition { callbacks = { Location.jump_first, Location.highlight.with { timeout = 300 } } }<CR>'
   )
 
   mapper(
-  'n',
-  '<space>pd',
-  '<cmd>lua vim.lsp.buf.definition { callbacks = Location.preview.with { lines_below = 5 } }<CR>'
+    'n',
+    '<space>pd',
+    '<cmd>lua vim.lsp.buf.definition { callbacks = Location.preview.with { lines_below = 5 } }<CR>'
   )
-
-  mapper(
-  'n',
-  '<leader>dn',
-  '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_next_diagnostic()<CR>'
-  )
-
-  mapper(
-  'n',
-  '<leader>dp',
-  '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_prev_diagnostic()<CR>'
-  )
-
 
   mapper('i', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 

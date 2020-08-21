@@ -1,8 +1,5 @@
 -- On ly required if you have packer in your `opt` pack
-vim.cmd [[packadd packer.nvim]]
-vim._update_package_paths()
-
-local packer_exists = pcall(require, 'packer')
+local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
 if not packer_exists then
   -- TODO: Maybe handle windows better?
@@ -41,12 +38,12 @@ return require('packer').startup {
 
     -- My Plugins
     local_use 'nlua.nvim'
+    local_use 'tree-sitter-nlua'
     local_use 'vlog.nvim'
     local_use 'vim9jit'
     local_use 'colorbuddy.vim'
     local_use 'gruvbuddy.nvim'
     local_use 'plenary.nvim'
-    local_use 'luvjob.nvim'
     local_use 'apyrori.nvim'
     local_use 'py_package.nvim'
     local_use 'manillua.nvim'
@@ -62,7 +59,7 @@ return require('packer').startup {
     local_use 'command_and_conquer.nvim'
 
     -- Packer can manage itself as an optional plugin
-    -- use {'wbthomason/packer.nvim', opt = true}
+    use {'wbthomason/packer.nvim', opt = true}
 
     -- PRACTICE: {{{
     use 'tpope/vim-projectionist'  -- STREAM: Alternate file editting and some helpful stuff
@@ -168,8 +165,11 @@ return require('packer').startup {
 
     -- STREAM: Figure out how to use snippets better
     use 'haorenW1025/completion-nvim'
-    use 'hrsh7th/vim-vsnip'
-    use 'hrsh7th/vim-vsnip-integ'
+
+    -- use 'hrsh7th/vim-vsnip'
+    -- use 'hrsh7th/vim-vsnip-integ'
+    use 'norcalli/snippets.nvim'
+    use 'norcalli/ui.nvim'
 
     -- TODO: Merge in my LSP PR...
     -- Plug 'haorenW1025/diagnostic-nvim'
@@ -244,10 +244,12 @@ return require('packer').startup {
 
     use 'lervag/wiki.vim'
     use 'ihsanturk/neuron.vim'
+
+    use 'ThePrimeagen/vim-apm'
   end,
   config = {
     display = {
-      open_fn = function(name)
+      _open_fn = function(name)
         -- Can only use plenary when we have our plugins.
         --  We can only get plenary when we don't have our plugins ;)
         local ok, float_win = pcall(function()
