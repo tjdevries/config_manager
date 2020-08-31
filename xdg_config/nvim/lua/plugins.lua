@@ -58,6 +58,8 @@ return require('packer').startup {
     local_use 'telescope.nvim'
     local_use 'command_and_conquer.nvim'
 
+    local_use 'lsp_extensions.nvim'
+
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
 
@@ -81,7 +83,8 @@ return require('packer').startup {
     use 'mhinz/vim-startify'
 
     -- Better profiling output for startup.
-    use 'tweekmonster/startuptime.vim'
+    use 'dstein64/vim-startuptime'
+    -- use 'tweekmonster/startuptime.vim'  -- Might switch back to this, but they are incompatible.
 
     -- Pretty colors
     use 'norcalli/nvim-colorizer.lua'
@@ -116,6 +119,7 @@ return require('packer').startup {
 
     -- Pretty icons. Not necessarily required.
     use 'ryanoasis/vim-devicons'
+    use 'kyazdani42/nvim-web-devicons'
 
     -- Undo helper
     use 'sjl/gundo.vim'
@@ -150,6 +154,8 @@ return require('packer').startup {
     use 'othree/javascript-libraries-syntax.vim'
     use 'leafgarland/typescript-vim'
     use 'peitalin/vim-jsx-typescript'
+
+    use { 'prettier/vim-prettier', run = 'yarn install' }
 
     use 'mattn/emmet-vim'
     use { 'vim-scripts/JavaScript-Indent', ft = 'javascript' }
@@ -193,11 +199,12 @@ return require('packer').startup {
     -- STREAM: Show off edit_alternate.vim
     use 'tjdevries/edit_alternate.vim'
 
-    use 'justinmk/vim-dirvish'
-
     use 'google/vim-searchindex'
 
+    use 'justinmk/vim-dirvish'
     use 'pechorin/any-jump.vim'
+    use 'andymass/vim-matchup'
+
     -- }}}
     -- TEXT MANIUPLATION {{{
     use 'godlygeek/tabular'        -- Quickly align text by pattern

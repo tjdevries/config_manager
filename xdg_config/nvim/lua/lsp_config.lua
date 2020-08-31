@@ -47,6 +47,7 @@ local custom_attach = function(client)
   mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   mapper('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
   mapper('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+  mapper('n', '<space>cr', '<cmd>lua vim.lsp.buf.rename()<CR>')
 
   -- if not vim.api.nvim_buf_get_keymap(0, 'n')['K'] then
   if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'lua' then
@@ -66,6 +67,11 @@ local custom_attach = function(client)
     '<space>pd',
     '<cmd>lua vim.lsp.buf.definition { callbacks = Location.preview.with { lines_below = 5 } }<CR>'
   )
+
+  -- Rust is currently the only thing w/ inlay hints
+  if vim.api.nvim_buf_get_option(0, 'filetype') == 'rust' then
+    vim.cmd [[autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request { aligned = true, prefix = " » " }]]
+  end
 
   mapper('i', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 
@@ -98,18 +104,24 @@ require('nlua.lsp.nvim').setup(nvim_lsp, {
   }
 })
 
-nvim_lsp.tsserver.setup({
-  cmd = {"typescript-language-server", "--stdio"},
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescriptreact",
-    "typescript.tsx"
-  },
-  on_attach = custom_attach
-})
+if true then
+  nvim_lsp.tsserver.setup({
+    cmd = {"typescript-language-server", "--stdio"},
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx"
+    },
+    on_attach = custom_attach
+  })
+else
+  nvim_lsp.sourcegraph_ts.setup {
+    on_attach = custom_attach
+  }
+end
 
 nvim_lsp.clangd.setup({
   cmd = {"clangd", "--background-index"},

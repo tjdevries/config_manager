@@ -40,3 +40,6 @@ nnoremap <space>fa      <cmd>FzfPreviewDirectoryFiles ~/.local/share/nvim/site/p
 nnoremap <leader>en     <cmd>FzfPreviewDirectoryFiles ~/.config/nvim<CR>
 
 nnoremap <leader>fc     <cmd>FzfPreviewDirectoryFiles ~/.config/<CR>
+
+
+nnoremap <space>ft <cmd>lua require('plenary.reload').reload_module('telescope'); require('telescope.builtin').git_files()<CR>
