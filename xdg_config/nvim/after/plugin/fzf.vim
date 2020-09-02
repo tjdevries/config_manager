@@ -25,7 +25,7 @@ nnoremap <space>gs      <cmd>FzfPreviewGitStatus<CR>
 " ANKI: Call FZF Preview Project Grep
 nnoremap <space>gg      :FzfPreviewProjectGrep 
 " ANKI: Call FZF Preview on current word
-nnoremap <space>gw      <cmd>call execute(':FzfPreviewProjectGrep ' . expand("<cword>"))<CR>
+" nnoremap <space>gw      <cmd>call execute(':FzfPreviewProjectGrep ' . expand("<cword>"))<CR>
 " ANKI: Call FZF Preview Tons of Things
 nnoremap <space><space> <cmd>FzfPreviewFromResources project git directory buffer project_mru<CR>
 
@@ -42,4 +42,16 @@ nnoremap <leader>en     <cmd>FzfPreviewDirectoryFiles ~/.config/nvim<CR>
 nnoremap <leader>fc     <cmd>FzfPreviewDirectoryFiles ~/.config/<CR>
 
 
-nnoremap <space>ft <cmd>lua require('plenary.reload').reload_module('telescope'); require('telescope.builtin').git_files()<CR>
+nnoremap <space>ft <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').git_files { shorten_path = true }<CR>
+
+nnoremap <space>fg <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').live_grep()<CR>
+
+nnoremap <space>fr <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').lsp_references()<CR>
+
+nnoremap <space>fo <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').oldfiles()<CR>
+
+nnoremap <space>fb <cmd>lua RELOAD('telescope'); require('telescope.builtin').builtin()<CR>
+
+nnoremap <space>gw <cmd>lua RELOAD('telescope'); require('telescope.builtin').grep_string()<CR>
+
+nnoremap <space>g; <cmd>lua RELOAD('telescope'); require('telescope.builtin').command_history()<CR>

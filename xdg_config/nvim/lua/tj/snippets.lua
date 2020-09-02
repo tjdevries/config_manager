@@ -11,6 +11,7 @@ local snips = {}
 snips._global = {
   ["todo"] = "TODO(tjdevries): ",
   ["date"] = [[${=os.date("%Y-%m-%d")}]],
+  ["rs"] = [[${=RandomString(25)}]],
 }
 
 snips.lua = vim.tbl_deep_extend(
@@ -24,6 +25,12 @@ snips.lua = vim.tbl_deep_extend(
   }
 )
 
+snips.json = {
+  testEntry = [[, {"text": "$1"}]],
+  i = [["$1": "$2"]],
+  e = [[, {"text": "$1: ${=RandomString(25)}", "score": $1}]],
+}
+
 snip_plug.snippets = snips
 snip_plug.use_suggested_mappings()
 
@@ -34,6 +41,25 @@ require'snippets'.set_ux(require'snippets.inserters.floaty')
 --  Could possibly use fzf or something for this, but this seemds good for now.
 vim.cmd [[nnoremap ,se :e ~/.config/nvim/lua/tj/snippets.lua<CR>]]
 vim.cmd [[nnoremap ,sn :e ~/plugins/nlua.nvim/lua/nlua/snippets/snippets_nvim.lua<CR>]]
+
+local charset = {}
+do -- [0-9a-zA-Z]
+    -- for c = 48, 57  do table.insert(charset, string.char(c)) end
+    for c = 65, 90  do table.insert(charset, string.char(c)) end
+    for c = 97, 122 do table.insert(charset, string.char(c)) end
+    table.insert(charset, " ")
+    table.insert(charset, " ")
+    table.insert(charset, " ")
+    table.insert(charset, " ")
+    table.insert(charset, " ")
+    table.insert(charset, " ")
+end
+
+function RandomString(length)
+    if not length or length <= 0 then return '' end
+    math.randomseed(os.clock()^5)
+    return RandomString(length - 1) .. charset[math.random(1, #charset)]
+end
 
 --[[
 -- Leftover from stream

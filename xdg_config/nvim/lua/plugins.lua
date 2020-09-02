@@ -60,6 +60,8 @@ return require('packer').startup {
 
     local_use 'lsp_extensions.nvim'
 
+    -- pcall(use, '~/plugins/scrollnv')
+
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
 
@@ -119,7 +121,9 @@ return require('packer').startup {
 
     -- Pretty icons. Not necessarily required.
     use 'ryanoasis/vim-devicons'
+
     use 'kyazdani42/nvim-web-devicons'
+    use 'kyazdani42/nvim-tree.lua'
 
     -- Undo helper
     use 'sjl/gundo.vim'
@@ -253,6 +257,7 @@ return require('packer').startup {
     use 'ihsanturk/neuron.vim'
 
     use 'ThePrimeagen/vim-apm'
+    use 'ThePrimeagen/vim-be-good'
   end,
   config = {
     display = {
