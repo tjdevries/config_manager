@@ -131,6 +131,8 @@ return require('packer').startup {
     -- Make cool signs for your files
     use 'johannesthyssen/vim-signit'
 
+    use 'gyim/vim-boxdraw'
+
     --   FOCUSING: {{{
     use 'junegunn/goyo.vim'
     use 'junegunn/limelight.vim'
@@ -146,6 +148,9 @@ return require('packer').startup {
     use 'PProvost/vim-ps1'
     use 'cespare/vim-toml'
     use 'Glench/Vim-Jinja2-Syntax'
+
+    -- Can add back if we ever use it.
+    -- use 'JuliaEditorSupport/julia-vim'
 
     -- Lua {{{
     use 'euclidianAce/BetterLua.vim'
@@ -197,6 +202,7 @@ return require('packer').startup {
     -- TREE SITTER: {{{
     local_use 'nvim-treesitter'
     use 'nvim-treesitter/playground'
+    use 'vigoux/architext.nvim'
 
     -- }}}
     -- NAVIGATION: {{{

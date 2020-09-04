@@ -29,8 +29,6 @@ nnoremap <space>gg      :FzfPreviewProjectGrep
 " ANKI: Call FZF Preview Tons of Things
 nnoremap <space><space> <cmd>FzfPreviewFromResources project git directory buffer project_mru<CR>
 
-nnoremap <space>fd      <cmd>FzfPreviewDirectoryFiles<CR>
-
 " ANKI: Call Fzf Preview File Plugins
 nnoremap <space>fp      <cmd>FzfPreviewDirectoryFiles ~/plugins/<CR>
 
@@ -42,16 +40,21 @@ nnoremap <leader>en     <cmd>FzfPreviewDirectoryFiles ~/.config/nvim<CR>
 nnoremap <leader>fc     <cmd>FzfPreviewDirectoryFiles ~/.config/<CR>
 
 
+nnoremap <leader>en <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').git_files { shorten_path = true, cwd = "~/.config/nvim" }<CR>
 nnoremap <space>ft <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').git_files { shorten_path = true }<CR>
-
-nnoremap <space>fg <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').live_grep()<CR>
+nnoremap <space>fg <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').live_grep { shorten_path = true }<CR>
+nnoremap <space>fo <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').oldfiles()<CR>
 
 nnoremap <space>fr <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').lsp_references()<CR>
 
-nnoremap <space>fo <cmd>lua RELOAD('plenary'); RELOAD('telescope'); require('telescope.builtin').oldfiles()<CR>
-
 nnoremap <space>fb <cmd>lua RELOAD('telescope'); require('telescope.builtin').builtin()<CR>
 
-nnoremap <space>gw <cmd>lua RELOAD('telescope'); require('telescope.builtin').grep_string()<CR>
+nnoremap <space>gw <cmd>lua RELOAD('telescope'); require('telescope.builtin').grep_string { shorten_path = true }<CR>
 
 nnoremap <space>g; <cmd>lua RELOAD('telescope'); require('telescope.builtin').command_history()<CR>
+
+nnoremap <space>rr <cmd>lua RELOAD('plenary'); RELOAD('telescope');<CR>
+
+cmap <nowait> <c-r> <Plug>(TelescopeFuzzyCommandSearch)
+
+nnoremap <space>fd <cmd>lua RELOAD('telescope'); require('telescope.builtin').fd()<CR>
