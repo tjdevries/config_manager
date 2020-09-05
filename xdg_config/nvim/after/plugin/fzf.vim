@@ -15,7 +15,6 @@ nnoremap <leader><leader>F :call fzf#vim#grep("rg --column --line-number --no-he
 let g:fzf_preview_use_dev_icons = 1
 
 " ANKI: Call Buffer stuff
-nnoremap <space>fb      <cmd>Buffers<CR>
 " ANKI: Call FZF Preview Project Files
 nnoremap <space>ff      <cmd>FzfPreviewProjectFiles<CR>
 " ANKI: Call FZF Preview Buffers
@@ -58,3 +57,4 @@ nnoremap <space>rr <cmd>lua RELOAD('plenary'); RELOAD('telescope');<CR>
 cmap <nowait> <c-r> <Plug>(TelescopeFuzzyCommandSearch)
 
 nnoremap <space>fd <cmd>lua RELOAD('telescope'); require('telescope.builtin').fd()<CR>
+nnoremap <space>fb <cmd>lua RELOAD('telescope'); require('telescope.builtin').buffers { shorten_path = true }<CR>
