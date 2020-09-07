@@ -1,5 +1,5 @@
 ---
-title: Design Principles of Lua
+title: Lua + Neovim = Luv
 author: TJ DeVries
 date: 2020-09-05
 ---
