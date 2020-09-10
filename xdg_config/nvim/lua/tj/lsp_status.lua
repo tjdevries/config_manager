@@ -21,7 +21,14 @@ end
 
 status.activate = function()
   nvim_status.config {
-    select_symbol = status.select_symbol
+    select_symbol = status.select_symbol,
+
+    indicator_errors = '',
+    indicator_warnings = '',
+    indicator_info = '🛈',
+    indicator_hint = '!',
+    indicator_ok = '',
+    spinner_frames = {'⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷'},
   }
 
   nvim_status.register_progress()

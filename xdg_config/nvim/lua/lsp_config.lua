@@ -41,7 +41,11 @@ local custom_attach = function(client)
   completion.on_attach(client)
   status    .on_attach(client)
 
-  mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+  if false then
+    pcall(setup_custom_diagnostics)
+  end
+
+  -- mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
   mapper('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>')
   mapper('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
   mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
@@ -75,7 +79,6 @@ local custom_attach = function(client)
 
   mapper('i', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 
-  -- Not sure if this is right
   vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 end
 
@@ -140,13 +143,6 @@ nvim_lsp.rust_analyzer.setup({
   filetypes = {"rust"},
   on_attach = custom_attach,
 })
-
-vim.g.indicator_errors = ''
-vim.g.indicator_warnings = ''
-vim.g.indicator_info = '🛈'
-vim.g.indicator_hint = '!'
-vim.g.indicator_ok = ''
-vim.g.spinner_frames = {'⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷'}
 
 --[[
 Example settings, have not messed around with too many of these.

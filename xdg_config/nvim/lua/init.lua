@@ -3,9 +3,11 @@
 local ok, _ = pcall(function() require('lsp_config') end)
 
 -- TODO: Experiment with lua tree sitter and make it the coolest ever.
+require('tj.completion')
 require('tj.treesitter')
 require('tj.statusline')
 require('tj.snippets')
+require('tj.telescope')
 
 RELOAD = require('plenary.reload').reload_module
 

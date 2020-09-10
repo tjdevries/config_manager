@@ -8,6 +8,12 @@ local plugins = {
     only_setup = false,
     path = "/home/tj/.local/share/nvim/site/pack/packer/opt/JavaScript-Indent"
   },
+  ["packer.nvim"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/home/tj/.local/share/nvim/site/pack/packer/opt/packer.nvim"
+  },
   ["vim-javascript"] = {
     loaded = false,
     only_sequence = false,
@@ -125,7 +131,7 @@ _packer_load = function(names, cause)
 
     -- NOTE: I'm not sure if the below substitution is correct; it might correspond to the literal
     -- characters \<Plug> rather than the special <Plug> key.
-    vim.fn.feedkeys(string.gsub(cause.keys, '^<Plug>', '\\<Plug>') .. extra)
+    vim.fn.feedkeys(string.gsub(string.gsub(cause.keys, '^<Plug>', '\\<Plug>') .. extra, '<[cC][rR]>', '\r'))
   elseif cause.event then
     vim.cmd(fmt('doautocmd <nomodeline> %s', cause.event))
   elseif cause.ft then
@@ -141,7 +147,7 @@ vim._update_package_paths()
 END
 
 function! s:load(names, cause) abort
-  call luaeval('_packer_load(_A[1], _A[2])', [a:names, a:cause])
+call luaeval('_packer_load(_A[1], _A[2])', [a:names, a:cause])
 endfunction
 
 " Runtimepath customization

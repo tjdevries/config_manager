@@ -123,7 +123,7 @@ return require('packer').startup {
     use 'ryanoasis/vim-devicons'
 
     use 'kyazdani42/nvim-web-devicons'
-    use 'kyazdani42/nvim-tree.lua'
+    -- use 'kyazdani42/nvim-tree.lua'
 
     -- Undo helper
     use 'sjl/gundo.vim'
@@ -180,6 +180,8 @@ return require('packer').startup {
 
     -- STREAM: Figure out how to use snippets better
     use 'haorenW1025/completion-nvim'
+    use 'steelsojka/completion-buffers'
+    use 'nvim-treesitter/completion-treesitter'
 
     -- use 'hrsh7th/vim-vsnip'
     -- use 'hrsh7th/vim-vsnip-integ'
