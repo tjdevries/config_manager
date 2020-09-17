@@ -2,14 +2,19 @@
 -- Load lsp config
 local ok, _ = pcall(function() require('lsp_config') end)
 
+RELOAD = require('plenary.reload').reload_module
+
+R = function(name)
+  RELOAD(name)
+  return require(name)
+end
+
 -- TODO: Experiment with lua tree sitter and make it the coolest ever.
 require('tj.completion')
 require('tj.treesitter')
 require('tj.statusline')
 require('tj.snippets')
 require('tj.telescope')
-
-RELOAD = require('plenary.reload').reload_module
 
 -- Run the first time to install it
 if false then

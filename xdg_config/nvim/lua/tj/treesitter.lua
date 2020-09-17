@@ -4,6 +4,10 @@ local custom_captures = {
   ['foo.bar'] = 'Identifier',
 }
 
+if true then
+  return
+end
+
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true, -- false will disable the whole extension
@@ -69,3 +73,16 @@ require('nvim-treesitter.configs').setup {
   -- },
   -- ensure_installed = {'lua'}, -- one of 'all', 'language', or a list of languages
 }
+
+--[[
+
+-- From python, get all the things we import, update __all__
+
+(import_from_statement name: (*) @Importer)
+
+(
+ (assignment left: (expression_list (identifier)) @assign)
+ (#eq? @assign "__all__")
+)
+
+--]]

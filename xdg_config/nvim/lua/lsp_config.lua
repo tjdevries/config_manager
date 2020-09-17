@@ -9,7 +9,7 @@ local status = require('tj.lsp_status')
 -- require('vim.lsp.log').set_level("trace")
 
 local mapper = function(mode, key, result)
-  vim.fn.nvim_buf_set_keymap(0, mode, key, result, {noremap = true, silent = true})
+  vim.api.nvim_buf_set_keymap(0, mode, key, result, {noremap = true, silent = true})
 end
 
 local setup_custom_diagnostics = function()
@@ -104,6 +104,9 @@ require('nlua.lsp.nvim').setup(nvim_lsp, {
   globals = {
     -- Colorbuddy
     "Color", "c", "Group", "g", "s",
+
+    -- Custom
+    "RELOAD",
   }
 })
 

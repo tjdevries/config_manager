@@ -123,7 +123,7 @@ return require('packer').startup {
     use 'ryanoasis/vim-devicons'
 
     use 'kyazdani42/nvim-web-devicons'
-    -- use 'kyazdani42/nvim-tree.lua'
+    use 'kyazdani42/nvim-tree.lua'
 
     -- Undo helper
     use 'sjl/gundo.vim'
@@ -132,6 +132,9 @@ return require('packer').startup {
     use 'johannesthyssen/vim-signit'
 
     use 'gyim/vim-boxdraw'
+
+    -- Helper to put stuff in quickfix
+    -- use 'neomake/neomake'
 
     --   FOCUSING: {{{
     use 'junegunn/goyo.vim'
@@ -232,6 +235,11 @@ return require('packer').startup {
     -- Do I even use any of these?
     use 'kana/vim-textobj-user'
     use 'bps/vim-textobj-python'
+    -- }}}
+    -- Python: {{{
+
+    use 'alfredodeza/pytest.vim'
+
     -- }}}
     -- GIT: {{{
     -- gita replacement

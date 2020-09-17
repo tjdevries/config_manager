@@ -186,7 +186,7 @@ endif
 
 set shada=!,'1000,<50,s10,h
 
-set mouse=a
+set mouse=n
 
 " guicursor messing around
 " set guicursor=n:blinkwait175-blinkoff150-blinkon175-hor10

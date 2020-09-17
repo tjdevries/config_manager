@@ -8,10 +8,10 @@ set shiftwidth=4
 nmap <leader>k [pf
 nmap <leader>j ]pf
 
-nnoremap <silent><leader>df <Esc>:Pytest file<CR>
-nnoremap <silent><leader>dc <Esc>:Pytest class<CR>
-nnoremap <silent><leader>dm <Esc>:Pytest method<CR>
-nnoremap <silent><leader>ds <Esc>:Pytest session<CR>
+nnoremap <buffer><silent> <space>pf <cmd>Pytest file<CR>
+nnoremap <buffer><silent> <space>pc <cmd>Pytest function<CR>
+nnoremap <buffer><silent> <space>pm <cmd>Pytest method<CR>
+nnoremap <buffer><silent> <space>ps <cmd>Pytest session<CR>
 " }}}
 
 augroup MyPythonAutos

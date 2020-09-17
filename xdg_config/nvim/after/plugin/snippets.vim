@@ -2,11 +2,11 @@
 let g:vsnip_extra_mapping = v:true
 let g:vsnip_snippet_dir = expand("~/.config/nvim/snips/vsnip")
 
-imap <leader>e <Plug>(vsnip-expand)
-imap <M-n> <Plug>(vsnip-jump-next)
-smap <M-n> <Plug>(vsnip-jump-next)
-imap <M-p> <Plug>(vsnip-jump-prev)
-smap <M-p> <Plug>(vsnip-jump-prev)
+" imap <leader>e <Plug>(vsnip-expand)
+" imap <M-n> <Plug>(vsnip-jump-next)
+" smap <M-n> <Plug>(vsnip-jump-next)
+" imap <M-p> <Plug>(vsnip-jump-prev)
+" smap <M-p> <Plug>(vsnip-jump-prev)
 
 if v:false
   " Configuration for custom snips
