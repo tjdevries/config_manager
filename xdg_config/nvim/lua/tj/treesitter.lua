@@ -4,20 +4,15 @@ local custom_captures = {
   ['foo.bar'] = 'Identifier',
 }
 
-if true then
-  return
-end
-
 require('nvim-treesitter.configs').setup {
   highlight = {
-    enable = true, -- false will disable the whole extension
-    disable = {'lua', 'typescript.tsx', 'typescript', 'tsx'},
+    enable = false, -- false will disable the whole extension
+    disable = {'typescript.tsx', 'typescript', 'tsx'},
     custom_captures = custom_captures,
   },
 
   incremental_selection = {
     enable = true,
-    disable = {},
     keymaps = { -- mappings for incremental selection (visual mappings)
       init_selection = '<M-w>',    -- maps in normal mode to init the node/scope selection
       node_incremental = '<M-w>',  -- increment to the upper named parent
@@ -26,23 +21,26 @@ require('nvim-treesitter.configs').setup {
     },
   },
 
-  -- refactor = {
-  --   highlight_definitions = {enable = true},
-  --   highlight_current_scope = {enable = true},
-  --   smart_rename = {
-  --     enable = true,
-  --     keymaps = {
-  --       smart_rename = 'grr', -- mapping to rename reference under cursor
-  --     },
-  --   },
-  --   navigation = {
-  --     enable = true,
-  --     keymaps = {
-  --       goto_definition = 'gnd', -- mapping to go to definition of symbol under cursor
-  --       list_definitions = 'gnD', -- mapping to list all definitions in current file
-  --     },
-  --   },
-  -- },
+  refactor = {
+    highlight_definitions = {enable = true},
+    highlight_current_scope = {enable = false},
+    smart_rename = {
+      enable = true,
+      keymaps = {
+        -- mapping to rename reference under cursor
+        smart_rename = 'grr',
+      },
+    },
+
+    -- TODO: This seems broken...
+    navigation = {
+      enable = true,
+      keymaps = {
+        goto_definition = 'gnd', -- mapping to go to definition of symbol under cursor
+        list_definitions = 'gnD', -- mapping to list all definitions in current file
+      },
+    },
+  },
   -- textobjects = { -- syntax-aware textobjects
   --   enable = true,
   --   disable = {},

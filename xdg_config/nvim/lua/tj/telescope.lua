@@ -2,6 +2,7 @@ require('plenary.reload').reload_module('telescope')
 require('plenary.reload').reload_module('plenary')
 require('plenary.reload').reload_module('popup')
 
+
 require('telescope').setup {
   defaults = {
     winblend = 0,
@@ -55,7 +56,13 @@ function M.edit_neovim()
   require('telescope.builtin').git_files {
     shorten_path = true,
     cwd = "~/.config/nvim",
-    prompt = "~ dotfiles ~"
+    prompt = "~ dotfiles ~",
+    height = 10,
+
+    layout_strategy = 'horizontal',
+    layout_options = {
+      preview_width = 0.75,
+    },
   }
 end
 
@@ -106,6 +113,28 @@ function M.installed_plugins()
   require('telescope.builtin').find_files {
     cwd = vim.fn.stdpath('data') .. '/site/pack/packer/start/'
   }
+end
+
+function M.project_search()
+  reloader()
+
+  require('telescope.builtin').find_files {
+    previewer = false,
+    layout_strategy = "vertical",
+    cwd = require('nvim_lsp.util').root_pattern(".git")(vim.fn.expand("%:p")),
+  }
+end
+
+function M.curbuf()
+  reloader()
+
+  local opts = themes.get_dropdown {
+    winblend = 10,
+    border = true,
+    previewer = false,
+    shorten_path = false,
+  }
+  require('telescope.builtin').current_buffer_fuzzy_find(opts)
 end
 
 return M

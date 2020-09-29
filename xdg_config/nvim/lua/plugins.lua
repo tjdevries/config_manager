@@ -90,6 +90,7 @@ return require('packer').startup {
 
     -- Pretty colors
     use 'norcalli/nvim-colorizer.lua'
+    use 'norcalli/nvim-terminal.lua'
 
     -- Make comments appear IN YO FACE
     use 'tjdevries/vim-inyoface'
@@ -267,7 +268,7 @@ return require('packer').startup {
     use {'junegunn/fzf', run = './install --all' }     -- Fuzzy Searcher
     use {'junegunn/fzf.vim'}
     -- use {'yuki-ycino/fzf-preview.vim', run = 'yarn global add' }
-    use {'yuki-ycino/fzf-preview.vim', run = 'npm install' }
+    -- use {'yuki-ycino/fzf-preview.vim', run = 'npm install' }
 
     use 'lervag/wiki.vim'
     use 'ihsanturk/neuron.vim'

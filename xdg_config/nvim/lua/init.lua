@@ -16,6 +16,9 @@ require('tj.statusline')
 require('tj.snippets')
 require('tj.telescope')
 
+
+require('terminal').setup()
+
 -- Run the first time to install it
 if false then
   -- Load required packages

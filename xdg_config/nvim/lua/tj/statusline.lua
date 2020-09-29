@@ -14,10 +14,17 @@ local lsp_statusline = require('el.plugins.lsp_status')
 -- 🌛︎🌝︎🌜︎🌚︎
 -- Show telescope icon / emoji when you open it as well
 
+--[[
+let s:left_sep = ' ❯❯ '
+let s:right_sep = ' ❮❮ '
+--]]
+
 require('el').setup {
   generator = function(win_id)
     return {
-      extensions.mode,
+      extensions.gen_mode {
+        format_string = '[%s]'
+      },
       sections.split,
       subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bufnr)
         local icon = extensions.file_icon(_, bufnr)
