@@ -16,7 +16,7 @@ snips._global = {
 
 snips.lua = vim.tbl_deep_extend(
   "error",
-  require('nlua.snippets.snippets_nvim').get_lua_snippets(),
+  require('nlua.snippets').get_lua_snippets(),
   {
     -- Custom parsed item, for a plugin I use a lot.
     get_parsed = [[local parsed = get_parsed($1)]],
@@ -40,7 +40,7 @@ require'snippets'.set_ux(require'snippets.inserters.floaty')
 -- Shortcuts for me to edit the snippet files
 --  Could possibly use fzf or something for this, but this seemds good for now.
 vim.cmd [[nnoremap ,se :e ~/.config/nvim/lua/tj/snippets.lua<CR>]]
-vim.cmd [[nnoremap ,sn :e ~/plugins/nlua.nvim/lua/nlua/snippets/snippets_nvim.lua<CR>]]
+vim.cmd [[nnoremap ,sn :e ~/plugins/nlua.nvim/lua/nlua/snippets.lua<CR>]]
 
 local charset = {}
 do -- [0-9a-zA-Z]

@@ -50,11 +50,17 @@ local themes = require('telescope.themes')
 
 local M = {}
 
+
+--[[
+lua require('plenary.reload').reload_module("my_user.tele")
+
+nnoremap <leader>en <cmd>lua require('my_user.tele').edit_neovim()<CR>
+--]]
 function M.edit_neovim()
   reloader()
 
   require('telescope.builtin').git_files {
-    shorten_path = true,
+    shorten_path = false,
     cwd = "~/.config/nvim",
     prompt = "~ dotfiles ~",
     height = 10,

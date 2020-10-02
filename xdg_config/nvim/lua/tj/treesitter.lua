@@ -6,8 +6,8 @@ local custom_captures = {
 
 require('nvim-treesitter.configs').setup {
   highlight = {
-    enable = false, -- false will disable the whole extension
-    disable = {'typescript.tsx', 'typescript', 'tsx'},
+    enable = true, -- false will disable the whole extension
+    disable = {'lua', 'typescript.tsx', 'typescript', 'tsx'},
     custom_captures = custom_captures,
   },
 

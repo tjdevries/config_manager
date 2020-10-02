@@ -25,6 +25,16 @@ require('el').setup {
       extensions.gen_mode {
         format_string = '[%s]'
       },
+      subscribe.buf_autocmd(
+        "el_git_branch",
+        "BufEnter",
+        function(window, buffer)
+          local branch = extensions.git_branch(window, buffer)
+          if branch then
+            return ' ' .. extensions.git_icon() .. ' ' .. branch
+          end
+        end
+      ),
       sections.split,
       subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bufnr)
         local icon = extensions.file_icon(_, bufnr)
