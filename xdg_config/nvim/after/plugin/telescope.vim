@@ -1,34 +1,4 @@
-
-
-nnoremap <leader><leader>f :call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(expand("<cword>")), 1, 0)<CR>
-nnoremap <leader><leader>F :call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(expand("<cWORD>")), 1, 0)<CR>
-
-
-" Other helpful shortcuts:
-"   To scroll the file, you can use <c-d> and <c-u>. This scrolls in the
-"   preview window.
-"
-"   To negate something, you can use "!" at the beginning of the pattern.
-"   To search from beginning, you can use "^" (converse is "$")
-"   To exact match, you can use "'"
-
-let g:fzf_preview_use_dev_icons = 1
-
-" ANKI: Call Buffer stuff
-" ANKI: Call FZF Preview Buffers
-nnoremap <space>if      <cmd>FzfPreviewBuffers<CR>
-" ANKI: Call FZF Preview Git Status
-nnoremap <space>gs      <cmd>FzfPreviewGitStatus<CR>
-" ANKI: Call FZF Preview Project Grep
-nnoremap <space>gg      :FzfPreviewProjectGrep 
-
-" ANKI: Call Fzf Preview on all plugins.
-
-nnoremap <leader>fc     <cmd>FzfPreviewDirectoryFiles ~/.config/<CR>
-
 cmap <nowait> <c-r><c-r> <Plug>(TelescopeFuzzyCommandSearch)
-
-nnoremap <space>rr <cmd>lua RELOAD('plenary'); RELOAD('telescope');<CR>
 
 nnoremap <space>gw <cmd>lua RELOAD('telescope'); require('telescope.builtin').grep_string { shorten_path = true, word_match = '-w' }<CR>
 

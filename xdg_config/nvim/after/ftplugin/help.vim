@@ -1,9 +1,14 @@
+" TODO(stream): We chould turn this into a plugin to make writing vim help
+" text easier. There's a lot of stuff that would be nice for it.
+
 setlocal expandtab
 setlocal textwidth=78
 setlocal tabstop=4
 setlocal shiftwidth=4
 
 
+" TODO: When refactoring this, consider just using `:right`...
+"       That seems much simpler and better.
 function! s:right_align() abort
   let text = matchstr(getline('.'), '^\s*\zs.\+\ze\s*$')
   let remainder = (&l:textwidth + 2) - len(text)
@@ -50,10 +55,13 @@ if !exists('*<SID>toggle_help_file_type')
   endfunction
 endif
 
-
-nnoremap <silent><buffer> <leader>ha :<c-u>call <sid>right_align()<cr>
 nnoremap <silent><buffer> <leader>th :<c-u>call <SID>toggle_help_file_type()<CR>
-nnoremap <silent><buffer> <leader>i= i===============================================================================<esc>
+
+
+" [h]elp [a]lign.
+nnoremap <silent><buffer> <leader>ha :<c-u>call <sid>right_align()<cr>
+
+nnoremap <silent><buffer> <leader>i= i==============================================================================<esc>
 "
 " nnoremap <silent><buffer> <leader>
 

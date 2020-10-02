@@ -1,14 +1,18 @@
 # Things to do in Nvim
 
+## TODOs
+
+Clean up this file...
+
+- Probably can remove `AnsiEscPlugin`, since we've got Norcalli's plugin that's better (terminal.nvim) or whatever the name is.
+- Look over some of Damian Conway's old stuff in here, see if they still run and if they should get hosted somewhere else?
+
 
 ## Shortcuts I like from PyCharm
 
 ```
 - <C-Space><C-Space>
     - Complete from anywhere
-- <C-J>
-    - Complete snippets (Live Templates)
-    - Should make the same snippets I have in PyCharm, so that things are easier.
 - <C-A-O>
     - Optimize imports
     - Sorts & Optimizes

@@ -37,16 +37,12 @@ if g:halo_enabled == v:true
 endif
 " }}}
 
-function! SyntaxNames() abort
-  let l:syntax_list = []
-  for id in synstack(line('.'), col('.'))
-    call add(l:syntax_list, synIDattr(id, 'name'))
-  endfor
 
-  return l:syntax_list
-endfunction
-nnoremap <leader>sh :echo string(SyntaxNames())<CR>
-
+" TODO: I would really like to be able to show the highlights from whatever
+" highlight is being applied by `nvim_buf_add_highlight` here as well. It is
+" not currently possible, as far as I know.
+"
+" Waiting for @bfredl to fix for me :grin:
 function! NewSyntaxNames() abort
   let l:syntax_list = []
   for id in synstack(line('.'), col('.'))

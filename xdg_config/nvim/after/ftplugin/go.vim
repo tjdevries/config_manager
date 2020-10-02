@@ -1,3 +1,8 @@
+" Folding Methods for Go {{{
+
+" We wrote this on stream one time to help someone.
+" I don't really know if it's good or not.
+
 function! s:matches(str, patterns) abort
   if type(a:patterns) == v:t_string
     return match(a:str, a:patterns) != -1
@@ -74,4 +79,4 @@ endfunction
 setlocal foldmethod=expr
 setlocal foldexpr=GoFolder()
 setlocal foldtext=GoText()
-
+" }}}
