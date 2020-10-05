@@ -53,4 +53,4 @@ function! NewSyntaxNames() abort
 endfunction
 
 " Syntax help
-nnoremap <leader><leader>sh :echo string(NewSyntaxNames())<CR>
+nnoremap <leader>sh :echo string(NewSyntaxNames())<CR>

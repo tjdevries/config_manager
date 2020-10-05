@@ -74,3 +74,12 @@ function nvimgif {
 
   termtosvg -g "$width"x"$height" $2 -c "nvim $1"
 }
+
+export DEFAULT_VIDEO="/dev/video0"
+function list_vid_option {
+  v4l2-ctl --list-ctrls -d $DEFAULT_VIDEO
+}
+
+function set_vid_option {
+  v4l2-ctl -d $DEFAULT_VIDEO --set-ctrl $1=$2
+}

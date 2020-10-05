@@ -8,6 +8,8 @@
 *zwc
 
 xdg_config/bin/YoutubeMusic.AppImage
+xdg_config/bin/Zulip.AppImage
+xdg_config/bin/tree-sitter-cli
 
 nvim/.netrwhist
 xdg_config/nvim/.netrwhist
@@ -110,3 +112,11 @@ xdg_config/neofetch/
 xdg_config/nvm/
 xdg_config/oh-my-zsh/
 xdg_config/qmk/
+xdg_config/Jackett/
+xdg_config/JetBrains/
+xdg_config/Zulip/
+xdg_config/gcloud/
+xdg_config/jesseduffield/
+xdg_config/nix/
+xdg_config/qBittorrent/
+xdg_config/youtube-music-desktop-app/

@@ -205,6 +205,9 @@ set formatoptions+=j    " Auto-remove comments if possible.
 set formatoptions-=2    " I'm not in gradeschool anymore
 set nojoinspaces        " Two spaces and grade school, we're done
 
+" set fillchars=eob:⠀
+set fillchars=eob:~
+
 " guicursor messing around
 " set guicursor=n:blinkwait175-blinkoff150-blinkon175-hor10
 " set guicursor=a:blinkon0

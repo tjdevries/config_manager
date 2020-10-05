@@ -1,7 +1,13 @@
-require('plenary.reload').reload_module('telescope')
-require('plenary.reload').reload_module('plenary')
-require('plenary.reload').reload_module('popup')
+local should_reload = true
+local reloader = function()
+  if should_reload then
+    RELOAD('plenary')
+    RELOAD('popup')
+    RELOAD('telescope')
+  end
+end
 
+reloader()
 
 require('telescope').setup {
   defaults = {
@@ -38,18 +44,9 @@ require('telescope').setup {
 
 }
 
-local should_reload = true
-local reloader = function()
-  if should_reload then
-    RELOAD('plenary')
-    RELOAD('telescope')
-  end
-end
-
 local themes = require('telescope.themes')
 
 local M = {}
-
 
 --[[
 lua require('plenary.reload').reload_module("my_user.tele")
@@ -57,8 +54,6 @@ lua require('plenary.reload').reload_module("my_user.tele")
 nnoremap <leader>en <cmd>lua require('my_user.tele').edit_neovim()<CR>
 --]]
 function M.edit_neovim()
-  reloader()
-
   require('telescope.builtin').git_files {
     shorten_path = false,
     cwd = "~/.config/nvim",
@@ -72,15 +67,30 @@ function M.edit_neovim()
   }
 end
 
-function M.builtin()
-  reloader()
+function M.edit_zsh()
+  require('telescope.builtin').git_files {
+    shorten_path = false,
+    cwd = "~/.config/zsh/",
+    prompt = "~ dotfiles ~",
+    height = 10,
 
+    layout_strategy = 'horizontal',
+    layout_options = {
+      preview_width = 0.75,
+    },
+  }
+end
+
+
+function M.fd()
+  require('telescope.builtin').fd()
+end
+
+function M.builtin()
   require('telescope.builtin').builtin()
 end
 
 function M.git_files()
-  reloader()
-
   local opts = themes.get_dropdown {
     winblend = 10,
     border = true,
@@ -92,38 +102,28 @@ function M.git_files()
 end
 
 function M.live_grep()
- reloader()
-
  require('telescope.builtin').live_grep {
    shorten_path = true
  }
 end
 
 function M.oldfiles()
-  reloader()
-
   require('telescope.builtin').oldfiles()
 end
 
-function M.all_plugins()
-  reloader()
-
+function M.my_plugins()
   require('telescope.builtin').find_files {
     cwd = '~/plugins/',
   }
 end
 
 function M.installed_plugins()
-  reloader()
-
   require('telescope.builtin').find_files {
     cwd = vim.fn.stdpath('data') .. '/site/pack/packer/start/'
   }
 end
 
 function M.project_search()
-  reloader()
-
   require('telescope.builtin').find_files {
     previewer = false,
     layout_strategy = "vertical",
@@ -131,9 +131,13 @@ function M.project_search()
   }
 end
 
-function M.curbuf()
-  reloader()
+function M.buffers()
+  require('telescope.builtin').buffers {
+    shorten_path = false,
+  }
+end
 
+function M.curbuf()
   local opts = themes.get_dropdown {
     winblend = 10,
     border = true,
@@ -143,4 +147,20 @@ function M.curbuf()
   require('telescope.builtin').current_buffer_fuzzy_find(opts)
 end
 
-return M
+function M.help_tags()
+  require('telescope.builtin').help_tags {
+    show_version = true,
+  }
+end
+
+return setmetatable({}, {
+  __index = function(_, k)
+    reloader()
+
+    if M[k] then
+      return M[k]
+    else
+      return require('telescope.builtin')[k]
+    end
+  end
+})

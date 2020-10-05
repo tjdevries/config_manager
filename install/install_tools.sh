@@ -54,7 +54,8 @@ cargo install \
   git-trim \
   ripgrep \
   broot \
-  delta
+  delta \
+  starship
 
 if ! [ -d ~/build/delta ]; then
   git clone https://github.com/dandavison/delta ~/build/delta

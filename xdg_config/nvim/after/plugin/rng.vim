@@ -1,3 +1,6 @@
+" TODO: We can probably remove all of this and do it w/ Lua instead.
+"       That's a project for a different day though.
+
 " George Marsaglia's Multiply-with-carry Random Number Generator {{{
 " Modified to work within Vim's semantics
 let s:m_w = 1 + getpid()

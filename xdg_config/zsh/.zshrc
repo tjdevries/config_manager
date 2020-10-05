@@ -368,3 +368,15 @@ source /home/tj/.config/broot/launcher/bash/br
 
 # Use nvim as manpager `:h Man`
 export MANPAGER='nvim +Man!'
+
+export GCLOUD_HOME="$HOME/Downloads/google-cloud-sdk"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$GCLOUD_HOME/path.zsh.inc" ]; then
+    . "$GCLOUD_HOME/path.zsh.inc";
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$GCLOUD_HOME/completion.zsh.inc" ]; then
+    . "$GCLOUD_HOME/completion.zsh.inc";
+fi

@@ -1,5 +1,6 @@
 # Neovim should be able to run anywhere
 pynvim
+neovim-remote
 
 # Get python language server up & running
 python-language-server[all]

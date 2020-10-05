@@ -14,7 +14,11 @@ require('tj.completion')
 require('tj.treesitter')
 require('tj.statusline')
 require('tj.snippets')
+
 require('tj.telescope')
+require('tj.telescope.mappings')
+
+require('tj.plenary')
 
 
 require('terminal').setup()

@@ -26,3 +26,4 @@ fi
 # if [[ -f "$HOME/.zsh_local" ]]; then
 #     source ~/.zsh_locanl
 # fi
+if [ -e /home/tj/.nix-profile/etc/profile.d/nix.sh ]; then . /home/tj/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

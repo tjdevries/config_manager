@@ -25,7 +25,7 @@
 [delta]
   line-numbers = true
   syntax-theme = gruvbox
-  side-by-side = true
+  side-by-side = false
 
   file-modified-label = modified:
 
