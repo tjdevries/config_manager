@@ -28,8 +28,16 @@ end
 
 return require('packer').startup {
   function(use)
-    local local_use = function(plug_path, home)
-      home = home or 'tjdevries'
+    local local_use = function(first, second)
+      local plug_path, home
+      if second == nil then
+        plug_path = first
+        home = 'tjdevries'
+      else
+        plug_path = second
+        home = first
+      end
+
       if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. plug_path)) == 1 then
         use("~/plugins/" .. plug_path)
       else
@@ -59,8 +67,8 @@ return require('packer').startup {
     local_use 'lsp_extensions.nvim'
 
     -- pcall(use, '~/plugins/scrollnv')
-    local_use('telescope.nvim', 'nvim-lua')
-    local_use('popup.nvim', 'nvim-lua')
+    local_use('nvim-lua', 'telescope.nvim')
+    local_use('nvim-lua', 'popup.nvim')
 
     -- local_use 'riki.nvim'
 
@@ -208,7 +216,7 @@ return require('packer').startup {
     use 'puremourning/vimspector'
     -- }}}
     -- TREE SITTER: {{{
-    local_use 'nvim-treesitter'
+    local_use('nvim-treesitter', 'nvim-treesitter')
     use 'nvim-treesitter/playground'
     use 'vigoux/architext.nvim'
 
@@ -216,10 +224,6 @@ return require('packer').startup {
     -- NAVIGATION: {{{
     -- STREAM: Show off edit_alternate.vim
     use 'tjdevries/edit_alternate.vim'
-
-    use 'kyazdani42/nvim-web-devicons'
-    use 'kyazdani42/nvim-tree.lua'
-    use 'justinmk/vim-dirvish'
 
     use 'google/vim-searchindex'
 

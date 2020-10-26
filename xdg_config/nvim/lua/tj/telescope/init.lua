@@ -9,6 +9,9 @@ end
 
 reloader()
 
+local sorters = require('telescope.sorters')
+local themes = require('telescope.themes')
+
 require('telescope').setup {
   defaults = {
     winblend = 0,
@@ -39,12 +42,11 @@ require('telescope').setup {
       preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
     },
 
-    -- borderchars = { 'b', 'e', 'g', 'i', 'n', 'b', 'o', 't'}
+    file_sorter = sorters.get_fzy_sorter,
+
+    color_devicons = true,
   }
-
 }
-
-local themes = require('telescope.themes')
 
 local M = {}
 
@@ -54,29 +56,29 @@ lua require('plenary.reload').reload_module("my_user.tele")
 nnoremap <leader>en <cmd>lua require('my_user.tele').edit_neovim()<CR>
 --]]
 function M.edit_neovim()
-  require('telescope.builtin').git_files {
+  require('telescope.builtin').find_files {
+    prompt_title = "~ dotfiles ~",
     shorten_path = false,
     cwd = "~/.config/nvim",
-    prompt = "~ dotfiles ~",
     height = 10,
 
     layout_strategy = 'horizontal',
-    layout_options = {
-      preview_width = 0.75,
+    layout_config = {
+      preview_width = 0.65,
     },
   }
 end
 
 function M.edit_zsh()
-  require('telescope.builtin').git_files {
+  require('telescope.builtin').find_files {
     shorten_path = false,
     cwd = "~/.config/zsh/",
     prompt = "~ dotfiles ~",
     height = 10,
 
     layout_strategy = 'horizontal',
-    layout_options = {
-      preview_width = 0.75,
+    layout_config = {
+      preview_width = 0.55,
     },
   }
 end
