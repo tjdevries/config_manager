@@ -543,5 +543,5 @@ _ _
 
 - Github : https://github.com/tjdevries
 - Twitch : https://twitch.tv/teej_dv
-- Tiwtter: https://twitter.com/TeejDeVries
+- Twitter: https://twitter.com/TeejDeVries
 
