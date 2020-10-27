@@ -9,20 +9,42 @@ end
 
 reloader()
 
+local actions = require('telescope.actions')
 local sorters = require('telescope.sorters')
 local themes = require('telescope.themes')
 
 require('telescope').setup {
   defaults = {
+    prompt_prefix = ' >',
+
     winblend = 0,
-    layout_strategy = "horizontal",
     preview_cutoff = 120,
+
+    scroll_strategy = 'cycle',
+    layout_strategy = "horizontal",
+    layout_defaults = {
+      horizontal = {
+        width_padding = 0.1,
+        height_padding = 0.1,
+        preview_width = 0.6,
+      },
+      vertical = {
+        width_padding = 0.05,
+        height_padding = 1,
+        preview_height = 0.5,
+      }
+    },
 
     sorting_strategy = "descending",
     prompt_position = "bottom",
+    color_devicons = true,
 
-    -- sorting_strategy = "ascending",
-    -- prompt_position = "top",
+    mappings = {
+      i = {
+        ["<c-x>"] = false,
+        ["<c-s>"] = actions.goto_file_selection_split,
+      },
+    },
 
     -- border = false,
     -- borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
@@ -43,8 +65,6 @@ require('telescope').setup {
     },
 
     file_sorter = sorters.get_fzy_sorter,
-
-    color_devicons = true,
   }
 }
 

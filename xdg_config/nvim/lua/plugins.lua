@@ -63,6 +63,7 @@ return require('packer').startup {
     local_use 'overlength.vim'
     local_use 'pastery.vim'
     local_use 'command_and_conquer.nvim'
+    local_use 'streamer.nvim'
 
     local_use 'lsp_extensions.nvim'
 
@@ -135,6 +136,8 @@ return require('packer').startup {
 
     use 'kyazdani42/nvim-web-devicons'
     use 'kyazdani42/nvim-tree.lua'
+
+    use { 'Shougo/defx.nvim', }
 
     -- Undo helper
     use 'sjl/gundo.vim'
@@ -286,7 +289,7 @@ return require('packer').startup {
     use 'ThePrimeagen/vim-apm'
     use 'ThePrimeagen/vim-be-good'
   end,
-  config = {
+  _config = {
     display = {
       _open_fn = function(name)
         -- Can only use plenary when we have our plugins.

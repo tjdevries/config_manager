@@ -9,6 +9,11 @@ R = function(name)
   return require(name)
 end
 
+P = function(v)
+  print(vim.inspect(v))
+  return v
+end
+
 -- TODO: Experiment with lua tree sitter and make it the coolest ever.
 require('tj.completion')
 require('tj.treesitter')
