@@ -64,6 +64,7 @@ return require('packer').startup {
     local_use 'pastery.vim'
     local_use 'command_and_conquer.nvim'
     local_use 'streamer.nvim'
+    local_use 'wander.nvim'
 
     local_use 'lsp_extensions.nvim'
 
@@ -137,7 +138,7 @@ return require('packer').startup {
     use 'kyazdani42/nvim-web-devicons'
     use 'kyazdani42/nvim-tree.lua'
 
-    use { 'Shougo/defx.nvim', }
+    -- use { 'Shougo/defx.nvim', }
 
     -- Undo helper
     use 'sjl/gundo.vim'
@@ -289,9 +290,9 @@ return require('packer').startup {
     use 'ThePrimeagen/vim-apm'
     use 'ThePrimeagen/vim-be-good'
   end,
-  _config = {
+  config = {
     display = {
-      _open_fn = function(name)
+      open_fn = function(name)
         -- Can only use plenary when we have our plugins.
         --  We can only get plenary when we don't have our plugins ;)
         local ok, float_win = pcall(function()
@@ -304,8 +305,8 @@ return require('packer').startup {
           return vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf()
         end
 
-        local bufnr = float_win.buf
-        local win = float_win.win
+        local bufnr = float_win.bufnr
+        local win = float_win.win_id
 
         vim.api.nvim_buf_set_name(bufnr, name)
         vim.api.nvim_win_set_option(win, 'winblend', 10)

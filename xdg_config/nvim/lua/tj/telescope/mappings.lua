@@ -38,6 +38,8 @@ map_tele('<space>fp', 'my_plugins')
 map_tele('<space>fa', 'installed_plugins')
 map_tele('<space>ff', 'curbuf')
 map_tele('<space>fh', 'help_tags')
+map_tele('<space>so', 'vim_options')
+map_tele('<space>gp', 'grep_prompt')
 
 -- Telescope Meta
 map_tele('<space>fB', 'builtin')

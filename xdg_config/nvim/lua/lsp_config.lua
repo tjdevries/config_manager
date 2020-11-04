@@ -13,37 +13,35 @@ local mapper = function(mode, key, result)
 end
 
 local setup_custom_diagnostics = function()
-  Diagnostic = require('vim.lsp.actions').Diagnostic
-  Location = require('vim.lsp.actions').Location
-
-  vim.lsp.callbacks["textDocument/publishDiagnostics"] = Diagnostic.handle_publish_diagnostics.with {
-    should_underline = false,
-    update_in_insert = false
-  }
+  -- vim.lsp.with -> a function that returns a new function, bound with new configuration.
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    virtual_text = false,
+    signs = true,
+    update_in_insert = false,
+  })
 
   mapper(
     'n',
     '<leader>dn',
-    '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_next_diagnostic()<CR>'
+    '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>'
   )
 
   mapper(
     'n',
     '<leader>dp',
-    '<cmd>lua vim.lsp.structures.Diagnostic.buf_move_prev_diagnostic()<CR>'
+    '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>'
   )
 end
 
 -- Turn on status.
-status.activate()
+-- status.activate()
 
 local custom_attach = function(client)
   completion.on_attach(client)
-  status    .on_attach(client)
+  -- status    .on_attach(client)
 
-  if false then
-    pcall(setup_custom_diagnostics)
-  end
+  pcall(setup_custom_diagnostics)
 
   -- mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
   mapper('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -51,7 +49,7 @@ local custom_attach = function(client)
   mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   mapper('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
   mapper('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-  mapper('n', '<space>cr', '<cmd>lua vim.lsp.buf.rename()<CR>')
+  mapper('n', '<space>cr', '<cmd>lua MyLspRename()<CR>')
 
   -- if not vim.api.nvim_buf_get_keymap(0, 'n')['K'] then
   if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'lua' then
@@ -191,3 +189,25 @@ let settings = {
 \     }}}
 --]]
 
+
+function MyLspRename()
+  local current_word = vim.fn.expand("<cword>")
+  local plenary_window = require('plenary.window.float').percentage_range_window(0.5, 0.2)
+  vim.api.nvim_buf_set_option(plenary_window.bufnr, 'buftype', 'prompt')
+  vim.fn.prompt_setprompt(plenary_window.bufnr, string.format('Rename "%s" to > ', current_word))
+  vim.fn.prompt_setcallback(plenary_window.bufnr, function(text)
+    vim.api.nvim_win_close(plenary_window.win_id, true)
+
+    if text ~= '' then
+      vim.schedule(function()
+        vim.api.nvim_buf_delete(plenary_window.bufnr, { force = true })
+
+        vim.lsp.buf.rename(text)
+      end)
+    else
+      print("Nothing to rename!")
+    end
+  end)
+
+  vim.cmd [[startinsert]]
+end

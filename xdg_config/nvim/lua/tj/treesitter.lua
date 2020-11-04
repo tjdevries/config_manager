@@ -4,8 +4,6 @@ local custom_captures = {
   ['foo.bar'] = 'Identifier',
 }
 
-if true then return end
-
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true, -- false will disable the whole extension

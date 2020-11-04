@@ -21,7 +21,7 @@ require('telescope').setup {
     preview_cutoff = 120,
 
     scroll_strategy = 'cycle',
-    layout_strategy = "horizontal",
+    layout_strategy = 'horizontal',
     layout_defaults = {
       horizontal = {
         width_padding = 0.1,
@@ -46,21 +46,8 @@ require('telescope').setup {
       },
     },
 
-    -- border = false,
-    -- borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-
-    -- for the top/right/bottom/left border.  Optionally
-    -- followed by the character to use for the
-    -- topleft/topright/botright/botleft corner.
-    -- border = {},
-    --   true,
-
-    --   prompt = true,
-    -- },
-
     borderchars = {
       { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-
       preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
     },
 
@@ -80,7 +67,7 @@ function M.edit_neovim()
     prompt_title = "~ dotfiles ~",
     shorten_path = false,
     cwd = "~/.config/nvim",
-    height = 10,
+    width = .25,
 
     layout_strategy = 'horizontal',
     layout_config = {
@@ -94,7 +81,6 @@ function M.edit_zsh()
     shorten_path = false,
     cwd = "~/.config/zsh/",
     prompt = "~ dotfiles ~",
-    height = 10,
 
     layout_strategy = 'horizontal',
     layout_config = {
@@ -129,8 +115,15 @@ function M.live_grep()
  }
 end
 
+function M.grep_prompt()
+  require('telescope.builtin').grep_string {
+    shorten_path = true,
+    search = vim.fn.input("Grep String > "),
+  }
+end
+
 function M.oldfiles()
-  require('telescope.builtin').oldfiles()
+  require('telescope.builtin').oldfiles { layout_strategy = 'vertical' }
 end
 
 function M.my_plugins()
@@ -165,6 +158,8 @@ function M.curbuf()
     border = true,
     previewer = false,
     shorten_path = false,
+
+    -- layout_strategy = 'current_buffer',
   }
   require('telescope.builtin').current_buffer_fuzzy_find(opts)
 end
