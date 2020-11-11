@@ -1,12 +1,13 @@
 local nvim_lsp = require('nvim_lsp')
 local nvim_status = require('lsp-status')
 local completion = require('completion')
+local diagnostic = require('diagnostic')
 
 local status = require('tj.lsp_status')
 
 -- Can set this lower if needed.
 -- require('vim.lsp.log').set_level("debug")
--- require('vim.lsp.log').set_level("trace")
+require('vim.lsp.log').set_level("trace")
 
 local mapper = function(mode, key, result)
   vim.api.nvim_buf_set_keymap(0, mode, key, result, {noremap = true, silent = true})
@@ -14,12 +15,6 @@ end
 
 local setup_custom_diagnostics = function()
   -- vim.lsp.with -> a function that returns a new function, bound with new configuration.
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    virtual_text = false,
-    signs = true,
-    update_in_insert = false,
-  })
 
   mapper(
     'n',
@@ -39,6 +34,8 @@ end
 
 local custom_attach = function(client)
   completion.on_attach(client)
+  -- diagnostic.on_attach(client)
+
   -- status    .on_attach(client)
 
   pcall(setup_custom_diagnostics)
@@ -56,7 +53,7 @@ local custom_attach = function(client)
     mapper('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
   end
 
-  mapper('n', '<space>sl', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>')
+  mapper('n', '<space>sl', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
 
   mapper(
     'n',
@@ -96,17 +93,53 @@ nvim_lsp.vimls.setup({
 })
 
 -- Load lua configuration from nlua.
-require('nlua.lsp.nvim').setup(nvim_lsp, {
-  on_attach = custom_attach,
+if true then
+  require('nlua.lsp.nvim').setup(nvim_lsp, {
+    on_attach = custom_attach,
 
-  globals = {
-    -- Colorbuddy
-    "Color", "c", "Group", "g", "s",
+    globals = {
+      -- Colorbuddy
+      "Color", "c", "Group", "g", "s",
 
-    -- Custom
-    "RELOAD",
-  }
-})
+      -- Custom
+      "RELOAD",
+    }
+  })
+else
+  -- This is the documentation example from ":help".
+  --    I just keep it here to test w/ it.
+  local custom_lsp_attach = function(client)
+    -- See `:help nvim_buf_set_keymap()` for more information
+    vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true})
+    -- ... and other keymappings for LSP
+
+    -- Use LSP as the handler for omnifunc.
+    --    See `:help omnifunc` and `:help ins-completion` for more information.
+    vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- For plugins with an `on_attach` callback, call them here. For example:
+    -- require('completion').on_attach(client)
+  end
+
+  -- An example of configuring for `sumneko_lua`,
+  --  a language server for Lua.
+  -- First, you must run `:LspInstall sumneko_lua` for this to work.
+  require('nvim_lsp').sumneko_lua.setup({
+    -- An example of settings for an LSP server.
+    --    For more options, see nvim-lspconfig
+    settings = {
+      Lua = {
+        diagnostics = {
+          enable = true,
+          globals = { "vim" },
+        },
+      }
+    },
+
+    on_attach = custom_lsp_attach
+  })
+end
 
 if true then
   nvim_lsp.tsserver.setup({
@@ -143,6 +176,13 @@ nvim_lsp.rust_analyzer.setup({
   cmd = {"rust-analyzer"},
   filetypes = {"rust"},
   on_attach = custom_attach,
+  handlers = {
+    ["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        signs = false
+      }
+    ),
+  }
 })
 
 --[[
@@ -210,4 +250,79 @@ function MyLspRename()
   end)
 
   vim.cmd [[startinsert]]
+end
+
+local sign_decider
+if true then
+  sign_decider = function(bufnr)
+    local ok, result = pcall(vim.api.nvim_buf_get_var, bufnr, 'show_signs')
+    if not ok then
+      return true
+    end
+
+    return result
+  end
+else
+  -- LOL, alternate signs.
+  sign_decider = coroutine.wrap(function()
+    while true do
+      coroutine.yield(true)
+      coroutine.yield(false)
+    end
+  end)
+end
+
+--[[
+0. nil -> do default (could be enabled or disabled)
+1. false -> disable it
+2. true -> enable, use defaults
+3. table -> enable, with (some) overrides
+4. function -> can return any of above
+--]]
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    virtual_text = true,
+    signs = {
+      priority = 20
+    },
+    update_in_insert = false,
+  }
+)
+
+if false then
+vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line_diagnostics)
+  if #line_diagnostics == 0 then
+    return nil
+  end
+
+  local line_length = #(vim.api.nvim_buf_get_lines(bufnr, line, line + 1, false)[1] or '')
+  local get_highlight = vim.lsp.diagnostic._get_severity_highlight_name
+
+  -- Create a little more space between virtual text and contents
+  local virt_texts = {{string.rep(" ", 80 - line_length)}}
+
+  for i = 1, #line_diagnostics - 1 do
+    table.insert(virt_texts, {"■", get_highlight(line_diagnostics[i].severity)})
+  end
+  local last = line_diagnostics[#line_diagnostics]
+  -- TODO(ashkan) use first line instead of subbing 2 spaces?
+
+  -- TODO(tjdevries): Allow different servers to be shown first somehow?
+  -- TODO(tjdevries): Display server name associated with these?
+  if last.message then
+    table.insert(
+      virt_texts,
+      {
+        string.format("■ %s", last.message:gsub("\r", ""):gsub("\n", "  ")),
+        get_highlight(last.severity)
+      }
+    )
+
+    return virt_texts
+  end
+
+  return virt_texts
+end
 end

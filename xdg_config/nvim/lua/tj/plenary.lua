@@ -5,3 +5,5 @@ function PlenaryTestFile()
   RELOAD('plenary')
   require('plenary.test_harness'):test_directory('busted', filename)
 end
+
+vim.api.nvim_set_keymap("n", "<leader>tl", "<cmd>lua PlenaryTestFile()<CR>", { noremap = true })

@@ -19,5 +19,5 @@ nnoremap <buffer><silent> <space>ps <cmd>Pytest session<CR>
 
 augroup MyPythonAutos
   au!
-  autocmd BufWritePost * :call PythonAuto()
+  autocmd BufWritePost *.py :call PythonAuto()
 augroup END

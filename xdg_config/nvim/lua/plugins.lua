@@ -207,7 +207,7 @@ return require('packer').startup {
     use 'norcalli/ui.nvim'
 
     -- TODO: Merge in my LSP PR...
-    -- Plug 'haorenW1025/diagnostic-nvim'
+    use 'haorenW1025/diagnostic-nvim'
 
     use 'wbthomason/lsp-status.nvim'
 
@@ -233,7 +233,10 @@ return require('packer').startup {
 
     use 'justinmk/vim-dirvish'
     use 'pechorin/any-jump.vim'
-    use 'andymass/vim-matchup'
+
+    -- Temporary disabled... getting real bad performance in some lua files.
+    --  Might just disable for Lua only?...
+    -- use 'andymass/vim-matchup'
 
     -- }}}
     -- TEXT MANIUPLATION {{{
