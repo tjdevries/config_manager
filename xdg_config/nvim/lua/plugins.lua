@@ -52,7 +52,6 @@ return require('packer').startup {
     local_use 'vim9jit'
     local_use 'colorbuddy.vim'
     local_use 'gruvbuddy.nvim'
-    local_use 'plenary.nvim'
     local_use 'apyrori.nvim'
     local_use 'py_package.nvim'
     local_use 'manillua.nvim'
@@ -71,6 +70,7 @@ return require('packer').startup {
     -- pcall(use, '~/plugins/scrollnv')
     local_use('nvim-lua', 'telescope.nvim')
     local_use('nvim-lua', 'popup.nvim')
+    local_use('nvim-lua', 'plenary.nvim')
 
     -- local_use 'riki.nvim'
 

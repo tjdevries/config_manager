@@ -12,6 +12,7 @@ local map_tele = function(key, f, options)
     ),
     {
       noremap = true,
+      silent = true,
     }
   )
 end
