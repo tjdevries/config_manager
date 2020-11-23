@@ -1,4 +1,4 @@
-local nvim_lsp = require('nvim_lsp')
+local lspconfig = require('lspconfig')
 local nvim_status = require('lsp-status')
 local completion = require('completion')
 local diagnostic = require('diagnostic')
@@ -6,8 +6,8 @@ local diagnostic = require('diagnostic')
 local status = require('tj.lsp_status')
 
 -- Can set this lower if needed.
--- require('vim.lsp.log').set_level("debug")
-require('vim.lsp.log').set_level("trace")
+require('vim.lsp.log').set_level("debug")
+-- require('vim.lsp.log').set_level("trace")
 
 local mapper = function(mode, key, result)
   vim.api.nvim_buf_set_keymap(0, mode, key, result, {noremap = true, silent = true})
@@ -55,18 +55,6 @@ local custom_attach = function(client)
 
   mapper('n', '<space>sl', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
 
-  mapper(
-    'n',
-    '<space>gd',
-    '<cmd>lua vim.lsp.buf.definition { callbacks = { Location.jump_first, Location.highlight.with { timeout = 300 } } }<CR>'
-  )
-
-  mapper(
-    'n',
-    '<space>pd',
-    '<cmd>lua vim.lsp.buf.definition { callbacks = Location.preview.with { lines_below = 5 } }<CR>'
-  )
-
   -- Rust is currently the only thing w/ inlay hints
   if vim.api.nvim_buf_get_option(0, 'filetype') == 'rust' then
     vim.cmd [[autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request { aligned = true, prefix = " » " }]]
@@ -77,7 +65,7 @@ local custom_attach = function(client)
   vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 end
 
-nvim_lsp.pyls.setup({
+lspconfig.pyls.setup({
   enable = true,
   plugins = {
     pyls_mypy = {
@@ -88,13 +76,17 @@ nvim_lsp.pyls.setup({
   on_attach = custom_attach
 })
 
-nvim_lsp.vimls.setup({
+lspconfig.vimls.setup({
   on_attach = custom_attach,
 })
 
+lspconfig.gdscript.setup {
+  on_attach = custom_attach,
+}
+
 -- Load lua configuration from nlua.
 if true then
-  require('nlua.lsp.nvim').setup(nvim_lsp, {
+  require('nlua.lsp.nvim').setup(lspconfig, {
     on_attach = custom_attach,
 
     globals = {
@@ -125,7 +117,7 @@ else
   -- An example of configuring for `sumneko_lua`,
   --  a language server for Lua.
   -- First, you must run `:LspInstall sumneko_lua` for this to work.
-  require('nvim_lsp').sumneko_lua.setup({
+  require('lspconfig').sumneko_lua.setup({
     -- An example of settings for an LSP server.
     --    For more options, see nvim-lspconfig
     settings = {
@@ -142,7 +134,7 @@ else
 end
 
 if true then
-  nvim_lsp.tsserver.setup({
+  lspconfig.tsserver.setup({
     cmd = {"typescript-language-server", "--stdio"},
     filetypes = {
       "javascript",
@@ -155,12 +147,12 @@ if true then
     on_attach = custom_attach
   })
 else
-  nvim_lsp.sourcegraph_ts.setup {
+  lspconfig.sourcegraph_ts.setup {
     on_attach = custom_attach
   }
 end
 
-nvim_lsp.clangd.setup({
+lspconfig.clangd.setup({
   cmd = {"clangd", "--background-index"},
   on_attach = custom_attach,
 
@@ -168,11 +160,11 @@ nvim_lsp.clangd.setup({
   init_options = {
     clangdFileStatus = true
   },
-  callbacks = nvim_status.extensions.clangd.setup(),
+  handlers = nvim_status.extensions.clangd.setup(),
   capabilities = nvim_status.capabilities,
 })
 
-nvim_lsp.rust_analyzer.setup({
+lspconfig.rust_analyzer.setup({
   cmd = {"rust-analyzer"},
   filetypes = {"rust"},
   on_attach = custom_attach,
@@ -187,7 +179,7 @@ nvim_lsp.rust_analyzer.setup({
 
 --[[
 Example settings, have not messed around with too many of these.
--- require 'nvim_lsp'.pyls_ms.setup{
+-- require 'lspconfig'.pyls_ms.setup{
 --     init_options = {
 --         interpreter = {
 --             properties = {
@@ -256,6 +248,7 @@ local sign_decider
 if true then
   sign_decider = function(bufnr)
     local ok, result = pcall(vim.api.nvim_buf_get_var, bufnr, 'show_signs')
+    -- No buffer local variable set, so just enable by default
     if not ok then
       return true
     end
@@ -280,16 +273,36 @@ end
 4. function -> can return any of above
 --]]
 
+--[ An example of using functions...
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, method, params, client_id, bufnr, config)
+  local uri = params.uri
+
+  vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      underline = true,
+      virtual_text = true,
+      signs = sign_decider,
+      update_in_insert = false,
+    }
+  )(err, method, params, client_id, bufnr, config)
+
+  bufnr = bufnr or vim.uri_to_bufnr(uri)
+
+  if bufnr == vim.api.nvim_get_current_buf() then
+    vim.lsp.diagnostic.set_loclist { open_loclist = false }
+  end
+end
+--]]
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
     virtual_text = true,
-    signs = {
-      priority = 20
-    },
+    signs = sign_decider,
     update_in_insert = false,
   }
 )
+
 
 if false then
 vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line_diagnostics)

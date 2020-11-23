@@ -37,7 +37,7 @@ let g:builtin_lsp = v:true
 " Packadd plugins
 packadd vimball
 
-lua require('plugins')
+lua require('tj/plugins')
 
 let g:init_base = fnamemodify(expand('$MYVRIMRC'), ':h')
 
@@ -54,19 +54,19 @@ if has('unix')
   " ...
   "
   " Something like that
-  if glob('~/.pyenv/versions/neovim2/bin/python') != ''
-    let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
-    let g:python2_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
-  else
-    let g:python_host_prog = 'python'
-    let g:python2_host_prog = 'python2'
-  endif
+  " if glob('~/.pyenv/versions/neovim2/bin/python') != ''
+  "   let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
+  "   let g:python2_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
+  " else
+  "   let g:python_host_prog = 'python'
+  "   let g:python2_host_prog = 'python2'
+  " endif
 
-  if glob('~/.pyenv/versions/neovim3/bin/python') != ''
-    let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
-  else
-    let g:python3_host_prog = systemlist('which python3')[0]
-  endif
+  " if glob('~/.pyenv/versions/neovim3/bin/python') != ''
+  "   let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
+  " else
+  "   let g:python3_host_prog = systemlist('which python3')[0]
+  " endif
 else
   let $PATH='C:\Users\tdevries\Downloads\Neovim\Neovim\bin\;' . $PATH
 

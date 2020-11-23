@@ -47,7 +47,7 @@ return require('packer').startup {
 
     -- My Plugins
     local_use 'nlua.nvim'
-    local_use 'tree-sitter-nlua'
+    local_use 'tree-sitter-lua'
     local_use 'vlog.nvim'
     local_use 'vim9jit'
     local_use 'colorbuddy.vim'
@@ -68,9 +68,11 @@ return require('packer').startup {
     local_use 'lsp_extensions.nvim'
 
     -- pcall(use, '~/plugins/scrollnv')
-    local_use('nvim-lua', 'telescope.nvim')
     local_use('nvim-lua', 'popup.nvim')
     local_use('nvim-lua', 'plenary.nvim')
+
+    local_use('nvim-telescope', 'telescope.nvim')
+    local_use('nvim-telescope', 'telescope-fzy-native.nvim')
 
     -- local_use 'riki.nvim'
 
@@ -189,6 +191,12 @@ return require('packer').startup {
     use { 'pangloss/vim-javascript', ft = { 'javascript', 'html' } }
     use 'tpope/vim-liquid'
     -- }}}
+    -- Godot {{{
+    use 'habamax/vim-godot'
+    -- }}}
+    -- Lisp {{{
+    use { 'eraserhd/parinfer-rust', run = 'cargo build --release' }
+    -- }}}
     --  }}}
     -- LSP {{{
 
@@ -198,8 +206,11 @@ return require('packer').startup {
 
     -- STREAM: Figure out how to use snippets better
     use 'haorenW1025/completion-nvim'
-    use 'steelsojka/completion-buffers'
     use 'nvim-treesitter/completion-treesitter'
+
+    -- TODO: I think this may be causing large buffers to slow considerably.
+    --       I also think I can just use ^X^N if I need to?...
+    -- use 'steelsojka/completion-buffers'
 
     -- use 'hrsh7th/vim-vsnip'
     -- use 'hrsh7th/vim-vsnip-integ'
@@ -217,7 +228,8 @@ return require('packer').startup {
 
     -- Debug adapter protocol
     --   Have not yet checked this out, but looks awesome.
-    use 'puremourning/vimspector'
+    -- use 'puremourning/vimspector'
+
     -- }}}
     -- TREE SITTER: {{{
     local_use('nvim-treesitter', 'nvim-treesitter')

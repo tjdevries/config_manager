@@ -1,6 +1,9 @@
 
 -- Load lsp config
-local ok, _ = pcall(function() require('lsp_config') end)
+local ok, msg = pcall(function() require('tj.lsp_config') end)
+if not ok then
+  print(msg)
+end
 
 RELOAD = require('plenary.reload').reload_module
 

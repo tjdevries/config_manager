@@ -2,12 +2,14 @@
 local custom_captures = {
   -- highlight own capture @foo.bar with highlight group "Identifier", see :h nvim-treesitter-query-extensions
   ['foo.bar'] = 'Identifier',
+  ['function.call'] = 'LuaFunctionCall',
+  ['function.bracket'] = 'Type',
 }
 
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true, -- false will disable the whole extension
-    disable = {'lua', 'typescript.tsx', 'typescript', 'tsx'},
+    disable = {'typescript.tsx', 'typescript', 'tsx'},
     custom_captures = custom_captures,
   },
 

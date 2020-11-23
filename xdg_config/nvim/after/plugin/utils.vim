@@ -7,7 +7,7 @@ function! PythonAuto() abort
     return
   endif
 
-  if match(expand("%:p"), "neovim") != ""
+  if match(expand("%:p"), "neovim") != -1
     return
   end
 

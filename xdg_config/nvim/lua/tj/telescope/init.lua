@@ -35,8 +35,8 @@ require('telescope').setup {
       }
     },
 
-    sorting_strategy = "descending",
-    prompt_position = "bottom",
+    sorting_strategy = "ascending",
+    prompt_position = "top",
     color_devicons = true,
 
     mappings = {
@@ -52,8 +52,18 @@ require('telescope').setup {
     },
 
     file_sorter = sorters.get_fzy_sorter,
-  }
+  },
+
+  extensions = {
+    fzy_native = {
+      override_generic_sorter = false,
+      override_file_sorter = true,
+    }
+  },
 }
+
+-- Load the fzy native extension at the start.
+-- require('telescope').load_extension('fzy_native')
 
 local M = {}
 
