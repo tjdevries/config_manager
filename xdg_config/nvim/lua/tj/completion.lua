@@ -1,7 +1,7 @@
 
-local set = vim.set
+local opt = vim.opt
 
-set.completeopt = { "menuone" , "noinsert", "noselect" }
+opt.completeopt = { "menuone" , "noinsert", "noselect" }
 
 
 -- Don't show the dumb matching stuff.

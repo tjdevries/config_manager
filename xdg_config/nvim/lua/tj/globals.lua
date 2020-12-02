@@ -1,8 +1,14 @@
+local if_nil = function(a, b)
+  if a == nil then
+    return b
+  end
+  return a
+end
 
 local singular_values = {
-  boolean = true,
-  number = true,
-  ['nil'] = true,
+  ['boolean'] = true,
+  ['number']  = true,
+  ['nil']     = true,
 }
 
 local set_key_value = function(t, key_value_str)
@@ -16,6 +22,11 @@ local set_key_value = function(t, key_value_str)
 end
 
 local convert_vimoption_to_lua = function(option, val)
+  -- Short circuit if we've already converted!
+  if type(val) == 'table' then
+    return val
+  end
+
   if singular_values[type(val)] then
     return val
   end
@@ -36,9 +47,9 @@ local convert_vimoption_to_lua = function(option, val)
   end
 end
 
-local concat_keys = function(t, sep)
-  return table.concat(vim.tbl_keys(t), sep)
-end
+-- local concat_keys = function(t, sep)
+--   return table.concat(vim.tbl_keys(t), sep)
+-- end
 
 local concat_key_values = function(t, sep, divider)
   local final = {}
@@ -46,6 +57,7 @@ local concat_key_values = function(t, sep, divider)
     table.insert(final, string.format('%s%s%s', k, divider, v))
   end
 
+  table.sort(final)
   return table.concat(final, sep)
 end
 
@@ -59,15 +71,19 @@ local remove_duplicate_values = function(t)
 end
 
 local remove_value = function(t, val)
-  local remove_index = nil
-  for i, v in ipairs(t) do
-    if v == val then
-      remove_index = i
+  if vim.tbl_islist(t) then
+    local remove_index = nil
+    for i, v in ipairs(t) do
+      if v == val then
+        remove_index = i
+      end
     end
-  end
 
-  if remove_index then
-    table.remove(t, remove_index)
+    if remove_index then
+      table.remove(t, remove_index)
+    end
+  else
+    t[val] = nil
   end
 
   return t
@@ -75,7 +91,12 @@ end
 
 local add_value = function(current, new)
   if singular_values[type(current)] then
-    error("This is not possible to do. Please do something different" .. tostring(current))
+    error(
+      "This is not possible to do. Please do something different: "
+      .. tostring(current)
+      .. " // "
+      .. tostring(new)
+    )
   end
 
   if type(new) == 'string' then
@@ -122,15 +143,15 @@ local clean_value = function(v)
   return result
 end
 
-local set_mt
+local opt_mt
 
-set_mt = {
+opt_mt = {
   __index = function(t, k)
     if k == '_value' then
       return rawget(t, k)
     end
 
-    return setmetatable({ _option = k, }, set_mt)
+    return setmetatable({ _option = k, }, opt_mt)
   end,
 
   __newindex = function(t, k, v)
@@ -140,7 +161,7 @@ set_mt = {
 
     if type(v) == 'table' then
       local new_value
-      if getmetatable(v) ~= set_mt then
+      if getmetatable(v) ~= opt_mt then
         new_value = v
       else
         assert(v._value, "Must have a value to set this")
@@ -156,8 +177,14 @@ set_mt = {
     end
 
     -- TODO: Figure out why nvim_set_option doesn't override values the same way.
+    -- @bfredl said he will fix this for me, so I can just use nvim_set_option
     if type(v) == 'boolean' then
       vim.o[k] = clean_value(v)
+      if v then
+        vim.cmd(string.format("set %s", k))
+      else
+        vim.cmd(string.format("set no%s", k))
+      end
     else
       vim.cmd(string.format("set %s=%s", k, clean_value(v)))
     end
@@ -174,10 +201,9 @@ set_mt = {
       error("not implemented for foldcolumn.. use a string")
     end
 
-    local existing = left._value or vim.o[left._option]
+    local existing = if_nil(left._value, vim.o[left._option])
     local current = convert_vimoption_to_lua(left._option, existing)
     if not current then
-      -- error(debug.traceback())
       left._value = convert_vimoption_to_lua(right)
     end
 
@@ -188,7 +214,8 @@ set_mt = {
   __sub = function(left, right)
     assert(left._option, "must have an option key")
 
-    local current = convert_vimoption_to_lua(left._option, left._value or vim.o[left._option])
+    local existing = if_nil(left._value, vim.o[left._option])
+    local current = convert_vimoption_to_lua(left._option, existing)
     if not current then
       return left
     end
@@ -198,9 +225,9 @@ set_mt = {
   end
 }
 
-vim.set = setmetatable({}, set_mt)
+vim.opt = setmetatable({}, opt_mt)
 
 return {
   convert_vimoption_to_lua = convert_vimoption_to_lua,
-  set = vim.set,
+  opt = vim.opt,
 }

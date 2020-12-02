@@ -44,76 +44,74 @@ require('tj.plugins')
 package.loaded['tj.globals'] = nil
 require('tj.globals')
 
-local set = vim.set
+local opt = vim.opt
 
 -- Ignore compiled files
-set.wildignore = '__pycache__'
-set.wildignore = set.wildignore + { '*.o' , '*~', '*.pyc', '*pycache*' }
+opt.wildignore = '__pycache__'
+opt.wildignore = opt.wildignore + { '*.o' , '*~', '*.pyc', '*pycache*' }
 
-set.wildmode = {'longest', 'list', 'full'}
+opt.wildmode = {'longest', 'list', 'full'}
 
 -- Cool floating window popup menu for completion on command line
-set.pumblend = 17
+opt.pumblend = 17
 
-set.wildmode = set.wildmode - 'list'
-set.wildmode = set.wildmode + { 'longest', 'full' }
+opt.wildmode = opt.wildmode - 'list'
+opt.wildmode = opt.wildmode + { 'longest', 'full' }
 
-set.wildoptions = 'pum'
+opt.wildoptions = 'pum'
 
-set.showmode       = false
-set.showcmd        = true
-set.cmdheight      = 1     -- Height of the command bar
-set.incsearch      = true  -- Makes search act like search in modern browsers
-set.showmatch      = true  -- show matching brackets when text indicator is over them
-set.relativenumber = true  -- Show line numbers
-set.number         = true  -- But show the actual number for the line we're on
-set.ignorecase     = true  -- Ignore case when searching...
-set.smartcase      = true  -- ... unless there is a capital letter in the query
-set.hidden         = true  -- I like having buffers stay around
-set.cursorline     = true  -- Highlight the current line
-set.equalalways    = false                      -- I don't like my windows changing all the time
-set.splitright     = true                         -- Prefer windows splitting to the right
-set.splitbelow     = true                         -- Prefer windows splitting to the bottom
-set.updatetime     = 1000                    -- Make updates happen faster
-set.hlsearch       = true -- I wouldn't use this without my DoNoHL function
-set.scrolloff      = 10                      -- Make it so there are always ten lines below my cursor
+opt.showmode       = false
+opt.showcmd        = true
+opt.cmdheight      = 1     -- Height of the command bar
+opt.incsearch      = true  -- Makes search act like search in modern browsers
+opt.showmatch      = true  -- show matching brackets when text indicator is over them
+opt.relativenumber = true  -- Show line numbers
+opt.number         = true  -- But show the actual number for the line we're on
+opt.ignorecase     = true  -- Ignore case when searching...
+opt.smartcase      = true  -- ... unless there is a capital letter in the query
+opt.hidden         = true  -- I like having buffers stay around
+opt.cursorline     = true  -- Highlight the current line
+opt.equalalways    = false -- I don't like my windows changing all the time
+opt.splitright     = true  -- Prefer windows splitting to the right
+opt.splitbelow     = true  -- Prefer windows splitting to the bottom
+opt.updatetime     = 1000  -- Make updates happen faster
+opt.hlsearch       = true  -- I wouldn't use this without my DoNoHL function
+opt.scrolloff      = 10    -- Make it so there are always ten lines below my cursor
 
 -- Tabs
-set.autoindent     = true
-set.cindent        = true
-set.wrap           = true
+opt.autoindent     = true
+opt.cindent        = true
+opt.wrap           = true
 
-set.tabstop        = 4
-set.shiftwidth     = 4
-set.softtabstop    = 4
-set.expandtab      = true
+opt.tabstop        = 4
+opt.shiftwidth     = 4
+opt.softtabstop    = 4
+opt.expandtab      = true
 
-set.breakindent    = true
-set.showbreak      = string.rep(' ', 3) -- Make it so that long lines wrap smartly
-set.linebreak      = true
+opt.breakindent    = true
+opt.showbreak      = string.rep(' ', 3) -- Make it so that long lines wrap smartly
+opt.linebreak      = true
 
-set.foldmethod     = 'marker'
-set.foldlevel      = 0
-set.modelines      = 1
+opt.foldmethod     = 'marker'
+opt.foldlevel      = 0
+opt.modelines      = 1
 
-set.belloff        = 'all' -- Just turn the dang bell off
+opt.belloff        = 'all' -- Just turn the dang bell off
 
-set.clipboard      = 'unnamedplus'
+opt.clipboard      = 'unnamedplus'
 
-set.inccommand     = 'split'
-set.swapfile       = false -- Living on the edge
-set.shada          = { "!", "'1000", "<50", "s10", "h" }
+opt.inccommand     = 'split'
+opt.swapfile       = false -- Living on the edge
+opt.shada          = { "!", "'1000", "<50", "s10", "h" }
 
-set.mouse          = 'n'
+opt.mouse          = 'n'
 
 -- Helpful related items:
 --   1. :center, :left, :right
 --   2. gw{motion} - Put cursor back after formatting motion.
 --
 -- TODO: w, {v, b, l}
-
---[[
-set.formatoptions = set.formatoptions
+opt.formatoptions = opt.formatoptions
                     - 'a'     -- Auto formatting is BAD.
                     - 't'     -- Don't auto format my code. I got linters for that.
                     + 'c'     -- In general, I like it when comments respect textwidth
@@ -123,12 +121,12 @@ set.formatoptions = set.formatoptions
                     + 'n'     -- Indent past the formatlistpat, not underneath it.
                     + 'j'     -- Auto-remove comments if possible.
                     - '2'     -- I'm not in gradeschool anymore
---]]
 
-set.joinspaces = false         -- Two spaces and grade school, we're done
+-- set joinspaces
+opt.joinspaces = false         -- Two spaces and grade school, we're done
 
--- set fillchars=eob:⠀
-set.fillchars = { eob = "~" }
+-- set fillchars=eob:~
+opt.fillchars = { eob = "~" }
 
 --[[
 guicursor messing around
