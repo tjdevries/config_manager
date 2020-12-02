@@ -1,3 +1,5 @@
+set list
+
 if !get(g:, 'loaded_cyclist', v:false)
   finish
 endif

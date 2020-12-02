@@ -33,6 +33,10 @@ end
 -- status.activate()
 
 local custom_attach = function(client)
+  if client.config.flags then
+    client.config.flags.allow_incremental_sync = true
+  end
+
   completion.on_attach(client)
   -- diagnostic.on_attach(client)
 
@@ -52,15 +56,23 @@ local custom_attach = function(client)
   if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'lua' then
     mapper('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
   end
-
   mapper('n', '<space>sl', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
 
+  mapper('i', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+
   -- Rust is currently the only thing w/ inlay hints
-  if vim.api.nvim_buf_get_option(0, 'filetype') == 'rust' then
-    vim.cmd [[autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request { aligned = true, prefix = " » " }]]
+  local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
+  if filetype == 'rust' then
+    vim.cmd(
+      [[autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request { ]]
+        .. [[aligned = true, prefix = " » " ]]
+        .. [[} ]]
+    )
   end
 
-  mapper('i', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+  if vim.tbl_contains({"go", "rust"}, filetype) then
+    vim.cmd [[autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()]]
+  end
 
   vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 end
@@ -79,6 +91,10 @@ lspconfig.pyls.setup({
 lspconfig.vimls.setup({
   on_attach = custom_attach,
 })
+
+lspconfig.gopls.setup {
+  on_attach = custom_attach,
+}
 
 lspconfig.gdscript.setup {
   on_attach = custom_attach,
@@ -153,7 +169,13 @@ else
 end
 
 lspconfig.clangd.setup({
-  cmd = {"clangd", "--background-index"},
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--suggest-missing-includes",
+    "--clang-tidy",
+    "--header-insertion=iwyu",
+  },
   on_attach = custom_attach,
 
   -- Required for lsp-status

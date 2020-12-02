@@ -1,6 +1,8 @@
 
+local set = vim.set
 
-vim.o.completeopt = "menuone,noinsert,noselect"
+set.completeopt = { "menuone" , "noinsert", "noselect" }
+
 
 -- Don't show the dumb matching stuff.
 vim.cmd [[set shortmess+=c]]

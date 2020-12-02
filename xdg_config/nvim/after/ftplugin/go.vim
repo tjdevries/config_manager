@@ -80,3 +80,5 @@ setlocal foldmethod=expr
 setlocal foldexpr=GoFolder()
 setlocal foldtext=GoText()
 " }}}
+
+setlocal noexpandtab

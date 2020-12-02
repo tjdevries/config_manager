@@ -14,7 +14,7 @@ endif
 set termguicolors
 
 
-if !g:fvim_loaded
+if !get(g:, 'fvim_loaded', v:false)
   let s:original_font_command = split(split(execute('Guifont'), "\n")[0], ':')
   let s:original_font_name = s:original_font_command[0]
   let s:original_font_size = s:original_font_command[1][1:]

@@ -9,7 +9,8 @@ local custom_captures = {
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true, -- false will disable the whole extension
-    disable = {'typescript.tsx', 'typescript', 'tsx'},
+    disable = {"json"},
+    use_languagetree = false,
     custom_captures = custom_captures,
   },
 

@@ -29,6 +29,8 @@ require('tj.telescope.mappings')
 require('tj.plenary')
 require('tj.grep')
 
+require('tj.dap')
+
 
 require('terminal').setup()
 

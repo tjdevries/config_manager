@@ -58,6 +58,11 @@ require('telescope').setup {
     fzy_native = {
       override_generic_sorter = false,
       override_file_sorter = true,
+    },
+
+    fzf_writer = {
+      use_highlighter = false,
+      minimum_grep_characters = 4,
     }
   },
 }

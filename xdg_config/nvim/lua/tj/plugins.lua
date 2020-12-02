@@ -73,6 +73,8 @@ return require('packer').startup {
 
     local_use('nvim-telescope', 'telescope.nvim')
     local_use('nvim-telescope', 'telescope-fzy-native.nvim')
+    local_use('nvim-telescope', 'telescope-fzf-writer.nvim')
+    local_use('nvim-telescope', 'telescope-packer.nvim')
 
     -- local_use 'riki.nvim'
 
@@ -195,7 +197,7 @@ return require('packer').startup {
     use 'habamax/vim-godot'
     -- }}}
     -- Lisp {{{
-    use { 'eraserhd/parinfer-rust', run = 'cargo build --release' }
+    -- use { 'eraserhd/parinfer-rust', run = 'cargo build --release' }
     -- }}}
     --  }}}
     -- LSP {{{
@@ -229,6 +231,14 @@ return require('packer').startup {
     -- Debug adapter protocol
     --   Have not yet checked this out, but looks awesome.
     -- use 'puremourning/vimspector'
+    use 'mfussenegger/nvim-dap'
+    use 'mfussenegger/nvim-dap-python'
+    use { 
+      'theHamsta/nvim-dap-virtual-text',
+      run = function()
+        vim.g.dap_virtual_text = true
+      end
+    }
 
     -- }}}
     -- TREE SITTER: {{{

@@ -81,7 +81,6 @@ local git_changes = subscribe.buf_autocmd(
 require('el').setup {
   generator = function(_, _)
     return {
-      ' // ',
       extensions.gen_mode {
         format_string = ' %s '
       },

@@ -5,6 +5,7 @@ require('plenary.reload').reload_module("snippets")
 -- require'snippets'.set_ux(require'snippets.inserters.vim_input')
 
 local snip_plug = require('snippets')
+local indent = require('snippets.utils').match_indentation
 
 local snips = {}
 
@@ -30,6 +31,12 @@ snips.json = {
   i = [["$1": "$2"]],
   e = [[, {"text": "$1: ${=RandomString(25)}", "score": $1}]],
 }
+
+snips.go = {}
+snips.go.err = indent [[
+if err != nil {
+  return$0
+}]]
 
 snip_plug.snippets = snips
 snip_plug.use_suggested_mappings()
