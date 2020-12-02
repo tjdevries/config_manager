@@ -230,4 +230,5 @@ vim.opt = setmetatable({}, opt_mt)
 return {
   convert_vimoption_to_lua = convert_vimoption_to_lua,
   opt = vim.opt,
+  opt_mt = opt_mt
 }

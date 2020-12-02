@@ -128,7 +128,37 @@ opt.joinspaces = false         -- Two spaces and grade school, we're done
 -- set fillchars=eob:~
 opt.fillchars = { eob = "~" }
 
+--[[ To use a more declarative syntax, you could do something like this:
+
+local function set_opts(opts_table)
+  for k, v in pairs(opts_table) do
+    vim.opt[k] = v
+  end
+end
+
+set_opts {
+  mouse = 'n',
+  fillchars = { eob = "~" },
+}
+
+--]]
+
+--[[ Global option names
+
+For those wondering how to get the values at the top level,
+    you could use Lua's `setfenv` function to set the environment
+    equal to the vim.opt dict
+
+cc @mccanch
+
+setfenv(function()
+    mouse = 'n'
+end, vim.opt)()
+
+--]]
+
 --[[
+
 guicursor messing around
 set guicursor=n:blinkwait175-blinkoff150-blinkon175-hor10
 set guicursor=a:blinkon0
@@ -138,4 +168,5 @@ let g:loaded_netrw             = 1
 let g:loaded_netrwPlugin       = 1
 let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
+
 --]]
