@@ -76,6 +76,8 @@ return require('packer').startup {
     local_use('nvim-telescope', 'telescope-fzf-writer.nvim')
     local_use('nvim-telescope', 'telescope-packer.nvim')
 
+    local_use('nvim-telescope', 'telescope-github.nvim')
+
     -- local_use 'riki.nvim'
 
     -- Packer can manage itself as an optional plugin
