@@ -229,6 +229,9 @@ return require('packer').startup {
     --   :Vista  <-- Opens up a really cool sidebar with info about file.
     use 'liuchengxu/vista.vim'
 
+    -- Find and replace
+    use 'brooth/far.vim'
+
     -- Debug adapter protocol
     --   Have not yet checked this out, but looks awesome.
     -- use 'puremourning/vimspector'

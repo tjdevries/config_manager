@@ -44,6 +44,9 @@ require('tj.plugins')
 package.loaded['tj.globals'] = nil
 require('tj.globals')
 
+-- Load plugin confs
+require('tj.far')
+
 local opt = vim.opt
 
 -- Ignore compiled files
