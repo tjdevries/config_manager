@@ -125,6 +125,17 @@ function M.git_files()
   require('telescope.builtin').git_files(opts)
 end
 
+function M.lsp_code_actions()
+  local opts = themes.get_dropdown {
+    winblend = 10,
+    border = true,
+    previewer = false,
+    shorten_path = false,
+  }
+
+  require('telescope.builtin').lsp_code_actions(opts)
+end
+
 function M.live_grep()
  require('telescope.builtin').live_grep {
    shorten_path = true

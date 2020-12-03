@@ -78,6 +78,9 @@ return require('packer').startup {
 
     local_use('nvim-telescope', 'telescope-github.nvim')
 
+    -- TODO: Need to get github token available
+    -- use 'pwntester/octo.nvim'
+
     -- local_use 'riki.nvim'
 
     -- Packer can manage itself as an optional plugin
@@ -207,6 +210,7 @@ return require('packer').startup {
     -- Configurations for neovim lsp.
     --   neovim/neovim has all of the LSP code.
     use 'neovim/nvim-lsp'
+    use 'wbthomason/lsp-status.nvim'
 
     -- STREAM: Figure out how to use snippets better
     use 'haorenW1025/completion-nvim'
@@ -220,11 +224,6 @@ return require('packer').startup {
     -- use 'hrsh7th/vim-vsnip-integ'
     use 'norcalli/snippets.nvim'
     use 'norcalli/ui.nvim'
-
-    -- TODO: Merge in my LSP PR...
-    use 'haorenW1025/diagnostic-nvim'
-
-    use 'wbthomason/lsp-status.nvim'
 
     -- Cool tags based viewer
     --   :Vista  <-- Opens up a really cool sidebar with info about file.

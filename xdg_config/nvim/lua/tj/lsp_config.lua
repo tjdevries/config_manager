@@ -1,32 +1,17 @@
 local lspconfig = require('lspconfig')
 local nvim_status = require('lsp-status')
 local completion = require('completion')
-local diagnostic = require('diagnostic')
+
+local telescope_mapper = require('tj.telescope.mappings')
 
 local status = require('tj.lsp_status')
 
 -- Can set this lower if needed.
-require('vim.lsp.log').set_level("debug")
+-- require('vim.lsp.log').set_level("debug")
 -- require('vim.lsp.log').set_level("trace")
 
 local mapper = function(mode, key, result)
   vim.api.nvim_buf_set_keymap(0, mode, key, result, {noremap = true, silent = true})
-end
-
-local setup_custom_diagnostics = function()
-  -- vim.lsp.with -> a function that returns a new function, bound with new configuration.
-
-  mapper(
-    'n',
-    '<leader>dn',
-    '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>'
-  )
-
-  mapper(
-    'n',
-    '<leader>dp',
-    '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>'
-  )
 end
 
 -- Turn on status.
@@ -38,30 +23,32 @@ local custom_attach = function(client)
   end
 
   completion.on_attach(client)
-  -- diagnostic.on_attach(client)
-
   -- status    .on_attach(client)
 
-  pcall(setup_custom_diagnostics)
+  mapper('n', '<space>dn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+  mapper('n', '<space>dp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+  mapper('n', '<space>sl', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
 
-  -- mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
   mapper('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>')
-  mapper('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-  mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   mapper('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-  mapper('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
   mapper('n', '<space>cr', '<cmd>lua MyLspRename()<CR>')
 
-  -- if not vim.api.nvim_buf_get_keymap(0, 'n')['K'] then
-  if vim.api.nvim_buf_get_option(0, 'filetype') ~= 'lua' then
+  telescope_mapper('gr', 'lsp_references', nil, true)
+  telescope_mapper('<space>fw', 'lsp_workspace_symbols', { ignore_filename = true }, true)
+  telescope_mapper('<space>ca', 'lsp_code_actions', nil, true)
+
+  -- mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+  -- mapper('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+  -- mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+
+  local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
+  if filetype ~= 'lua' then
     mapper('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
   end
-  mapper('n', '<space>sl', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
 
   mapper('i', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 
   -- Rust is currently the only thing w/ inlay hints
-  local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
   if filetype == 'rust' then
     vim.cmd(
       [[autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request { ]]
@@ -74,7 +61,7 @@ local custom_attach = function(client)
     vim.cmd [[autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()]]
   end
 
-  vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
+  vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
 end
 
 lspconfig.pyls.setup({
