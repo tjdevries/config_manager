@@ -45,6 +45,7 @@ package.loaded['tj.globals'] = nil
 require('tj.globals')
 
 -- Load plugin confs
+require('tj.dap')
 require('tj.far')
 
 local opt = vim.opt
@@ -173,3 +174,6 @@ let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 
 --]]
+
+vim.cmd [[menu File.Save :w<CR>]]
+vim.cmd [[menu File.Stop :q<CR>]]

@@ -214,7 +214,10 @@ return require('packer').startup {
 
     -- STREAM: Figure out how to use snippets better
     use 'haorenW1025/completion-nvim'
-    use 'nvim-treesitter/completion-treesitter'
+    use {
+      'nvim-treesitter/completion-treesitter',
+      run = function() vim.cmd [[TSUpdate]] end
+    }
 
     -- TODO: I think this may be causing large buffers to slow considerably.
     --       I also think I can just use ^X^N if I need to?...

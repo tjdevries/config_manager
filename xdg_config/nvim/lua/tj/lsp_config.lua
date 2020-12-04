@@ -11,7 +11,7 @@ local status = require('tj.lsp_status')
 -- require('vim.lsp.log').set_level("trace")
 
 local mapper = function(mode, key, result)
-  vim.api.nvim_buf_set_keymap(0, mode, key, result, {noremap = true, silent = true})
+  vim.api.nvim_buf_set_keymap(0, mode, key, "<cmd>lua " .. result .. "<CR>", {noremap = true, silent = true})
 end
 
 -- Turn on status.
@@ -25,13 +25,13 @@ local custom_attach = function(client)
   completion.on_attach(client)
   -- status    .on_attach(client)
 
-  mapper('n', '<space>dn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-  mapper('n', '<space>dp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-  mapper('n', '<space>sl', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+  mapper('n', '<space>dn', 'vim.lsp.diagnostic.goto_next()')
+  mapper('n', '<space>dp', 'vim.lsp.diagnostic.goto_prev()')
+  mapper('n', '<space>sl', 'vim.lsp.diagnostic.show_line_diagnostics()')
 
-  mapper('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>')
-  mapper('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-  mapper('n', '<space>cr', '<cmd>lua MyLspRename()<CR>')
+  mapper('n', '<c-]>', 'vim.lsp.buf.definition()')
+  mapper('n', 'gr', 'vim.lsp.buf.references()')
+  mapper('n', '<space>cr', 'MyLspRename()')
 
   telescope_mapper('gr', 'lsp_references', nil, true)
   telescope_mapper('<space>fw', 'lsp_workspace_symbols', { ignore_filename = true }, true)
@@ -43,10 +43,10 @@ local custom_attach = function(client)
 
   local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
   if filetype ~= 'lua' then
-    mapper('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+    mapper('n', 'K', 'vim.lsp.buf.hover()')
   end
 
-  mapper('i', '<c-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+  mapper('i', '<c-s>', 'vim.lsp.buf.signature_help()')
 
   -- Rust is currently the only thing w/ inlay hints
   if filetype == 'rust' then
