@@ -35,6 +35,7 @@ require('telescope').setup {
       }
     },
 
+    selection_strategy = 'reset',
     sorting_strategy = "ascending",
     prompt_position = "top",
     color_devicons = true,
@@ -43,6 +44,9 @@ require('telescope').setup {
       i = {
         ["<c-x>"] = false,
         ["<c-s>"] = actions.goto_file_selection_split,
+
+        -- Experimental
+        ["<tab>"] = actions.add_selection,
       },
     },
 
@@ -52,6 +56,10 @@ require('telescope').setup {
     },
 
     file_sorter = sorters.get_fzy_sorter,
+
+    file_previewer    = require('telescope.previewers').vim_buffer_cat.new,
+    grep_previewer   = require('telescope.previewers').vim_buffer_vimgrep.new,
+    qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
   },
 
   extensions = {
@@ -194,6 +202,12 @@ end
 function M.help_tags()
   require('telescope.builtin').help_tags {
     show_version = true,
+  }
+end
+
+function M.search_all_files()
+  require('telescope.builtin').find_files {
+    find_command = { 'rg', '--no-ignore', '--files', },
   }
 end
 

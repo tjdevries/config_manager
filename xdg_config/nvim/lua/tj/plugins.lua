@@ -46,6 +46,7 @@ return require('packer').startup {
     end
 
     -- My Plugins
+    local_use 'contextprint.nvim'
     local_use 'nlua.nvim'
     local_use 'tree-sitter-lua'
     local_use 'vlog.nvim'
@@ -65,6 +66,9 @@ return require('packer').startup {
     local_use 'streamer.nvim'
     local_use 'wander.nvim'
 
+    local_use 'nsync.nvim'
+    use 'bfredl/nvim-luadev'
+
     local_use 'lsp_extensions.nvim'
 
     -- pcall(use, '~/plugins/scrollnv')
@@ -77,6 +81,7 @@ return require('packer').startup {
     local_use('nvim-telescope', 'telescope-packer.nvim')
 
     local_use('nvim-telescope', 'telescope-github.nvim')
+    local_use('nvim-telescope', 'telescope-symbols.nvim')
 
     -- TODO: Need to get github token available
     -- use 'pwntester/octo.nvim'

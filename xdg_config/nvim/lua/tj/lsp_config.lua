@@ -64,7 +64,12 @@ local custom_attach = function(client)
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
 end
 
-lspconfig.pyls.setup({
+
+lspconfig.yamlls.setup {
+  on_attach = custom_attach
+}
+
+lspconfig.pyls.setup {
   enable = true,
   plugins = {
     pyls_mypy = {
@@ -73,11 +78,11 @@ lspconfig.pyls.setup({
     }
   },
   on_attach = custom_attach
-})
+}
 
-lspconfig.vimls.setup({
+lspconfig.vimls.setup {
   on_attach = custom_attach,
-})
+}
 
 lspconfig.gopls.setup {
   on_attach = custom_attach,
