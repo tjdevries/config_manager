@@ -15,12 +15,6 @@ local plugins = {
     only_setup = false,
     path = "/home/tj/.local/share/nvim/site/pack/packer/opt/JavaScript-Indent"
   },
-  ["packer.nvim"] = {
-    loaded = false,
-    only_sequence = false,
-    only_setup = false,
-    path = "/home/tj/.local/share/nvim/site/pack/packer/opt/packer.nvim"
-  },
   ["vim-javascript"] = {
     loaded = false,
     only_sequence = false,
@@ -122,7 +116,7 @@ _packer_load = function(names, cause)
     end
 
     if cause.prefix then
-      local prefix = vim.v.count and vim.v.count or ''
+      local prefix = vim.v.count ~= 0 and vim.v.count or ''
       prefix = prefix .. '"' .. vim.v.register .. cause.prefix
       if vim.fn.mode('full') == 'no' then
         if vim.v.operator == 'c' then
@@ -166,7 +160,7 @@ endfunction
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
-  au FileType javascript ++once call s:load(['vim-javascript', 'JavaScript-Indent'], { "ft": "javascript" })
   au FileType html ++once call s:load(['vim-javascript'], { "ft": "html" })
+  au FileType javascript ++once call s:load(['vim-javascript', 'JavaScript-Indent'], { "ft": "javascript" })
   " Event lazy-loads
 augroup END

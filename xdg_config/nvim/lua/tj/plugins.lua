@@ -28,6 +28,8 @@ end
 
 return require('packer').startup {
   function(use)
+    use 'wbthomason/packer.nvim'
+
     local local_use = function(first, second)
       local plug_path, home
       if second == nil then
@@ -88,9 +90,6 @@ return require('packer').startup {
     -- use 'pwntester/octo.nvim'
 
     -- local_use 'riki.nvim'
-
-    -- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = true}
 
     -- PRACTICE: {{{
     use 'tpope/vim-projectionist'  -- STREAM: Alternate file editting and some helpful stuff
@@ -161,10 +160,12 @@ return require('packer').startup {
     -- Make cool signs for your files
     use 'johannesthyssen/vim-signit'
 
+    -- Crazy good box drawing
     use 'gyim/vim-boxdraw'
 
-    -- Helper to put stuff in quickfix
-    -- use 'neomake/neomake'
+    -- Better increment/decrement
+    -- use 'tpope/vim-speeddating'    -- Handle changing of dates in a nicer manner
+    use 'monaqa/dial.nvim'
 
     --   FOCUSING: {{{
     use 'junegunn/goyo.vim'
@@ -215,7 +216,7 @@ return require('packer').startup {
 
     -- Configurations for neovim lsp.
     --   neovim/neovim has all of the LSP code.
-    use 'neovim/nvim-lsp'
+    use 'neovim/nvim-lspconfig'
     use 'wbthomason/lsp-status.nvim'
 
     -- STREAM: Figure out how to use snippets better
@@ -277,7 +278,6 @@ return require('packer').startup {
     -- TEXT MANIUPLATION {{{
     use 'godlygeek/tabular'        -- Quickly align text by pattern
     use 'tpope/vim-surround'       -- Surround text objects easily
-    use 'tpope/vim-speeddating'    -- Handle changing of dates in a nicer manner
     use 'tpope/vim-commentary'     -- Easily comment out lines or objects
     use 'tpope/vim-repeat'         -- Repeat actions better
     use 'tpope/vim-abolish'        -- Cool things with words!
