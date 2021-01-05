@@ -65,6 +65,7 @@ return require('packer').startup {
     local_use 'command_and_conquer.nvim'
     local_use 'streamer.nvim'
     local_use 'wander.nvim'
+    local_use 'complextras.nvim'
 
     local_use 'nsync.nvim'
     use 'bfredl/nvim-luadev'
@@ -305,8 +306,10 @@ return require('packer').startup {
     use 'rhysd/git-messenger.vim'
 
     -- Async signs!
-    if vim.fn.has 'unix' then
+    if 0 == vim.fn.has 'nvim-0.5' then
       use 'mhinz/vim-signify'
+    else
+      use 'lewis6991/gitsigns.nvim'
     end
     -- }}}
 
@@ -328,7 +331,7 @@ return require('packer').startup {
     use 'ThePrimeagen/vim-be-good'
   end,
   config = {
-    display = {
+    _display = {
       open_fn = function(name)
         -- Can only use plenary when we have our plugins.
         --  We can only get plenary when we don't have our plugins ;)

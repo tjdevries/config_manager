@@ -288,32 +288,31 @@ end
 --]]
 
 --[ An example of using functions...
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, method, params, client_id, bufnr, config)
-  local uri = params.uri
-
-  vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      underline = true,
-      virtual_text = true,
-      signs = sign_decider,
-      update_in_insert = false,
-    }
-  )(err, method, params, client_id, bufnr, config)
-
-  bufnr = bufnr or vim.uri_to_bufnr(uri)
-
-  if bufnr == vim.api.nvim_get_current_buf() then
-    vim.lsp.diagnostic.set_loclist { open_loclist = false }
-  end
-end
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, method, params, client_id, bufnr, config)
+--   local uri = params.uri
+-- 
+--   vim.lsp.with(
+--     vim.lsp.diagnostic.on_publish_diagnostics, {
+--       underline = true,
+--       virtual_text = true,
+--       signs = sign_decider,
+--       update_in_insert = false,
+--     }
+--   )(err, method, params, client_id, bufnr, config)
+-- 
+--   bufnr = bufnr or vim.uri_to_bufnr(uri)
+-- 
+--   if bufnr == vim.api.nvim_get_current_buf() then
+--     vim.lsp.diagnostic.set_loclist { open_loclist = false }
+--   end
+-- end
 --]]
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    virtual_text = true,
-    signs = sign_decider,
-    update_in_insert = false,
+    virtual_text = {
+      severity_limit = "Warning",
+    },
   }
 )
 

@@ -20,7 +20,6 @@ require('telescope').setup {
     winblend = 0,
     preview_cutoff = 120,
 
-    scroll_strategy = 'cycle',
     layout_strategy = 'horizontal',
     layout_defaults = {
       horizontal = {
@@ -35,8 +34,9 @@ require('telescope').setup {
       }
     },
 
-    selection_strategy = 'reset',
-    sorting_strategy = "ascending",
+    selection_strategy = "reset",
+    sorting_strategy = "descending",
+    scroll_strategy = "cycle",
     prompt_position = "top",
     color_devicons = true,
 
@@ -47,6 +47,7 @@ require('telescope').setup {
 
         -- Experimental
         ["<tab>"] = actions.add_selection,
+        ["<c-q>"] = actions.send_to_qflist,
       },
     },
 
@@ -57,7 +58,7 @@ require('telescope').setup {
 
     file_sorter = sorters.get_fzy_sorter,
 
-    file_previewer    = require('telescope.previewers').vim_buffer_cat.new,
+    file_previewer   = require('telescope.previewers').vim_buffer_cat.new,
     grep_previewer   = require('telescope.previewers').vim_buffer_vimgrep.new,
     qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
   },
@@ -145,8 +146,10 @@ function M.lsp_code_actions()
 end
 
 function M.live_grep()
- require('telescope.builtin').live_grep {
-   shorten_path = true
+ require('telescope').extensions.fzf_writer.staged_grep {
+   shorten_path = true,
+   previewer = false,
+   fzf_separator = "|>",
  }
 end
 

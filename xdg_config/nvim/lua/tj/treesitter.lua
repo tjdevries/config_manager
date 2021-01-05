@@ -75,6 +75,8 @@ require('nvim-treesitter.configs').setup {
   -- ensure_installed = {'lua'}, -- one of 'all', 'language', or a list of languages
 }
 
+vim.cmd [[highlight IncludedC guibg=#373b41]]
+
 --[[
 
 -- From python, get all the things we import, update __all__

@@ -166,7 +166,7 @@ endfunction
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
-  au FileType html ++once call s:load(['vim-javascript'], { "ft": "html" })
   au FileType javascript ++once call s:load(['vim-javascript', 'JavaScript-Indent'], { "ft": "javascript" })
+  au FileType html ++once call s:load(['vim-javascript'], { "ft": "html" })
   " Event lazy-loads
 augroup END
