@@ -4,6 +4,9 @@ local completion = require('completion')
 
 local telescope_mapper = require('tj.telescope.mappings')
 
+-- TODO: Consider using this. I do kind of like it :)
+local nnoremap = require('tj.keymaps').nnoremap
+
 local status = require('tj.lsp_status')
 
 -- Can set this lower if needed.
@@ -25,9 +28,9 @@ local custom_attach = function(client)
   completion.on_attach(client)
   -- status    .on_attach(client)
 
-  mapper('n', '<space>dn', 'vim.lsp.diagnostic.goto_next()')
-  mapper('n', '<space>dp', 'vim.lsp.diagnostic.goto_prev()')
-  mapper('n', '<space>sl', 'vim.lsp.diagnostic.show_line_diagnostics()')
+  nnoremap { '<space>dn', vim.lsp.diagnostic.goto_next, buffer = 0 }
+  nnoremap { '<space>dp', vim.lsp.diagnostic.goto_prev, buffer = 0 }
+  nnoremap { '<space>sl', vim.lsp.diagnostic.show_line_diagnostics, buffer = 0 }
 
   mapper('n', '<c-]>', 'vim.lsp.buf.definition()')
   mapper('n', 'gr', 'vim.lsp.buf.references()')

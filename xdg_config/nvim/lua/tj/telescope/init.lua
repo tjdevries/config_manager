@@ -42,12 +42,14 @@ require('telescope').setup {
 
     mappings = {
       i = {
-        ["<c-x>"] = false,
-        ["<c-s>"] = actions.goto_file_selection_split,
+        ["<C-x>"] = false,
+        ["<C-s>"] = actions.goto_file_selection_split,
 
         -- Experimental
-        ["<tab>"] = actions.add_selection,
-        ["<c-q>"] = actions.send_to_qflist,
+        ["<tab>"] = actions.toggle_selection,
+
+        ["<C-q>"] = actions.send_to_qflist,
+        ["<M-q>"] = actions.send_selected_to_qflist,
       },
     },
 
@@ -78,7 +80,7 @@ require('telescope').setup {
 
 -- Load the fzy native extension at the start.
 require('telescope').load_extension('fzy_native')
-require('telescope').load_extension('ghcli')
+require('telescope').load_extension('gh')
 
 local M = {}
 
@@ -90,7 +92,7 @@ nnoremap <leader>en <cmd>lua require('my_user.tele').edit_neovim()<CR>
 function M.edit_neovim()
   require('telescope.builtin').find_files {
     prompt_title = "~ dotfiles ~",
-    shorten_path = false,
+    shorten_path = true,
     cwd = "~/.config/nvim",
     width = .25,
 
