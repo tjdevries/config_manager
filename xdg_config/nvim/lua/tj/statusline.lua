@@ -10,6 +10,7 @@ local extensions = require('el.extensions')
 local sections = require('el.sections')
 local subscribe = require('el.subscribe')
 local lsp_statusline = require('el.plugins.lsp_status')
+local helper = require('el.helper')
 
 -- TODO: Spinning planet extension. Integrated w/ telescope.
 -- ◐ ◓ ◑ ◒
@@ -97,6 +98,7 @@ require('el').setup {
         builtin.modified_flag
       },
       sections.split,
+      -- helper.buf_var('vista_nearest_method_or_function'),
       lsp_statusline.current_function,
       lsp_statusline.server_progress,
       git_changes,

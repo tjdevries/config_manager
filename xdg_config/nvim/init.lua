@@ -28,7 +28,6 @@ Much of the configuration of individual plugins you can find in either:
 --]]
 
 -- TODO: Consider what to do with ginit.vim
-
 vim.cmd [[packadd vimball]]
 
 -- Leader key -> ","
@@ -44,11 +43,12 @@ require('tj.plugins')
 package.loaded['tj.globals'] = nil
 require('tj.globals')
 
--- Load plugin confs
-require('tj.dap')
-require('tj.far')
-
 local opt = vim.opt
+
+--[[
+local opt_local = vim.opt_local
+opt_local.wildignore = opt_local.wildignore + '__pycache__'
+--]]
 
 -- Ignore compiled files
 opt.wildignore = '__pycache__'
@@ -174,6 +174,3 @@ let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 
 --]]
-
-vim.cmd [[menu File.Save :w<CR>]]
-vim.cmd [[menu File.Stop :q<CR>]]

@@ -22,6 +22,7 @@ if not packer_exists then
 
   print(out)
   print("Downloading packer.nvim...")
+  print("( You'll need to restart now )")
 
   return
 end
@@ -68,6 +69,7 @@ return require('packer').startup {
     local_use 'streamer.nvim'
     local_use 'wander.nvim'
     local_use 'complextras.nvim'
+    -- local_use 'riki.nvim'
 
     local_use 'nsync.nvim'
     use 'bfredl/nvim-luadev'
@@ -86,10 +88,11 @@ return require('packer').startup {
     local_use('nvim-telescope', 'telescope-github.nvim')
     local_use('nvim-telescope', 'telescope-symbols.nvim')
 
-    -- TODO: Need to get github token available
-    -- use 'pwntester/octo.nvim'
-
-    -- local_use 'riki.nvim'
+    use {
+      'tami5/sql.nvim',
+      rocks = { 'lua-cjson' },
+    }
+    use 'nvim-telescope/telescope-frecency.nvim'
 
     -- PRACTICE: {{{
     use 'tpope/vim-projectionist'  -- STREAM: Alternate file editting and some helpful stuff
@@ -97,7 +100,7 @@ return require('packer').startup {
     -- For narrowing regions of text to look at them alone
     use 'chrisbra/NrrwRgn' -- Figure out some good ways to use this on stream
 
-    use {'rhysd/vim-clang-format', rocks = { 'lua-cjson', 'lpeg', 'asdf' }}
+    use 'rhysd/vim-clang-format'
     use 'tweekmonster/spellrotate.vim'
     use 'haya14busa/vim-metarepeat'  -- Never figured out how to use this, but looks like fun.
     -- }}}
@@ -297,7 +300,9 @@ return require('packer').startup {
     -- GIT: {{{
     -- gita replacement
     use 'lambdalisue/gina.vim'
-    use 'kdheepak/lazygit.nvim'
+
+    -- Github integration
+    use 'pwntester/octo.nvim'
 
     -- Sweet message committer
     use 'rhysd/committia.vim'

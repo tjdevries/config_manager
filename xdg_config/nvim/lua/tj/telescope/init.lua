@@ -79,8 +79,10 @@ require('telescope').setup {
 }
 
 -- Load the fzy native extension at the start.
-require('telescope').load_extension('fzy_native')
-require('telescope').load_extension('gh')
+pcall(require('telescope').load_extension, 'fzy_native')
+pcall(require('telescope').load_extension, 'gh')
+pcall(require('telescope').load_extension, 'frecency')
+pcall(require('telescope').load_extension, 'octo')
 
 local M = {}
 
@@ -163,7 +165,11 @@ function M.grep_prompt()
 end
 
 function M.oldfiles()
-  require('telescope.builtin').oldfiles { layout_strategy = 'vertical' }
+  if pcall(require('telescope').load_extension, 'frecency') then
+    require('telescope').extensions.frecency.frecency()
+  else
+    require('telescope.builtin').oldfiles { layout_strategy = 'vertical' }
+  end
 end
 
 function M.my_plugins()

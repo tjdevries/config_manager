@@ -1,30 +1,12 @@
-# Things to do in Nvim
-
 ## TODOs
-
-Clean up this file...
 
 - Probably can remove `AnsiEscPlugin`, since we've got Norcalli's plugin that's better (terminal.nvim) or whatever the name is.
 - Look over some of Damian Conway's old stuff in here, see if they still run and if they should get hosted somewhere else?
 
 
-## Shortcuts I like from PyCharm
-
-```
-- <C-Space><C-Space>
-    - Complete from anywhere
-- <C-A-O>
-    - Optimize imports
-    - Sorts & Optimizes
-- <A-Enter>
-    - "Fix" something
-    - Would be nice to just have a chain of possibilities
-    - Import this, spell this, etc.
-```
-
-```
 From vim-surround
 
+```
                                                 *i_CTRL-G_s* *i_CTRL-G_S*
 Finally, there is an experimental insert mode mapping on <C-G>s and <C-S>.
 Beware that the latter won't work on terminals with flow control (if you

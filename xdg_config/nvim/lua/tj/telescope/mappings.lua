@@ -26,7 +26,11 @@ map_tele('<leader>en', 'edit_neovim')
 map_tele('<leader>ez', 'edit_zsh')
 
 -- Search
-map_tele('<space>gw', 'grep_string', { short_path = true, word_match = '-w' })
+map_tele('<space>gw', 'grep_string', {
+  short_path = true,
+  word_match = '-w',
+  only_sort_text = true
+})
 
 -- Files
 map_tele('<space>ft', 'git_files')

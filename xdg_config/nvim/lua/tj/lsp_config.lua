@@ -6,7 +6,6 @@ local telescope_mapper = require('tj.telescope.mappings')
 
 -- TODO: Consider using this. I do kind of like it :)
 local nnoremap = require('tj.keymaps').nnoremap
-
 local status = require('tj.lsp_status')
 
 -- Can set this lower if needed.
@@ -36,7 +35,12 @@ local custom_attach = function(client)
   mapper('n', 'gr', 'vim.lsp.buf.references()')
   mapper('n', '<space>cr', 'MyLspRename()')
 
-  telescope_mapper('gr', 'lsp_references', nil, true)
+  telescope_mapper('gr', 'lsp_references', {
+    sorting_strategy = "ascending",
+    prompt_position = "top",
+    ignore_filename = true,
+  }, true)
+
   telescope_mapper('<space>fw', 'lsp_workspace_symbols', { ignore_filename = true }, true)
   telescope_mapper('<space>ca', 'lsp_code_actions', nil, true)
 
@@ -186,13 +190,6 @@ lspconfig.rust_analyzer.setup({
   cmd = {"rust-analyzer"},
   filetypes = {"rust"},
   on_attach = custom_attach,
-  handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics, {
-        signs = false
-      }
-    ),
-  }
 })
 
 --[[
@@ -314,45 +311,14 @@ end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = {
-      severity_limit = "Warning",
+    signs = {
+      severity_limit = "Error",
     },
+    -- virtual_text = {
+    --   severity_limit = "Warning",
+    -- },
   }
 )
 
 
-if false then
-vim.lsp.diagnostic.get_virtual_text_chunks_for_line = function(bufnr, line, line_diagnostics)
-  if #line_diagnostics == 0 then
-    return nil
-  end
-
-  local line_length = #(vim.api.nvim_buf_get_lines(bufnr, line, line + 1, false)[1] or '')
-  local get_highlight = vim.lsp.diagnostic._get_severity_highlight_name
-
-  -- Create a little more space between virtual text and contents
-  local virt_texts = {{string.rep(" ", 80 - line_length)}}
-
-  for i = 1, #line_diagnostics - 1 do
-    table.insert(virt_texts, {"■", get_highlight(line_diagnostics[i].severity)})
-  end
-  local last = line_diagnostics[#line_diagnostics]
-  -- TODO(ashkan) use first line instead of subbing 2 spaces?
-
-  -- TODO(tjdevries): Allow different servers to be shown first somehow?
-  -- TODO(tjdevries): Display server name associated with these?
-  if last.message then
-    table.insert(
-      virt_texts,
-      {
-        string.format("■ %s", last.message:gsub("\r", ""):gsub("\n", "  ")),
-        get_highlight(last.severity)
-      }
-    )
-
-    return virt_texts
-  end
-
-  return virt_texts
-end
-end
+require('tj.lsp.handlers')
