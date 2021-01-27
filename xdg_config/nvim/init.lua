@@ -37,11 +37,20 @@ vim.cmd [[packadd vimball]]
 -- leader.
 vim.g.mapleader = ','
 
+package.loaded['tj.globals'] = nil
+local globals_ok, msg = pcall(require, 'tj.globals')
+if not globals_ok then
+  print("Failed to load globals:", msg)
+end
+
 -- Load packer.nvim files
 require('tj.plugins')
 
-package.loaded['tj.globals'] = nil
-require('tj.globals')
+if not globals_ok then
+  print("Quitting early after loading plugins.")
+  print("You probably need to install them...")
+  return
+end
 
 local opt = vim.opt
 
@@ -132,45 +141,12 @@ opt.joinspaces = false         -- Two spaces and grade school, we're done
 -- set fillchars=eob:~
 opt.fillchars = { eob = "~" }
 
---[[ To use a more declarative syntax, you could do something like this:
+-- Force loading of astronauta first.
+vim.cmd [[runtime plugin/astronauta.vim]]
 
-local function set_opts(opts_table)
-  for k, v in pairs(opts_table) do
-    vim.opt[k] = v
-  end
-end
+require('tj.lsp')
 
-set_opts {
-  mouse = 'n',
-  fillchars = { eob = "~" },
-}
+require('tj.telescope')
+require('tj.telescope.mappings')
 
---]]
-
---[[ Global option names
-
-For those wondering how to get the values at the top level,
-    you could use Lua's `setfenv` function to set the environment
-    equal to the vim.opt dict
-
-cc @mccanch
-
-setfenv(function()
-    mouse = 'n'
-end, vim.opt)()
-
---]]
-
---[[
-
-guicursor messing around
-set guicursor=n:blinkwait175-blinkoff150-blinkon175-hor10
-set guicursor=a:blinkon0
-
-disable netrw.vim
-let g:loaded_netrw             = 1
-let g:loaded_netrwPlugin       = 1
-let g:loaded_netrwSettings     = 1
-let g:loaded_netrwFileHandlers = 1
-
---]]
+require('terminal').setup()

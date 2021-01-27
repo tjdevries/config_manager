@@ -167,8 +167,6 @@ nnoremap <c-r>w :%s/<c-r><c-w>//g<left><left>
 
 nnoremap <M-CR> :let v:hlsearch=!v:hlsearch<CR>
 
-nnoremap J :call tj#join_lines()<CR>
-
 " Shrug ¯\_(ツ)_/¯
 inoremap ,shrug ¯\_(ツ)_/¯
 

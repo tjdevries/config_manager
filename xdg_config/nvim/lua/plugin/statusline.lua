@@ -4,7 +4,6 @@ vim.cmd [[packadd express_line.nvim]]
 RELOAD('el')
 require('el').reset_windows()
 
-
 local builtin = require('el.builtin')
 local extensions = require('el.extensions')
 local sections = require('el.sections')

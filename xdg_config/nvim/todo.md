@@ -27,3 +27,9 @@ function name inside the parentheses.
   "hello"                   ysWFprint<cr>     print( "hello" )
   "hello"                   ysW<C-f>print<cr> (print "hello")
 ```
+
+
+## Random Ideas:
+
+- [ ] Adding descriptions to maps as metadata
+    - `nnoremap <describe>Hello World</describe> lhs rhs`

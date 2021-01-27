@@ -69,6 +69,7 @@ return require('packer').startup {
     local_use 'streamer.nvim'
     local_use 'wander.nvim'
     local_use 'complextras.nvim'
+    local_use 'astronauta.nvim'
     -- local_use 'riki.nvim'
 
     local_use 'nsync.nvim'
@@ -280,13 +281,16 @@ return require('packer').startup {
     -- }}}
     -- TEXT MANIUPLATION {{{
     use 'godlygeek/tabular'        -- Quickly align text by pattern
-    use 'tpope/vim-surround'       -- Surround text objects easily
     use 'tpope/vim-commentary'     -- Easily comment out lines or objects
     use 'tpope/vim-repeat'         -- Repeat actions better
     use 'tpope/vim-abolish'        -- Cool things with words!
     use 'tpope/vim-characterize'
+    use 'tpope/vim-dispatch'
     use 'AndrewRadev/splitjoin.vim'
     use 'AndrewRadev/sideways.vim' -- Easy sideways movement
+
+    -- TODO: Check out macvhakann/vim-sandwich at some point
+    use 'tpope/vim-surround'       -- Surround text objects easily
 
     -- Do I even use any of these?
     use 'kana/vim-textobj-user'

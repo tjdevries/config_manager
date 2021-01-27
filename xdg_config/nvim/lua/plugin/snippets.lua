@@ -1,5 +1,5 @@
-require('plenary.reload').reload_module("nlua")
-require('plenary.reload').reload_module("snippets")
+R("nlua")
+R("snippets")
 
 -- TODO: We should check out the UX stuff here. Norcalli made something sweet.
 -- require'snippets'.set_ux(require'snippets.inserters.vim_input')

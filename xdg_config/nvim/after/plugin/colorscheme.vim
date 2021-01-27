@@ -1,10 +1,5 @@
 scriptencoding utf-8
 
-set termguicolors
-
-lua pcall(function() require('colorbuddy').colorscheme('gruvbuddy') end)
-lua pcall(function() return require('colorizer').setup() end)
-
 " {{{ Halo
 " Thanks to Justinmk for this.
 " Not currently using it though. I want to change some of the colors to make

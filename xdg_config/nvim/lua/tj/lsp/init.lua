@@ -5,8 +5,8 @@ local completion = require('completion')
 local telescope_mapper = require('tj.telescope.mappings')
 
 -- TODO: Consider using this. I do kind of like it :)
-local nnoremap = require('tj.keymaps').nnoremap
-local status = require('tj.lsp_status')
+local nnoremap = vim.keymap.nnoremap
+local status = require('tj.lsp.status')
 
 -- Can set this lower if needed.
 -- require('vim.lsp.log').set_level("debug")
@@ -20,11 +20,18 @@ end
 -- status.activate()
 
 local custom_attach = function(client)
+  local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
+
   if client.config.flags then
-    client.config.flags.allow_incremental_sync = true
+    -- It doesn't seem like clang likes this very much.
+    if filetype ~= 'c' then
+      client.config.flags.allow_incremental_sync = true
+    end
   end
 
-  completion.on_attach(client)
+  if filetype ~= 'c' then
+    completion.on_attach(client)
+  end
   -- status    .on_attach(client)
 
   nnoremap { '<space>dn', vim.lsp.diagnostic.goto_next, buffer = 0 }
@@ -48,7 +55,6 @@ local custom_attach = function(client)
   -- mapper('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
   -- mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
 
-  local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
   if filetype ~= 'lua' then
     mapper('n', 'K', 'vim.lsp.buf.hover()')
   end

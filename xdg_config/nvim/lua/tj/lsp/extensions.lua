@@ -1,4 +1,3 @@
-
 local inlay_hints = require('lsp_extensions.inlay_hints')
 
 local M = {}
