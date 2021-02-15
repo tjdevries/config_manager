@@ -72,10 +72,12 @@ return require('packer').startup {
     local_use 'astronauta.nvim'
     -- local_use 'riki.nvim'
 
+
     local_use 'nsync.nvim'
     use 'bfredl/nvim-luadev'
 
     local_use 'lsp_extensions.nvim'
+    use 'glepnir/lspsaga.nvim'
 
     -- pcall(use, '~/plugins/scrollnv')
     local_use('nvim-lua', 'popup.nvim')
@@ -89,10 +91,10 @@ return require('packer').startup {
     local_use('nvim-telescope', 'telescope-github.nvim')
     local_use('nvim-telescope', 'telescope-symbols.nvim')
 
-    use {
-      'tami5/sql.nvim',
-      rocks = { 'lua-cjson' },
-    }
+    local_use 'telescope-hacks.nvim'
+    local_use 'green_light.nvim'
+
+    use 'tami5/sql.nvim'
     use 'nvim-telescope/telescope-frecency.nvim'
 
     -- PRACTICE: {{{
@@ -106,6 +108,12 @@ return require('packer').startup {
     use 'haya14busa/vim-metarepeat'  -- Never figured out how to use this, but looks like fun.
     -- }}}
     -- VIM EDITOR: {{{
+
+    -- Hmm... I don't like that it is not tab local.
+    --  I will need to investigate some more
+    if false then
+      use 'romgrk/barbar.nvim'
+    end
 
     -- Little know features:
     --   :SSave
@@ -224,7 +232,12 @@ return require('packer').startup {
     use 'wbthomason/lsp-status.nvim'
 
     -- STREAM: Figure out how to use snippets better
-    use 'haorenW1025/completion-nvim'
+    -- use 'haorenW1025/completion-nvim'
+    use 'hrsh7th/nvim-compe'
+
+    -- Completion stuff
+    local_use 'rofl.nvim'
+
     use {
       'nvim-treesitter/completion-treesitter',
       run = function() vim.cmd [[TSUpdate]] end
@@ -306,7 +319,10 @@ return require('packer').startup {
     use 'lambdalisue/gina.vim'
 
     -- Github integration
-    use 'pwntester/octo.nvim'
+    use {
+      'pwntester/octo.nvim',
+      -- cmd = { 'Octo' },
+    }
 
     -- Sweet message committer
     use 'rhysd/committia.vim'

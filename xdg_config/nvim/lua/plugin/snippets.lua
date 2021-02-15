@@ -32,6 +32,23 @@ snips.json = {
   e = [[, {"text": "$1: ${=RandomString(25)}", "score": $1}]],
 }
 
+snips.rust = {}
+
+snips.rust.mod_test = indent [[
+#[cfg(test)]
+mod tests {
+  use super::*;
+
+  $0
+}
+]]
+
+snips.rust.test = indent [[
+#[test]
+fn $1() {
+  $0
+}]]
+
 snips.go = {}
 
 snips.go.err = indent [[

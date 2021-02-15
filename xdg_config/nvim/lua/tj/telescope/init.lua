@@ -13,6 +13,8 @@ local actions = require('telescope.actions')
 local sorters = require('telescope.sorters')
 local themes = require('telescope.themes')
 
+-- local action_set = require('telescope.actions.set')
+
 require('telescope').setup {
   defaults = {
     prompt_prefix = ' >',
@@ -48,15 +50,12 @@ require('telescope').setup {
         -- Experimental
         ["<tab>"] = actions.toggle_selection,
 
-        ["<C-q>"] = actions.send_to_qflist,
-        ["<M-q>"] = actions.send_selected_to_qflist,
+        ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+        ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
       },
     },
 
-    borderchars = {
-      { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-      preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-    },
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
 
     file_sorter = sorters.get_fzy_sorter,
 
@@ -74,6 +73,13 @@ require('telescope').setup {
     fzf_writer = {
       use_highlighter = false,
       minimum_grep_characters = 4,
+    },
+
+    frecency = {
+      workspaces = {
+        ["conf"] = "/home/tj/.config/nvim/",
+        ["nvim"] = "/home/tj/build/neovim",
+      }
     }
   },
 }
@@ -81,8 +87,11 @@ require('telescope').setup {
 -- Load the fzy native extension at the start.
 pcall(require('telescope').load_extension, 'fzy_native')
 pcall(require('telescope').load_extension, 'gh')
-pcall(require('telescope').load_extension, 'frecency')
-pcall(require('telescope').load_extension, 'octo')
+require('telescope').load_extension('octo')
+
+-- if pcall(require('telescope').load_extension, 'frecency') then
+  -- require('tj.telescope.frecency')
+-- end
 
 local M = {}
 
@@ -94,7 +103,7 @@ nnoremap <leader>en <cmd>lua require('my_user.tele').edit_neovim()<CR>
 function M.edit_neovim()
   require('telescope.builtin').find_files {
     prompt_title = "~ dotfiles ~",
-    shorten_path = true,
+    shorten_path = false,
     cwd = "~/.config/nvim",
     width = .25,
 
@@ -138,6 +147,16 @@ function M.git_files()
   require('telescope.builtin').git_files(opts)
 end
 
+function M.buffer_git_files()
+  require('telescope.builtin').git_files(themes.get_dropdown {
+    cwd = vim.fn.expand("%:p:h"),
+    winblend = 10,
+    border = true,
+    previewer = false,
+    shorten_path = false,
+  })
+end
+
 function M.lsp_code_actions()
   local opts = themes.get_dropdown {
     winblend = 10,
@@ -164,9 +183,23 @@ function M.grep_prompt()
   }
 end
 
+function M.grep_last_search(opts)
+  opts = opts or {}
+
+  -- \<getreg\>\C
+  -- -> Subs out the search things
+  local register = vim.fn.getreg('/'):gsub('\\<', ''):gsub('\\>', ''):gsub("\\C", "")
+
+  opts.shorten_path = true
+  opts.word_match = '-w'
+  opts.search = register
+
+  require('telescope.builtin').grep_string(opts)
+end
+
 function M.oldfiles()
+  if true then require('telescope').extensions.frecency.frecency() end
   if pcall(require('telescope').load_extension, 'frecency') then
-    require('telescope').extensions.frecency.frecency()
   else
     require('telescope.builtin').oldfiles { layout_strategy = 'vertical' }
   end

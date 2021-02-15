@@ -1,0 +1,193 @@
+|| { {
+||     command = {
+||       arguments = { {
+||           args = {
+||             cargoArgs = { "test", "--package", "lsif-protocol", "--lib" },
+||             cargoExtraArgs = {},
+||             executableArgs = { "reader::reader::test", "--nocapture" },
+||             workspaceRoot = "/home/tj/sourcegraph/lsif-protocol-rs"
+||           },
+||           kind = "cargo",
+||           label = "test-mod reader::reader::test",
+||           location = {
+||             targetRange = {
+||               end = {
+||                 character = 1,
+||                 line = 186
+||               },
+||               start = {
+||                 character = 0,
+||                 line = 158
+||               }
+||             },
+||             targetSelectionRange = {
+||               end = {
+||                 character = 8,
+||                 line = 159
+||               },
+||               start = {
+||                 character = 4,
+||                 line = 159
+||               }
+||             },
+||             targetUri = "file:///home/tj/sourcegraph/lsif-protocol-rs/src/reader/reader.rs"
+||           }
+||         } },
+||       command = "rust-analyzer.runSingle",
+||       title = "▶︎ Run Test"
+||     },
+||     range = {
+||       end = {
+||         character = 1,
+||         line = 186
+||       },
+||       start = {
+||         character = 0,
+||         line = 158
+||       }
+||     }
+||   }, {
+||     command = {
+||       arguments = { {
+||           args = {
+||             cargoArgs = { "test", "--package", "lsif-protocol", "--lib" },
+||             cargoExtraArgs = {},
+||             executableArgs = { "reader::reader::test", "--nocapture" },
+||             workspaceRoot = "/home/tj/sourcegraph/lsif-protocol-rs"
+||           },
+||           kind = "cargo",
+||           label = "test-mod reader::reader::test",
+||           location = {
+||             targetRange = {
+||               end = {
+||                 character = 1,
+||                 line = 186
+||               },
+||               start = {
+||                 character = 0,
+||                 line = 158
+||               }
+||             },
+||             targetSelectionRange = {
+||               end = {
+||                 character = 8,
+||                 line = 159
+||               },
+||               start = {
+||                 character = 4,
+||                 line = 159
+||               }
+||             },
+||             targetUri = "file:///home/tj/sourcegraph/lsif-protocol-rs/src/reader/reader.rs"
+||           }
+||         } },
+||       command = "rust-analyzer.debugSingle",
+||       title = "Debug"
+||     },
+||     range = {
+||       end = {
+||         character = 1,
+||         line = 186
+||       },
+||       start = {
+||         character = 0,
+||         line = 158
+||       }
+||     }
+||   }, {
+||     command = {
+||       arguments = { {
+||           args = {
+||             cargoArgs = { "test", "--package", "lsif-protocol", "--lib" },
+||             cargoExtraArgs = {},
+||             executableArgs = { "reader::reader::test::basic", "--exact", "--nocapture" },
+||             workspaceRoot = "/home/tj/sourcegraph/lsif-protocol-rs"
+||           },
+||           kind = "cargo",
+||           label = "test reader::reader::test::basic",
+||           location = {
+||             targetRange = {
+||               end = {
+||                 character = 5,
+||                 line = 185
+||               },
+||               start = {
+||                 character = 4,
+||                 line = 163
+||               }
+||             },
+||             targetSelectionRange = {
+||               end = {
+||                 character = 12,
+||                 line = 164
+||               },
+||               start = {
+||                 character = 7,
+||                 line = 164
+||               }
+||             },
+||             targetUri = "file:///home/tj/sourcegraph/lsif-protocol-rs/src/reader/reader.rs"
+||           }
+||         } },
+||       command = "rust-analyzer.runSingle",
+||       title = "▶︎ Run Test"
+||     },
+||     range = {
+||       end = {
+||         character = 5,
+||         line = 185
+||       },
+||       start = {
+||         character = 4,
+||         line = 163
+||       }
+||     }
+||   }, {
+||     command = {
+||       arguments = { {
+||           args = {
+||             cargoArgs = { "test", "--package", "lsif-protocol", "--lib" },
+||             cargoExtraArgs = {},
+||             executableArgs = { "reader::reader::test::basic", "--exact", "--nocapture" },
+||             workspaceRoot = "/home/tj/sourcegraph/lsif-protocol-rs"
+||           },
+||           kind = "cargo",
+||           label = "test reader::reader::test::basic",
+||           location = {
+||             targetRange = {
+||               end = {
+||                 character = 5,
+||                 line = 185
+||               },
+||               start = {
+||                 character = 4,
+||                 line = 163
+||               }
+||             },
+||             targetSelectionRange = {
+||               end = {
+||                 character = 12,
+||                 line = 164
+||               },
+||               start = {
+||                 character = 7,
+||                 line = 164
+||               }
+||             },
+||             targetUri = "file:///home/tj/sourcegraph/lsif-protocol-rs/src/reader/reader.rs"
+||           }
+||         } },
+||       command = "rust-analyzer.debugSingle",
+||       title = "Debug"
+||     },
+||     range = {
+||       end = {
+||         character = 5,
+||         line = 185
+||       },
+||       start = {
+||         character = 4,
+||         line = 163
+||       }
+||     }
+||   } }

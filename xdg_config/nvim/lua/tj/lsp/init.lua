@@ -1,6 +1,7 @@
 local lspconfig = require('lspconfig')
 local nvim_status = require('lsp-status')
-local completion = require('completion')
+
+local has_completion, completion = pcall(require, 'completion')
 
 local telescope_mapper = require('tj.telescope.mappings')
 
@@ -9,8 +10,12 @@ local nnoremap = vim.keymap.nnoremap
 local status = require('tj.lsp.status')
 
 -- Can set this lower if needed.
+
 -- require('vim.lsp.log').set_level("debug")
 -- require('vim.lsp.log').set_level("trace")
+
+-- Setup handlers before running
+require('tj.lsp.handlers')
 
 local mapper = function(mode, key, result)
   vim.api.nvim_buf_set_keymap(0, mode, key, "<cmd>lua " .. result .. "<CR>", {noremap = true, silent = true})
@@ -29,7 +34,7 @@ local custom_attach = function(client)
     end
   end
 
-  if filetype ~= 'c' then
+  if has_completion and filetype ~= 'c' then
     completion.on_attach(client)
   end
   -- status    .on_attach(client)
@@ -38,17 +43,28 @@ local custom_attach = function(client)
   nnoremap { '<space>dp', vim.lsp.diagnostic.goto_prev, buffer = 0 }
   nnoremap { '<space>sl', vim.lsp.diagnostic.show_line_diagnostics, buffer = 0 }
 
-  mapper('n', '<c-]>', 'vim.lsp.buf.definition()')
-  mapper('n', 'gr', 'vim.lsp.buf.references()')
+  nnoremap { '<c-]>', vim.lsp.buf.definition, buffer = 0 }
+  nnoremap { 'gD', vim.lsp.buf.declaration, buffer = 0 }
+
   mapper('n', '<space>cr', 'MyLspRename()')
 
   telescope_mapper('gr', 'lsp_references', {
+    layout_strategy = "vertical",
     sorting_strategy = "ascending",
     prompt_position = "top",
     ignore_filename = true,
   }, true)
 
-  telescope_mapper('<space>fw', 'lsp_workspace_symbols', { ignore_filename = true }, true)
+  -- TODO: I don't like these combos
+  telescope_mapper('<space>wd', 'lsp_document_symbols', { ignore_filename = true }, true)
+  telescope_mapper('<space>ww', 'lsp_workspace_symbols', { ignore_filename = true }, true)
+  if filetype == 'rust' then
+    telescope_mapper('<space>wf', 'lsp_workspace_symbols', {
+      ignore_filename = true,
+      query = '#',
+    }, true)
+  end
+
   telescope_mapper('<space>ca', 'lsp_code_actions', nil, true)
 
   -- mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
@@ -60,6 +76,7 @@ local custom_attach = function(client)
   end
 
   mapper('i', '<c-s>', 'vim.lsp.buf.signature_help()')
+  mapper('n', '<space>rr', 'vim.lsp.stop_client(vim.lsp.get_active_clients()); vim.cmd [[e]]')
 
   -- Rust is currently the only thing w/ inlay hints
   if filetype == 'rust' then
@@ -97,8 +114,21 @@ lspconfig.vimls.setup {
   on_attach = custom_attach,
 }
 
+local codelens_capabilities = vim.lsp.protocol.make_client_capabilities()
+codelens_capabilities.textDocument.codeLens = {
+  dynamicRegistration = false,
+}
+
 lspconfig.gopls.setup {
   on_attach = custom_attach,
+
+  capabilities = codelens_capabilities,
+
+  settings = {
+    gopls = {
+      codelenses = { test = true },
+    }
+  }
 }
 
 lspconfig.gdscript.setup {
@@ -192,6 +222,12 @@ lspconfig.clangd.setup({
   capabilities = nvim_status.capabilities,
 })
 
+if 1 == vim.fn.executable('cmake-language-server') then
+  lspconfig.cmake.setup {
+    on_attach = custom_attach,
+  }
+end
+
 lspconfig.rust_analyzer.setup({
   cmd = {"rust-analyzer"},
   filetypes = {"rust"},
@@ -242,29 +278,6 @@ let settings = {
 \     }}}
 --]]
 
-
-function MyLspRename()
-  local current_word = vim.fn.expand("<cword>")
-  local plenary_window = require('plenary.window.float').percentage_range_window(0.5, 0.2)
-  vim.api.nvim_buf_set_option(plenary_window.bufnr, 'buftype', 'prompt')
-  vim.fn.prompt_setprompt(plenary_window.bufnr, string.format('Rename "%s" to > ', current_word))
-  vim.fn.prompt_setcallback(plenary_window.bufnr, function(text)
-    vim.api.nvim_win_close(plenary_window.win_id, true)
-
-    if text ~= '' then
-      vim.schedule(function()
-        vim.api.nvim_buf_delete(plenary_window.bufnr, { force = true })
-
-        vim.lsp.buf.rename(text)
-      end)
-    else
-      print("Nothing to rename!")
-    end
-  end)
-
-  vim.cmd [[startinsert]]
-end
-
 local sign_decider
 if true then
   sign_decider = function(bufnr)
@@ -314,17 +327,3 @@ end
 --   end
 -- end
 --]]
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    signs = {
-      severity_limit = "Error",
-    },
-    -- virtual_text = {
-    --   severity_limit = "Warning",
-    -- },
-  }
-)
-
-
-require('tj.lsp.handlers')
