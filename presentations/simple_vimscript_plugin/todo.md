@@ -1,0 +1,38 @@
+
+- Introduction to vim plugin
+    - What are the folders:
+        - plugin/
+            - :help plugin
+        - autoload/
+            - :help autoload
+        - doc/
+            - :help help-writing
+        - README.md
+
+        - Advanced:
+            - <Plug> mappings
+            - Commands
+                - Completion
+            - Tests
+                - Vader
+                - :help assert_*
+- Introduction to vimscript
+    - Key thing to remember: Everything is about being run from vim's command line
+    - Important commands:
+        - `call`
+        - `let`
+        - `function!`
+    - executing commands
+- How to write (good) Lua
+- Convert a plugin to lua.
+    - `require('...')` semantics
+    - `require('my_plugin').setup { ... }`
+    - Style guidelines:
+        - Globals -> CapitalLetters
+        - locals -> things_like_this
+        - vim.fn.*
+        - vim.api.*
+        - hot-reloading
+        - Fun syntax items:
+            - func { }
+            - func [[ ]]
