@@ -380,3 +380,5 @@ fi
 if [ -f "$GCLOUD_HOME/completion.zsh.inc" ]; then
     . "$GCLOUD_HOME/completion.zsh.inc";
 fi
+
+export PATH="$HOME/.local/bin/:$PATH"
