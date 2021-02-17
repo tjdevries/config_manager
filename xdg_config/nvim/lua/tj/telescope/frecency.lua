@@ -1,4 +1,3 @@
-
 require('telescope').load_extension('frecency').setup {
   workspaces = {
     ["conf"] = "/home/tj/.config/nvim/",

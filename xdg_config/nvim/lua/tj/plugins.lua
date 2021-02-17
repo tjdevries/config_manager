@@ -1,4 +1,6 @@
--- On ly required if you have packer in your `opt` pack
+vim.cmd [[packadd vimball]]
+
+-- Only required if you have packer in your `opt` pack
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
 if not packer_exists then
@@ -78,6 +80,7 @@ return require('packer').startup {
 
     local_use 'lsp_extensions.nvim'
     use 'glepnir/lspsaga.nvim'
+    use 'onsails/lspkind-nvim'
 
     -- pcall(use, '~/plugins/scrollnv')
     local_use('nvim-lua', 'popup.nvim')

@@ -7,14 +7,14 @@ local telescope_mapper = require('tj.telescope.mappings')
 
 -- TODO: Consider using this. I do kind of like it :)
 local nnoremap = vim.keymap.nnoremap
-local status = require('tj.lsp.status')
 
 -- Can set this lower if needed.
-
 -- require('vim.lsp.log').set_level("debug")
 -- require('vim.lsp.log').set_level("trace")
 
--- Setup handlers before running
+_ = require('lspkind').init()
+
+_ = require('tj.lsp.status')
 require('tj.lsp.handlers')
 
 local mapper = function(mode, key, result)
@@ -23,6 +23,7 @@ end
 
 -- Turn on status.
 -- status.activate()
+
 
 local custom_attach = function(client)
   local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
