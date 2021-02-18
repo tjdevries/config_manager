@@ -35,6 +35,10 @@ Much of the configuration of individual plugins you can find in either:
 
 -- TODO: Consider what to do with ginit.vim
 
+if require('tj.first_load')() then
+  return
+end
+
 -- Leader key -> ","
 --
 -- In general, it's a good idea to set this early in your config, because otherwise
