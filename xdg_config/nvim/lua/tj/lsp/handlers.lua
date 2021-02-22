@@ -11,6 +11,15 @@ vim.lsp.handlers["textDocument/definition"] = function(_, _, result)
   end
 end
 
+-- vim.lsp.handlers["textDocument/definition"] = vim.lsp.with(
+--   vim.lsp.handlers.location, {
+--     location_callback = function(location)
+--       vim.cmd [[vsplit]]
+--       vim.lsp.util.jump_to_location(location)
+--     end
+--   }
+-- )
+
 
 -- Normal configuration, but for now testing out workspace configuration.
 -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

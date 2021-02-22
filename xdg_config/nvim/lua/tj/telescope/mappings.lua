@@ -1,3 +1,7 @@
+if not pcall(require, 'telescope') then
+  return
+end
+
 local sorters = require('telescope.sorters')
 
 TelescopeMapArgs = TelescopeMapArgs or {}
@@ -50,6 +54,7 @@ map_tele('<space>fg', 'live_grep')
 map_tele('<space>fo', 'oldfiles')
 map_tele('<space>fd', 'fd')
 map_tele('<space>pp', 'project_search')
+map_tele('<space>fv', 'find_nvim_source')
 
 -- Nvim
 map_tele('<space>fb', 'buffers')

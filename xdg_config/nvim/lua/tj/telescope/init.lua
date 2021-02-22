@@ -1,3 +1,7 @@
+if not pcall(require, 'telescope') then
+  return
+end
+
 local should_reload = true
 local reloader = function()
   if should_reload then
@@ -45,7 +49,7 @@ require('telescope').setup {
     mappings = {
       i = {
         ["<C-x>"] = false,
-        ["<C-s>"] = actions.goto_file_selection_split,
+        ["<C-s>"] = actions.select_vertical,
 
         -- Experimental
         ["<tab>"] = actions.toggle_selection,
@@ -105,6 +109,32 @@ function M.edit_neovim()
     prompt_title = "~ dotfiles ~",
     shorten_path = false,
     cwd = "~/.config/nvim",
+
+    layout_strategy = 'horizontal',
+    layout_config = {
+      preview_width = 0.65,
+    },
+
+    attach_mappings = function(prompt_bufnr, map)
+      -- Map "<CR>" in insert mode to the function, actions.set_command_line
+
+      -- map(mode, key  , lua function to call)
+      map('i', '<c-t>', function(bufnr)
+        local entry = require('telescope.actions').get_selected_entry(bufnr)
+        print("VALUE:", entry.value)
+        require('telescope.actions').close(bufnr)
+      end)
+
+      return nil
+    end,
+  }
+end
+
+function M.find_nvim_source()
+  require('telescope.builtin').find_files {
+    prompt_title = "~ nvim ~",
+    shorten_path = false,
+    cwd = "~/build/neovim/",
     width = .25,
 
     layout_strategy = 'horizontal',
@@ -253,6 +283,14 @@ function M.search_all_files()
   require('telescope.builtin').find_files {
     find_command = { 'rg', '--no-ignore', '--files', },
   }
+end
+
+function M.example_for_prime()
+  -- local Sorter = require('telescope.sorters')
+
+  -- require('telescope.builtin').find_files {
+  --   sorter = Sorter:new {
+  -- }
 end
 
 return setmetatable({}, {

@@ -4,12 +4,17 @@ local custom_captures = {
   ['foo.bar'] = 'Identifier',
   ['function.call'] = 'LuaFunctionCall',
   ['function.bracket'] = 'Type',
+
+  ['namespace.type'] = 'TSNamespaceType',
 }
 
 require('nvim-treesitter.configs').setup {
+  -- ensure_installed = {'lua'}, -- one of 'all', 'language', or a list of languages
+  ensure_installed = { 'go', 'rust', 'toml', },
+
   highlight = {
     enable = true, -- false will disable the whole extension
-    disable = {"json"},
+    disable = {"json", "rust"},
     use_languagetree = false,
     custom_captures = custom_captures,
   },
@@ -27,8 +32,9 @@ require('nvim-treesitter.configs').setup {
   refactor = {
     highlight_definitions = {enable = true},
     highlight_current_scope = {enable = false},
+
     smart_rename = {
-      enable = true,
+      enable = false,
       keymaps = {
         -- mapping to rename reference under cursor
         smart_rename = 'grr',
@@ -37,13 +43,14 @@ require('nvim-treesitter.configs').setup {
 
     -- TODO: This seems broken...
     navigation = {
-      enable = true,
+      enable = false,
       keymaps = {
         goto_definition = 'gnd', -- mapping to go to definition of symbol under cursor
         list_definitions = 'gnD', -- mapping to list all definitions in current file
       },
     },
   },
+
   -- textobjects = { -- syntax-aware textobjects
   --   enable = true,
   --   disable = {},
@@ -72,7 +79,6 @@ require('nvim-treesitter.configs').setup {
   --     ['im'] = '@call.inner',
   --   },
   -- },
-  -- ensure_installed = {'lua'}, -- one of 'all', 'language', or a list of languages
 }
 
 vim.cmd [[highlight IncludedC guibg=#373b41]]
@@ -89,3 +95,5 @@ vim.cmd [[highlight IncludedC guibg=#373b41]]
 )
 
 --]]
+
+require('tj.ts')

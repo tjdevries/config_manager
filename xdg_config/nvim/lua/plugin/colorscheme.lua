@@ -8,3 +8,5 @@ local Group = require('colorbuddy.group').Group
 
 Group.new('GoTestSuccess', c.green, nil, s.bold)
 Group.new('GoTestFail', c.red, nil, s.bold)
+
+-- Group.new('Keyword', c.purple, nil, nil)

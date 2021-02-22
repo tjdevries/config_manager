@@ -38,6 +38,7 @@ _G.packer_plugins = {
   },
   ["JavaScript-Indent"] = {
     loaded = false,
+    needs_bufread = false,
     path = "/home/tj/.local/share/nvim/site/pack/packer/opt/JavaScript-Indent"
   },
   NrrwRgn = {
@@ -95,10 +96,6 @@ _G.packer_plugins = {
   ["conf.vim"] = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/conf.vim"
-  },
-  ["contextprint.nvim"] = {
-    loaded = true,
-    path = "/home/tj/.local/share/nvim/site/pack/packer/start/contextprint.nvim"
   },
   ["cyclist.vim"] = {
     loaded = true,
@@ -368,6 +365,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/telescope-packer.nvim"
   },
+  ["telescope-sourcegraph.nvim"] = {
+    loaded = true,
+    path = "/home/tj/.local/share/nvim/site/pack/packer/start/telescope-sourcegraph.nvim"
+  },
   ["telescope-symbols.nvim"] = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/telescope-symbols.nvim"
@@ -446,6 +447,7 @@ _G.packer_plugins = {
   },
   ["vim-javascript"] = {
     loaded = false,
+    needs_bufread = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/opt/vim-javascript"
   },
   ["vim-javascript-syntax"] = {
@@ -544,10 +546,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/vlog.nvim"
   },
-  ["wander.nvim"] = {
-    loaded = true,
-    path = "/home/tj/.local/share/nvim/site/pack/packer/start/wander.nvim"
-  },
   ["wiki.vim"] = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/wiki.vim"
@@ -557,8 +555,12 @@ _G.packer_plugins = {
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'JavaScript-Indent', 'vim-javascript'}, { ft = "javascript" }, _G.packer_plugins)]]
 vim.cmd [[au FileType html ++once lua require("packer.load")({'vim-javascript'}, { ft = "html" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascript ++once lua require("packer.load")({'JavaScript-Indent', 'vim-javascript'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd("augroup END")
+vim.cmd [[augroup filetypedetect]]
+vim.cmd [[source /home/tj/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/flow.vim]]
+vim.cmd [[source /home/tj/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/javascript.vim]]
 vim.cmd("augroup END")
 END
 

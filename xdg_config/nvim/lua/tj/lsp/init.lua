@@ -1,4 +1,8 @@
-local lspconfig = require('lspconfig')
+local has_lsp, lspconfig = pcall(require, 'lspconfig')
+if not has_lsp then
+  return
+end
+
 local nvim_status = require('lsp-status')
 
 local has_completion, completion = pcall(require, 'completion')
