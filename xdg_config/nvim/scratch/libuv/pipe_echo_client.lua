@@ -3,7 +3,7 @@ local uv = vim.loop
 local SOCK = "/tmp/echo.sock"
 
 local client = uv.new_pipe(false)
-client:connect(SOCK, function (err)
+client:connect(SOCK, vim.schedule_wrap(function (err)
   vim.cmd[[sleep 1]]
   assert(not err, err)
   client:read_start(function (err, chunk)
@@ -17,7 +17,7 @@ client:connect(SOCK, function (err)
 
   client:write("Hello ")
   client:write("world!  !!")
-end)
+end))
 
 print("CTRL-C to break")
 

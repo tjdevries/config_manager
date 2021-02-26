@@ -5,8 +5,6 @@ end
 
 local nvim_status = require('lsp-status')
 
-local has_completion, completion = pcall(require, 'completion')
-
 local telescope_mapper = require('tj.telescope.mappings')
 
 -- TODO: Consider using this. I do kind of like it :)
@@ -39,9 +37,6 @@ local custom_attach = function(client)
     end
   end
 
-  if has_completion and filetype ~= 'c' then
-    completion.on_attach(client)
-  end
   -- status    .on_attach(client)
 
   nnoremap { '<space>dn', vim.lsp.diagnostic.goto_next, buffer = 0 }

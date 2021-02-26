@@ -31,3 +31,5 @@
 
 [interactive]
   diffFilter = delta --color-only
+[credential]
+	helper = cache

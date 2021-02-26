@@ -3,6 +3,8 @@
 set -e
 set -x
 
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+sudo apt-add-repository https://cli.github.com/packages
 
 sudo apt update
 sudo apt upgrade
@@ -89,3 +91,6 @@ if ! [ -d "$ZSH_CUSTOM/themes/spaceship-prompt" ]; then
   ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 fi
 # }}}
+
+# Github
+sudo apt install gh

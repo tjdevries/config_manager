@@ -163,7 +163,7 @@ endif
 
 " Change the current word in insertmode.
 "   Auto places you into the spot where you can start typing to change it.
-nnoremap <c-r>w :%s/<c-r><c-w>//g<left><left>
+nnoremap <c-w><c-r> :%s/<c-r><c-w>//g<left><left>
 
 nnoremap <M-CR> :let v:hlsearch=!v:hlsearch<CR>
 

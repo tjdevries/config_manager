@@ -32,10 +32,6 @@ local function try_loadstring(s, component, name)
 end
 
 _G.packer_plugins = {
-  ["BetterLua.vim"] = {
-    loaded = true,
-    path = "/home/tj/.local/share/nvim/site/pack/packer/start/BetterLua.vim"
-  },
   ["JavaScript-Indent"] = {
     loaded = false,
     needs_bufread = false,
@@ -108,10 +104,6 @@ _G.packer_plugins = {
   ["edit_alternate.vim"] = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/edit_alternate.vim"
-  },
-  ["emmet-vim"] = {
-    loaded = true,
-    path = "/home/tj/.local/share/nvim/site/pack/packer/start/emmet-vim"
   },
   ["exception.vim"] = {
     loaded = true,
@@ -341,6 +333,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/tabular"
   },
+  ["telescope-cheat.nvim"] = {
+    loaded = true,
+    path = "/home/tj/.local/share/nvim/site/pack/packer/start/telescope-cheat.nvim"
+  },
   ["telescope-frecency.nvim"] = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/telescope-frecency.nvim"
@@ -384,6 +380,10 @@ _G.packer_plugins = {
   ["tree-sitter-lua"] = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/tree-sitter-lua"
+  },
+  ["tree-sitter-sql"] = {
+    loaded = true,
+    path = "/home/tj/.local/share/nvim/site/pack/packer/start/tree-sitter-sql"
   },
   ["typescript-vim"] = {
     loaded = true,
@@ -502,10 +502,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/vim-searchindex"
   },
-  ["vim-signit"] = {
-    loaded = true,
-    path = "/home/tj/.local/share/nvim/site/pack/packer/start/vim-signit"
-  },
   ["vim-startify"] = {
     loaded = true,
     path = "/home/tj/.local/share/nvim/site/pack/packer/start/vim-startify"
@@ -555,8 +551,8 @@ _G.packer_plugins = {
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
-vim.cmd [[au FileType html ++once lua require("packer.load")({'vim-javascript'}, { ft = "html" }, _G.packer_plugins)]]
 vim.cmd [[au FileType javascript ++once lua require("packer.load")({'JavaScript-Indent', 'vim-javascript'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType html ++once lua require("packer.load")({'vim-javascript'}, { ft = "html" }, _G.packer_plugins)]]
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
 vim.cmd [[source /home/tj/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/flow.vim]]

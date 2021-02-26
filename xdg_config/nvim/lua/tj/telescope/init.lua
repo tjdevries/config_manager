@@ -52,10 +52,10 @@ require('telescope').setup {
         ["<C-s>"] = actions.select_vertical,
 
         -- Experimental
-        ["<tab>"] = actions.toggle_selection,
+        -- ["<tab>"] = actions.toggle_selection,
 
-        ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-        ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        -- ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+        -- ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
       },
     },
 
@@ -92,10 +92,11 @@ require('telescope').setup {
 pcall(require('telescope').load_extension, 'fzy_native')
 pcall(require('telescope').load_extension, 'gh')
 require('telescope').load_extension('octo')
+require('telescope').load_extension("cheat")
 
--- if pcall(require('telescope').load_extension, 'frecency') then
-  -- require('tj.telescope.frecency')
--- end
+if pcall(require('telescope').load_extension, 'frecency') then
+  require('tj.telescope.frecency')
+end
 
 local M = {}
 
@@ -114,19 +115,6 @@ function M.edit_neovim()
     layout_config = {
       preview_width = 0.65,
     },
-
-    attach_mappings = function(prompt_bufnr, map)
-      -- Map "<CR>" in insert mode to the function, actions.set_command_line
-
-      -- map(mode, key  , lua function to call)
-      map('i', '<c-t>', function(bufnr)
-        local entry = require('telescope.actions').get_selected_entry(bufnr)
-        print("VALUE:", entry.value)
-        require('telescope.actions').close(bufnr)
-      end)
-
-      return nil
-    end,
   }
 end
 
@@ -291,6 +279,14 @@ function M.example_for_prime()
   -- require('telescope.builtin').find_files {
   --   sorter = Sorter:new {
   -- }
+end
+
+function M.file_browser()
+  require('telescope.builtin').file_browser {
+    sorting_strategy = "ascending",
+    scroll_strategy = "cycle",
+    prompt_position = "top",
+  }
 end
 
 return setmetatable({}, {

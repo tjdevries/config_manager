@@ -10,12 +10,12 @@ local custom_captures = {
 
 require('nvim-treesitter.configs').setup {
   -- ensure_installed = {'lua'}, -- one of 'all', 'language', or a list of languages
-  ensure_installed = { 'go', 'rust', 'toml', },
+  ensure_installed = { 'go', 'rust', 'toml', 'query', },
 
   highlight = {
     enable = true, -- false will disable the whole extension
-    disable = {"json", "rust"},
     use_languagetree = false,
+    disable = {"json", "rust"},
     custom_captures = custom_captures,
   },
 
@@ -96,4 +96,4 @@ vim.cmd [[highlight IncludedC guibg=#373b41]]
 
 --]]
 
-require('tj.ts')
+-- require('tj.ts')

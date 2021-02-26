@@ -49,33 +49,7 @@ fn $1() {
   $0
 }]]
 
-snips.go = {}
-
-snips.go.err = indent [[
-if err != nil {
-  return$0
-}]]
-
-snips.go.mfile = [[
-package main
-
-func main() {
-	$0
-}
-]]
-
-snips.go.main = [[
-func main() {
-	$0
-}
-]]
-
-snips.go.func = [[
-func $1 {
-	$0
-}
-]]
-
+snips.go = R('tj.snips.go')
 snip_plug.snippets = snips
 snip_plug.use_suggested_mappings()
 

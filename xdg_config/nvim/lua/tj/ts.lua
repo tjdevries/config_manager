@@ -25,13 +25,13 @@ vim.cmd [[augroup CustomTreesitter]]
 vim.cmd [[  au!]]
 vim.cmd [[  autocmd FileType rust :lua require('tj.ts').rust()]]
 vim.cmd [[  autocmd FileType rust :set syntax=]]
+vim.cmd [[  autocmd FileType sql :lua require('tj.ts').sql()]]
 vim.cmd [[augroup END]]
+
 
 _CachedHighlighterDetach = _CachedHighlighterDetach or require('nvim-treesitter.highlight').detach
 require('nvim-treesitter.highlight').detach = function(bufnr)
-  vim.g.called = true
   if a.nvim_get_option(bufnr, 'filetype') == 'rust' then
-    vim.g.got_this = true
     return
   end
 
@@ -45,7 +45,6 @@ return {
 
     -- vim.schedule(function()
       -- print("Setup:", bufnr)
-
       local parser = vim.treesitter.get_parser(bufnr, 'rust')
 
       ts.highlighter.new(parser, {
@@ -56,5 +55,10 @@ return {
         }
       })
     -- end)
+  end,
+
+  sql = function()
+    local parser = vim.treesitter.get_parser(bufnr, 'sql')
+    ts.highlighter.new(parser, {})
   end,
 }

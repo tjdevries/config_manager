@@ -78,6 +78,21 @@ gmrebase() {
     echo ""
 }
 
+gnrebase() {
+    echo "==> Checking out main..."
+    git checkout main
+    echo ""
+    echo "==> Updating main..."
+    git pull
+    echo ""
+    echo "==> Checking back to original branch"
+    git checkout -
+    echo ""
+    echo "==> Rebasing main onto $(git rev-parse --abbrev-ref HEAD)"
+    git rebase main $(git rev-parse --abbrev-ref HEAD)
+    echo ""
+}
+
 
 gpo() {
     git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)

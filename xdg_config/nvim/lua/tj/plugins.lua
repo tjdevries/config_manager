@@ -23,7 +23,6 @@ return require('packer').startup {
 
     -- My Plugins
     local_use 'nlua.nvim'
-    local_use 'tree-sitter-lua'
     local_use 'vlog.nvim'
     local_use 'vim9jit'
     local_use 'colorbuddy.vim'
@@ -54,7 +53,8 @@ return require('packer').startup {
 
     -- pcall(use, '~/plugins/scrollnv')
     local_use('nvim-lua', 'popup.nvim')
-    local_use('nvim-lua', 'plenary.nvim')
+    -- local_use('nvim-lua', 'plenary.nvim')
+    use { "~/plugins/plenary.nvim", rocks = { 'effil', 'lanes', --[[ 'threads' ]]  } }
 
     local_use('nvim-telescope', 'telescope.nvim')
     local_use('nvim-telescope', 'telescope-fzy-native.nvim')
@@ -70,6 +70,7 @@ return require('packer').startup {
 
     use 'tami5/sql.nvim'
     use 'nvim-telescope/telescope-frecency.nvim'
+    use 'nvim-telescope/telescope-cheat.nvim'
 
     -- PRACTICE: {{{
     use 'tpope/vim-projectionist'  -- STREAM: Alternate file editting and some helpful stuff
@@ -143,8 +144,9 @@ return require('packer').startup {
     -- Undo helper
     use 'sjl/gundo.vim'
 
+    -- TODO: This randomly disappeared? Find a replacement sometime.
     -- Make cool signs for your files
-    use 'johannesthyssen/vim-signit'
+    -- use 'johannesthyssen/vim-signit'
 
     -- Crazy good box drawing
     use 'gyim/vim-boxdraw'
@@ -172,10 +174,6 @@ return require('packer').startup {
     -- Can add back if we ever use it.
     -- use 'JuliaEditorSupport/julia-vim'
 
-    -- Lua {{{
-    use 'euclidianAce/BetterLua.vim'
-    -- }}}
-
     -- Typescript {{{
     -- TODO: Should probably only load these when necessary.
     -- TODO: Should prboably check if these work for typescript, typescript.tsx, etc.
@@ -186,7 +184,9 @@ return require('packer').startup {
 
     use { 'prettier/vim-prettier', run = 'yarn install' }
 
-    use 'mattn/emmet-vim'
+    -- TODO: Turn emmet back on when I someday use it
+    -- use 'mattn/emmet-vim'
+
     use { 'vim-scripts/JavaScript-Indent', ft = 'javascript' }
     use { 'pangloss/vim-javascript', ft = { 'javascript', 'html' } }
     use 'tpope/vim-liquid'
@@ -216,6 +216,9 @@ return require('packer').startup {
       'nvim-treesitter/completion-treesitter',
       run = function() vim.cmd [[TSUpdate]] end
     }
+
+    local_use 'tree-sitter-lua'
+    local_use 'tree-sitter-sql'
 
     -- TODO: I think this may be causing large buffers to slow considerably.
     --       I also think I can just use ^X^N if I need to?...

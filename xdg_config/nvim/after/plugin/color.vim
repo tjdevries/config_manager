@@ -3,15 +3,15 @@
 "
 " WHY DOES THAT HAVE TO BE HARD @VIGOUX?!?!
 
-function! SetSyntax(ft)
-  if a:ft == 'rust'
-    return
-  endif
+" function! SetSyntax(ft)
+"   if a:ft == 'rust'
+"     return
+"   endif
 
-  exe 'set syntax=' . a:ft
-endfunction
+"   exe 'set syntax=' . a:ft
+" endfunction
 
-au! syntaxset
-augroup syntaxset
-  au! FileType * call SetSyntax(expand("<amatch>"))
-augroup END
+" au! syntaxset
+" augroup syntaxset
+"   au! FileType * call SetSyntax(expand("<amatch>"))
+" augroup END
