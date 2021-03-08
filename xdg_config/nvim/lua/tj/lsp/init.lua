@@ -1,4 +1,5 @@
 local has_lsp, lspconfig = pcall(require, 'lspconfig')
+local _, lspconfig_util = pcall(require, 'lspconfig.util')
 if not has_lsp then
   return
 end
@@ -16,7 +17,7 @@ local nnoremap = vim.keymap.nnoremap
 
 _ = require('lspkind').init()
 
-_ = require('tj.lsp.status')
+require('tj.lsp.status').activate()
 require('tj.lsp.handlers')
 
 local mapper = function(mode, key, result)
@@ -37,14 +38,14 @@ local custom_attach = function(client)
     end
   end
 
-  -- status    .on_attach(client)
+  nvim_status.on_attach(client)
 
-  nnoremap { '<space>dn', vim.lsp.diagnostic.goto_next, buffer = 0 }
-  nnoremap { '<space>dp', vim.lsp.diagnostic.goto_prev, buffer = 0 }
-  nnoremap { '<space>sl', vim.lsp.diagnostic.show_line_diagnostics, buffer = 0 }
+  nnoremap { "<space>dn", vim.lsp.diagnostic.goto_next, buffer = 0 }
+  nnoremap { "<space>dp", vim.lsp.diagnostic.goto_prev, buffer = 0 }
+  nnoremap { "<space>sl", vim.lsp.diagnostic.show_line_diagnostics, buffer = 0 }
 
-  nnoremap { '<c-]>', vim.lsp.buf.definition, buffer = 0 }
-  nnoremap { 'gD', vim.lsp.buf.declaration, buffer = 0 }
+  nnoremap { "<c-]>", vim.lsp.buf.definition, buffer = 0 }
+  nnoremap { "gD", vim.lsp.buf.declaration, buffer = 0 }
 
   mapper('n', '<space>cr', 'MyLspRename()')
 
@@ -94,6 +95,11 @@ local custom_attach = function(client)
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
 end
 
+local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+updated_capabilities.textDocument.codeLens = {
+  dynamicRegistration = false,
+}
+updated_capabilities = vim.tbl_extend('keep', updated_capabilities, nvim_status.capabilities)
 
 lspconfig.yamlls.setup {
   on_attach = custom_attach
@@ -114,15 +120,10 @@ lspconfig.vimls.setup {
   on_attach = custom_attach,
 }
 
-local codelens_capabilities = vim.lsp.protocol.make_client_capabilities()
-codelens_capabilities.textDocument.codeLens = {
-  dynamicRegistration = false,
-}
-
 lspconfig.gopls.setup {
   on_attach = custom_attach,
 
-  capabilities = codelens_capabilities,
+  capabilities = updated_capabilities,
 
   settings = {
     gopls = {
@@ -139,6 +140,16 @@ lspconfig.gdscript.setup {
 if true then
   require('nlua.lsp.nvim').setup(lspconfig, {
     on_attach = custom_attach,
+
+    root_dir = function(fname)
+      if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
+        return vim.fn.expand("~/git/config_manager/xdg_config/nvim/")
+      end
+
+      -- ~/git/config_manager/xdg_config/nvim/...
+      return lspconfig_util.find_git_ancestor(fname)
+        or lspconfig_util.path.dirname(fname)
+    end,
 
     globals = {
       -- Colorbuddy

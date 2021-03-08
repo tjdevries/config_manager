@@ -21,7 +21,9 @@ local themes = require('telescope.themes')
 
 require('telescope').setup {
   defaults = {
-    prompt_prefix = ' >',
+    prompt_prefix = '❯ ',
+    selection_caret = '❯ ',
+
 
     winblend = 0,
     preview_cutoff = 120,
@@ -49,7 +51,7 @@ require('telescope').setup {
     mappings = {
       i = {
         ["<C-x>"] = false,
-        ["<C-s>"] = actions.select_vertical,
+        ["<C-s>"] = actions.select_horizontal,
 
         -- Experimental
         -- ["<tab>"] = actions.toggle_selection,
@@ -89,10 +91,12 @@ require('telescope').setup {
 }
 
 -- Load the fzy native extension at the start.
-pcall(require('telescope').load_extension, 'fzy_native')
-pcall(require('telescope').load_extension, 'gh')
+pcall(require('telescope').load_extension, "fzy_native")
+pcall(require('telescope').load_extension, "gh")
+pcall(require('telescope').load_extension, "cheat")
+pcall(require('telescope').load_extension, "dap")
+
 require('telescope').load_extension('octo')
-require('telescope').load_extension("cheat")
 
 if pcall(require('telescope').load_extension, 'frecency') then
   require('tj.telescope.frecency')
@@ -132,11 +136,26 @@ function M.find_nvim_source()
   }
 end
 
+function M.find_sourcegraph()
+  require('telescope.builtin').find_files {
+    prompt_title = "~ sourcegraph ~",
+    shorten_path = false,
+    cwd = "~/sourcegraph/",
+    width = .25,
+
+    layout_strategy = 'horizontal',
+    layout_config = {
+      preview_width = 0.65,
+    },
+  }
+end
+
 function M.edit_zsh()
   require('telescope.builtin').find_files {
     shorten_path = false,
     cwd = "~/.config/zsh/",
     prompt = "~ dotfiles ~",
+    hidden = true,
 
     layout_strategy = 'horizontal',
     layout_config = {

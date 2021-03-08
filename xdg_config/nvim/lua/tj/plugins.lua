@@ -54,7 +54,10 @@ return require('packer').startup {
     -- pcall(use, '~/plugins/scrollnv')
     local_use('nvim-lua', 'popup.nvim')
     -- local_use('nvim-lua', 'plenary.nvim')
-    use { "~/plugins/plenary.nvim", rocks = { 'effil', 'lanes', --[[ 'threads' ]]  } }
+    use { 
+      "~/plugins/plenary.nvim",
+      -- rocks = { --[[ 'effil', 'lanes',  'threads' ]]  }
+    }
 
     local_use('nvim-telescope', 'telescope.nvim')
     local_use('nvim-telescope', 'telescope-fzy-native.nvim')
@@ -241,12 +244,8 @@ return require('packer').startup {
     -- use 'puremourning/vimspector'
     use 'mfussenegger/nvim-dap'
     use 'mfussenegger/nvim-dap-python'
-    use { 
-      'theHamsta/nvim-dap-virtual-text',
-      run = function()
-        vim.g.dap_virtual_text = true
-      end
-    }
+    use 'theHamsta/nvim-dap-virtual-text'
+    use 'nvim-telescope/telescope-dap.nvim'
 
     -- }}}
     -- TREE SITTER: {{{

@@ -29,7 +29,6 @@ require('harpoon').setup {
       if filepath:find(".*hello.*") then
         return true
       end
-    end] = {
-      ...
-    }
+    end] = {}
+  }
 }

@@ -114,9 +114,9 @@ extract () {
 # {{{1 Language specific configuration
 # {{{2 Go
 if [ -d /usr/local/go/bin/ ]; then
-  # export GOPATH=~/go
-  # export GOBIN="$GOPATH/bin"
-  # export PATH="$PATH:/usr/local/go/bin:$GOBIN"
+  export GOPATH=~/go
+  export GOBIN="$GOPATH/bin"
+  export PATH="$PATH:/usr/local/go/bin:$GOBIN"
 elif [ -d ~/.go/bin/ ]; then
   export GOPATH="$HOME/.gopath"
   export GOROOT="$HOME/.go"

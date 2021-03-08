@@ -670,8 +670,8 @@ client.connect_signal('focus', function(c) c.border_color = beautiful.border_foc
 client.connect_signal('unfocus', function(c) c.border_color = beautiful.border_normal or '' end)
 -- }}}
 
-local net_widgets = require("net_widgets")
-net_wireless = net_widgets.wireless({interface="wlp1s0"})
-
+-- TODO: Figure out what we want to do with these things.
+-- local net_widgets = require("net_widgets")
+-- net_wireless = net_widgets.wireless({interface="wlp1s0"})
 -- Run my startup shell things
-awful.util.spawn_with_shell("~/.config/awesome/autorun.sh")
+-- awful.util.spawn_with_shell("~/.config/awesome/autorun.sh")
