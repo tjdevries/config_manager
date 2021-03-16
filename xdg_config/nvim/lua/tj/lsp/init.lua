@@ -28,15 +28,13 @@ end
 -- status.activate()
 
 
+local custom_init = function(client)
+  client.config.flags = client.config.flags or {}
+  client.config.flags.allow_incremental_sync = true
+end
+
 local custom_attach = function(client)
   local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
-
-  if client.config.flags then
-    -- It doesn't seem like clang likes this very much.
-    if filetype ~= 'c' then
-      client.config.flags.allow_incremental_sync = true
-    end
-  end
 
   nvim_status.on_attach(client)
 
@@ -102,25 +100,28 @@ updated_capabilities.textDocument.codeLens = {
 updated_capabilities = vim.tbl_extend('keep', updated_capabilities, nvim_status.capabilities)
 
 lspconfig.yamlls.setup {
+  on_init = custom_init,
   on_attach = custom_attach
 }
 
 lspconfig.pyls.setup {
-  enable = true,
   plugins = {
     pyls_mypy = {
       enabled = true,
       live_mode = false
     }
   },
+  on_init = custom_init,
   on_attach = custom_attach
 }
 
 lspconfig.vimls.setup {
+  on_init = custom_init,
   on_attach = custom_attach,
 }
 
 lspconfig.gopls.setup {
+  on_init = custom_init,
   on_attach = custom_attach,
 
   capabilities = updated_capabilities,
@@ -129,71 +130,37 @@ lspconfig.gopls.setup {
     gopls = {
       codelenses = { test = true },
     }
-  }
+  },
 }
 
 lspconfig.gdscript.setup {
+  on_init = custom_init,
   on_attach = custom_attach,
 }
 
 -- Load lua configuration from nlua.
-if true then
-  require('nlua.lsp.nvim').setup(lspconfig, {
-    on_attach = custom_attach,
+require('nlua.lsp.nvim').setup(lspconfig, {
+  on_init = custom_init,
+  on_attach = custom_attach,
 
-    root_dir = function(fname)
-      if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
-        return vim.fn.expand("~/git/config_manager/xdg_config/nvim/")
-      end
+  root_dir = function(fname)
+    if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
+      return vim.fn.expand("~/git/config_manager/xdg_config/nvim/")
+    end
 
-      -- ~/git/config_manager/xdg_config/nvim/...
-      return lspconfig_util.find_git_ancestor(fname)
-        or lspconfig_util.path.dirname(fname)
-    end,
+    -- ~/git/config_manager/xdg_config/nvim/...
+    return lspconfig_util.find_git_ancestor(fname)
+      or lspconfig_util.path.dirname(fname)
+  end,
 
-    globals = {
-      -- Colorbuddy
-      "Color", "c", "Group", "g", "s",
+  globals = {
+    -- Colorbuddy
+    "Color", "c", "Group", "g", "s",
 
-      -- Custom
-      "RELOAD",
-    }
-  })
-else
-  -- This is the documentation example from ":help".
-  --    I just keep it here to test w/ it.
-  local custom_lsp_attach = function(client)
-    -- See `:help nvim_buf_set_keymap()` for more information
-    vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true})
-    vim.api.nvim_buf_set_keymap(0, 'n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true})
-    -- ... and other keymappings for LSP
-
-    -- Use LSP as the handler for omnifunc.
-    --    See `:help omnifunc` and `:help ins-completion` for more information.
-    vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- For plugins with an `on_attach` callback, call them here. For example:
-    -- require('completion').on_attach(client)
-  end
-
-  -- An example of configuring for `sumneko_lua`,
-  --  a language server for Lua.
-  -- First, you must run `:LspInstall sumneko_lua` for this to work.
-  require('lspconfig').sumneko_lua.setup({
-    -- An example of settings for an LSP server.
-    --    For more options, see nvim-lspconfig
-    settings = {
-      Lua = {
-        diagnostics = {
-          enable = true,
-          globals = { "vim" },
-        },
-      }
-    },
-
-    on_attach = custom_lsp_attach
-  })
-end
+    -- Custom
+    "RELOAD",
+  }
+})
 
 if true then
   lspconfig.tsserver.setup({
@@ -206,6 +173,7 @@ if true then
       "typescriptreact",
       "typescript.tsx"
     },
+    on_init = custom_init,
     on_attach = custom_attach
   })
 else
@@ -223,6 +191,7 @@ lspconfig.clangd.setup({
     "--clang-tidy",
     "--header-insertion=iwyu",
   },
+  on_init = custom_init,
   on_attach = custom_attach,
 
   -- Required for lsp-status
@@ -235,6 +204,7 @@ lspconfig.clangd.setup({
 
 if 1 == vim.fn.executable('cmake-language-server') then
   lspconfig.cmake.setup {
+    on_init = custom_init,
     on_attach = custom_attach,
   }
 end
@@ -242,6 +212,7 @@ end
 lspconfig.rust_analyzer.setup({
   cmd = {"rust-analyzer"},
   filetypes = {"rust"},
+  on_init = custom_init,
   on_attach = custom_attach,
 })
 
