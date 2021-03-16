@@ -78,7 +78,7 @@ require('telescope').setup {
 
     fzf_writer = {
       use_highlighter = false,
-      minimum_grep_characters = 4,
+      minimum_grep_characters = 6,
     },
 
     frecency = {
@@ -141,6 +141,25 @@ function M.find_sourcegraph()
     prompt_title = "~ sourcegraph ~",
     shorten_path = false,
     cwd = "~/sourcegraph/",
+    width = .25,
+
+    layout_strategy = 'horizontal',
+    layout_config = {
+      preview_width = 0.65,
+    },
+  }
+end
+
+function M.sourcegraph_tips()
+  -- TODO: Can make this optionally fuzzy find over the contents as well
+  --    if we want to start getting fancier
+  --
+  --    Could even make it do that _only_ when doing something like ";" or similar.
+
+  require('telescope.builtin').find_files {
+    prompt_title = "~ sourcegraph ~",
+    shorten_path = false,
+    cwd = "~/wiki/sourcegraph/tips",
     width = .25,
 
     layout_strategy = 'horizontal',

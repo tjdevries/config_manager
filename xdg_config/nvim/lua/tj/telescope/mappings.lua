@@ -57,6 +57,7 @@ map_tele('<space>pp', 'project_search')
 map_tele('<space>fv', 'find_nvim_source')
 map_tele('<space>fe', 'file_browser')
 map_tele('<space>fs', 'find_sourcegraph')
+map_tele('<space>fz', 'sourcegraph_tips')
 
 -- Nvim
 map_tele('<space>fb', 'buffers')

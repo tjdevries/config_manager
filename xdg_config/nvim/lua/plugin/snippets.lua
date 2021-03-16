@@ -50,6 +50,8 @@ fn $1() {
 }]]
 
 snips.go = R('tj.snips.go')
+snips.python = R('tj.snips.python')
+
 snip_plug.snippets = snips
 snip_plug.use_suggested_mappings()
 

@@ -177,6 +177,8 @@ return require('packer').startup {
     -- Can add back if we ever use it.
     -- use 'JuliaEditorSupport/julia-vim'
 
+    use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'  }
+
     -- Typescript {{{
     -- TODO: Should probably only load these when necessary.
     -- TODO: Should prboably check if these work for typescript, typescript.tsx, etc.
