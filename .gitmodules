@@ -1,0 +1,3 @@
+[submodule "xdg_config/zsh/submods/gcloud-zsh-completion"]
+	path = xdg_config/zsh/submods/gcloud-zsh-completion
+	url = https://github.com/littleq0903/gcloud-zsh-completion
