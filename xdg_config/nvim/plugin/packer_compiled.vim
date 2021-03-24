@@ -169,13 +169,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/haunted.vim"
   },
+  ["hop.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/hop.nvim"
+  },
   ["javascript-libraries-syntax.vim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/javascript-libraries-syntax.vim"
-  },
-  ["jupyter_ascending.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/jupyter_ascending.vim"
   },
   ["limelight.vim"] = {
     loaded = true,
@@ -260,6 +260,10 @@ _G.packer_plugins = {
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+  },
+  ["nvim-web-nonicons"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-web-nonicons"
   },
   ["octo.nvim"] = {
     loaded = true,
@@ -559,7 +563,7 @@ _G.packer_plugins = {
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'JavaScript-Indent', 'vim-javascript'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascript ++once lua require("packer.load")({'vim-javascript', 'JavaScript-Indent'}, { ft = "javascript" }, _G.packer_plugins)]]
 vim.cmd [[au FileType html ++once lua require("packer.load")({'vim-javascript'}, { ft = "html" }, _G.packer_plugins)]]
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

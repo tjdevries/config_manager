@@ -25,6 +25,8 @@ setopt hist_ignore_space
 
 export ZSH_PLUGIN_MANAGER='antigen'
 
+fpath=($XDG_CONFIG_HOME/zsh/submods/gcloud-zsh-completion/src/ $fpath)
+
 autoload -U +X bashcompinit && bashcompinit
 autoload -U +X compinit && compinit
 function git_clone_or_update() {

@@ -37,7 +37,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   require('lsp_extensions.workspace.diagnostic').handler, {
     signs = {
       severity_limit = "Error",
-    }
+    },
+    virtual_text = true,
   }
 )
 
@@ -134,3 +135,40 @@ function MyLspRename()
   vim.cmd [[startinsert]]
 end
 
+  -- -- Only want to do this config when Uivonim is in use, so do a check for that.
+  -- if vim.g.uivonim == 1 then
+  --   -- Get the override callbacks.
+  --   local lsp_callbacks = require'uivonim.lsp'.callbacks
+
+  --   nvim_lsp.texlab.setup {
+  --     -- Pass in the callbacks to override the defaults with Uivonim's.
+  --     handlers = lsp_callbacks;
+      
+  --     -- Can still use other options, like this on_attach function
+  --     -- from nvim-lua/completion-nvim (recommended).
+  --     on_attach = require('completion').on_attach
+  --   }
+
+  --   nvim_lsp.tsserver.setup {
+  --     callbacks = lsp_callbacks;
+  --   }
+
+  --   -- Etc.
+  -- end
+
+GoImports = function(timeoutms)
+  local context = { source = { organizeImports = true } }
+  vim.validate { context = { context, "t", true } }
+  local params = vim.lsp.util.make_range_params()
+  params.context = context
+  local method = "textDocument/codeAction"
+  local resp = vim.lsp.buf_request_sync(0, method, params, timeoutms)
+  if resp and resp[1] then
+    local result = resp[1].result
+    if result and result[1] then
+      local edit = result[1].edit
+      vim.lsp.util.apply_workspace_edit(edit)
+    end
+  end
+  vim.lsp.buf.formatting()
+end

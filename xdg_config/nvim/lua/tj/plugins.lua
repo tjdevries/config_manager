@@ -140,9 +140,10 @@ return require('packer').startup {
     use 'ryanoasis/vim-devicons'
 
     use 'kyazdani42/nvim-web-devicons'
-    use 'kyazdani42/nvim-tree.lua'
+    use 'yamatsum/nvim-web-nonicons'
 
     -- use { 'Shougo/defx.nvim', }
+    use 'kyazdani42/nvim-tree.lua'
 
     -- Undo helper
     use 'sjl/gundo.vim'
@@ -249,6 +250,10 @@ return require('packer').startup {
     use 'theHamsta/nvim-dap-virtual-text'
     use 'nvim-telescope/telescope-dap.nvim'
 
+    if 1 == vim.fn.has('python3') then
+      use 'puremourning/vimspector'
+    end
+
     -- }}}
     -- TREE SITTER: {{{
     local_use('nvim-treesitter', 'nvim-treesitter')
@@ -286,6 +291,8 @@ return require('packer').startup {
     -- Do I even use any of these?
     use 'kana/vim-textobj-user'
     use 'bps/vim-textobj-python'
+
+    use 'phaazon/hop.nvim'
     -- }}}
     -- Python: {{{
 
@@ -316,7 +323,7 @@ return require('packer').startup {
     end
     -- }}}
 
-    use 'untitled-ai/jupyter_ascending.vim'
+    -- use 'untitled-ai/jupyter_ascending.vim'
 
     use 'tjdevries/standard.vim'
     use 'tjdevries/conf.vim'

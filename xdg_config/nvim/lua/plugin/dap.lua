@@ -22,6 +22,8 @@ vim.g.dap_virtual_text = true
 -- }
 
 dap.adapters.c = {
+  name = "lldb",
+
   type = 'executable',
   attach = {
     pidProperty = "pid",
@@ -31,7 +33,6 @@ dap.adapters.c = {
   env = {
     LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"
   },
-  name = "lldb"
 }
 
 dap.configurations.c = {
@@ -51,20 +52,100 @@ dap.configurations.c = {
     MIMode = 'lldb',
   },
   {
-    name = "Attach to nvim",
+    name = "Deprecated",
     type = 'c',
     request = 'attach',
     program = './build/bin/nvim',
-    args = {
-      '--headless',
-      '-c', 'echo getcompletion("vim.api.nvim_buf_", "lua")',
-      '-c', 'qa!'
-    },
-    cwd = nil,
-    environment = nil,
+    cwd = vim.fn.expand("~/build/neovim/"),
+    -- environment = nil,
+    externalConsole = false,
+    MIMode = 'gdb',
+  },
+  {
+    name = "Attach to Neovim",
+    type = "c",
+    request = "attach",
+    program = vim.fn.expand("~/build/neovim/build/bin/nvim"),
+    cwd = vim.fn.getcwd(),
     externalConsole = true,
-    MIMode = 'lldb',
-    -- }
+    MIMode = "gdb"
+  },
+  {
+    -- If you get an "Operation not permitted" error using this, try disabling YAMA:
+    --  echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    --
+    -- Careful, don't try to attach to the neovim instance that runs *this*
+    name = "Fancy attach",
+    type = 'c',
+    request = 'attach',
+    pid = function()
+      local output = vim.fn.system({'ps', 'a'})
+      local lines = vim.split(output, '\n')
+      local procs = {}
+      for _, line in pairs(lines) do
+        -- output format
+        --    " 107021 pts/4    Ss     0:00 /bin/zsh <args>"
+        local parts = vim.fn.split(vim.fn.trim(line), ' \\+')
+        local pid = parts[1]
+        local name = table.concat({unpack(parts, 5)}, ' ')
+        if pid and pid ~= 'PID' then
+          pid = tonumber(pid)
+          if pid ~= vim.fn.getpid() then
+            table.insert(procs, { pid = pid, name = name })
+          end
+        end
+      end
+      local choices = {'Select process'}
+      for i, proc in ipairs(procs) do
+        table.insert(choices, string.format("%d: pid=%d name=%s", i, proc.pid, proc.name))
+      end
+      -- Would be cool to have a fancier selection, but needs to be sync :/
+      -- Should nvim-dap handle coroutine results?
+      local choice = vim.fn.inputlist(choices)
+      if choice < 1 or choice > #procs then
+        return nil
+      end
+      return procs[choice].pid
+    end,
+    args = {},
+   },
+  -- {
+  --   name = "Run functional tests",
+  --   type = 'c',
+  --   request = 'attach',
+  --   program = 'make',
+  --   args = { 'functionaltest', },
+  --   cwd = nil,
+  --   environment = {
+  --     TEST_FILE = "./test/functional/autocmd/fast/",
+  --   },
+  --   externalConsole = true,
+  --   MIMode = 'lldb',
+  -- },
+  --[[
+  {
+    "type": "gdb",
+    "request": "attach",
+    "name": "Attach to gdbserver",
+    "executable": "<path to the elf/exe file relativ to workspace root in order to load the symbols>",
+    "target": "X.X.X.X:9999",
+    "remote": true,
+    "cwd": "${workspaceRoot}", 
+    "gdbpath": "path/to/your/gdb",
+    "autorun": [
+            "any gdb commands to initiate your environment, if it is needed"
+        ]
+}
+  --]]
+  {
+    type = "c",
+    request = "attach",
+    program = "./build/bin/nvim",
+    name = "Attach to gdbserver::Neovim",
+    target = "localhost:7777",
+    remote = true,
+    cwd = vim.fn.expand("~/build/neovim"),
+    gdbpath = vim.fn.exepath("gdb"),
   }
 }
 
@@ -153,3 +234,6 @@ nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Break
 nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
 nnoremap <silent> <leader>dl :lua require'dap'.repl.run_last()<CR>
 --]]
+
+-- vim.cmd [[nmap <silent> <space>db <Plug>VimspectorToggleBreakpoint]]
+-- vim.cmd [[nmap <space>ds <Plug>VimscectorContinue]]

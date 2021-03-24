@@ -12,7 +12,7 @@ local telescope_mapper = require('tj.telescope.mappings')
 local nnoremap = vim.keymap.nnoremap
 
 -- Can set this lower if needed.
--- require('vim.lsp.log').set_level("debug")
+require('vim.lsp.log').set_level("debug")
 -- require('vim.lsp.log').set_level("trace")
 
 _ = require('lspkind').init()
