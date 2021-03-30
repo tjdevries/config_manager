@@ -249,6 +249,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-terminal.lua"
   },
+  ["nvim-tetris"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-tetris"
+  },
   ["nvim-tree.lua"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
@@ -341,6 +345,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/tabular"
   },
+  ["telescope-arecibo.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-arecibo.nvim"
+  },
   ["telescope-cheat.nvim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-cheat.nvim"
@@ -412,14 +420,6 @@ _G.packer_plugins = {
   ["vim-abolish"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-abolish"
-  },
-  ["vim-apm"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-apm"
-  },
-  ["vim-be-good"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-be-good"
   },
   ["vim-boxdraw"] = {
     loaded = true,
@@ -494,6 +494,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-projectionist"
   },
+  ["vim-protocol"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-protocol"
+  },
   ["vim-ps1"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-ps1"
@@ -563,7 +567,7 @@ _G.packer_plugins = {
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'vim-javascript', 'JavaScript-Indent'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascript ++once lua require("packer.load")({'JavaScript-Indent', 'vim-javascript'}, { ft = "javascript" }, _G.packer_plugins)]]
 vim.cmd [[au FileType html ++once lua require("packer.load")({'vim-javascript'}, { ft = "html" }, _G.packer_plugins)]]
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

@@ -1,6 +1,5 @@
 local vim = vim
 local uv = vim.loop
-local F = require('plenary.functional')
 local Job = {}
 Job.__index = Job
 local function close_safely(j, key)
@@ -77,12 +76,8 @@ function Job:new(o)
   else
     obj.interactive = o.interactive
   end
-  obj.enable_handlers = F.if_nil(o.enable_handlers, true, o.enable_handlers)
-  obj.enable_recording = F.if_nil(
-    F.if_nil(o.enable_recording, o.enable_handlers, o.enable_recording),
-    true,
-    o.enable_recording
-  )
+  obj.enable_handlers = true
+  obj.enable_recording = true
   if not obj.enable_handlers and obj.enable_recording then
     error("[plenary.job] Cannot record items but disable handlers")
   end

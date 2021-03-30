@@ -18,6 +18,7 @@ local sorters = require('telescope.sorters')
 local themes = require('telescope.themes')
 
 -- local action_set = require('telescope.actions.set')
+local _ = require('nvim-nonicons')
 
 require('telescope').setup {
   defaults = {
@@ -95,6 +96,7 @@ pcall(require('telescope').load_extension, "fzy_native")
 pcall(require('telescope').load_extension, "gh")
 pcall(require('telescope').load_extension, "cheat")
 pcall(require('telescope').load_extension, "dap")
+pcall(require('telescope').load_extension, "arecibo")
 
 require('telescope').load_extension('octo')
 

@@ -34,16 +34,30 @@ inoremap <C-CR> <C-O>O
 " Set kj to be escape in insert mode
 inoremap kj <esc>
 
-" For long, wrapped lines
-nnoremap k gk
-" For long, wrapped lines
-nnoremap j gj
+" Does:
+"   For wrapped lines, does gj/gk
+"   For large jumps, adds a spot on the jump list
+function! s:jump_dir(letter)
+  let jump_count = v:count
+
+  if jump_count == 0
+    return execute(printf('normal! g%s', a:letter))
+  endif
+
+  if jump_count > 5
+    normal! m'
+  endif
+
+  call execute(printf('normal! %d%s', jump_count, a:letter))
+endfunction
+nnoremap <silent> j <cmd>call <SID>jump_dir('j')<CR>
+nnoremap <silent> k <cmd>call <SID>jump_dir('k')<CR>
 
 " For moving quickly up and down,
 " Goes to the first line above/below that isn't whitespace
 " Thanks to: http://vi.stackexchange.com/a/213
-nnoremap gj :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
-nnoremap gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
+nnoremap <silent> gj :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
+nnoremap <silent> gk :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
 
 " Run the last command
 nnoremap <leader><leader>c :<up>
@@ -62,18 +76,7 @@ vnoremap <leader>x :<C-w>exe join(getline("'<","'>"),'<Bar>')<CR>
 nnoremap <leader><leader>v :w<CR>:Vader %<CR>
 
 " Execute this file
-function! s:save_and_exec() abort
-  if &filetype == 'vim'
-    :silent! write
-    :source %
-  elseif &filetype == 'lua'
-    :silent! write
-    :luafile %
-  endif
-
-  return
-endfunction
-nnoremap <leader><leader>x :call <SID>save_and_exec()<CR>
+nnoremap <leader><leader>x :call tj#save_and_exec()<CR>
 
 " Remove whitespace
 nnoremap <leader>sws :%s/\s\+$//<CR>
@@ -135,10 +138,6 @@ if has('nvim')
     tnoremap <A-j> <C-\><C-n><C-w>j
     tnoremap <A-k> <C-\><C-n><C-w>k
     tnoremap <A-l> <C-\><C-n><C-w>l
-    nnoremap <A-h> <C-w>h
-    nnoremap <A-j> <C-w>j
-    nnoremap <A-k> <C-w>k
-    nnoremap <A-l> <C-w>l
 
     " Try and make sure to not mangle space items
     tnoremap <S-Space> <Space>
@@ -183,3 +182,17 @@ cnoremap %H <C-R>=expand('%:h:p') . std#path#separator()<CR>
 cnoremap %T <C-R>=expand('%:t')<CR>
 cnoremap %P <C-R>=expand('%:p')<CR>
 cnoremap E<S-space> e<space>
+
+" " Break undo sequence on specific characters
+" inoremap , ,<C-g>u
+" inoremap . .<C-g>u
+" inoremap ! !<C-g>u
+" inoremap ? ?<C-g>u
+
+" Move line(s) up and down
+nnoremap <M-j> :m .+1<CR>==
+nnoremap <M-k> :m .-2<CR>==
+inoremap <M-j> <Esc>:m .+1<CR>==gi
+inoremap <M-k> <Esc>:m .-2<CR>==gi
+vnoremap <M-j> :m '>+1<CR>gv=gv
+vnoremap <M-k> :m '<-2<CR>gv=gv

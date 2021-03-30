@@ -74,6 +74,7 @@ return require('packer').startup {
     use 'tami5/sql.nvim'
     use 'nvim-telescope/telescope-frecency.nvim'
     use 'nvim-telescope/telescope-cheat.nvim'
+    use { 'nvim-telescope/telescope-arecibo.nvim', rocks = {"openssl", "lua-http-parser"} }
 
     -- PRACTICE: {{{
     use 'tpope/vim-projectionist'  -- STREAM: Alternate file editting and some helpful stuff
@@ -144,6 +145,7 @@ return require('packer').startup {
 
     -- use { 'Shougo/defx.nvim', }
     use 'kyazdani42/nvim-tree.lua'
+    use 'lambdalisue/vim-protocol'
 
     -- Undo helper
     use 'sjl/gundo.vim'
@@ -337,8 +339,10 @@ return require('packer').startup {
     use 'lervag/wiki.vim'
     use 'ihsanturk/neuron.vim'
 
-    use 'ThePrimeagen/vim-apm'
-    use 'ThePrimeagen/vim-be-good'
+    -- use 'ThePrimeagen/vim-apm'
+    -- use 'ThePrimeagen/vim-be-good'
+
+    use 'alec-gibson/nvim-tetris'
   end,
   config = {
     _display = {
