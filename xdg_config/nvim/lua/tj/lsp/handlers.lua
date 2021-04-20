@@ -32,11 +32,13 @@ end
 --     -- },
 --   }
 -- )
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   require('lsp_extensions.workspace.diagnostic').handler, {
     signs = {
       severity_limit = "Error",
+    },
+    underline = {
+      severity_limit = "Warning",
     },
     virtual_text = true,
   }
@@ -81,6 +83,7 @@ function MyLspRename()
   local current_word = vim.fn.expand("<cword>")
 
   local has_saga, saga = pcall(require, 'lspsaga.rename')
+
   if has_saga then
     local line, col = vim.fn.line('.'), vim.fn.col('.')
     local contents = vim.api.nvim_buf_get_lines(bufnr, line - 1, line, false)[1]

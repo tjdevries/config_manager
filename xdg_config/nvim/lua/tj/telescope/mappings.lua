@@ -59,6 +59,9 @@ map_tele('<space>fe', 'file_browser')
 map_tele('<space>fs', 'find_sourcegraph')
 map_tele('<space>fz', 'sourcegraph_tips')
 
+-- Git
+map_tele('<space>gs', 'git_status')
+
 -- Nvim
 map_tele('<space>fb', 'buffers')
 map_tele('<space>fp', 'my_plugins')

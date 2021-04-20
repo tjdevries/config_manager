@@ -20,25 +20,20 @@ local read_query = function(filename)
   return table.concat(vim.fn.readfile(vim.fn.expand(filename)), "\n")
 end
 
-require('nvim-treesitter.configs').setup {
-  -- ensure_installed = {'lua'}, -- one of 'all', 'language', or a list of languages
-  ensure_installed = { 'go', 'rust', 'toml', 'query', },
+for _, file in ipairs(vim.fn.glob("~/plugins/tree-sitter-lua/queries/lua/*.scm", false, true)) do
+  vim.treesitter.set_query("lua", vim.fn.fnamemodify(file, ":t:r"), read_query(file))
+end
 
-  parsers = {
-    lua = {
-      injections = read_query("~/plugins/tree-sitter-lua/queries/lua/injections.scm"),
-    }
-  },
+vim.treesitter.set_query("rust", "highlights", read_query("~/.config/nvim/queries/rust/highlights.scm"))
+
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { 'go', 'rust', 'toml', 'query', },
 
   highlight = {
     enable = enabled, -- false will disable the whole extension
     use_languagetree = false,
     disable = {"json"},
     custom_captures = custom_captures,
-    queries = {
-      lua  = read_query("~/plugins/tree-sitter-lua/queries/lua/highlights.scm"),
-      rust = read_query("~/.config/nvim/queries/rust/highlights.scm"),
-    }
   },
 
   incremental_selection = {

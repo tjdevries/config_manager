@@ -33,3 +33,6 @@ function name inside the parentheses.
 
 - [ ] Adding descriptions to maps as metadata
     - `nnoremap <describe>Hello World</describe> lhs rhs`
+
+
+ git config --global alias.publish '!git push --set-upstream origin "$(git rev-parse --abbrev-ref HEAD)"'

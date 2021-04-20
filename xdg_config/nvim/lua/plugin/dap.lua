@@ -6,6 +6,27 @@ dap.defaults.fallback.external_terminal = {
   args = {'-e'};
 }
 
+dap.configurations.lua = { 
+  { 
+    type = 'nlua', 
+    request = 'attach',
+    name = "Attach to running Neovim instance",
+    host = function()
+      return '127.0.0.1'
+    end,
+    port = function()
+      -- local val = tonumber(vim.fn.input('Port: '))
+      -- assert(val, "Please provide a port number")
+      local val = 54231
+      return val
+    end,
+  }
+}
+
+dap.adapters.nlua = function(callback, config)
+  callback({ type = 'server', host = config.host, port = config.port })
+end
+
 vim.g.dap_virtual_text = true
 
 -- dap.adapters.cpp = {
@@ -151,29 +172,29 @@ dap.configurations.c = {
 
 -- TODO: Try out the dlv command directly:
 --  https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#go-using-delve-directly
-local use_delve = false
+local use_delve = true
 if use_delve then
   dap.adapters.go = function(callback, config)
-    -- local handle, pid_or_err, port = nil, nil, 12346
+    local handle, pid_or_err, port = nil, nil, 12346
 
-    -- handle, pid_or_err = vim.loop.spawn(
-    --   "dlv", {
-    --     args = {"dap", "-l", "127.0.0.1:" .. port},
-    --     detached = true,
-    --   }, vim.schedule_wrap(function(code)
-    --     handle:close()
-    --     print("Delve has exited with: " .. code)
-    --   end)
-    -- )
+    handle, pid_or_err = vim.loop.spawn(
+      "dlv", {
+        args = {"dap", "-l", "127.0.0.1:" .. port},
+        detached = true,
+        cwd = vim.loop.cwd(),
+      }, vim.schedule_wrap(function(code)
+        handle:close()
+        print("Delve has exited with: " .. code)
+      end)
+    )
 
-    -- if not handle then
-    --   error("FAILED:", pid_or_err)
-    -- end
+    if not handle then
+      error("FAILED:", pid_or_err)
+    end
 
-    -- vim.wait(100)
-
-    local port = 38697
-    callback { type = "server", host = "127.0.0.1", port = port }
+    vim.defer_fn(function()
+      callback { type = "server", host = "127.0.0.1", port = port }
+    end, 100)
   end
 else
   dap.adapters.go = {
@@ -208,13 +229,26 @@ dap.configurations.go = {
     name = 'Run lsif-clang indexer',
     request = 'launch',
     showLog = true,
-    program = '${file}',
-    args = { '--indexer', 'lsif-clang', '--dir', vim.fn.expand('~/sourcegraph/lsif-clang/functionaltest'), },
+    program = '.',
+    args = { '--indexer', 'lsif-clang compile_commands.json', '--dir', vim.fn.expand('~/sourcegraph/lsif-clang/functionaltest'), "--debug"},
     dlvToolPath = vim.fn.exepath('dlv'),
   },
 }
 
-require('dap-python').setup('~/.pyenv/versions/debugpy/bin/python')
+dap.configurations.python = {
+  {
+    type = 'python';
+    request = 'launch';
+    name = 'Build api';
+    program = '${file}';
+    args = { '--target', 'api' },
+    console = 'integratedTerminal';
+  }
+}
+
+require('dap-python').setup('python', {
+  include_configs = true
+})
 
 
 vim.cmd [[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]]

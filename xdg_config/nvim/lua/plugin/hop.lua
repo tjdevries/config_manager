@@ -1,3 +1,5 @@
+if true then return end
+
 local c = require('colorbuddy.color').colors
 local Group = require('colorbuddy.group').Group
 local s = require('colorbuddy.style').styles

@@ -34,24 +34,11 @@ inoremap <C-CR> <C-O>O
 " Set kj to be escape in insert mode
 inoremap kj <esc>
 
-" Does:
-"   For wrapped lines, does gj/gk
-"   For large jumps, adds a spot on the jump list
-function! s:jump_dir(letter)
-  let jump_count = v:count
+nnoremap <expr> j tj#jump_direction('j')
+nnoremap <expr> k tj#jump_direction('k')
 
-  if jump_count == 0
-    return execute(printf('normal! g%s', a:letter))
-  endif
-
-  if jump_count > 5
-    normal! m'
-  endif
-
-  call execute(printf('normal! %d%s', jump_count, a:letter))
-endfunction
-nnoremap <silent> j <cmd>call <SID>jump_dir('j')<CR>
-nnoremap <silent> k <cmd>call <SID>jump_dir('k')<CR>
+" nnoremap <silent> j <cmd>call <SID>jump_dir('j')<CR>
+" nnoremap <silent> k <cmd>call <SID>jump_dir('k')<CR>
 
 " For moving quickly up and down,
 " Goes to the first line above/below that isn't whitespace

@@ -1,3 +1,6 @@
+local actions = require('telescope.actions')
+local action_state = require('telescope.actions.state')
+
 if not pcall(require, 'telescope') then
   return
 end
@@ -44,9 +47,9 @@ require('telescope').setup {
     },
 
     selection_strategy = "reset",
+    prompt_position = "top",
     sorting_strategy = "descending",
     scroll_strategy = "cycle",
-    prompt_position = "top",
     color_devicons = true,
 
     mappings = {
@@ -65,6 +68,7 @@ require('telescope').setup {
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
 
     file_sorter = sorters.get_fzy_sorter,
+    file_ignore_patterns = { 'parser.c' },
 
     file_previewer   = require('telescope.previewers').vim_buffer_cat.new,
     grep_previewer   = require('telescope.previewers').vim_buffer_vimgrep.new,
@@ -73,7 +77,7 @@ require('telescope').setup {
 
   extensions = {
     fzy_native = {
-      override_generic_sorter = false,
+      override_generic_sorter = true,
       override_file_sorter = true,
     },
 
@@ -92,12 +96,13 @@ require('telescope').setup {
 }
 
 -- Load the fzy native extension at the start.
-pcall(require('telescope').load_extension, "fzy_native")
+-- pcall(require('telescope').load_extension, "fzy_native")
 pcall(require('telescope').load_extension, "gh")
 pcall(require('telescope').load_extension, "cheat")
 pcall(require('telescope').load_extension, "dap")
 pcall(require('telescope').load_extension, "arecibo")
 
+require('telescope').load_extension('fzf')
 require('telescope').load_extension('octo')
 
 if pcall(require('telescope').load_extension, 'frecency') then
@@ -117,9 +122,14 @@ function M.edit_neovim()
     shorten_path = false,
     cwd = "~/.config/nvim",
 
-    layout_strategy = 'horizontal',
+    layout_strategy = 'flex',
     layout_config = {
-      preview_width = 0.65,
+      horizontal = {
+        preview_width = 120,
+      },
+      vertical = {
+        preview_height = 0.75,
+      },
     },
   }
 end
@@ -129,11 +139,10 @@ function M.find_nvim_source()
     prompt_title = "~ nvim ~",
     shorten_path = false,
     cwd = "~/build/neovim/",
-    width = .25,
 
     layout_strategy = 'horizontal',
     layout_config = {
-      preview_width = 0.65,
+      preview_width = 0.35,
     },
   }
 end
@@ -295,8 +304,6 @@ function M.curbuf()
     border = true,
     previewer = false,
     shorten_path = false,
-
-    -- layout_strategy = 'current_buffer',
   }
   require('telescope.builtin').current_buffer_fuzzy_find(opts)
 end
@@ -322,11 +329,57 @@ function M.example_for_prime()
 end
 
 function M.file_browser()
-  require('telescope.builtin').file_browser {
+  local opts
+
+  opts = {
     sorting_strategy = "ascending",
     scroll_strategy = "cycle",
     prompt_position = "top",
+
+    attach_mappings = function(prompt_bufnr, map)
+      local current_picker = action_state.get_current_picker(prompt_bufnr)
+
+      local modify_cwd = function(new_cwd)
+        current_picker.cwd = new_cwd
+        current_picker:refresh(opts.new_finder(new_cwd), { reset_prompt = true })
+      end
+
+      map('i', '-', function() modify_cwd(current_picker.cwd .. "/..") end)
+      map('i', '~', function() modify_cwd(vim.fn.expand("~")) end)
+
+      local modify_depth = function(mod)
+        return function()
+          opts.depth = opts.depth + mod
+
+          local current_picker = action_state.get_current_picker(prompt_bufnr)
+          current_picker:refresh(opts.new_finder(current_picker.cwd), { reset_prompt = true })
+        end
+      end
+
+      map('i', '<M-=>', modify_depth(1))
+      map('i', '<M-+>', modify_depth(-1))
+
+      return true
+    end,
   }
+
+  require('telescope.builtin').file_browser(opts)
+end
+
+function M.git_status()
+  local opts = themes.get_dropdown {
+    winblend = 10,
+    border = true,
+    previewer = false,
+    shorten_path = false,
+  }
+
+  -- Can change the git icons using this.
+  -- opts.git_icons = {
+  --   changed = "M"
+  -- }
+
+  require('telescope.builtin').git_status(opts)
 end
 
 return setmetatable({}, {

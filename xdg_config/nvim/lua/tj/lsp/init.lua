@@ -1,3 +1,5 @@
+local Path = require('plenary.path')
+
 local has_lsp, lspconfig = pcall(require, 'lspconfig')
 local _, lspconfig_util = pcall(require, 'lspconfig.util')
 if not has_lsp then
@@ -22,6 +24,10 @@ require('tj.lsp.handlers')
 
 local mapper = function(mode, key, result)
   vim.api.nvim_buf_set_keymap(0, mode, key, "<cmd>lua " .. result .. "<CR>", {noremap = true, silent = true})
+end
+
+local nvim_exec = function(txt)
+  vim.api.nvim_exec(txt, false)
 end
 
 -- Turn on status.
@@ -91,6 +97,17 @@ local custom_attach = function(client)
   end
 
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+  -- Set autocommands conditional on server_capabilities
+  if client.resolved_capabilities.document_highlight then
+    nvim_exec [[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]]
+  end
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -120,11 +137,24 @@ lspconfig.vimls.setup {
   on_attach = custom_attach,
 }
 
+GoRootDir = function(fname)
+  local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
+  local absolute_fname = Path:new(fname):absolute()
+
+  if string.find(absolute_cwd, "/cmd/", 1, true)
+      and string.find(absolute_fname, absolute_cwd, 1, true) then
+    return absolute_cwd
+  end
+
+  return lspconfig_util.root_pattern("go.mod", ".git")(fname)
+end
+
 lspconfig.gopls.setup {
   on_init = custom_init,
   on_attach = custom_attach,
 
   capabilities = updated_capabilities,
+  root_dir = GoRootDir,
 
   settings = {
     gopls = {

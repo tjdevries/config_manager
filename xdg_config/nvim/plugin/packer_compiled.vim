@@ -32,6 +32,10 @@ local function try_loadstring(s, component, name)
 end
 
 _G.packer_plugins = {
+  ["FixCursorHold.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/FixCursorHold.nvim"
+  },
   ["JavaScript-Indent"] = {
     loaded = false,
     needs_bufread = false,
@@ -69,9 +73,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/bandaid.nvim"
   },
-  ["colorbuddy.vim"] = {
+  ["colorbuddy.nvim"] = {
     loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/colorbuddy.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/colorbuddy.nvim"
   },
   ["command_and_conquer.nvim"] = {
     loaded = true,
@@ -125,6 +129,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/fold_search.vim"
   },
+  ["formatter.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/formatter.nvim"
+  },
   fzf = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/fzf"
@@ -140,6 +148,10 @@ _G.packer_plugins = {
   ["git-messenger.vim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/git-messenger.vim"
+  },
+  ["gitlinker.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/gitlinker.nvim"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
@@ -168,10 +180,6 @@ _G.packer_plugins = {
   ["haunted.vim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/haunted.vim"
-  },
-  ["hop.nvim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/hop.nvim"
   },
   ["javascript-libraries-syntax.vim"] = {
     loaded = true,
@@ -273,6 +281,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/octo.nvim"
   },
+  ["one-small-step-for-vimkind"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/one-small-step-for-vimkind"
+  },
   ["overlength.vim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/overlength.vim"
@@ -349,6 +361,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-arecibo.nvim"
   },
+  ["telescope-async-sorter-test.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-async-sorter-test.nvim"
+  },
   ["telescope-cheat.nvim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-cheat.nvim"
@@ -360,6 +376,10 @@ _G.packer_plugins = {
   ["telescope-frecency.nvim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-frecency.nvim"
+  },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim"
   },
   ["telescope-fzf-writer.nvim"] = {
     loaded = true,

@@ -140,14 +140,36 @@ endfunction
 vnoremap yc <c-r>:call tj#visual_code_review()<CR>
 xnoremap yc <c-r>:call tj#visual_code_review()<CR>
 
-function! tj#save_and_exec() abort
-  if &filetype == 'vim'
-    :silent! write
-    :source %
-  elseif &filetype == 'lua'
-    :silent! write
-    :luafile %
+if !exists('*tj#save_and_exec')
+  function! tj#save_and_exec() abort
+    if &filetype == 'vim'
+      :silent! write
+      :source %
+    elseif &filetype == 'lua'
+      :silent! write
+      :luafile %
+    endif
+
+    return
+  endfunction
+endif
+
+
+" Does:
+"   For wrapped lines, does gj/gk
+"   For large jumps, adds a spot on the jump list
+function! tj#jump_direction(letter)
+  let jump_count = v:count
+
+  if jump_count == 0
+    return printf('g%s', a:letter)
   endif
 
-  return
+  let result = ''
+  if jump_count > 5
+    let result = "m'"
+  endif
+
+  let final_result = printf('%s%d%s', result, jump_count, a:letter)
+  return final_result
 endfunction

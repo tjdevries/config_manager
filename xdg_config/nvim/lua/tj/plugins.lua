@@ -1,5 +1,9 @@
 vim.cmd [[packadd vimball]]
 
+local has = function(x)
+  return vim.fn.has(x) == 1
+end
+
 return require('packer').startup {
   function(use)
     use 'wbthomason/packer.nvim'
@@ -25,7 +29,7 @@ return require('packer').startup {
     local_use 'nlua.nvim'
     local_use 'vlog.nvim'
     local_use 'vim9jit'
-    local_use 'colorbuddy.vim'
+    local_use 'colorbuddy.nvim'
     local_use 'gruvbuddy.nvim'
     local_use 'apyrori.nvim'
     local_use 'py_package.nvim'
@@ -51,6 +55,9 @@ return require('packer').startup {
     use 'glepnir/lspsaga.nvim'
     use 'onsails/lspkind-nvim'
 
+    -- TODO: Investigate
+    -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
     -- pcall(use, '~/plugins/scrollnv')
     local_use('nvim-lua', 'popup.nvim')
     -- local_use('nvim-lua', 'plenary.nvim')
@@ -61,8 +68,10 @@ return require('packer').startup {
 
     local_use('nvim-telescope', 'telescope.nvim')
     local_use('nvim-telescope', 'telescope-fzy-native.nvim')
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = "make", }
     local_use('nvim-telescope', 'telescope-fzf-writer.nvim')
     local_use('nvim-telescope', 'telescope-packer.nvim')
+    local_use('nvim-telescope', 'telescope-async-sorter-test.nvim')
 
     local_use('nvim-telescope', 'telescope-github.nvim')
     local_use('nvim-telescope', 'telescope-symbols.nvim')
@@ -75,6 +84,13 @@ return require('packer').startup {
     use 'nvim-telescope/telescope-frecency.nvim'
     use 'nvim-telescope/telescope-cheat.nvim'
     use { 'nvim-telescope/telescope-arecibo.nvim', rocks = {"openssl", "lua-http-parser"} }
+
+    use {
+      'antoinemadec/FixCursorHold.nvim',
+      run = function()
+        vim.g.curshold_updatime = 1000
+      end,
+    }
 
     -- PRACTICE: {{{
     use 'tpope/vim-projectionist'  -- STREAM: Alternate file editting and some helpful stuff
@@ -248,13 +264,18 @@ return require('packer').startup {
     --   Have not yet checked this out, but looks awesome.
     -- use 'puremourning/vimspector'
     use 'mfussenegger/nvim-dap'
-    use 'mfussenegger/nvim-dap-python'
     use 'theHamsta/nvim-dap-virtual-text'
+
+    use 'mfussenegger/nvim-dap-python'
     use 'nvim-telescope/telescope-dap.nvim'
 
-    if 1 == vim.fn.has('python3') then
+    use 'jbyuki/one-small-step-for-vimkind'
+
+    if false and has 'python3' then
       use 'puremourning/vimspector'
     end
+
+    use 'mhartington/formatter.nvim'
 
     -- }}}
     -- TREE SITTER: {{{
@@ -293,8 +314,6 @@ return require('packer').startup {
     -- Do I even use any of these?
     use 'kana/vim-textobj-user'
     use 'bps/vim-textobj-python'
-
-    use 'phaazon/hop.nvim'
     -- }}}
     -- Python: {{{
 
@@ -305,11 +324,10 @@ return require('packer').startup {
     -- gita replacement
     use 'lambdalisue/gina.vim'
 
+
     -- Github integration
-    use {
-      'pwntester/octo.nvim',
-      -- cmd = { 'Octo' },
-    }
+    use 'pwntester/octo.nvim'
+    use 'ruifm/gitlinker.nvim'
 
     -- Sweet message committer
     use 'rhysd/committia.vim'
@@ -318,9 +336,7 @@ return require('packer').startup {
     use 'rhysd/git-messenger.vim'
 
     -- Async signs!
-    if 0 == vim.fn.has 'nvim-0.5' then
-      use 'mhinz/vim-signify'
-    else
+    if has 'nvim-0.5' then
       use 'lewis6991/gitsigns.nvim'
     end
     -- }}}

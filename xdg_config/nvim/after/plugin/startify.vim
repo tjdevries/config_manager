@@ -1,3 +1,5 @@
+let g:startify_disable_at_vimenter = 1
+
 let g:startify_bookmarks = [
             \ '~/.zshrc',
             \ '~/.config/nvim/init.vim',
