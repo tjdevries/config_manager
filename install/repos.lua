@@ -39,6 +39,8 @@ local sourcegraph_repos = {
 
 local plugin_repos = {
   ["tjdevries"] = {
+    "colorbuddy.nvim",
+    "gruvbuddy.nvim",
     "green_light.nvim",
     "rofl.nvim",
     "telescope-hacks.nvim",
@@ -50,6 +52,7 @@ local plugin_repos = {
 
   ["nvim-telescope"] = {
     "telescope.nvim",
+    "telescope-fzf-writer.nvim",
   },
 
   ["nvim-lua"] = {
@@ -69,7 +72,7 @@ local build_repos = {
   "dandavison/delta",
 }
 
-local testing = true
+local testing = false
 
 local create_github_repo = function(repo, root)
   if testing then
