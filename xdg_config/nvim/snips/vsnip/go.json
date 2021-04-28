@@ -1,0 +1,61 @@
+{
+    "if err": {
+        "prefix": "err",
+        "body": [
+            "if err != nil {",
+            "\treturn ${1:err}",
+            "}"
+        ]
+    },
+    "go-package": {
+        "prefix": "pkg",
+        "body": [
+            "package ${1}",
+            "\t${2}"
+        ],
+        "description": "declare go package"
+    },
+    "go-import-m": {
+        "prefix": "ims",
+        "body": [
+            "import (",
+            "\t\"${1}\"",
+            ")"
+        ],
+        "description": "multiple packages"
+    },
+    "go-import-s": {
+        "prefix": "im",
+        "body": [
+            "import \"${1}\""
+        ],
+        "description": "single packages"
+    },
+    "go-func":{
+        "prefix": "f",
+        "body": [
+            "func ${1}(${2}) ${3} {",
+            "\t${4}",
+            "}"
+        ],
+        "description": "function"
+    },
+    "go-function-main": {
+        "prefix": "fm",
+        "body": [
+            "func main()  {",
+            "\t${1}",
+            "}"
+        ],
+        "description": "main function"
+    },
+    "go-struct": {
+        "prefix": "st",
+        "body": [
+            "type ${1} struct {",
+            "\t${2}",
+            "}"
+        ],
+        "description": "struct"
+    }
+}

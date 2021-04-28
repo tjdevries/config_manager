@@ -54,6 +54,13 @@ return require('packer').startup {
     local_use 'lsp_extensions.nvim'
     use 'glepnir/lspsaga.nvim'
     use 'onsails/lspkind-nvim'
+    use {
+      'folke/lsp-trouble.nvim',
+      config = function()
+        require('trouble').setup {
+        }
+      end,
+    }
 
     -- TODO: Investigate
     -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
@@ -248,10 +255,11 @@ return require('packer').startup {
     --       I also think I can just use ^X^N if I need to?...
     -- use 'steelsojka/completion-buffers'
 
-    -- use 'hrsh7th/vim-vsnip'
-    -- use 'hrsh7th/vim-vsnip-integ'
-    use 'norcalli/snippets.nvim'
-    use 'norcalli/ui.nvim'
+    use 'hrsh7th/vim-vsnip'
+    use 'hrsh7th/vim-vsnip-integ'
+    -- use 'norcalli/snippets.nvim'
+
+    -- use 'norcalli/ui.nvim'
 
     -- Cool tags based viewer
     --   :Vista  <-- Opens up a really cool sidebar with info about file.
@@ -322,7 +330,8 @@ return require('packer').startup {
     -- }}}
     -- GIT: {{{
     -- gita replacement
-    use 'lambdalisue/gina.vim'
+    -- use 'lambdalisue/gina.vim'
+    use 'TimUntersberger/neogit'
 
 
     -- Github integration
@@ -337,8 +346,9 @@ return require('packer').startup {
 
     -- Async signs!
     if has 'nvim-0.5' then
-      use 'lewis6991/gitsigns.nvim'
+      -- use 'lewis6991/gitsigns.nvim'
     end
+
     -- }}}
 
     -- use 'untitled-ai/jupyter_ascending.vim'

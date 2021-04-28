@@ -1,5 +1,3 @@
-local actions = require('telescope.actions')
-local action_state = require('telescope.actions.state')
 
 if not pcall(require, 'telescope') then
   return
@@ -17,8 +15,16 @@ end
 reloader()
 
 local actions = require('telescope.actions')
+local action_state = require('telescope.actions.state')
 local sorters = require('telescope.sorters')
 local themes = require('telescope.themes')
+
+local set_prompt_to_entry_value = function(prompt_bufnr)
+  local entry = action_state.get_selected_entry()
+  if not entry or not type(entry) == 'table' then return end
+
+  action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
+end
 
 -- local action_set = require('telescope.actions.set')
 local _ = require('nvim-nonicons')
@@ -56,6 +62,8 @@ require('telescope').setup {
       i = {
         ["<C-x>"] = false,
         ["<C-s>"] = actions.select_horizontal,
+
+        ["<C-y>"] = set_prompt_to_entry_value,
 
         -- Experimental
         -- ["<tab>"] = actions.toggle_selection,
@@ -96,13 +104,13 @@ require('telescope').setup {
 }
 
 -- Load the fzy native extension at the start.
--- pcall(require('telescope').load_extension, "fzy_native")
+pcall(require('telescope').load_extension, "fzy_native")
 pcall(require('telescope').load_extension, "gh")
 pcall(require('telescope').load_extension, "cheat")
 pcall(require('telescope').load_extension, "dap")
 pcall(require('telescope').load_extension, "arecibo")
 
-require('telescope').load_extension('fzf')
+-- require('telescope').load_extension('fzf')
 require('telescope').load_extension('octo')
 
 if pcall(require('telescope').load_extension, 'frecency') then
@@ -131,6 +139,12 @@ function M.edit_neovim()
         preview_height = 0.75,
       },
     },
+
+    attach_mappings = function(prompt_bufnr, map)
+      map('i', '<c-y>', set_prompt_to_entry_value)
+
+      return true
+    end,
   }
 end
 

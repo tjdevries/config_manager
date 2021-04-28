@@ -1,11 +1,14 @@
 R("nlua")
-R("snippets")
 
 -- TODO: We should check out the UX stuff here. Norcalli made something sweet.
 -- require'snippets'.set_ux(require'snippets.inserters.vim_input')
 
-local snip_plug = require('snippets')
+local ok = pcall(require, 'snippets')
+if not ok then return end
+
 local indent = require('snippets.utils').match_indentation
+
+local snip_plug = R("snippets")
 
 local snips = {}
 

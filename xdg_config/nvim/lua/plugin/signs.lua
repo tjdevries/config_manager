@@ -7,7 +7,10 @@ Group.new('GitSignsAdd', c.green)
 Group.new('GitSignsChange', c.yellow)
 Group.new('GitSignsDelete', c.red)
 
-require('gitsigns').setup {
+local ok, signs = pcall(require, 'gitsigns')
+if not ok then return end
+
+signs.setup {
   signs = {
     add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'},
     change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr'},

@@ -48,10 +48,10 @@ local custom_attach = function(client)
   nnoremap { "<space>dp", vim.lsp.diagnostic.goto_prev, buffer = 0 }
   nnoremap { "<space>sl", vim.lsp.diagnostic.show_line_diagnostics, buffer = 0 }
 
-  nnoremap { "<c-]>", vim.lsp.buf.definition, buffer = 0 }
+  nnoremap { "gd", vim.lsp.buf.definition, buffer = 0 }
   nnoremap { "gD", vim.lsp.buf.declaration, buffer = 0 }
 
-  mapper('n', '<space>cr', 'MyLspRename()')
+  nnoremap { "<space>cr", MyLspRename, buffer = 0 }
 
   telescope_mapper('gr', 'lsp_references', {
     layout_strategy = "vertical",
@@ -114,11 +114,21 @@ local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 updated_capabilities.textDocument.codeLens = {
   dynamicRegistration = false,
 }
-updated_capabilities = vim.tbl_extend('keep', updated_capabilities, nvim_status.capabilities)
+updated_capabilities = vim.tbl_deep_extend('keep', updated_capabilities, nvim_status.capabilities)
+updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
+updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
+
 
 lspconfig.yamlls.setup {
   on_init = custom_init,
-  on_attach = custom_attach
+  on_attach = custom_attach,
+  capabilities = updated_capabilities,
 }
 
 lspconfig.pyls.setup {
@@ -129,12 +139,14 @@ lspconfig.pyls.setup {
     }
   },
   on_init = custom_init,
-  on_attach = custom_attach
+  on_attach = custom_attach,
+  capabilities = updated_capabilities,
 }
 
 lspconfig.vimls.setup {
   on_init = custom_init,
   on_attach = custom_attach,
+  capabilities = updated_capabilities,
 }
 
 GoRootDir = function(fname)
@@ -166,12 +178,14 @@ lspconfig.gopls.setup {
 lspconfig.gdscript.setup {
   on_init = custom_init,
   on_attach = custom_attach,
+  capabilities = updated_capabilities,
 }
 
 -- Load lua configuration from nlua.
 require('nlua.lsp.nvim').setup(lspconfig, {
   on_init = custom_init,
   on_attach = custom_attach,
+  capabilities = updated_capabilities,
 
   root_dir = function(fname)
     if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
@@ -204,7 +218,8 @@ if true then
       "typescript.tsx"
     },
     on_init = custom_init,
-    on_attach = custom_attach
+    on_attach = custom_attach,
+    capabilities = updated_capabilities,
   })
 else
   lspconfig.sourcegraph_ts.setup {
@@ -229,13 +244,14 @@ lspconfig.clangd.setup({
     clangdFileStatus = true
   },
   handlers = nvim_status.extensions.clangd.setup(),
-  capabilities = nvim_status.capabilities,
+  capabilities = updated_capabilities,
 })
 
 if 1 == vim.fn.executable('cmake-language-server') then
   lspconfig.cmake.setup {
     on_init = custom_init,
     on_attach = custom_attach,
+    capabilities = nvim_status.capabilities,
   }
 end
 
@@ -244,6 +260,7 @@ lspconfig.rust_analyzer.setup({
   filetypes = {"rust"},
   on_init = custom_init,
   on_attach = custom_attach,
+  capabilities = nvim_status.capabilities,
 })
 
 --[[
