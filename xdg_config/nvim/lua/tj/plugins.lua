@@ -27,37 +27,44 @@ return require('packer').startup {
 
     -- My Plugins
     local_use 'nlua.nvim'
-    local_use 'vlog.nvim'
     local_use 'vim9jit'
     local_use 'colorbuddy.nvim'
     local_use 'gruvbuddy.nvim'
     local_use 'apyrori.nvim'
-    local_use 'py_package.nvim'
     local_use 'manillua.nvim'
     local_use 'cyclist.vim'
-    local_use 'bandaid.nvim'
-    local_use 'train.vim'
     local_use 'express_line.nvim'
     local_use 'overlength.vim'
     local_use 'pastery.vim'
-    local_use 'command_and_conquer.nvim'
-    local_use 'streamer.nvim'
     local_use 'complextras.nvim'
     local_use 'astronauta.nvim'
 
-    -- local_use 'wander.nvim'
-    -- local_use 'riki.nvim'
+    -- When I have some extra time...
+    local_use 'train.vim'
+    local_use 'command_and_conquer.nvim'
+    local_use 'streamer.nvim'
+    local_use 'bandaid.nvim'
 
     local_use 'nsync.nvim'
     use 'bfredl/nvim-luadev'
 
+    -- LSP Plugins:
+
+    -- NOTE: lspconfig ONLY has configs, for people reading this :)
+    use 'neovim/nvim-lspconfig'
+    use 'wbthomason/lsp-status.nvim'
+
     local_use 'lsp_extensions.nvim'
     use 'glepnir/lspsaga.nvim'
     use 'onsails/lspkind-nvim'
+
     use {
       'folke/lsp-trouble.nvim',
       config = function()
+        -- Can use P to toggle auto movement
         require('trouble').setup {
+          auto_preview = false,
+          auto_fold = true,
         }
       end,
     }
@@ -65,20 +72,15 @@ return require('packer').startup {
     -- TODO: Investigate
     -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
-    -- pcall(use, '~/plugins/scrollnv')
     local_use('nvim-lua', 'popup.nvim')
-    -- local_use('nvim-lua', 'plenary.nvim')
-    use { 
-      "~/plugins/plenary.nvim",
-      -- rocks = { --[[ 'effil', 'lanes',  'threads' ]]  }
-    }
+    local_use('nvim-lua', 'plenary.nvim')
 
     local_use('nvim-telescope', 'telescope.nvim')
-    local_use('nvim-telescope', 'telescope-fzy-native.nvim')
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = "make", }
     local_use('nvim-telescope', 'telescope-fzf-writer.nvim')
     local_use('nvim-telescope', 'telescope-packer.nvim')
     local_use('nvim-telescope', 'telescope-async-sorter-test.nvim')
+    local_use('nvim-telescope', 'telescope-fzy-native.nvim')
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = "make", }
 
     local_use('nvim-telescope', 'telescope-github.nvim')
     local_use('nvim-telescope', 'telescope-symbols.nvim')
@@ -105,17 +107,10 @@ return require('packer').startup {
     -- For narrowing regions of text to look at them alone
     use 'chrisbra/NrrwRgn' -- Figure out some good ways to use this on stream
 
-    use 'rhysd/vim-clang-format'
     use 'tweekmonster/spellrotate.vim'
     use 'haya14busa/vim-metarepeat'  -- Never figured out how to use this, but looks like fun.
     -- }}}
     -- VIM EDITOR: {{{
-
-    -- Hmm... I don't like that it is not tab local.
-    --  I will need to investigate some more
-    if false then
-      use 'romgrk/barbar.nvim'
-    end
 
     -- Little know features:
     --   :SSave
@@ -160,9 +155,6 @@ return require('packer').startup {
     -- TODO: Eventually statusline should consume this.
     use 'mkitt/tabline.vim'
 
-    -- Pretty icons. Not necessarily required.
-    use 'ryanoasis/vim-devicons'
-
     use 'kyazdani42/nvim-web-devicons'
     use 'yamatsum/nvim-web-nonicons'
 
@@ -181,7 +173,6 @@ return require('packer').startup {
     use 'gyim/vim-boxdraw'
 
     -- Better increment/decrement
-    -- use 'tpope/vim-speeddating'    -- Handle changing of dates in a nicer manner
     use 'monaqa/dial.nvim'
 
     --   FOCUSING: {{{
@@ -213,6 +204,8 @@ return require('packer').startup {
     use 'leafgarland/typescript-vim'
     use 'peitalin/vim-jsx-typescript'
 
+    -- Wonder if I can make LSP do this and respect .prettier files.
+    --  I don't write enough typescript to think about this.
     use { 'prettier/vim-prettier', run = 'yarn install' }
 
     -- TODO: Turn emmet back on when I someday use it
@@ -231,11 +224,6 @@ return require('packer').startup {
     --  }}}
     -- LSP {{{
 
-    -- Configurations for neovim lsp.
-    --   neovim/neovim has all of the LSP code.
-    use 'neovim/nvim-lspconfig'
-    use 'wbthomason/lsp-status.nvim'
-
     -- STREAM: Figure out how to use snippets better
     -- use 'haorenW1025/completion-nvim'
     use 'hrsh7th/nvim-compe'
@@ -243,23 +231,9 @@ return require('packer').startup {
     -- Completion stuff
     local_use 'rofl.nvim'
 
-    use {
-      'nvim-treesitter/completion-treesitter',
-      run = function() vim.cmd [[TSUpdate]] end
-    }
-
-    local_use 'tree-sitter-lua'
-    local_use 'tree-sitter-sql'
-
-    -- TODO: I think this may be causing large buffers to slow considerably.
-    --       I also think I can just use ^X^N if I need to?...
-    -- use 'steelsojka/completion-buffers'
-
     use 'hrsh7th/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
     -- use 'norcalli/snippets.nvim'
-
-    -- use 'norcalli/ui.nvim'
 
     -- Cool tags based viewer
     --   :Vista  <-- Opens up a really cool sidebar with info about file.
@@ -273,7 +247,6 @@ return require('packer').startup {
     -- use 'puremourning/vimspector'
     use 'mfussenegger/nvim-dap'
     use 'theHamsta/nvim-dap-virtual-text'
-
     use 'mfussenegger/nvim-dap-python'
     use 'nvim-telescope/telescope-dap.nvim'
 
@@ -282,14 +255,19 @@ return require('packer').startup {
     if false and has 'python3' then
       use 'puremourning/vimspector'
     end
-
-    use 'mhartington/formatter.nvim'
-
     -- }}}
+
     -- TREE SITTER: {{{
     local_use('nvim-treesitter', 'nvim-treesitter')
+    use 'nvim-treesitter/nvim-treesitter-textobjects'
     use 'nvim-treesitter/playground'
     use 'vigoux/architext.nvim'
+
+    use 'JoosepAlviste/nvim-ts-context-commentstring'
+
+    -- Grammars
+    local_use 'tree-sitter-lua'
+    local_use 'tree-sitter-sql'
 
     -- }}}
     -- NAVIGATION: {{{
@@ -298,7 +276,9 @@ return require('packer').startup {
 
     use 'google/vim-searchindex'
 
-    use 'justinmk/vim-dirvish'
+    -- use 'justinmk/vim-dirvish'
+    use 'tamago324/lir.nvim'
+
     use 'pechorin/any-jump.vim'
 
     -- Temporary disabled... getting real bad performance in some lua files.
@@ -314,7 +294,7 @@ return require('packer').startup {
     use 'tpope/vim-characterize'
     use 'tpope/vim-dispatch'
     use 'AndrewRadev/splitjoin.vim'
-    use 'AndrewRadev/sideways.vim' -- Easy sideways movement
+    -- use 'AndrewRadev/sideways.vim' -- Easy sideways movement
 
     -- TODO: Check out macvhakann/vim-sandwich at some point
     use 'tpope/vim-surround'       -- Surround text objects easily
@@ -369,30 +349,35 @@ return require('packer').startup {
     -- use 'ThePrimeagen/vim-be-good'
 
     use 'alec-gibson/nvim-tetris'
+
+    -- WIP:
+    local_use 'py_package.nvim'
+
+    -- TODO: Figure out why this randomly popups
+    --       Figure out if I want to use it later as well :)
+    -- use {
+    --   'folke/which-key.nvim',
+    --   config = function()
+    --     -- TODO: Consider changing my timeoutlen?
+    --     require('which-key').setup {
+    --       presets = {
+    --         g = true,
+    --       },
+    --     }
+    --   end,
+    -- } 
+
+
+    -- It would be fun to think about making a wiki again...
+    -- local_use 'wander.nvim'
+    -- local_use 'riki.nvim'
+
+    -- pretty sure I'm done w/ these
+    -- local_use 'vlog.nvim'
   end,
   config = {
-    _display = {
-      open_fn = function(name)
-        -- Can only use plenary when we have our plugins.
-        --  We can only get plenary when we don't have our plugins ;)
-        local ok, float_win = pcall(function()
-          return require('plenary.window.float').percentage_range_window(0.8, 0.8)
-        end)
-
-        if not ok then
-          vim.cmd [[65vnew  [packer] ]]
-
-          return vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf()
-        end
-
-        local bufnr = float_win.bufnr
-        local win = float_win.win_id
-
-        vim.api.nvim_buf_set_name(bufnr, name)
-        vim.api.nvim_win_set_option(win, 'winblend', 10)
-
-        return win, bufnr
-      end
+    display = {
+      -- open_fn = require('packer.util').float,
     },
   }
 }
@@ -423,59 +408,3 @@ Plug 'skywind3000/quickmenu.vim'
 Plug 'nathanaelkane/vim-indent-guides'                       " See indentation guides
 
 --]]
-
---[[ Graveyard
-
-can check these out some time for ideas on how to do this:
-Plug 'google/vim-maktaba'
-Plug 'google/vim-codefmt', { 'on': 'FormatCode' }
-Plug 'google/vim-glaive'
-
--- I don't think I need these anymore because they are handled by plugins I use already
-if has('unix')
-  Plug 'Shougo/echodoc.vim'
-  Plug 'Shougo/context_filetype.vim'
-  endif
-
-  if has('python3') && g:my_deoplete_enabled
-    Plug 'Shougo/deoplete.nvim'
-
-    Plug 'Shougo/neco-vim'
-    Plug 'Shougo/neco-syntax'
-
-    if executable('zsh')
-      Plug 'deoplete-plugins/deoplete-zsh'
-      endif
-
-      if executable('racer') " TODO: Maybe check racer?
-        Plug 'rust-lang/rust.vim'                        " Realistically. we only need this when we have rust as well
-        Plug 'sebastianmarkow/deoplete-rust'             " Rust completion
-        endif
-
-        " Gotta choose electric boogaloo
-        Plug 'tweekmonster/deoplete-clang2'                 " C-Family languages
-
-        " Works, but not using
-        " Plug 'eagletmt/neco-ghc'
-
-        " Emojis :)
-        Plug 'fszymanski/deoplete-emoji'
-
-        " Can't seem to get to work on windows as of right now.
-        " Will make an issue if I can't figure it out.
-        if executable('tsc') && has('unix')
-          Plug 'mhartington/nvim-typescript', {'for': 'typescript'}
-          endif
-          endif
-
-          " Tag Based Plugins {{{
-            if executable('ctags')
-              Plug 'jsfaint/gen_tags.vim'
-
-              if has('unix')
-                Plug 'majutsushi/tagbar'
-                endif
-                endif
-                -- }}}
-
-                --]]

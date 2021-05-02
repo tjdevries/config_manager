@@ -162,14 +162,13 @@ function! tj#jump_direction(letter)
   let jump_count = v:count
 
   if jump_count == 0
-    return printf('g%s', a:letter)
+    call execute(printf('normal! g%s', a:letter))
+    return
   endif
 
-  let result = ''
   if jump_count > 5
-    let result = "m'"
+    call execute("normal! m'")
   endif
 
-  let final_result = printf('%s%d%s', result, jump_count, a:letter)
-  return final_result
+  call execute(printf('normal! %d%s', jump_count, a:letter))
 endfunction

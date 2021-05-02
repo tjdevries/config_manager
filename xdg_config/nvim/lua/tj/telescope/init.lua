@@ -16,8 +16,28 @@ reloader()
 
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
+local action_mt = require('telescope.actions.mt')
 local sorters = require('telescope.sorters')
 local themes = require('telescope.themes')
+
+-- actions.master_stack = action_mt.create('master_stack', function(prompt_bufnr)
+--   local picker = action_state.get_current_picker(prompt_bufnr)
+
+--   actions.close(prompt_bufnr)
+
+--   vim.cmd [[tabnew]]
+--   for index, entry in ipairs(picker:get_multi_selection()) do
+--     if index == 1 then
+--       vim.cmd("edit " .. entry.filename)
+--     elseif index == 2 then
+--       vim.cmd("vsplit " .. entry.filename)
+--     else
+--       vim.cmd("split " .. entry.filename)
+--     end
+--   end
+
+--   vim.cmd [[wincmd =]]
+-- end)
 
 local set_prompt_to_entry_value = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
@@ -65,6 +85,8 @@ require('telescope').setup {
 
         ["<C-y>"] = set_prompt_to_entry_value,
 
+        -- ["<M-m>"] = actions.master_stack,
+
         -- Experimental
         -- ["<tab>"] = actions.toggle_selection,
 
@@ -104,13 +126,13 @@ require('telescope').setup {
 }
 
 -- Load the fzy native extension at the start.
-pcall(require('telescope').load_extension, "fzy_native")
+-- pcall(require('telescope').load_extension, "fzy_native")
 pcall(require('telescope').load_extension, "gh")
 pcall(require('telescope').load_extension, "cheat")
 pcall(require('telescope').load_extension, "dap")
 pcall(require('telescope').load_extension, "arecibo")
 
--- require('telescope').load_extension('fzf')
+require('telescope').load_extension('fzf')
 require('telescope').load_extension('octo')
 
 if pcall(require('telescope').load_extension, 'frecency') then

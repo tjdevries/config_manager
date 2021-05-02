@@ -34,8 +34,8 @@ inoremap <C-CR> <C-O>O
 " Set kj to be escape in insert mode
 inoremap kj <esc>
 
-nnoremap <expr> j tj#jump_direction('j')
-nnoremap <expr> k tj#jump_direction('k')
+nnoremap j <cmd>call tj#jump_direction('j')<CR>
+nnoremap k <cmd>call tj#jump_direction('k')<CR>
 
 " nnoremap <silent> j <cmd>call <SID>jump_dir('j')<CR>
 " nnoremap <silent> k <cmd>call <SID>jump_dir('k')<CR>

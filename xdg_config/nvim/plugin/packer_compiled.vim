@@ -124,10 +124,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/committia.vim"
   },
-  ["completion-treesitter"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/completion-treesitter"
-  },
   ["complextras.nvim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/complextras.nvim"
@@ -167,10 +163,6 @@ _G.packer_plugins = {
   ["fold_search.vim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/fold_search.vim"
-  },
-  ["formatter.nvim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/formatter.nvim"
   },
   fzf = {
     loaded = true,
@@ -220,12 +212,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/limelight.vim"
   },
+  ["lir.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lir.nvim"
+  },
   ["lsp-status.nvim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lsp-status.nvim"
   },
   ["lsp-trouble.nvim"] = {
-    config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0" },
+    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0" },
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim"
   },
@@ -309,6 +305,14 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
   },
+  ["nvim-treesitter-textobjects"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects"
+  },
+  ["nvim-ts-context-commentstring"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-ts-context-commentstring"
+  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
@@ -360,10 +364,6 @@ _G.packer_plugins = {
   ["rofl.nvim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/rofl.nvim"
-  },
-  ["sideways.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/sideways.vim"
   },
   ["spellrotate.vim"] = {
     loaded = true,
@@ -481,21 +481,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-characterize"
   },
-  ["vim-clang-format"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-clang-format"
-  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-commentary"
-  },
-  ["vim-devicons"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-devicons"
-  },
-  ["vim-dirvish"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-dirvish"
   },
   ["vim-dispatch"] = {
     loaded = true,
@@ -614,10 +602,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vista.vim"
   },
-  ["vlog.nvim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vlog.nvim"
-  },
   ["wiki.vim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/wiki.vim"
@@ -627,7 +611,7 @@ _G.packer_plugins = {
 time("Defining packer_plugins", false)
 -- Config for: lsp-trouble.nvim
 time("Config for lsp-trouble.nvim", true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
+try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
 time("Config for lsp-trouble.nvim", false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
