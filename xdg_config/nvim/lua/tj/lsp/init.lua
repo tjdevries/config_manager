@@ -131,17 +131,29 @@ lspconfig.yamlls.setup {
   capabilities = updated_capabilities,
 }
 
-lspconfig.pyls.setup {
-  plugins = {
-    pyls_mypy = {
-      enabled = true,
-      live_mode = false
-    }
-  },
+-- lspconfig.pyls.setup {
+--   plugins = {
+--     pyls_mypy = {
+--       enabled = true,
+--       live_mode = false
+--     }
+--   },
+--   on_init = custom_init,
+--   on_attach = custom_attach,
+--   capabilities = updated_capabilities,
+-- }
+
+lspconfig.pyright.setup {
   on_init = custom_init,
   on_attach = custom_attach,
   capabilities = updated_capabilities,
 }
+
+-- lspconfig.jedi_language_server.setup {
+--   on_init = custom_init,
+--   on_attach = custom_attach,
+--   capabilities = updated_capabilities,
+-- }
 
 lspconfig.vimls.setup {
   on_init = custom_init,
@@ -180,6 +192,15 @@ lspconfig.gdscript.setup {
   on_attach = custom_attach,
   capabilities = updated_capabilities,
 }
+
+local has_flutter_tools = pcall(require, 'flutter-tools')
+if not has_flutter_tools then
+  lspconfig.dartls.setup {
+    on_init = custom_init,
+    on_attach = custom_attach,
+    capabilities = updated_capabilities,
+  }
+end
 
 -- Load lua configuration from nlua.
 local _ = false and require('nlua.lsp.nvim').setup(lspconfig, {
@@ -356,3 +377,8 @@ end
 --   end
 -- end
 --]]
+
+return {
+  on_attach = custom_attach,
+  capabilities = updated_capabilities,
+}

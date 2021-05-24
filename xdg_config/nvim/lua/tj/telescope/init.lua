@@ -54,22 +54,34 @@ require('telescope').setup {
     prompt_prefix = '❯ ',
     selection_caret = '❯ ',
 
-
     winblend = 0,
     preview_cutoff = 120,
 
     layout_strategy = 'horizontal',
-    layout_defaults = {
+    layout_config = {
+      width = 0.8,
+      height = 0.85,
+
       horizontal = {
-        width_padding = 0.1,
-        height_padding = 0.1,
+        -- width_padding = 0.1,
+        -- height_padding = 0.1,
         preview_width = 0.6,
       },
+
       vertical = {
-        width_padding = 0.05,
-        height_padding = 1,
+        -- width_padding = 0.05,
+        -- height_padding = 1,
+        width = 0.9,
+        height = 0.95,
         preview_height = 0.5,
-      }
+      },
+
+      flex = {
+        horizontal = {
+          preview_width = 0.9,
+        },
+      },
+
     },
 
     selection_strategy = "reset",
@@ -135,6 +147,7 @@ pcall(require('telescope').load_extension, "fzy_native")
 pcall(require('telescope').load_extension, "cheat")
 pcall(require('telescope').load_extension, "dap")
 pcall(require('telescope').load_extension, "arecibo")
+pcall(require("telescope").load_extension, "flutter")
 
 <<<<<<< HEAD
 require('telescope').load_extension('fzf')
@@ -167,15 +180,18 @@ function M.edit_neovim()
 
     layout_strategy = 'flex',
     layout_config = {
+      width = 0.9,
+      height = 0.8,
+
       horizontal = {
-        preview_width = 120,
+        width = { padding = 0.2 },
       },
       vertical = {
         preview_height = 0.75,
       },
     },
 
-    attach_mappings = function(prompt_bufnr, map)
+    attach_mappings = function(_, map)
       map('i', '<c-y>', set_prompt_to_entry_value)
 
       return true
@@ -196,38 +212,57 @@ function M.find_nvim_source()
   }
 end
 
-function M.find_sourcegraph()
+function M.sourcegraph_find()
   require('telescope.builtin').find_files {
     prompt_title = "~ sourcegraph ~",
     shorten_path = false,
     cwd = "~/sourcegraph/",
-    width = .25,
 
     layout_strategy = 'horizontal',
     layout_config = {
+      width         = 0.25,
       preview_width = 0.65,
     },
   }
 end
 
-function M.sourcegraph_tips()
-  -- TODO: Can make this optionally fuzzy find over the contents as well
-  --    if we want to start getting fancier
-  --
-  --    Could even make it do that _only_ when doing something like ";" or similar.
-
+function M.sourcegraph_about_find()
   require('telescope.builtin').find_files {
-    prompt_title = "~ sourcegraph ~",
-    shorten_path = false,
-    cwd = "~/wiki/sourcegraph/tips",
-    width = .25,
+    prompt_tiles = [[\ Sourcegraph About: Files /]],
+    cwd = "~/sourcegraph/about/handbook/",
 
-    layout_strategy = 'horizontal',
-    layout_config = {
-      preview_width = 0.65,
-    },
+    sorter = require('telescope').extensions.fzy_native.native_fzy_sorter(),
   }
 end
+
+function M.sourcegraph_about_grep()
+  require('telescope.builtin').live_grep {
+    prompt_tiles = [[\ Sourcegraph About: Files /]],
+    cwd = "~/sourcegraph/about/",
+
+    -- sorter = require('telescope').extensions.fzy_native.native_fzy_sorter(),
+  }
+end
+
+-- TODO: Should work on a wiki at some point....
+--function M.sourcegraph_tips()
+--  -- TODO: Can make this optionally fuzzy find over the contents as well
+--  --    if we want to start getting fancier
+--  --
+--  --    Could even make it do that _only_ when doing something like ";" or similar.
+
+--  require('telescope.builtin').find_files {
+--    prompt_title = "~ sourcegraph ~",
+--    shorten_path = false,
+--    cwd = "~/wiki/sourcegraph/tips",
+--    width = .25,
+
+--    layout_strategy = 'horizontal',
+--    layout_config = {
+--      preview_width = 0.65,
+--    },
+--  }
+--end
 
 function M.edit_zsh()
   require('telescope.builtin').find_files {
@@ -254,10 +289,13 @@ end
 
 function M.git_files()
   local opts = themes.get_dropdown {
-    winblend = 10,
-    border = true,
+    winblend = 5,
     previewer = false,
     shorten_path = false,
+
+    layout_config = {
+      width = .25,
+    },
   }
 
   require('telescope.builtin').git_files(opts)
@@ -383,7 +421,9 @@ function M.file_browser()
   opts = {
     sorting_strategy = "ascending",
     scroll_strategy = "cycle",
-    prompt_position = "top",
+    layout_config = {
+      prompt_position = "top",
+    },
 
     attach_mappings = function(prompt_bufnr, map)
       local current_picker = action_state.get_current_picker(prompt_bufnr)
@@ -407,6 +447,11 @@ function M.file_browser()
 
       map('i', '<M-=>', modify_depth(1))
       map('i', '<M-+>', modify_depth(-1))
+
+      map('n', 'yy', function()
+        local entry = action_state.get_selected_entry()
+        vim.fn.setreg("+", entry.value)
+      end)
 
       return true
     end,

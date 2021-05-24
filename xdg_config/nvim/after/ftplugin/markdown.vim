@@ -1,1 +1,0 @@
-setlocal shiftwidth=2

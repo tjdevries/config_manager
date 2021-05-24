@@ -32,5 +32,7 @@ Group.new("LspReferenceRead", nil, c.gray0:light())
 Group.link("LspReferenceWrite", g.LspReferenceRead)
 -- Group.new("LspReferenceWrite", nil, c.gray0:light())
 
+Group.new("comment", c.gray3:light(), nil, s.italic)
+
 -- Group.new("TSKeyword", c.purple, nil, s.underline, c.blue)
 -- Group.new("LuaFunctionCall", c.green, nil, s.underline + s.nocombine, g.TSKeyword.guisp)

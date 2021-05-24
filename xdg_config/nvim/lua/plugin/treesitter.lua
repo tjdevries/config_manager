@@ -1,5 +1,8 @@
-local ts_debugging =  false
+if not pcall(require, 'nvim-treesitter') then
+  return
+end
 
+local ts_debugging =  false
 if ts_debugging then
   RELOAD('nvim-treesitter')
 end
@@ -11,36 +14,60 @@ local custom_captures = {
   ['namespace.type'] = 'TSNamespaceType',
 }
 
-local enabled = true
-
 local read_query = function(filename)
   return table.concat(vim.fn.readfile(vim.fn.expand(filename)), "\n")
 end
 
 vim.treesitter.set_query("rust", "highlights", read_query("~/.config/nvim/queries/rust/highlights.scm"))
 
+
+-- alt+<space>, alt+p -> swap next
+-- alt+<backspace>, alt+p -> swap previous
+-- swap_previous = {
+--   ["<M-s><M-P>"] = "@parameter.inner",
+--   ["<M-s><M-F>"] = "@function.outer",
+-- },
+local swap_next, swap_prev = (function()
+  local swap_objects = {
+    p = "@parameter.inner",
+    f = "@function.outer",
+    e = "@element",
+
+    -- Not ready, but I think it's my fault :)
+    -- v = "@variable",
+  }
+
+  local n, p = {}, {}
+  for key, obj in pairs(swap_objects) do
+    n[string.format("<M-Space><M-%s>", key)] = obj
+    p[string.format("<M-BS><M-%s>", key)] = obj
+  end
+
+  return n, p
+end)()
+
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'go', 'rust', 'toml', 'query', },
+  ensure_installed = { 'go', 'rust', 'toml', 'query', 'html', 'typescript', 'tsx' },
 
   highlight = {
-    enable = enabled, -- false will disable the whole extension
+    enable = true,
     use_languagetree = false,
     disable = {"json"},
     custom_captures = custom_captures,
   },
 
   incremental_selection = {
-    enable = enabled,
-    keymaps = { -- mappings for incremental selection (visual mappings)
-      init_selection = '<M-w>',    -- maps in normal mode to init the node/scope selection
-      node_incremental = '<M-w>',  -- increment to the upper named parent
-      scope_incremental = '<M-e>', -- increment to the upper scope (as defined in locals.scm)
-      node_decremental = '<M-C-w>',  -- decrement to the previous node
+    enable = true,
+    keymaps = {
+      init_selection    = '<M-w>',   -- maps in normal mode to init the node/scope selection
+      node_incremental  = '<M-w>',   -- increment to the upper named parent
+      scope_incremental = '<M-e>',   -- increment to the upper scope (as defined in locals.scm)
+      node_decremental  = '<M-C-w>', -- decrement to the previous node
     },
   },
 
   refactor = {
-    highlight_definitions = {enable = enabled},
+    highlight_definitions = {enable = true},
     highlight_current_scope = {enable = false},
 
     smart_rename = {
@@ -64,17 +91,19 @@ require('nvim-treesitter.configs').setup {
   context_commentstring = {
     enable = true,
     config = {
-      -- TODO: Figure this out or wait for Conni to do it for me
-      -- just like the rest of my open source work.
       c   = '// %s',
       lua = '-- %s',
     },
   },
 
   textobjects = {
+    move = {
+      enable = true,
+      set_jumps = true,
+    },
+
     select = {
       enable = true,
-      -- disable = { 'lua' },
       keymaps = {
         ['af'] = '@function.outer',
         ['if'] = '@function.inner',
@@ -87,50 +116,32 @@ require('nvim-treesitter.configs').setup {
       },
     },
 
-    -- TODO: Could be interesting to do things w/ lists?
-    -- TODO: Need to think of the right prefix for this.
-    --          Almost wonder if I should go in an operator pending style
-    --          thing here?... until I stop holding things.
-    --
-    --          Could do special stuff w/ my keyboard too :)
     swap = {
       enable = true,
-      swap_next = {
-        ["<M-s><M-p>"] = "@parameter.inner",
-        ["<M-s>f"] = "@function.outer",
-      },
-      swap_previous = {
-        ["<M-s><M-P>"] = "@parameter.inner",
-        ["<M-s>F"] = "@function.outer",
-      },
+      swap_next = swap_next,
+      swap_previous = swap_prev,
     },
   },
-  -- textobjects = { -- syntax-aware textobjects
-  --   enable = true,
-  --   disable = {},
-  --   keymaps = {
-  --     ['iL'] = { -- you can define your own textobjects directly here
-  --       python = '(function_definition) @function',
-  --       cpp = '(function_definition) @function',
-  --       c = '(function_definition) @function',
-  --       java = '(method_declaration) @function',
-  --     },
-  --     -- or you use the queries from supported languages with textobjects.scm
-  --     ['af'] = '@function.outer',
-  --     ['if'] = '@function.inner',
-  --     ['aC'] = '@class.outer',
-  --     ['iC'] = '@class.inner',
-  --     ['ae'] = '@block.outer',
-  --     ['ie'] = '@block.inner',
-  --     ['al'] = '@loop.outer',
-  --     ['il'] = '@loop.inner',
-  --     ['is'] = '@statement.inner',
-  --     ['as'] = '@statement.outer',
-  --     ['ad'] = '@comment.outer',
-  --     ['am'] = '@call.outer',
-  --     ['im'] = '@call.inner',
-  --   },
-  -- },
+
+  playground = {
+    enable = true,
+    updatetime = 25,
+    persist_queries = true,
+    keybindings = {
+      toggle_query_editor = 'o',
+      toggle_hl_groups = 'i',
+      toggle_injected_languages = 't',
+
+      -- This shows stuff like literal strings, commas, etc.
+      toggle_anonymous_nodes = 'a',
+      toggle_language_display = 'I',
+      focus_language = 'f',
+      unfocus_language = 'F',
+      update = 'R',
+      goto_node = '<cr>',
+      show_help = '?',
+    },
+  },
 }
 
 vim.cmd [[highlight IncludedC guibg=#373b41]]

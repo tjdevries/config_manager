@@ -243,7 +243,15 @@ dap.configurations.python = {
     program = '${file}';
     args = { '--target', 'api' },
     console = 'integratedTerminal';
-  }
+  },
+  {
+    type = 'python',
+    request = 'launch',
+    name = 'lsif',
+    program = 'src/lsif/__main__.py',
+    args = { },
+    console = 'integratedTerminal',
+  },
 }
 
 require('dap-python').setup('python', {

@@ -63,6 +63,8 @@ return require('packer').startup {
     use 'glepnir/lspsaga.nvim'
     use 'onsails/lspkind-nvim'
 
+    use { 'akinsho/flutter-tools.nvim' }
+
     use {
       'folke/lsp-trouble.nvim',
       config = function()
@@ -105,6 +107,8 @@ return require('packer').startup {
         vim.g.curshold_updatime = 1000
       end,
     }
+
+    use 'nanotee/luv-vimdocs'
 
     -- PRACTICE: {{{
     use 'tpope/vim-projectionist'  -- STREAM: Alternate file editting and some helpful stuff
@@ -249,7 +253,12 @@ return require('packer').startup {
     use 'liuchengxu/vista.vim'
 
     -- Find and replace
-    use 'brooth/far.vim'
+    use {
+      'brooth/far.vim',
+
+      cond = function() return vim.fn.has 'python3' == 1 end,
+    }
+
 
     -- Debug adapter protocol
     --   Have not yet checked this out, but looks awesome.
@@ -260,6 +269,23 @@ return require('packer').startup {
     use 'nvim-telescope/telescope-dap.nvim'
 
     use 'jbyuki/one-small-step-for-vimkind'
+
+    if has 'python3' then
+      use {
+        "rcarriga/vim-ultest",
+
+        requires = { "vim-test/vim-test" },
+        run      = ":UpdateRemotePlugins",
+        cond     = function() return vim.fn.has 'python3' == 1 end,
+        config   = function()
+          vim.cmd [[nmap ]t <Plug>(ultest-next-fail)]]
+          vim.cmd [[nmap [t <Plug>(ultest-prev-fail)]]
+        end,
+      }
+
+
+      use 'alfredodeza/pytest.vim'
+    end
 
     if false and has 'python3' then
       use 'puremourning/vimspector'
@@ -313,8 +339,6 @@ return require('packer').startup {
     use 'bps/vim-textobj-python'
     -- }}}
     -- Python: {{{
-
-    use 'alfredodeza/pytest.vim'
 
     -- }}}
     -- GIT: {{{

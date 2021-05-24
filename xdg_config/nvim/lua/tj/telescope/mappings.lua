@@ -56,8 +56,12 @@ map_tele('<space>fd', 'fd')
 map_tele('<space>pp', 'project_search')
 map_tele('<space>fv', 'find_nvim_source')
 map_tele('<space>fe', 'file_browser')
-map_tele('<space>fs', 'find_sourcegraph')
-map_tele('<space>fz', 'sourcegraph_tips')
+
+-- Sourcegraph
+map_tele('<space>sf', 'sourcegraph_find')
+map_tele('<space>saf', 'sourcegraph_about_find')
+map_tele('<space>sag', 'sourcegraph_about_grep')
+-- map_tele('<space>fz', 'sourcegraph_tips')
 
 -- Git
 map_tele('<space>gs', 'git_status')
@@ -69,7 +73,7 @@ map_tele('<space>fa', 'installed_plugins')
 map_tele('<space>fi', 'search_all_files')
 map_tele('<space>ff', 'curbuf')
 map_tele('<space>fh', 'help_tags')
-map_tele('<space>so', 'vim_options')
+map_tele('<space>vo', 'vim_options')
 map_tele('<space>gp', 'grep_prompt')
 
 -- Telescope Meta

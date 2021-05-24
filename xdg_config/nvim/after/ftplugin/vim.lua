@@ -1,1 +1,1 @@
-print("This is getting sourced automatically")
+-- print("This is getting sourced automatically")

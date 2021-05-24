@@ -32,6 +32,8 @@ lir.setup {
   },
 }
 
+vim.api.nvim_set_keymap('n', '-', ':edit %:h<CR>', { noremap = true, })
+
 
 -- Can do this if we want to get particular settings
 -- vim.cmd [[

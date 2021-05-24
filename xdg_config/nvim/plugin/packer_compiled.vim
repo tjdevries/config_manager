@@ -47,8 +47,8 @@ local function save_profiles(threshold)
 end
 
 time("Luarocks path setup", true)
-local package_path_str = "/home/tj-wsl/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/tj-wsl/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/tj-wsl/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/tj-wsl/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/tj-wsl/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/home/tjdevries/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/tjdevries/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/tjdevries/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/tjdevries/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/tjdevries/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -73,558 +73,584 @@ time("Defining packer_plugins", true)
 _G.packer_plugins = {
   ["FixCursorHold.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/FixCursorHold.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/FixCursorHold.nvim"
   },
   ["JavaScript-Indent"] = {
     loaded = false,
     needs_bufread = false,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/opt/JavaScript-Indent"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/JavaScript-Indent"
   },
   NrrwRgn = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/NrrwRgn"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/NrrwRgn"
   },
   ["Vim-Jinja2-Syntax"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/Vim-Jinja2-Syntax"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/Vim-Jinja2-Syntax"
   },
   ["ansible-vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/ansible-vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/ansible-vim"
   },
   ["any-jump.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/any-jump.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/any-jump.vim"
   },
   ["apyrori.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/apyrori.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/apyrori.nvim"
   },
   ["architext.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/architext.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/architext.nvim"
   },
   ["astronauta.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/astronauta.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/astronauta.nvim"
   },
   ["bandaid.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/bandaid.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/bandaid.nvim"
   },
   ["colorbuddy.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/colorbuddy.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/colorbuddy.nvim"
   },
   ["command_and_conquer.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/command_and_conquer.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/command_and_conquer.nvim"
   },
   ["committia.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/committia.vim"
-  },
-  ["completion-treesitter"] = {
-    loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/completion-treesitter"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/committia.vim"
   },
   ["complextras.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/complextras.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/complextras.nvim"
   },
   ["conf.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/conf.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/conf.vim"
   },
   ["cyclist.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/cyclist.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/cyclist.vim"
   },
   ["dial.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/dial.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/dial.nvim"
   },
   ["edit_alternate.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/edit_alternate.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/edit_alternate.vim"
   },
   ["exception.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/exception.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/exception.vim"
   },
   ["express_line.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/express_line.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/express_line.nvim"
   },
   ["far.vim"] = {
-    loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/far.vim"
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/far.vim"
   },
   firenvim = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/firenvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/firenvim"
+  },
+  ["flutter-tools.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/flutter-tools.nvim"
   },
   ["fold_search.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/fold_search.vim"
-  },
-  ["formatter.nvim"] = {
-    loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/formatter.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/fold_search.vim"
   },
   fzf = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/fzf"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/fzf"
   },
   ["fzf.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/fzf.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/fzf.vim"
   },
   ["git-messenger.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/git-messenger.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/git-messenger.vim"
   },
   ["gitlinker.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/gitlinker.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/gitlinker.nvim"
   },
   ["goyo.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/goyo.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/goyo.vim"
   },
   ["green_light.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/green_light.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/green_light.nvim"
   },
   ["gruvbuddy.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/gruvbuddy.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/gruvbuddy.nvim"
   },
   ["gundo.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/gundo.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/gundo.vim"
   },
   ["haskell-vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/haskell-vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/haskell-vim"
   },
   ["haunted.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/haunted.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/haunted.vim"
   },
   ["javascript-libraries-syntax.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/javascript-libraries-syntax.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/javascript-libraries-syntax.vim"
   },
   ["limelight.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/limelight.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/limelight.vim"
+  },
+  ["lir.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lir.nvim"
   },
   ["lsp-status.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/lsp-status.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lsp-status.nvim"
   },
   ["lsp-trouble.nvim"] = {
-    config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0" },
+    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0" },
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim"
   },
   ["lsp_extensions.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim"
   },
   ["lspkind-nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/lspkind-nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lspkind-nvim"
   },
   ["lspsaga.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
+  },
+  ["luv-vimdocs"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/luv-vimdocs"
   },
   ["manillua.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/manillua.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/manillua.nvim"
   },
   ["markdown-preview.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim"
   },
   neogit = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/neogit"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/neogit"
   },
   ["neuron.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/neuron.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/neuron.vim"
   },
   ["nlua.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nlua.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nlua.nvim"
   },
   ["nsync.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nsync.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nsync.nvim"
   },
   ["nvim-colorizer.lua"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
   },
   ["nvim-compe"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-compe"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-compe"
   },
   ["nvim-dap"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-dap"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-dap"
   },
   ["nvim-dap-python"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-dap-python"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-dap-python"
   },
   ["nvim-dap-virtual-text"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
   },
   ["nvim-luadev"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-luadev"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-luadev"
   },
   ["nvim-terminal.lua"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-terminal.lua"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-terminal.lua"
   },
   ["nvim-tetris"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-tetris"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-tetris"
   },
   ["nvim-tree.lua"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+  },
+  ["nvim-treesitter-textobjects"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects"
+  },
+  ["nvim-ts-context-commentstring"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-ts-context-commentstring"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+  },
+  ["nvim-web-nonicons"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-web-nonicons"
+  },
+  ["octo.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/octo.nvim"
   },
   ["one-small-step-for-vimkind"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/one-small-step-for-vimkind"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/one-small-step-for-vimkind"
   },
   ["overlength.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/overlength.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/overlength.vim"
   },
   ["packer.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/packer.nvim"
   },
   ["pastery.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/pastery.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/pastery.vim"
   },
   playground = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/playground"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/playground"
   },
   ["plenary.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/plenary.nvim"
   },
   ["popup.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/popup.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/popup.nvim"
   },
   ["py_package.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/py_package.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/py_package.nvim"
   },
   ["pytest.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/pytest.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/pytest.vim"
   },
   ["rofl.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/rofl.nvim"
-  },
-  ["sideways.vim"] = {
-    loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/sideways.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/rofl.nvim"
   },
   ["spellrotate.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/spellrotate.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/spellrotate.vim"
   },
   ["splitjoin.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/splitjoin.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/splitjoin.vim"
   },
   ["sql.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/sql.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/sql.nvim"
   },
   ["standard.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/standard.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/standard.vim"
   },
   ["streamer.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/streamer.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/streamer.nvim"
   },
   ["tabline.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/tabline.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/tabline.vim"
   },
   tabular = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/tabular"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/tabular"
   },
   ["telescope-arecibo.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-arecibo.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-arecibo.nvim"
   },
   ["telescope-async-sorter-test.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-async-sorter-test.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-async-sorter-test.nvim"
   },
   ["telescope-cheat.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-cheat.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-cheat.nvim"
   },
   ["telescope-dap.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim"
   },
   ["telescope-frecency.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-frecency.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-frecency.nvim"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim"
   },
   ["telescope-fzf-writer.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-fzf-writer.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-fzf-writer.nvim"
   },
   ["telescope-fzy-native.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
   },
   ["telescope-github.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-github.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-github.nvim"
   },
   ["telescope-hacks.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-hacks.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-hacks.nvim"
   },
   ["telescope-packer.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-packer.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-packer.nvim"
   },
   ["telescope-sourcegraph.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-sourcegraph.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-sourcegraph.nvim"
   },
   ["telescope-symbols.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope-symbols.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope-symbols.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
   ["train.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/train.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/train.vim"
   },
   ["tree-sitter-lua"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/tree-sitter-lua"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/tree-sitter-lua"
   },
   ["tree-sitter-sql"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/tree-sitter-sql"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/tree-sitter-sql"
   },
   ["typescript-vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/typescript-vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/typescript-vim"
   },
   ["vader.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vader.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vader.vim"
   },
   ["vim-abolish"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-abolish"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-abolish"
   },
   ["vim-boxdraw"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-boxdraw"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-boxdraw"
   },
   ["vim-characterize"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-characterize"
-  },
-  ["vim-clang-format"] = {
-    loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-clang-format"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-characterize"
   },
   ["vim-commentary"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-commentary"
-  },
-  ["vim-devicons"] = {
-    loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-devicons"
-  },
-  ["vim-dirvish"] = {
-    loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-dirvish"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-commentary"
   },
   ["vim-dispatch"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-dispatch"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-dispatch"
   },
   ["vim-godot"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-godot"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-godot"
   },
   ["vim-inyoface"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-inyoface"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-inyoface"
   },
   ["vim-javascript"] = {
     loaded = false,
     needs_bufread = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/opt/vim-javascript"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-javascript"
   },
   ["vim-javascript-syntax"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-javascript-syntax"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-javascript-syntax"
   },
   ["vim-json"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-json"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-json"
   },
   ["vim-jsx-typescript"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-jsx-typescript"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-jsx-typescript"
   },
   ["vim-liquid"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-liquid"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-liquid"
   },
   ["vim-metarepeat"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-metarepeat"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-metarepeat"
   },
   ["vim-mscgen"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-mscgen"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-mscgen"
   },
   ["vim-prettier"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-prettier"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-prettier"
   },
   ["vim-projectionist"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-projectionist"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-projectionist"
   },
   ["vim-protocol"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-protocol"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-protocol"
   },
   ["vim-ps1"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-ps1"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-ps1"
   },
   ["vim-qf"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-qf"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-qf"
   },
   ["vim-repeat"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-repeat"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-repeat"
   },
   ["vim-scriptease"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-scriptease"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-scriptease"
   },
   ["vim-searchindex"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-searchindex"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-searchindex"
   },
   ["vim-startify"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-startify"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-startify"
   },
   ["vim-startuptime"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-startuptime"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-startuptime"
   },
   ["vim-surround"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-surround"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-surround"
   },
   ["vim-syntax-extra"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-syntax-extra"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-syntax-extra"
+  },
+  ["vim-test"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-test"
   },
   ["vim-textobj-python"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-textobj-python"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-textobj-python"
   },
   ["vim-textobj-user"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-textobj-user"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-textobj-user"
   },
   ["vim-toml"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-toml"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-toml"
+  },
+  ["vim-ultest"] = {
+    config = { "\27LJ\2\nu\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0%nmap [t <Plug>(ultest-prev-fail)%nmap ]t <Plug>(ultest-next-fail)\bcmd\bvim\0" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-ultest"
   },
   ["vim-vsnip"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-vsnip"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-vsnip"
   },
   ["vim-vsnip-integ"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ"
   },
   vim9jit = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vim9jit"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim9jit"
   },
   ["vista.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vista.vim"
-  },
-  ["vlog.nvim"] = {
-    loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/vlog.nvim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vista.vim"
   },
   ["wiki.vim"] = {
     loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/wiki.vim"
-  },
-  ["zig.vim"] = {
-    loaded = true,
-    path = "/home/tj-wsl/.local/share/nvim/site/pack/packer/start/zig.vim"
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/wiki.vim"
   }
 }
 
 time("Defining packer_plugins", false)
 -- Config for: lsp-trouble.nvim
 time("Config for lsp-trouble.nvim", true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
+try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
 time("Config for lsp-trouble.nvim", false)
+-- Conditional loads
+time("Condition for { 'vim-ultest', 'far.vim' }", true)
+if
+try_loadstring("\27LJ\2\nG\0\0\3\0\4\1\v6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\2\b\0\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\fpython3\bhas\afn\bvim\2\0", "condition", '{ "vim-ultest", "far.vim" }')
+then
+time("Condition for { 'vim-ultest', 'far.vim' }", false)
+time("packadd for vim-ultest", true)
+		vim.cmd [[packadd vim-ultest]]
+	time("packadd for vim-ultest", false)
+	-- Config for: vim-ultest
+	time("Config for vim-ultest", true)
+	try_loadstring("\27LJ\2\nu\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0%nmap [t <Plug>(ultest-prev-fail)%nmap ]t <Plug>(ultest-next-fail)\bcmd\bvim\0", "config", "vim-ultest")
+	time("Config for vim-ultest", false)
+	time("packadd for far.vim", true)
+		vim.cmd [[packadd far.vim]]
+	time("packadd for far.vim", false)
+else
+time("Condition for { 'vim-ultest', 'far.vim' }", false)
+end
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
@@ -634,12 +660,12 @@ vim.cmd [[au FileType html ++once lua require("packer.load")({'vim-javascript'},
 time("Defining lazy-load filetype autocommands", false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time("Sourcing ftdetect script at: /home/tj-wsl/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/flow.vim", true)
-vim.cmd [[source /home/tj-wsl/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/flow.vim]]
-time("Sourcing ftdetect script at: /home/tj-wsl/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/flow.vim", false)
-time("Sourcing ftdetect script at: /home/tj-wsl/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/javascript.vim", true)
-vim.cmd [[source /home/tj-wsl/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/javascript.vim]]
-time("Sourcing ftdetect script at: /home/tj-wsl/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/javascript.vim", false)
+time("Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/flow.vim", true)
+vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/flow.vim]]
+time("Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/flow.vim", false)
+time("Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/javascript.vim", true)
+vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/javascript.vim]]
+time("Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-javascript/ftdetect/javascript.vim", false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
