@@ -182,7 +182,7 @@ lspconfig.gdscript.setup {
 }
 
 -- Load lua configuration from nlua.
-require('nlua.lsp.nvim').setup(lspconfig, {
+local _ = false and require('nlua.lsp.nvim').setup(lspconfig, {
   on_init = custom_init,
   on_attach = custom_attach,
   capabilities = updated_capabilities,

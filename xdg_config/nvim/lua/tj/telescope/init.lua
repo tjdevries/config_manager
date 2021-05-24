@@ -47,7 +47,7 @@ local set_prompt_to_entry_value = function(prompt_bufnr)
 end
 
 -- local action_set = require('telescope.actions.set')
-local _ = require('nvim-nonicons')
+local _ = pcall(require, 'nvim-nonicons')
 
 require('telescope').setup {
   defaults = {
@@ -126,14 +126,27 @@ require('telescope').setup {
 }
 
 -- Load the fzy native extension at the start.
+<<<<<<< HEAD
 -- pcall(require('telescope').load_extension, "fzy_native")
 pcall(require('telescope').load_extension, "gh")
+=======
+pcall(require('telescope').load_extension, "fzy_native")
+>>>>>>> some laptop updates
 pcall(require('telescope').load_extension, "cheat")
 pcall(require('telescope').load_extension, "dap")
 pcall(require('telescope').load_extension, "arecibo")
 
+<<<<<<< HEAD
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('octo')
+=======
+if vim.fn.executable('gh') == 1 then
+  pcall(require('telescope').load_extension, "gh")
+  pcall(require('telescope').load_extension, "octo")
+end
+
+-- require('telescope').load_extension('fzf')
+>>>>>>> some laptop updates
 
 if pcall(require('telescope').load_extension, 'frecency') then
   require('tj.telescope.frecency')

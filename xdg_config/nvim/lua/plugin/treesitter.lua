@@ -134,3 +134,6 @@ require('nvim-treesitter.configs').setup {
 }
 
 vim.cmd [[highlight IncludedC guibg=#373b41]]
+
+vim.cmd [[nnoremap <space>tp :TSPlaygroundToggle<CR>]]
+vim.cmd [[nnoremap <space>th :TSHighlightCapturesUnderCursor<CR>]]

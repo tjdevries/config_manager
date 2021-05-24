@@ -4,6 +4,11 @@ local has = function(x)
   return vim.fn.has(x) == 1
 end
 
+local is_wsl = (function()
+  local output = vim.fn.systemlist('uname -r')
+  return not not string.find(output[1] or '', 'WSL')
+end)()
+
 return require('packer').startup {
   function(use)
     use 'wbthomason/packer.nvim'
@@ -156,7 +161,9 @@ return require('packer').startup {
     use 'mkitt/tabline.vim'
 
     use 'kyazdani42/nvim-web-devicons'
-    use 'yamatsum/nvim-web-nonicons'
+    if not is_wsl then
+      use 'yamatsum/nvim-web-nonicons'
+    end
 
     -- use { 'Shougo/defx.nvim', }
     use 'kyazdani42/nvim-tree.lua'
@@ -190,6 +197,8 @@ return require('packer').startup {
     use 'PProvost/vim-ps1'
     use 'cespare/vim-toml'
     use 'Glench/Vim-Jinja2-Syntax'
+
+    use 'ziglang/zig.vim'
 
     -- Can add back if we ever use it.
     -- use 'JuliaEditorSupport/julia-vim'
@@ -315,7 +324,9 @@ return require('packer').startup {
 
 
     -- Github integration
-    use 'pwntester/octo.nvim'
+    if vim.fn.executable('gh') == 1 then
+      use 'pwntester/octo.nvim'
+    end
     use 'ruifm/gitlinker.nvim'
 
     -- Sweet message committer
