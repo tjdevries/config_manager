@@ -1,1 +1,1 @@
-require('terminal').setup()
+require("terminal").setup()

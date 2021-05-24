@@ -1,25 +1,24 @@
-if not pcall(require, 'nvim-treesitter') then
+if not pcall(require, "nvim-treesitter") then
   return
 end
 
-local ts_debugging =  false
+local ts_debugging = false
 if ts_debugging then
-  RELOAD('nvim-treesitter')
+  RELOAD "nvim-treesitter"
 end
 
 -- :h nvim-treesitter-query-extensions
 local custom_captures = {
-  ['function.call'] = 'LuaFunctionCall',
-  ['function.bracket'] = 'Type',
-  ['namespace.type'] = 'TSNamespaceType',
+  ["function.call"] = "LuaFunctionCall",
+  ["function.bracket"] = "Type",
+  ["namespace.type"] = "TSNamespaceType",
 }
 
 local read_query = function(filename)
   return table.concat(vim.fn.readfile(vim.fn.expand(filename)), "\n")
 end
 
-vim.treesitter.set_query("rust", "highlights", read_query("~/.config/nvim/queries/rust/highlights.scm"))
-
+vim.treesitter.set_query("rust", "highlights", read_query "~/.config/nvim/queries/rust/highlights.scm")
 
 -- alt+<space>, alt+p -> swap next
 -- alt+<backspace>, alt+p -> swap previous
@@ -46,35 +45,35 @@ local swap_next, swap_prev = (function()
   return n, p
 end)()
 
-require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'go', 'rust', 'toml', 'query', 'html', 'typescript', 'tsx' },
+require("nvim-treesitter.configs").setup {
+  ensure_installed = { "go", "rust", "toml", "query", "html", "typescript", "tsx" },
 
   highlight = {
     enable = true,
     use_languagetree = false,
-    disable = {"json"},
+    disable = { "json" },
     custom_captures = custom_captures,
   },
 
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection    = '<M-w>',   -- maps in normal mode to init the node/scope selection
-      node_incremental  = '<M-w>',   -- increment to the upper named parent
-      scope_incremental = '<M-e>',   -- increment to the upper scope (as defined in locals.scm)
-      node_decremental  = '<M-C-w>', -- decrement to the previous node
+      init_selection = "<M-w>", -- maps in normal mode to init the node/scope selection
+      node_incremental = "<M-w>", -- increment to the upper named parent
+      scope_incremental = "<M-e>", -- increment to the upper scope (as defined in locals.scm)
+      node_decremental = "<M-C-w>", -- decrement to the previous node
     },
   },
 
   refactor = {
-    highlight_definitions = {enable = true},
-    highlight_current_scope = {enable = false},
+    highlight_definitions = { enable = true },
+    highlight_current_scope = { enable = false },
 
     smart_rename = {
       enable = false,
       keymaps = {
         -- mapping to rename reference under cursor
-        smart_rename = 'grr',
+        smart_rename = "grr",
       },
     },
 
@@ -82,8 +81,8 @@ require('nvim-treesitter.configs').setup {
     navigation = {
       enable = false,
       keymaps = {
-        goto_definition = 'gnd', -- mapping to go to definition of symbol under cursor
-        list_definitions = 'gnD', -- mapping to list all definitions in current file
+        goto_definition = "gnd", -- mapping to go to definition of symbol under cursor
+        list_definitions = "gnD", -- mapping to list all definitions in current file
       },
     },
   },
@@ -91,8 +90,8 @@ require('nvim-treesitter.configs').setup {
   context_commentstring = {
     enable = true,
     config = {
-      c   = '// %s',
-      lua = '-- %s',
+      c = "// %s",
+      lua = "-- %s",
     },
   },
 
@@ -105,14 +104,14 @@ require('nvim-treesitter.configs').setup {
     select = {
       enable = true,
       keymaps = {
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
 
-        ['ac'] = '@conditional.outer',
-        ['ic'] = '@conditional.inner',
+        ["ac"] = "@conditional.outer",
+        ["ic"] = "@conditional.inner",
 
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
       },
     },
 
@@ -128,18 +127,18 @@ require('nvim-treesitter.configs').setup {
     updatetime = 25,
     persist_queries = true,
     keybindings = {
-      toggle_query_editor = 'o',
-      toggle_hl_groups = 'i',
-      toggle_injected_languages = 't',
+      toggle_query_editor = "o",
+      toggle_hl_groups = "i",
+      toggle_injected_languages = "t",
 
       -- This shows stuff like literal strings, commas, etc.
-      toggle_anonymous_nodes = 'a',
-      toggle_language_display = 'I',
-      focus_language = 'f',
-      unfocus_language = 'F',
-      update = 'R',
-      goto_node = '<cr>',
-      show_help = '?',
+      toggle_anonymous_nodes = "a",
+      toggle_language_display = "I",
+      focus_language = "f",
+      unfocus_language = "F",
+      update = "R",
+      goto_node = "<cr>",
+      show_help = "?",
     },
   },
 }

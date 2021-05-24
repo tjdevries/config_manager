@@ -1,7 +1,7 @@
-local colors = require('colorbuddy.color').colors
+local colors = require("colorbuddy.color").colors
 
-local ns_tj = vim.api.nvim_create_namespace('tj_colors')
-local ns_tj_2 = vim.api.nvim_create_namespace('tj_colors_2')
+local ns_tj = vim.api.nvim_create_namespace "tj_colors"
+local ns_tj_2 = vim.api.nvim_create_namespace "tj_colors_2"
 
 vim.api.nvim_set_decoration_provider(ns_tj, {
   on_start = function(_, tick)
@@ -25,7 +25,7 @@ vim.api.nvim_set_decoration_provider(ns_tj, {
   end,
 })
 
-vim.api.nvim_set_hl(ns_tj, 'LuaFunctionCall', {
+vim.api.nvim_set_hl(ns_tj, "LuaFunctionCall", {
   foreground = colors.green:to_rgb(),
   background = nil,
   reverse = false,

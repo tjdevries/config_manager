@@ -1,5 +1,5 @@
 local nnoremap = vim.keymap.nnoremap
-local Path = require('plenary.path')
+local Path = require "plenary.path"
 
 local lsif = {}
 
@@ -23,8 +23,8 @@ lsif.range = function()
   local row = cursor_pos[1]
   local col = cursor_pos[2]
 
-  local start = vim.fn.getpos("'<")
-  local finish = vim.fn.getpos("'>")
+  local start = vim.fn.getpos "'<"
+  local finish = vim.fn.getpos "'>"
 
   local filename = "file://" .. Path:new(vim.api.nvim_buf_get_name(0)):make_relative()
 

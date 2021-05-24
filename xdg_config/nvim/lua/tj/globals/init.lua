@@ -3,8 +3,8 @@ P = function(v)
   return v
 end
 
-if pcall(require, 'plenary') then
-  RELOAD = require('plenary.reload').reload_module
+if pcall(require, "plenary") then
+  RELOAD = require("plenary.reload").reload_module
 
   R = function(name)
     RELOAD(name)
@@ -13,4 +13,4 @@ if pcall(require, 'plenary') then
 end
 
 -- `vim.opt`
-require('tj.globals.opt')
+require "tj.globals.opt"

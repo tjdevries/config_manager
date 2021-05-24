@@ -35,9 +35,9 @@ local if_nil = function(a, b)
 end
 
 local singular_values = {
-  ['boolean'] = true,
-  ['number']  = true,
-  ['nil']     = true,
+  ["boolean"] = true,
+  ["number"] = true,
+  ["nil"] = true,
 }
 
 local set_key_value = function(t, key_value_str)
@@ -52,7 +52,7 @@ end
 
 local convert_vimoption_to_lua = function(option, val)
   -- Short circuit if we've already converted!
-  if type(val) == 'table' then
+  if type(val) == "table" then
     return val
   end
 
@@ -83,7 +83,7 @@ end
 local concat_key_values = function(t, sep, divider)
   local final = {}
   for k, v in pairs(t) do
-    table.insert(final, string.format('%s%s%s', k, divider, v))
+    table.insert(final, string.format("%s%s%s", k, divider, v))
   end
 
   table.sort(final)
@@ -120,15 +120,10 @@ end
 
 local add_value = function(current, new)
   if singular_values[type(current)] then
-    error(
-      "This is not possible to do. Please do something different: "
-      .. tostring(current)
-      .. " // "
-      .. tostring(new)
-    )
+    error("This is not possible to do. Please do something different: " .. tostring(current) .. " // " .. tostring(new))
   end
 
-  if type(new) == 'string' then
+  if type(new) == "string" then
     if vim.tbl_islist(current) then
       table.insert(current, new)
     else
@@ -136,7 +131,7 @@ local add_value = function(current, new)
     end
 
     return current
-  elseif type(new) == 'table' then
+  elseif type(new) == "table" then
     if vim.tbl_islist(current) then
       assert(vim.tbl_islist(new))
       vim.list_extend(current, new)
@@ -147,7 +142,7 @@ local add_value = function(current, new)
 
     return current
   else
-    error("Unknown type")
+    error "Unknown type"
   end
 end
 
@@ -156,9 +151,9 @@ local convert_lua_to_vimoption = function(t)
     t = remove_duplicate_values(t)
 
     table.sort(t)
-    return table.concat(t, ',')
+    return table.concat(t, ",")
   else
-    return concat_key_values(t, ',', ':')
+    return concat_key_values(t, ",", ":")
   end
 end
 
@@ -167,7 +162,7 @@ local clean_value = function(v)
     return v
   end
 
-  local result = v:gsub('^,', '')
+  local result = v:gsub("^,", "")
 
   return result
 end
@@ -176,19 +171,19 @@ local opt_mt
 
 opt_mt = {
   __index = function(t, k)
-    if k == '_value' then
+    if k == "_value" then
       return rawget(t, k)
     end
 
-    return setmetatable({ _option = k, }, opt_mt)
+    return setmetatable({ _option = k }, opt_mt)
   end,
 
   __newindex = function(t, k, v)
-    if k == '_value' then
+    if k == "_value" then
       return rawset(t, k, v)
     end
 
-    if type(v) == 'table' then
+    if type(v) == "table" then
       local new_value
       if getmetatable(v) ~= opt_mt then
         new_value = v
@@ -202,12 +197,12 @@ opt_mt = {
     end
 
     if v == nil then
-      v = ''
+      v = ""
     end
 
     -- TODO: Figure out why nvim_set_option doesn't override values the same way.
     -- @bfredl said he will fix this for me, so I can just use nvim_set_option
-    if type(v) == 'boolean' then
+    if type(v) == "boolean" then
       vim.o[k] = clean_value(v)
       if v then
         vim.cmd(string.format("set %s", k))
@@ -226,8 +221,8 @@ opt_mt = {
     --]]
 
     assert(left._option, "must have an option key")
-    if left._option == 'foldcolumn' then
-      error("not implemented for foldcolumn.. use a string")
+    if left._option == "foldcolumn" then
+      error "not implemented for foldcolumn.. use a string"
     end
 
     local existing = if_nil(left._value, vim.o[left._option])
@@ -251,7 +246,7 @@ opt_mt = {
 
     left._value = remove_value(current, right)
     return left
-  end
+  end,
 }
 
 vim.opt = setmetatable({}, opt_mt)
@@ -259,5 +254,5 @@ vim.opt = setmetatable({}, opt_mt)
 return {
   convert_vimoption_to_lua = convert_vimoption_to_lua,
   opt = vim.opt,
-  opt_mt = opt_mt
+  opt_mt = opt_mt,
 }

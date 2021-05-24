@@ -1,4 +1,3 @@
+R "gitlinker"
 
-R'gitlinker'
-
-require('gitlinker').setup()
+require("gitlinker").setup()

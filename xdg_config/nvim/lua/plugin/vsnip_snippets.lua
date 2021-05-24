@@ -1,4 +1,3 @@
-
 vim.cmd [[
   imap <expr> <C-k>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-k>'
   smap <expr> <C-k>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-k>'
@@ -9,4 +8,4 @@ vim.cmd [[
   smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 ]]
 
-vim.g.vsnip_snippet_dir = vim.fn.expand("~/.config/nvim/snips/vsnip")
+vim.g.vsnip_snippet_dir = vim.fn.expand "~/.config/nvim/snips/vsnip"

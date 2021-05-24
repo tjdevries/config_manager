@@ -1,9 +1,9 @@
-vim.api.nvim_set_keymap('n', '<C-a>', '<Plug>(dial-increment)',  {
+vim.api.nvim_set_keymap("n", "<C-a>", "<Plug>(dial-increment)", {
   noremap = false,
-  silent = true
+  silent = true,
 })
 
-vim.api.nvim_set_keymap('n', '<C-x>', '<Plug>(dial-decrement)',  {
+vim.api.nvim_set_keymap("n", "<C-x>", "<Plug>(dial-decrement)", {
   noremap = false,
-  silent = true
+  silent = true,
 })

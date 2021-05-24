@@ -22,7 +22,7 @@ local start_shutdown_check = function(child, options, code, signal)
     child = nil
   end)
 end
-local shutdown_factory = function (child, options)
+local shutdown_factory = function(child, options)
   return function(code, signal)
     if uv.is_closing(child._shutdown_check) then
       return child:shutdown(code, signal)
@@ -33,40 +33,42 @@ local shutdown_factory = function (child, options)
 end
 function Job:new(o)
   if not o then
-    error(debug.traceback("Options are required for Job:new"))
+    error(debug.traceback "Options are required for Job:new")
   end
   local command = o.command
   if not command then
     if o[1] then
       command = o[1]
     else
-      error(debug.traceback("'command' is required for Job:new"))
+      error(debug.traceback "'command' is required for Job:new")
     end
   elseif o[1] then
-    error(debug.traceback("Cannot pass both 'command' and array args"))
+    error(debug.traceback "Cannot pass both 'command' and array args")
   end
   local args = o.args
   if not args then
     if #o > 1 then
-      args = {select(2, unpack(o))}
+      args = { select(2, unpack(o)) }
     end
   end
   local ok, is_exe = pcall(vim.fn.executable, command)
   if not o.skip_validation and ok and 1 ~= is_exe then
-    error(debug.traceback(command..": Executable not found"))
+    error(debug.traceback(command .. ": Executable not found"))
   end
   local obj = {}
   obj.command = command
   obj.args = args
   obj.cwd = o.cwd and (vim.in_fast_event() and uv.fs_realpath(o.cwd) or vim.fn.expand(o.cwd, true))
   if o.env then
-    if type(o.env) ~= "table" then error('[plenary.job] env has to be a table') end
+    if type(o.env) ~= "table" then
+      error "[plenary.job] env has to be a table"
+    end
     local transform = {}
     for k, v in pairs(o.env) do
-      if type(k) == 'number' then
+      if type(k) == "number" then
         table.insert(transform, v)
-      elseif type(k) == 'string' then
-        table.insert(transform, k .. '=' .. tostring(v))
+      elseif type(k) == "string" then
+        table.insert(transform, k .. "=" .. tostring(v))
       end
     end
     obj.env = transform
@@ -79,7 +81,7 @@ function Job:new(o)
   obj.enable_handlers = true
   obj.enable_recording = true
   if not obj.enable_handlers and obj.enable_recording then
-    error("[plenary.job] Cannot record items but disable handlers")
+    error "[plenary.job] Cannot record items but disable handlers"
   end
   obj._user_on_start = o.on_start
   obj._user_on_stdout = o.on_stdout
@@ -94,10 +96,12 @@ function Job:new(o)
 end
 function Job:_reset()
   self.is_shutdown = nil
-  if self._shutdown_check
-      and uv.is_active(self._shutdown_check)
-      and not uv.is_closing(self._shutdown_check) then
-    vim.api.nvim_err_writeln(debug.traceback("We may be memory leaking here. Please report to TJ."))
+  if
+    self._shutdown_check
+    and uv.is_active(self._shutdown_check)
+    and not uv.is_closing(self._shutdown_check)
+  then
+    vim.api.nvim_err_writeln(debug.traceback "We may be memory leaking here. Please report to TJ.")
   end
   self._shutdown_check = uv.new_check()
   self.stdin = nil
@@ -120,7 +124,7 @@ function Job:_stop()
   close_safely(self, "handle")
 end
 function Job:_pipes_are_closed(options)
-  for _, pipe in ipairs({options.stdin, options.stdout, options.stderr}) do
+  for _, pipe in ipairs { options.stdin, options.stdout, options.stderr } do
     if pipe and not uv.is_closing(pipe) then
       return false
     end
@@ -169,8 +173,12 @@ function Job:_create_uv_options()
   options.command = self.command
   options.args = self.args
   options.stdio = { self.stdin, self.stdout, self.stderr }
-  if self.cwd then options.cwd = self.cwd end
-  if self.env then options.env = self.env end
+  if self.cwd then
+    options.cwd = self.cwd
+  end
+  if self.env then
+    options.env = self.env
+  end
   return options
 end
 local on_output = function(self, result_key, cb)
@@ -249,11 +257,7 @@ function Job:_execute()
   if self._user_on_start then
     self:_user_on_start()
   end
-  self.handle, self.pid = uv.spawn(
-    options.command,
-    options,
-    shutdown_factory(self, options)
-  )
+  self.handle, self.pid = uv.spawn(options.command, options, shutdown_factory(self, options))
   if not self.handle then
     error(debug.traceback("Failed to spawn process: " .. vim.inspect(self)))
   end
@@ -266,26 +270,26 @@ function Job:_execute()
   if self.writer then
     if Job.is_job(self.writer) then
       self.writer:_execute()
-    elseif type(self.writer) == 'table' and vim.tbl_islist(self.writer) then
+    elseif type(self.writer) == "table" and vim.tbl_islist(self.writer) then
       local writer_len = #self.writer
       for i, v in ipairs(self.writer) do
         self.stdin:write(v)
         if i ~= writer_len then
-          self.stdin:write('\n')
+          self.stdin:write "\n"
         else
-          self.stdin:write('\n', function()
+          self.stdin:write("\n", function()
             self.stdin:close()
           end)
         end
       end
-    elseif type(self.writer) == 'string' then
+    elseif type(self.writer) == "string" then
       self.stdin:write(self.writer, function()
         self.stdin:close()
       end)
     elseif self.writer.write then
       self.stdin = self.writer
     else
-      error('Unknown self.writer: ' .. vim.inspect(self.writer))
+      error("Unknown self.writer: " .. vim.inspect(self.writer))
     end
   end
   return self
@@ -328,12 +332,14 @@ function Job:wait(timeout, wait_interval, should_redraw)
     return self.is_shutdown
   end, wait_interval, not should_redraw)
   if not wait_result then
-    error(string.format(
-      "'%s %s' was unable to complete in %s ms",
-      self.command,
-      table.concat(self.args or {}, " "),
-      timeout
-    ))
+    error(
+      string.format(
+        "'%s %s' was unable to complete in %s ms",
+        self.command,
+        table.concat(self.args or {}, " "),
+        timeout
+      )
+    )
   end
   return self
 end
@@ -343,13 +349,15 @@ function Job:co_wait(wait_time)
     vim.api.nvim_err_writeln(vim.inspect(self))
     return
   end
-  while not vim.wait(wait_time, function() return self.is_shutdown end) do
+  while not vim.wait(wait_time, function()
+    return self.is_shutdown
+  end) do
     coroutine.yield()
   end
   return self
 end
 function Job.join(...)
-  local jobs_to_wait = {...}
+  local jobs_to_wait = { ... }
   local num_jobs = table.getn(jobs_to_wait)
   local timeout
   if type(jobs_to_wait[num_jobs]) == "number" then
@@ -384,38 +392,50 @@ function Job:after(fn)
 end
 function Job:and_then_on_success(next_job)
   self:add_on_exit_callback(function(_, code)
-    if code == 0 then next_job:start() end
+    if code == 0 then
+      next_job:start()
+    end
   end)
 end
 function Job:and_then_on_success_wrap(next_job)
   self:add_on_exit_callback(vim.schedule_wrap(function(_, code)
-    if code == 0 then next_job:start() end
+    if code == 0 then
+      next_job:start()
+    end
   end))
 end
 function Job:after_success(fn)
   self:add_on_exit_callback(function(j, code, signal)
-    if code == 0 then fn(j, code, signal) end
+    if code == 0 then
+      fn(j, code, signal)
+    end
   end)
 end
 function Job:and_then_on_failure(next_job)
   self:add_on_exit_callback(function(_, code)
-    if code ~= 0 then next_job:start() end
+    if code ~= 0 then
+      next_job:start()
+    end
   end)
 end
 function Job:and_then_on_failure_wrap(next_job)
   self:add_on_exit_callback(vim.schedule_wrap(function(_, code)
-    if code ~= 0 then next_job:start() end
+    if code ~= 0 then
+      next_job:start()
+    end
   end))
 end
 function Job:after_failure(fn)
   self:add_on_exit_callback(function(j, code, signal)
-    if code ~= 0 then fn(j, code, signal) end
+    if code ~= 0 then
+      fn(j, code, signal)
+    end
   end)
 end
 function Job.chain(...)
   _request_id = _request_id + 1
   _request_status[_request_id] = false
-  local jobs = {...}
+  local jobs = { ... }
   for index = 2, #jobs do
     local prev_job = jobs[index - 1]
     local job = jobs[index]
@@ -437,7 +457,7 @@ function Job.chain_status(id)
   return _request_status[id]
 end
 function Job.is_job(item)
-  if type(item) ~= 'table' then
+  if type(item) ~= "table" then
     return false
   end
   return getmetatable(item) == Job
@@ -447,7 +467,7 @@ function Job:add_on_exit_callback(cb)
 end
 function Job:send(data)
   if not self.stdin then
-    error("job has no 'stdin'. Have you run `job:start()` yet?")
+    error "job has no 'stdin'. Have you run `job:start()` yet?"
   end
   self.stdin:write(data)
 end

@@ -17,24 +17,20 @@ local offset = 1
 
 CANCEL = false
 local timer = vim.loop.new_timer()
-timer:start(
-  0,
-  50,
-  vim.schedule_wrap(function()
-    blend_start = blend_start + offset
+timer:start(0, 50, vim.schedule_wrap(function()
+  blend_start = blend_start + offset
 
-    if blend_start > 90 then
-      offset = -1
-    elseif blend_start < 10 then
-      offset = 1
-    end
+  if blend_start > 90 then
+    offset = -1
+  elseif blend_start < 10 then
+    offset = 1
+  end
 
-    if CANCEL or not vim.api.nvim_win_is_valid(win) then
-      timer:close()
-      timer:stop()
-      return
-    end
+  if CANCEL or not vim.api.nvim_win_is_valid(win) then
+    timer:close()
+    timer:stop()
+    return
+  end
 
-    vim.cmd([[highlight NormalFloat blend=]] .. tostring(blend_start))
-  end)
-)
+  vim.cmd([[highlight NormalFloat blend=]] .. tostring(blend_start))
+end))

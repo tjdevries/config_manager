@@ -1,18 +1,18 @@
-local dap = require('dap')
+local dap = require "dap"
 
 -- TODO: How does terminal work?
 dap.defaults.fallback.external_terminal = {
-  command = '/home/tjdevries/.local/bin/kitty',
-  args = {'-e'};
+  command = "/home/tjdevries/.local/bin/kitty",
+  args = { "-e" },
 }
 
-dap.configurations.lua = { 
-  { 
-    type = 'nlua', 
-    request = 'attach',
+dap.configurations.lua = {
+  {
+    type = "nlua",
+    request = "attach",
     name = "Attach to running Neovim instance",
     host = function()
-      return '127.0.0.1'
+      return "127.0.0.1"
     end,
     port = function()
       -- local val = tonumber(vim.fn.input('Port: '))
@@ -20,11 +20,11 @@ dap.configurations.lua = {
       local val = 54231
       return val
     end,
-  }
+  },
 }
 
 dap.adapters.nlua = function(callback, config)
-  callback({ type = 'server', host = config.host, port = config.port })
+  callback { type = "server", host = config.host, port = config.port }
 end
 
 vim.g.dap_virtual_text = true
@@ -45,51 +45,53 @@ vim.g.dap_virtual_text = true
 dap.adapters.c = {
   name = "lldb",
 
-  type = 'executable',
+  type = "executable",
   attach = {
     pidProperty = "pid",
-    pidSelect = "ask"
+    pidSelect = "ask",
   },
-  command = 'lldb-vscode-11',
+  command = "lldb-vscode-11",
   env = {
-    LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"
+    LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES",
   },
 }
 
 dap.configurations.c = {
   {
     name = "Launch binary nvim",
-    type = 'c',
-    request = 'launch',
-    program = './build/bin/nvim',
+    type = "c",
+    request = "launch",
+    program = "./build/bin/nvim",
     args = {
-      '--headless',
-      '-c', 'echo getcompletion("vim.api.nvim_buf_", "lua")',
-      '-c', 'qa!'
+      "--headless",
+      "-c",
+      'echo getcompletion("vim.api.nvim_buf_", "lua")',
+      "-c",
+      "qa!",
     },
     cwd = nil,
     environment = nil,
     externalConsole = true,
-    MIMode = 'lldb',
+    MIMode = "lldb",
   },
   {
     name = "Deprecated",
-    type = 'c',
-    request = 'attach',
-    program = './build/bin/nvim',
-    cwd = vim.fn.expand("~/build/neovim/"),
+    type = "c",
+    request = "attach",
+    program = "./build/bin/nvim",
+    cwd = vim.fn.expand "~/build/neovim/",
     -- environment = nil,
     externalConsole = false,
-    MIMode = 'gdb',
+    MIMode = "gdb",
   },
   {
     name = "Attach to Neovim",
     type = "c",
     request = "attach",
-    program = vim.fn.expand("~/build/neovim/build/bin/nvim"),
+    program = vim.fn.expand "~/build/neovim/build/bin/nvim",
     cwd = vim.fn.getcwd(),
     externalConsole = true,
-    MIMode = "gdb"
+    MIMode = "gdb",
   },
   {
     -- If you get an "Operation not permitted" error using this, try disabling YAMA:
@@ -97,26 +99,26 @@ dap.configurations.c = {
     --
     -- Careful, don't try to attach to the neovim instance that runs *this*
     name = "Fancy attach",
-    type = 'c',
-    request = 'attach',
+    type = "c",
+    request = "attach",
     pid = function()
-      local output = vim.fn.system({'ps', 'a'})
-      local lines = vim.split(output, '\n')
+      local output = vim.fn.system { "ps", "a" }
+      local lines = vim.split(output, "\n")
       local procs = {}
       for _, line in pairs(lines) do
         -- output format
         --    " 107021 pts/4    Ss     0:00 /bin/zsh <args>"
-        local parts = vim.fn.split(vim.fn.trim(line), ' \\+')
+        local parts = vim.fn.split(vim.fn.trim(line), " \\+")
         local pid = parts[1]
-        local name = table.concat({unpack(parts, 5)}, ' ')
-        if pid and pid ~= 'PID' then
+        local name = table.concat({ unpack(parts, 5) }, " ")
+        if pid and pid ~= "PID" then
           pid = tonumber(pid)
           if pid ~= vim.fn.getpid() then
             table.insert(procs, { pid = pid, name = name })
           end
         end
       end
-      local choices = {'Select process'}
+      local choices = { "Select process" }
       for i, proc in ipairs(procs) do
         table.insert(choices, string.format("%d: pid=%d name=%s", i, proc.pid, proc.name))
       end
@@ -129,7 +131,7 @@ dap.configurations.c = {
       return procs[choice].pid
     end,
     args = {},
-   },
+  },
   -- {
   --   name = "Run functional tests",
   --   type = 'c',
@@ -165,9 +167,9 @@ dap.configurations.c = {
     name = "Attach to gdbserver::Neovim",
     target = "localhost:7777",
     remote = true,
-    cwd = vim.fn.expand("~/build/neovim"),
-    gdbpath = vim.fn.exepath("gdb"),
-  }
+    cwd = vim.fn.expand "~/build/neovim",
+    gdbpath = vim.fn.exepath "gdb",
+  },
 }
 
 -- TODO: Try out the dlv command directly:
@@ -177,16 +179,16 @@ if use_delve then
   dap.adapters.go = function(callback, config)
     local handle, pid_or_err, port = nil, nil, 12346
 
-    handle, pid_or_err = vim.loop.spawn(
-      "dlv", {
-        args = {"dap", "-l", "127.0.0.1:" .. port},
-        detached = true,
-        cwd = vim.loop.cwd(),
-      }, vim.schedule_wrap(function(code)
+    handle, pid_or_err = vim.loop.spawn("dlv", {
+      args = { "dap", "-l", "127.0.0.1:" .. port },
+      detached = true,
+      cwd = vim.loop.cwd(),
+    }, vim.schedule_wrap(
+      function(code)
         handle:close()
         print("Delve has exited with: " .. code)
-      end)
-    )
+      end
+    ))
 
     if not handle then
       error("FAILED:", pid_or_err)
@@ -198,73 +200,77 @@ if use_delve then
   end
 else
   dap.adapters.go = {
-    type = 'executable',
-    command = '/home/tjdevries/.nvm/versions/node/v14.16.0/bin/node',
-    args = { vim.fn.expand("~/build/vscode-go/dist/debugAdapter.js") },
+    type = "executable",
+    command = "/home/tjdevries/.nvm/versions/node/v14.16.0/bin/node",
+    args = { vim.fn.expand "~/build/vscode-go/dist/debugAdapter.js" },
     console = "externalTerminal",
   }
 end
 
 dap.configurations.go = {
   {
-    type = 'go',
-    name = 'Debug',
-    request = 'launch',
+    type = "go",
+    name = "Debug",
+    request = "launch",
     showLog = true,
     program = "${file}",
     -- console = "externalTerminal",
-    dlvToolPath = vim.fn.exepath('dlv'),
+    dlvToolPath = vim.fn.exepath "dlv",
   },
   {
-    name = 'Test Current File',
-    type = 'go',
-    request = 'launch',
+    name = "Test Current File",
+    type = "go",
+    request = "launch",
     showLog = true,
     mode = "test",
     program = ".",
-    dlvToolPath = vim.fn.exepath('dlv'),
+    dlvToolPath = vim.fn.exepath "dlv",
   },
   {
-    type = 'go',
-    name = 'Run lsif-clang indexer',
-    request = 'launch',
+    type = "go",
+    name = "Run lsif-clang indexer",
+    request = "launch",
     showLog = true,
-    program = '.',
-    args = { '--indexer', 'lsif-clang compile_commands.json', '--dir', vim.fn.expand('~/sourcegraph/lsif-clang/functionaltest'), "--debug"},
-    dlvToolPath = vim.fn.exepath('dlv'),
+    program = ".",
+    args = {
+      "--indexer",
+      "lsif-clang compile_commands.json",
+      "--dir",
+      vim.fn.expand "~/sourcegraph/lsif-clang/functionaltest",
+      "--debug",
+    },
+    dlvToolPath = vim.fn.exepath "dlv",
   },
 }
 
 dap.configurations.python = {
   {
-    type = 'python';
-    request = 'launch';
-    name = 'Build api';
-    program = '${file}';
-    args = { '--target', 'api' },
-    console = 'integratedTerminal';
+    type = "python",
+    request = "launch",
+    name = "Build api",
+    program = "${file}",
+    args = { "--target", "api" },
+    console = "integratedTerminal",
   },
   {
-    type = 'python',
-    request = 'launch',
-    name = 'lsif',
-    program = 'src/lsif/__main__.py',
-    args = { },
-    console = 'integratedTerminal',
+    type = "python",
+    request = "launch",
+    name = "lsif",
+    program = "src/lsif/__main__.py",
+    args = {},
+    console = "integratedTerminal",
   },
 }
 
-require('dap-python').setup('python', {
-  include_configs = true
+require("dap-python").setup("python", {
+  include_configs = true,
 })
-
 
 vim.cmd [[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]]
 vim.cmd [[nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>]]
 
 vim.cmd [[nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>]]
 vim.cmd [[nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>]]
-
 
 vim.cmd [[nnoremap <silent> <space>dh :lua require('dap.ui.variables').hover()<CR>]]
 

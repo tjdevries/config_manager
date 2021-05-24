@@ -1,39 +1,39 @@
+local has_lir, lir = pcall(require, "lir")
+if not has_lir then
+  return
+end
 
-local has_lir, lir = pcall(require, 'lir')
-if not has_lir then return end
-
-local has_devicons, devicons = pcall(require, 'nvim-web-devicons')
+local has_devicons, devicons = pcall(require, "nvim-web-devicons")
 if has_devicons then
-  devicons.setup({
+  devicons.setup {
     override = {
       lir_folder_icon = {
         icon = "",
         color = "#7ebae4",
-        name = "LirFolderNode"
+        name = "LirFolderNode",
       },
-    }
-  })
+    },
+  }
 end
 
-local actions = require'lir.actions'
+local actions = require "lir.actions"
 
 lir.setup {
   show_hidden_files = true,
   devicons_enable = true,
 
   mappings = {
-    ['<CR>']  = actions.edit,
-    ['-']     = actions.up,
+    ["<CR>"] = actions.edit,
+    ["-"] = actions.up,
 
-    ['K']     = actions.mkdir,
-    ['N']     = actions.newfile,
-    ['R']     = actions.rename,
-    ['Y']     = actions.yank_path,
+    ["K"] = actions.mkdir,
+    ["N"] = actions.newfile,
+    ["R"] = actions.rename,
+    ["Y"] = actions.yank_path,
   },
 }
 
-vim.api.nvim_set_keymap('n', '-', ':edit %:h<CR>', { noremap = true, })
-
+vim.api.nvim_set_keymap("n", "-", ":edit %:h<CR>", { noremap = true })
 
 -- Can do this if we want to get particular settings
 -- vim.cmd [[

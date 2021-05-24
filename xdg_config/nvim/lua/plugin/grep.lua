@@ -1,11 +1,11 @@
-local Job = require('plenary.job')
+local Job = require "plenary.job"
 
 local grepper = {}
 
 local get_job = function(str, cwd)
   local job = Job:new {
     command = "rg",
-    args = {"--vimgrep", str},
+    args = { "--vimgrep", str },
 
     on_stdout = vim.schedule_wrap(function(_, line)
       local split_line = vim.split(line, ":")
@@ -14,12 +14,15 @@ local get_job = function(str, cwd)
       local lnum = split_line[2]
       local col = split_line[3]
 
-      vim.fn.setqflist({{
-        filename = filename,
-        lnum = lnum,
-        col = col,
-        text = split_line[4],
-      }}, 'a')
+      vim.fn.setqflist(
+        { {
+          filename = filename,
+          lnum = lnum,
+          col = col,
+          text = split_line[4],
+        } },
+        "a"
+      )
     end),
 
     on_exit = vim.schedule_wrap(function()
@@ -31,7 +34,7 @@ local get_job = function(str, cwd)
 end
 
 grepper.grep_for_string = function(str, cwd)
-  vim.fn.setqflist({}, 'r')
+  vim.fn.setqflist({}, "r")
   return get_job(str, cwd):join()
 end
 
@@ -46,7 +49,6 @@ grepper.replace_string = function(search, replace, opts)
 
   return job:sync()
 end
-
 
 -- grepper.grep_for_string('buf_get_prev_diagnostic')
 

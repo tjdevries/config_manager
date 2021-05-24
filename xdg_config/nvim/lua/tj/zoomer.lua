@@ -1,4 +1,4 @@
-local Job = require('plenary.job')
+local Job = require "plenary.job"
 
 STOP_TIMERS = false
 
@@ -11,16 +11,24 @@ local start_zoomer = function(start, zoom)
       timer:stop()
       timer:close()
 
-      Job:new {
-        "v4l2-ctl", "--set-ctrl", "zoom_absolute=100"
-      }:start()
+      Job
+        :new({
+          "v4l2-ctl",
+          "--set-ctrl",
+          "zoom_absolute=100",
+        })
+        :start()
       return
     end
 
     print("starting: ", zoom)
-    Job:new {
-      "v4l2-ctl", "--set-ctrl", "zoom_absolute=" .. tostring(zoom)
-    }:start()
+    Job
+      :new({
+        "v4l2-ctl",
+        "--set-ctrl",
+        "zoom_absolute=" .. tostring(zoom),
+      })
+      :start()
   end))
 end
 
