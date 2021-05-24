@@ -200,11 +200,7 @@ if not has_flutter_tools then
 end
 
 -- Load lua configuration from nlua.
-<<<<<<< HEAD
-local _ = false and require('nlua.lsp.nvim').setup(lspconfig, {
-=======
 require("nlua.lsp.nvim").setup(lspconfig, {
->>>>>>> post: ran stylua
   on_init = custom_init,
   on_attach = custom_attach,
   capabilities = updated_capabilities,

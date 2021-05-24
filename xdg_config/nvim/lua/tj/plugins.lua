@@ -4,16 +4,12 @@ local has = function(x)
   return vim.fn.has(x) == 1
 end
 
-<<<<<<< HEAD
 local is_wsl = (function()
-  local output = vim.fn.systemlist('uname -r')
-  return not not string.find(output[1] or '', 'WSL')
+  local output = vim.fn.systemlist "uname -r"
+  return not not string.find(output[1] or "", "WSL")
 end)()
 
-return require('packer').startup {
-=======
 return require("packer").startup {
->>>>>>> post: ran stylua
   function(use)
     use "wbthomason/packer.nvim"
 
@@ -168,15 +164,10 @@ return require("packer").startup {
     -- TODO: Eventually statusline should consume this.
     use "mkitt/tabline.vim"
 
-<<<<<<< HEAD
-    use 'kyazdani42/nvim-web-devicons'
-    if not is_wsl then
-      use 'yamatsum/nvim-web-nonicons'
-    end
-=======
     use "kyazdani42/nvim-web-devicons"
-    use "yamatsum/nvim-web-nonicons"
->>>>>>> post: ran stylua
+    if not is_wsl then
+      use "yamatsum/nvim-web-nonicons"
+    end
 
     -- use { 'Shougo/defx.nvim', }
     use "kyazdani42/nvim-tree.lua"
@@ -211,7 +202,7 @@ return require("packer").startup {
     use "cespare/vim-toml"
     use "Glench/Vim-Jinja2-Syntax"
 
-    use 'ziglang/zig.vim'
+    use "ziglang/zig.vim"
 
     -- Can add back if we ever use it.
     -- use 'JuliaEditorSupport/julia-vim'
@@ -358,15 +349,10 @@ return require("packer").startup {
     use "TimUntersberger/neogit"
 
     -- Github integration
-<<<<<<< HEAD
-    if vim.fn.executable('gh') == 1 then
-      use 'pwntester/octo.nvim'
+    if vim.fn.executable "gh" == 1 then
+      use "pwntester/octo.nvim"
     end
-    use 'ruifm/gitlinker.nvim'
-=======
-    use "pwntester/octo.nvim"
     use "ruifm/gitlinker.nvim"
->>>>>>> post: ran stylua
 
     -- Sweet message committer
     use "rhysd/committia.vim"

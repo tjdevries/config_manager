@@ -15,12 +15,14 @@ local get_job = function(str, cwd)
       local col = split_line[3]
 
       vim.fn.setqflist(
-        { {
-          filename = filename,
-          lnum = lnum,
-          col = col,
-          text = split_line[4],
-        } },
+        {
+          {
+            filename = filename,
+            lnum = lnum,
+            col = col,
+            text = split_line[4],
+          },
+        },
         "a"
       )
     end),
