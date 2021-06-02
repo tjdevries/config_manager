@@ -56,12 +56,12 @@ require("telescope").setup {
     selection_caret = "❯ ",
 
     winblend = 0,
-    preview_cutoff = 120,
 
     layout_strategy = "horizontal",
     layout_config = {
       width = 0.8,
       height = 0.85,
+      preview_cutoff = 120,
 
       horizontal = {
         -- width_padding = 0.1,
@@ -277,13 +277,22 @@ function M.builtin()
 end
 
 function M.git_files()
+  local path = vim.fn.expand "%:h"
+
+  local width = 0.25
+  if string.find(path, "sourcegraph.*sourcegraph", 1, false) then
+    width = 0.5
+  end
+
   local opts = themes.get_dropdown {
     winblend = 5,
     previewer = false,
     shorten_path = false,
 
+    cwd = path,
+
     layout_config = {
-      width = 0.25,
+      width = width,
     },
   }
 
@@ -427,6 +436,7 @@ function M.file_browser()
       map("i", "-", function()
         modify_cwd(current_picker.cwd .. "/..")
       end)
+
       map("i", "~", function()
         modify_cwd(vim.fn.expand "~")
       end)
@@ -469,6 +479,23 @@ function M.git_status()
   -- }
 
   require("telescope.builtin").git_status(opts)
+end
+
+function M.git_commits()
+  require("telescope.builtin").git_commits {
+    winblend = 5,
+  }
+end
+
+function M.search_only_certain_files()
+  require("telescope.builtin").find_files {
+    find_command = {
+      "rg",
+      "--files",
+      "--type",
+      vim.fn.input "Type: ",
+    },
+  }
 end
 
 return setmetatable({}, {

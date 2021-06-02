@@ -1,0 +1,9 @@
+{ 
+    "Stylua Ignore": {
+        "prefix": "ignore",
+        "body": [
+          "-- stylua: ignore"
+        ],
+        "description": "Add stylua ignore"
+  }
+}

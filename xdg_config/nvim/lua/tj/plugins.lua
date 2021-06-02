@@ -109,6 +109,7 @@ return require("packer").startup {
     }
 
     use "nanotee/luv-vimdocs"
+    use "milisims/nvim-luaref"
 
     -- PRACTICE: {{{
     use "tpope/vim-projectionist" -- STREAM: Alternate file editting and some helpful stuff
@@ -244,9 +245,16 @@ return require("packer").startup {
     -- Completion stuff
     local_use "rofl.nvim"
 
-    use "hrsh7th/vim-vsnip"
-    use "hrsh7th/vim-vsnip-integ"
+    -- use "hrsh7th/vim-vsnip"
+    -- use "hrsh7th/vim-vsnip-integ"
     -- use 'norcalli/snippets.nvim'
+    use {
+      "L3MON4D3/LuaSnip",
+
+      config = function()
+        vim.g.snippets = "luasnip"
+      end,
+    }
 
     -- Cool tags based viewer
     --   :Vista  <-- Opens up a really cool sidebar with info about file.
@@ -362,7 +370,7 @@ return require("packer").startup {
 
     -- Async signs!
     if has "nvim-0.5" then
-      -- use 'lewis6991/gitsigns.nvim'
+      use "lewis6991/gitsigns.nvim"
     end
 
     -- }}}

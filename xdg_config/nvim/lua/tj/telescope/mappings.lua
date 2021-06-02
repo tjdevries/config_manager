@@ -52,6 +52,7 @@ map_tele("<space>fd", "fd")
 map_tele("<space>pp", "project_search")
 map_tele("<space>fv", "find_nvim_source")
 map_tele("<space>fe", "file_browser")
+map_tele("<space>fz", "search_only_certain_files")
 
 -- Sourcegraph
 map_tele("<space>sf", "sourcegraph_find")
@@ -61,6 +62,7 @@ map_tele("<space>sag", "sourcegraph_about_grep")
 
 -- Git
 map_tele("<space>gs", "git_status")
+map_tele("<space>gc", "git_commits")
 
 -- Nvim
 map_tele("<space>fb", "buffers")

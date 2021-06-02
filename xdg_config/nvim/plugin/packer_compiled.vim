@@ -80,6 +80,11 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/JavaScript-Indent"
   },
+  LuaSnip = {
+    config = { "\27LJ\2\n2\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\fluasnip\rsnippets\6g\bvim\0" },
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/LuaSnip"
+  },
   NrrwRgn = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/NrrwRgn"
@@ -185,6 +190,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/gitlinker.nvim"
   },
+  ["gitsigns.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
+  },
   ["goyo.vim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/goyo.vim"
@@ -226,7 +235,7 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lsp-status.nvim"
   },
   ["lsp-trouble.nvim"] = {
-    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0" },
+    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\17auto_preview\1\14auto_fold\2\nsetup\ftrouble\frequire\0" },
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim"
   },
@@ -298,6 +307,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-luadev"
   },
+  ["nvim-luaref"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-luaref"
+  },
   ["nvim-terminal.lua"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-terminal.lua"
@@ -365,10 +378,6 @@ _G.packer_plugins = {
   ["py_package.nvim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/py_package.nvim"
-  },
-  ["pytest.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/pytest.vim"
   },
   ["rofl.nvim"] = {
     loaded = true,
@@ -583,10 +592,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-syntax-extra"
   },
-  ["vim-test"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-test"
-  },
   ["vim-textobj-python"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-textobj-python"
@@ -599,20 +604,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-toml"
   },
-  ["vim-ultest"] = {
-    config = { "\27LJ\2\nu\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0%nmap [t <Plug>(ultest-prev-fail)%nmap ]t <Plug>(ultest-next-fail)\bcmd\bvim\0" },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-ultest"
-  },
-  ["vim-vsnip"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-vsnip"
-  },
-  ["vim-vsnip-integ"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ"
-  },
   vim9jit = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim9jit"
@@ -624,38 +615,39 @@ _G.packer_plugins = {
   ["wiki.vim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/wiki.vim"
+  },
+  ["zig.vim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/zig.vim"
   }
 }
 
 time("Defining packer_plugins", false)
+-- Config for: LuaSnip
+time("Config for LuaSnip", true)
+try_loadstring("\27LJ\2\n2\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\fluasnip\rsnippets\6g\bvim\0", "config", "LuaSnip")
+time("Config for LuaSnip", false)
 -- Config for: lsp-trouble.nvim
 time("Config for lsp-trouble.nvim", true)
-try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
+try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\17auto_preview\1\14auto_fold\2\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
 time("Config for lsp-trouble.nvim", false)
 -- Conditional loads
-time("Condition for { 'vim-ultest', 'far.vim' }", true)
+time("Condition for { 'far.vim' }", true)
 if
-try_loadstring("\27LJ\2\nG\0\0\3\0\4\1\v6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\2\b\0\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\fpython3\bhas\afn\bvim\2\0", "condition", '{ "vim-ultest", "far.vim" }')
+try_loadstring("\27LJ\2\nG\0\0\3\0\4\1\v6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\2\b\0\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\fpython3\bhas\afn\bvim\2\0", "condition", '{ "far.vim" }')
 then
-time("Condition for { 'vim-ultest', 'far.vim' }", false)
-time("packadd for vim-ultest", true)
-		vim.cmd [[packadd vim-ultest]]
-	time("packadd for vim-ultest", false)
-	-- Config for: vim-ultest
-	time("Config for vim-ultest", true)
-	try_loadstring("\27LJ\2\nu\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0%nmap [t <Plug>(ultest-prev-fail)%nmap ]t <Plug>(ultest-next-fail)\bcmd\bvim\0", "config", "vim-ultest")
-	time("Config for vim-ultest", false)
-	time("packadd for far.vim", true)
+time("Condition for { 'far.vim' }", false)
+time("packadd for far.vim", true)
 		vim.cmd [[packadd far.vim]]
 	time("packadd for far.vim", false)
 else
-time("Condition for { 'vim-ultest', 'far.vim' }", false)
+time("Condition for { 'far.vim' }", false)
 end
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time("Defining lazy-load filetype autocommands", true)
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'JavaScript-Indent', 'vim-javascript'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascript ++once lua require("packer.load")({'vim-javascript', 'JavaScript-Indent'}, { ft = "javascript" }, _G.packer_plugins)]]
 vim.cmd [[au FileType html ++once lua require("packer.load")({'vim-javascript'}, { ft = "html" }, _G.packer_plugins)]]
 time("Defining lazy-load filetype autocommands", false)
 vim.cmd("augroup END")

@@ -35,7 +35,7 @@ Much of the configuration of individual plugins you can find in either:
 
 -- TODO: Consider what to do with ginit.vim
 
-if require('tj.first_load')() then
+if require "tj.first_load"() then
   return
 end
 
@@ -44,24 +44,24 @@ end
 -- In general, it's a good idea to set this early in your config, because otherwise
 -- if you have any mappings you set BEFORE doing this, they will be set to the OLD
 -- leader.
-vim.g.mapleader = ','
+vim.g.mapleader = ","
 
 -- Setup globals that I expect to be always available.
 --  See `./lua/tj/globals/*.lua` for more information.
-require('tj.globals')
+require "tj.globals"
 
 -- Load packer.nvim files
-require('tj.plugins')
+require "tj.plugins"
 
 -- Force loading of astronauta first.
 vim.cmd [[runtime plugin/astronauta.vim]]
 
 -- Load neovim options
-require('tj.options')
+require "tj.options"
 
 -- Neovim builtin LSP configuration
-require('tj.lsp')
+require "tj.lsp"
 
 -- Telescope BTW
-require('tj.telescope')
-require('tj.telescope.mappings')
+require "tj.telescope"
+require "tj.telescope.mappings"

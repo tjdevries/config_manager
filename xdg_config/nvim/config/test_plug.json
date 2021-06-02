@@ -1,0 +1,11 @@
+{
+    "enabled": true,
+    "settings": {
+        "debug": true
+    },
+    "maps": {
+        "n": {
+            "<space>kj": "TestPlugMappingOne"
+        }
+    }
+}

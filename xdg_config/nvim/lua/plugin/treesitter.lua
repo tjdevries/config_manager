@@ -18,6 +18,7 @@ local read_query = function(filename)
   return table.concat(vim.fn.readfile(vim.fn.expand(filename)), "\n")
 end
 
+-- Overrides any existing tree sitter query for a particular name
 vim.treesitter.set_query("rust", "highlights", read_query "~/.config/nvim/queries/rust/highlights.scm")
 
 -- alt+<space>, alt+p -> swap next
@@ -55,16 +56,6 @@ require("nvim-treesitter.configs").setup {
     custom_captures = custom_captures,
   },
 
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "<M-w>", -- maps in normal mode to init the node/scope selection
-      node_incremental = "<M-w>", -- increment to the upper named parent
-      scope_incremental = "<M-e>", -- increment to the upper scope (as defined in locals.scm)
-      node_decremental = "<M-C-w>", -- decrement to the previous node
-    },
-  },
-
   refactor = {
     highlight_definitions = { enable = true },
     highlight_current_scope = { enable = false },
@@ -84,6 +75,16 @@ require("nvim-treesitter.configs").setup {
         goto_definition = "gnd", -- mapping to go to definition of symbol under cursor
         list_definitions = "gnD", -- mapping to list all definitions in current file
       },
+    },
+  },
+
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<M-w>", -- maps in normal mode to init the node/scope selection
+      node_incremental = "<M-w>", -- increment to the upper named parent
+      node_decremental = "<M-C-w>", -- decrement to the previous node
+      scope_incremental = "<M-e>", -- increment to the upper scope (as defined in locals.scm)
     },
   },
 

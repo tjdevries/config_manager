@@ -1,3 +1,7 @@
+if vim.g.snippets ~= "vsnip" then
+  return
+end
+
 vim.cmd [[
   imap <expr> <C-k>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-k>'
   smap <expr> <C-k>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-k>'
