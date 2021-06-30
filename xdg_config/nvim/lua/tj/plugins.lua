@@ -1,3 +1,4 @@
+vim.cmd [[packadd packer.nvim]]
 vim.cmd [[packadd vimball]]
 
 local has = function(x)
@@ -11,9 +12,14 @@ end)()
 
 return require("packer").startup {
   function(use)
-    use "wbthomason/packer.nvim"
+    use {
+      "wbthomason/packer.nvim",
+      opt = true,
+    }
 
-    local local_use = function(first, second)
+    local local_use = function(first, second, opts)
+      opts = opts or {}
+
       local plug_path, home
       if second == nil then
         plug_path = first
@@ -24,10 +30,14 @@ return require("packer").startup {
       end
 
       if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. plug_path)) == 1 then
-        use("~/plugins/" .. plug_path)
+        -- use("~/plugins/" .. plug_path)
+        opts[1] = "~/plugins/" .. plug_path
       else
-        use(string.format("%s/%s", home, plug_path))
+        -- use(string.format("%s/%s", home, plug_path))
+        opts[1] = string.format("%s/%s", home, plug_path)
       end
+
+      use(opts)
     end
 
     -- My Plugins
@@ -42,7 +52,11 @@ return require("packer").startup {
     local_use "overlength.vim"
     local_use "pastery.vim"
     local_use "complextras.nvim"
-    local_use "astronauta.nvim"
+    local_use("tjdevries", "astronauta.nvim", {
+      -- setup = function()
+      --   vim.g.astronauta_load_plugins = false
+      -- end,
+    })
 
     -- When I have some extra time...
     local_use "train.vim"
@@ -85,9 +99,9 @@ return require("packer").startup {
     local_use("nvim-telescope", "telescope.nvim")
     local_use("nvim-telescope", "telescope-fzf-writer.nvim")
     local_use("nvim-telescope", "telescope-packer.nvim")
-    local_use("nvim-telescope", "telescope-async-sorter-test.nvim")
     local_use("nvim-telescope", "telescope-fzy-native.nvim")
     use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+    -- local_use("nvim-telescope", "telescope-async-sorter-test.nvim")
 
     local_use("nvim-telescope", "telescope-github.nvim")
     local_use("nvim-telescope", "telescope-symbols.nvim")
@@ -194,39 +208,43 @@ return require("packer").startup {
     -- }}}
     --  LANGUAGE: {{{
     -- TODO: Should check on these if they are the best ones
-    use "neovimhaskell/haskell-vim"
-    use "justinmk/vim-syntax-extra"
-    use "elzr/vim-json"
-    use "goodell/vim-mscgen"
-    use "pearofducks/ansible-vim"
+    use { "neovimhaskell/haskell-vim", ft = "haskell" }
+    use { "elzr/vim-json", ft = "json" }
+    use { "goodell/vim-mscgen", ft = "mscgen" }
     use "PProvost/vim-ps1"
-    use "cespare/vim-toml"
     use "Glench/Vim-Jinja2-Syntax"
+    use "justinmk/vim-syntax-extra"
 
-    use "ziglang/zig.vim"
+    -- use "pearofducks/ansible-vim"
+    -- use { "cespare/vim-toml", ft = "toml" }
 
-    -- Can add back if we ever use it.
-    -- use 'JuliaEditorSupport/julia-vim'
+    use { "ziglang/zig.vim", ft = "zig" }
+    -- use { 'JuliaEditorSupport/julia-vim', ft = "julia" }
 
-    use { "iamcco/markdown-preview.nvim", run = "cd app && yarn install" }
+    use { "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" }
 
     -- Typescript {{{
-    -- TODO: Should probably only load these when necessary.
-    -- TODO: Should prboably check if these work for typescript, typescript.tsx, etc.
-    use "jelera/vim-javascript-syntax"
-    use "othree/javascript-libraries-syntax.vim"
-    use "leafgarland/typescript-vim"
-    use "peitalin/vim-jsx-typescript"
+    if false then
+      use "jelera/vim-javascript-syntax"
+      use "othree/javascript-libraries-syntax.vim"
+      use "leafgarland/typescript-vim"
+      use "peitalin/vim-jsx-typescript"
+
+      use { "vim-scripts/JavaScript-Indent", ft = "javascript" }
+      use { "pangloss/vim-javascript", ft = { "javascript", "html" } }
+    end
 
     -- Wonder if I can make LSP do this and respect .prettier files.
     --  I don't write enough typescript to think about this.
-    use { "prettier/vim-prettier", run = "yarn install" }
+    use {
+      "prettier/vim-prettier",
+      ft = { "html", "javascript", "typescript" },
+      run = "yarn install",
+    }
 
     -- TODO: Turn emmet back on when I someday use it
     -- use 'mattn/emmet-vim'
 
-    use { "vim-scripts/JavaScript-Indent", ft = "javascript" }
-    use { "pangloss/vim-javascript", ft = { "javascript", "html" } }
     use "tpope/vim-liquid"
     -- }}}
     -- Godot {{{
@@ -258,7 +276,7 @@ return require("packer").startup {
 
     -- Cool tags based viewer
     --   :Vista  <-- Opens up a really cool sidebar with info about file.
-    use "liuchengxu/vista.vim"
+    use { "liuchengxu/vista.vim", cmd = "Vista" }
 
     -- Find and replace
     use {
@@ -279,23 +297,22 @@ return require("packer").startup {
 
     use "jbyuki/one-small-step-for-vimkind"
 
-    if has "python3" then
-      use {
-        "rcarriga/vim-ultest",
+    use {
+      "rcarriga/vim-ultest",
 
-        requires = { "vim-test/vim-test" },
-        run = ":UpdateRemotePlugins",
-        cond = function()
-          return vim.fn.has "python3" == 1
-        end,
-        config = function()
-          vim.cmd [[nmap ]t <Plug>(ultest-next-fail)]]
-          vim.cmd [[nmap [t <Plug>(ultest-prev-fail)]]
-        end,
-      }
+      requires = { "vim-test/vim-test" },
+      run = ":UpdateRemotePlugins",
+      cond = function() return vim.fn.has "python3" == 1 end,
+      config = function()
+        vim.cmd [[nmap ]t <Plug>(ultest-next-fail)]]
+        vim.cmd [[nmap [t <Plug>(ultest-prev-fail)]]
+      end,
+    }
 
-      use "alfredodeza/pytest.vim"
-    end
+    use {
+      "alfredodeza/pytest.vim",
+      cond = function() return vim.fn.has "python3" == 1 end,
+    }
 
     if false and has "python3" then
       use "puremourning/vimspector"

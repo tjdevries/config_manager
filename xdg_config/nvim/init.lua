@@ -50,9 +50,6 @@ vim.g.mapleader = ","
 --  See `./lua/tj/globals/*.lua` for more information.
 require "tj.globals"
 
--- Load packer.nvim files
-require "tj.plugins"
-
 -- Force loading of astronauta first.
 vim.cmd [[runtime plugin/astronauta.vim]]
 
