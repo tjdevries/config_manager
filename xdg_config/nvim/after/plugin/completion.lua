@@ -1,7 +1,7 @@
 vim.opt.completeopt = { "menuone", "noselect" }
 
 -- Don't show the dumb matching stuff.
-vim.opt.shortmess:remove "c"
+vim.opt.shortmess:append "c"
 
 -- Complextras.nvim configuration
 vim.api.nvim_set_keymap(
@@ -35,13 +35,15 @@ if has_compe then
       path = true,
       buffer = true,
       calc = false,
-      vsnip = true,
       nvim_lsp = true,
       nvim_lua = true,
       spell = true,
       tags = true,
+      luasnip = true,
+
       treesitter = false,
-      snippets_nvim = true,
+      snippets_nvim = false,
+      vsnip = false,
     },
   }
 
