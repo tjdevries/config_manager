@@ -33,6 +33,7 @@ map_tele("<leader>en", "edit_neovim")
 map_tele("<leader>ez", "edit_zsh")
 
 -- Search
+-- TODO: I would like to completely remove _mock from my search results here when I'm in SG/SG
 map_tele("<space>gw", "grep_string", {
   short_path = true,
   word_match = "-w",

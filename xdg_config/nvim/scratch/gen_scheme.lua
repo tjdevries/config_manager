@@ -49,27 +49,27 @@
 local Match = {}
 Match.__index = Match
 Match.__tostring = function(self)
-  if #self.args == 1 and type(self.args[1]) == 'string' then
+  if #self.args == 1 and type(self.args[1]) == "string" then
     return self.args[1]
   end
 end
 
 function Match.new(...)
-  return setmetatable({ args = {...}}, Match)
+  return setmetatable({ args = { ... } }, Match)
 end
 
 local Rule = {}
 Rule.__index = Rule
 
 function Rule.new(name, match)
-  return setmetatable({name = name, match = match}, Rule)
+  return setmetatable({ name = name, match = match }, Rule)
 end
 
 local function new_scheme()
   return setmetatable({}, {
     __newindex = function(t, k, v)
       table.insert(t, Rule.new(k, Match.new(v)))
-    end
+    end,
   })
 end
 
@@ -115,7 +115,7 @@ local generate_scheme = function(t)
   local lines = {}
   for _, rule in ipairs(t) do
     -- for _, rule in ipairs(v) do
-      table.insert(lines, string.format("(%s) %s", rule.name, rule.match))
+    table.insert(lines, string.format("(%s) %s", rule.name, rule.match))
     -- end
   end
 
@@ -124,7 +124,7 @@ end
 
 local do_func
 if false then
-  do_func = function(x) 
+  do_func = function(x)
     vim.api.nvim_buf_set_lines(0, -1, -1, false, x)
   end
 else
@@ -133,7 +133,7 @@ else
   end
 end
 
-do_func(generate_scheme(extend_scheme('', defs, child_defs)))
+do_func(generate_scheme(extend_scheme("", defs, child_defs)))
 
 --[[
 (identifier) @reference

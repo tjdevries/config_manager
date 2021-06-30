@@ -59,14 +59,21 @@ require("telescope").setup {
 
     layout_strategy = "horizontal",
     layout_config = {
-      width = 0.8,
+      width = 0.95,
       height = 0.85,
-      preview_cutoff = 120,
+      -- preview_cutoff = 120,
+      prompt_position = "top",
 
       horizontal = {
         -- width_padding = 0.1,
         -- height_padding = 0.1,
-        preview_width = 0.6,
+        preview_width = function(_, cols, _)
+          if cols > 200 then
+            return math.floor(cols * 0.4)
+          else
+            return math.floor(cols * 0.6)
+          end
+        end,
       },
 
       vertical = {
@@ -85,7 +92,6 @@ require("telescope").setup {
     },
 
     selection_strategy = "reset",
-    prompt_position = "top",
     sorting_strategy = "descending",
     scroll_strategy = "cycle",
     color_devicons = true,
@@ -109,8 +115,11 @@ require("telescope").setup {
 
     borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
 
-    file_sorter = sorters.get_fzy_sorter,
-    file_ignore_patterns = { "parser.c" },
+    -- file_sorter = sorters.get_fzy_sorter,
+    file_ignore_patterns = {
+      "parser.c",
+      "mock_.*.go",
+    },
 
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
@@ -138,18 +147,19 @@ require("telescope").setup {
 }
 
 -- Load the fzy native extension at the start.
--- pcall(require('telescope').load_extension, "fzy_native")
-pcall(require("telescope").load_extension, "fzy_native")
 pcall(require("telescope").load_extension, "cheat")
 pcall(require("telescope").load_extension, "dap")
 pcall(require("telescope").load_extension, "arecibo")
 pcall(require("telescope").load_extension, "flutter")
 
-require("telescope").load_extension "fzf"
+-- pcall(require("telescope").load_extension, "fzy_native")
+pcall(require("telescope").load_extension, "fzf")
+
 if vim.fn.executable "gh" == 1 then
   pcall(require("telescope").load_extension, "gh")
   pcall(require("telescope").load_extension, "octo")
 end
+pcall(require("telescope").load_extension, "git_worktree")
 
 if pcall(require("telescope").load_extension, "frecency") then
   require "tj.telescope.frecency"
@@ -163,7 +173,9 @@ lua require('plenary.reload').reload_module("my_user.tele")
 nnoremap <leader>en <cmd>lua require('my_user.tele').edit_neovim()<CR>
 --]]
 function M.edit_neovim()
-  require("telescope.builtin").find_files {
+  local opts_with_preview, opts_without_preview
+
+  opts_with_preview = {
     prompt_title = "~ dotfiles ~",
     shorten_path = false,
     cwd = "~/.config/nvim",
@@ -174,7 +186,7 @@ function M.edit_neovim()
       height = 0.8,
 
       horizontal = {
-        width = { padding = 0.2 },
+        width = { padding = 0.15 },
       },
       vertical = {
         preview_height = 0.75,
@@ -183,10 +195,21 @@ function M.edit_neovim()
 
     attach_mappings = function(_, map)
       map("i", "<c-y>", set_prompt_to_entry_value)
+      map("i", "<M-c>", function(prompt_bufnr)
+        actions.close(prompt_bufnr)
+        vim.schedule(function()
+          require("telescope.builtin").find_files(opts_without_preview)
+        end)
+      end)
 
       return true
     end,
   }
+
+  opts_without_preview = vim.deepcopy(opts_with_preview)
+  opts_without_preview.previewer = false
+
+  require("telescope.builtin").find_files(opts_with_preview)
 end
 
 function M.find_nvim_source()

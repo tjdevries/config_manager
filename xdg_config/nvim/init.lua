@@ -4,6 +4,12 @@
 --      / / / /___/ /___/ /_/ /      https://twitch.tv/teej_dv
 --     /_/ /_____/_____/\____/
 
+PROFILE_LOAD = false
+if PROFILE_LOAD then
+  require("jit.p").start("10,i1,s,m0,G", "/tmp/output_flame.log")
+  vim.cmd [[au VimLeave * lua require'jit.p'.stop()]]
+end
+
 --[[ Notes to people reading my configuration!
 
 Much of the configuration of individual plugins you can find in either:
@@ -33,8 +39,6 @@ Much of the configuration of individual plugins you can find in either:
 
 --]]
 
--- TODO: Consider what to do with ginit.vim
-
 if require "tj.first_load"() then
   return
 end
@@ -45,6 +49,8 @@ end
 -- if you have any mappings you set BEFORE doing this, they will be set to the OLD
 -- leader.
 vim.g.mapleader = ","
+
+vim.g.snippets = "luasnip"
 
 -- Setup globals that I expect to be always available.
 --  See `./lua/tj/globals/*.lua` for more information.

@@ -63,6 +63,8 @@ stylua.format = function(bufnr)
   end
 
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, output)
+  vim.api.nvim_buf_clear_namespace(bufnr, Luasnip_ns_id, 0, -1)
+  Luasnip_current_nodes[bufnr] = nil
 end
 
 return stylua

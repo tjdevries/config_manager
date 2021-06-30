@@ -20,7 +20,7 @@ require("vim.lsp.log").set_level "debug"
 _ = require("lspkind").init()
 
 require("tj.lsp.status").activate()
-require "tj.lsp.handlers"
+local handlers = require "tj.lsp.handlers"
 
 local mapper = function(mode, key, result)
   vim.api.nvim_buf_set_keymap(0, mode, key, "<cmd>lua " .. result .. "<CR>", { noremap = true, silent = true })
@@ -49,13 +49,21 @@ local custom_attach = function(client)
 
   nnoremap { "gd", vim.lsp.buf.definition, buffer = 0 }
   nnoremap { "gD", vim.lsp.buf.declaration, buffer = 0 }
+  nnoremap { "gT", vim.lsp.buf.type_definition, buffer = 0 }
+
+  nnoremap { "<space>gI", vim.lsp.buf.implementation, buffer = 0 }
+  nnoremap { "gI", handlers.implementation, buffer = 0 }
 
   nnoremap { "<space>cr", MyLspRename, buffer = 0 }
 
+  -- TODO: Add more height to this, or go to flex maybe?
+  --    I don't love this on stream cause I don't have enough rows to show this easily
   telescope_mapper("gr", "lsp_references", {
     layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
     sorting_strategy = "ascending",
-    prompt_position = "top",
     ignore_filename = true,
   }, true)
 
@@ -72,7 +80,6 @@ local custom_attach = function(client)
   telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
 
   -- mapper('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-  -- mapper('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
   -- mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
 
   if filetype ~= "lua" then
@@ -91,8 +98,20 @@ local custom_attach = function(client)
     )
   end
 
-  if vim.tbl_contains({ "go", "rust" }, filetype) then
-    vim.cmd [[autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()]]
+  if filetype == "rust" then
+    vim.cmd [[
+      augroup lsp_buf_format
+        au! BufWritePre <buffer>
+        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting(nil, 5000)
+      augroup END
+    ]]
+  elseif filetype == "go" then
+    vim.cmd [[
+      augroup lsp_buf_format
+        au! BufWritePre <buffer>
+        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting()
+      augroup END
+    ]]
   end
 
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
@@ -278,6 +297,13 @@ end
 lspconfig.rust_analyzer.setup {
   cmd = { "rust-analyzer" },
   filetypes = { "rust" },
+  on_init = custom_init,
+  on_attach = custom_attach,
+  capabilities = nvim_status.capabilities,
+}
+
+lspconfig.omnisharp.setup {
+  cmd = { vim.fn.expand "~/build/omnisharp/run", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
   on_init = custom_init,
   on_attach = custom_attach,
   capabilities = nvim_status.capabilities,

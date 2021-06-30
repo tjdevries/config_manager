@@ -58,6 +58,9 @@ return require("packer").startup {
       -- end,
     })
 
+    -- Contributor Plugins
+    local_use("L3MON4D3", "LuaSnip")
+
     -- When I have some extra time...
     local_use "train.vim"
     local_use "command_and_conquer.nvim"
@@ -266,13 +269,6 @@ return require("packer").startup {
     -- use "hrsh7th/vim-vsnip"
     -- use "hrsh7th/vim-vsnip-integ"
     -- use 'norcalli/snippets.nvim'
-    use {
-      "L3MON4D3/LuaSnip",
-
-      config = function()
-        vim.g.snippets = "luasnip"
-      end,
-    }
 
     -- Cool tags based viewer
     --   :Vista  <-- Opens up a really cool sidebar with info about file.
@@ -326,6 +322,17 @@ return require("packer").startup {
     use "vigoux/architext.nvim"
 
     use "JoosepAlviste/nvim-ts-context-commentstring"
+    -- use {
+    --   "romgrk/nvim-treesitter-context",
+    --   config = function()
+    --     require("treesitter-context.config").setup {
+    --       enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    --     }
+
+    --     -- TODO: Decide on a better highlighting color
+    --     -- vim.cmd [[highlight TreesitterContext link NormalFloat]]
+    --   end,
+    -- }
 
     -- Grammars
     local_use "tree-sitter-lua"
@@ -389,6 +396,14 @@ return require("packer").startup {
     if has "nvim-0.5" then
       use "lewis6991/gitsigns.nvim"
     end
+
+    -- Git worktree utility6
+    use {
+      "ThePrimeagen/git-worktree.nvim",
+      config = function()
+        require("git-worktree").setup {}
+      end,
+    }
 
     -- }}}
 

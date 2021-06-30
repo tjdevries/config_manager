@@ -68,39 +68,59 @@ local show_current_func = function(window, buffer)
   return lsp_statusline.current_function(window, buffer)
 end
 
+local minimal_status_line = function(_, buffer)
+  if string.find(buffer.name, "sourcegraph/sourcegraph") then
+    return true
+  end
+end
+
 require("el").setup {
-  generator = function(_, _)
-    return {
-      extensions.gen_mode {
-        format_string = " %s ",
+  generator = function(window, buffer)
+    local is_minimal = minimal_status_line(window, buffer)
+
+    local items = {
+      { extensions.gen_mode { format_string = " %s " }, required = true },
+      { git_branch },
+      { " " },
+      { sections.split, required = true },
+      { git_icon },
+      { sections.maximum_width(builtin.responsive_file(140, 90), 0.40), required = true },
+      { sections.collapse_builtin { { " " }, { builtin.modified_flag } } },
+      { sections.split, required = true },
+      { show_current_func },
+      { lsp_statusline.server_progress },
+      -- { ws_diagnostic_counts },
+      { git_changes },
+      { "[" },
+      { builtin.line_with_width(3) },
+      { ":" },
+      { builtin.column_with_width(2) },
+      { "]" },
+      {
+        sections.collapse_builtin {
+          "[",
+          builtin.help_list,
+          builtin.readonly_list,
+          "]",
+        },
       },
-      git_branch,
-      " ",
-      sections.split,
-      git_icon,
-      sections.maximum_width(builtin.responsive_file(140, 90), 0.30),
-      sections.collapse_builtin {
-        " ",
-        builtin.modified_flag,
-      },
-      sections.split,
-      show_current_func,
-      lsp_statusline.server_progress,
-      ws_diagnostic_counts,
-      git_changes,
-      "[",
-      builtin.line_with_width(3),
-      ":",
-      builtin.column_with_width(2),
-      "]",
-      sections.collapse_builtin {
-        "[",
-        builtin.help_list,
-        builtin.readonly_list,
-        "]",
-      },
-      builtin.filetype,
+      { builtin.filetype },
     }
+
+    local add_item = function(result, item)
+      if is_minimal and not item.required then
+        return
+      end
+
+      table.insert(result, item)
+    end
+
+    local result = {}
+    for _, item in ipairs(items) do
+      add_item(result, item)
+    end
+
+    return result
   end,
 }
 
