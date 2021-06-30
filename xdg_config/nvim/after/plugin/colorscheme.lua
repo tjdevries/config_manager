@@ -1,3 +1,7 @@
+if not pcall(require, "colorbuddy") then
+  return
+end
+
 vim.opt.termguicolors = true
 
 require("colorbuddy").colorscheme "gruvbuddy"
@@ -33,6 +37,7 @@ Group.link("LspReferenceWrite", g.LspReferenceRead)
 -- Group.new("LspReferenceWrite", nil, c.gray0:light())
 
 Group.new("comment", c.gray3:light(), nil, s.italic)
+Group.new("FloatBorder", c.gray0:light(), g.NormalFloat)
 
 -- Group.new("TSKeyword", c.purple, nil, s.underline, c.blue)
 -- Group.new("LuaFunctionCall", c.green, nil, s.underline + s.nocombine, g.TSKeyword.guisp)

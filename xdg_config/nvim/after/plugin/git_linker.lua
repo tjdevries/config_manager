@@ -1,3 +1,7 @@
-R "gitlinker"
+local ok, gitlinker = pcall(require, "gitlinker")
+if not ok then
+  return
+end
 
-require("gitlinker").setup()
+-- <leader>gy yanks current line from github.
+return gitlinker.setup()

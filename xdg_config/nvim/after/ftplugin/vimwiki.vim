@@ -1,3 +1,8 @@
+" Don't use this anymore, but I do want to take some ideas for this
+if v:true
+  finish
+endif
+
 setlocal foldmethod=marker
 
 imap <buffer> <C-T> <Plug>VimwikiIncreaseLvlSingleItem<c-o>a

@@ -14,17 +14,14 @@ local get_job = function(str, cwd)
       local lnum = split_line[2]
       local col = split_line[3]
 
-      vim.fn.setqflist(
+      vim.fn.setqflist({
         {
-          {
-            filename = filename,
-            lnum = lnum,
-            col = col,
-            text = split_line[4],
-          },
+          filename = filename,
+          lnum = lnum,
+          col = col,
+          text = split_line[4],
         },
-        "a"
-      )
+      }, "a")
     end),
 
     on_exit = vim.schedule_wrap(function()
@@ -54,7 +51,9 @@ end
 
 -- grepper.grep_for_string('buf_get_prev_diagnostic')
 
-vim.cmd [[nnoremap ,ff :lua R("tj.grep").grep_for_string(vim.fn.input("Grep For > "))<CR>]]
-vim.cmd [[nnoremap ,fr :lua R("tj.grep").replace_string(vim.fn.input("Grep For > "), vim.fn.input("Replace with > "))<CR>]]
+TJ_GREP = grepper
+
+vim.cmd [[nnoremap ,ff :lua TJ_GREP.grep_for_string(vim.fn.input("Grep For > "))<CR>]]
+vim.cmd [[nnoremap ,fr :lua TJ_GREP.replace_string(vim.fn.input("Grep For > "), vim.fn.input("Replace with > "))<CR>]]
 
 return grepper

@@ -12,10 +12,7 @@ end)()
 
 return require("packer").startup {
   function(use)
-    use {
-      "wbthomason/packer.nvim",
-      opt = true,
-    }
+    use "wbthomason/packer.nvim"
 
     local local_use = function(first, second, opts)
       opts = opts or {}
@@ -30,10 +27,8 @@ return require("packer").startup {
       end
 
       if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. plug_path)) == 1 then
-        -- use("~/plugins/" .. plug_path)
         opts[1] = "~/plugins/" .. plug_path
       else
-        -- use(string.format("%s/%s", home, plug_path))
         opts[1] = string.format("%s/%s", home, plug_path)
       end
 
@@ -152,7 +147,12 @@ return require("packer").startup {
 
     -- Pretty colors
     use "norcalli/nvim-colorizer.lua"
-    use "norcalli/nvim-terminal.lua"
+    use {
+      "norcalli/nvim-terminal.lua",
+      config = function()
+        require("terminal").setup()
+      end,
+    }
 
     -- Make comments appear IN YO FACE
     use "tjdevries/vim-inyoface"
@@ -298,7 +298,9 @@ return require("packer").startup {
 
       requires = { "vim-test/vim-test" },
       run = ":UpdateRemotePlugins",
-      cond = function() return vim.fn.has "python3" == 1 end,
+      cond = function()
+        return vim.fn.has "python3" == 1
+      end,
       config = function()
         vim.cmd [[nmap ]t <Plug>(ultest-next-fail)]]
         vim.cmd [[nmap [t <Plug>(ultest-prev-fail)]]
@@ -307,7 +309,9 @@ return require("packer").startup {
 
     use {
       "alfredodeza/pytest.vim",
-      cond = function() return vim.fn.has "python3" == 1 end,
+      cond = function()
+        return vim.fn.has "python3" == 1
+      end,
     }
 
     if false and has "python3" then
@@ -347,6 +351,7 @@ return require("packer").startup {
 
     -- use 'justinmk/vim-dirvish'
     use "tamago324/lir.nvim"
+    use "tamago324/lir-git-status.nvim"
 
     use "pechorin/any-jump.vim"
 
@@ -363,7 +368,6 @@ return require("packer").startup {
     use "tpope/vim-characterize"
     use "tpope/vim-dispatch"
     use "AndrewRadev/splitjoin.vim"
-    -- use 'AndrewRadev/sideways.vim' -- Easy sideways movement
 
     -- TODO: Check out macvhakann/vim-sandwich at some point
     use "tpope/vim-surround" -- Surround text objects easily

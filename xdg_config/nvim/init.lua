@@ -4,17 +4,11 @@
 --      / / / /___/ /___/ /_/ /      https://twitch.tv/teej_dv
 --     /_/ /_____/_____/\____/
 
-PROFILE_LOAD = false
-if PROFILE_LOAD then
-  require("jit.p").start("10,i1,s,m0,G", "/tmp/output_flame.log")
-  vim.cmd [[au VimLeave * lua require'jit.p'.stop()]]
-end
-
 --[[ Notes to people reading my configuration!
 
 Much of the configuration of individual plugins you can find in either:
 
-./lua/plugin/*.lua
+./plugin/*.lua
   This is where many of the new plugin configurations live.
 
   These are sourced by using https://github.com/tjdevries/astronauta.nvim
@@ -39,6 +33,8 @@ Much of the configuration of individual plugins you can find in either:
 
 --]]
 
+require "tj.profile"
+
 if require "tj.first_load"() then
   return
 end
@@ -50,6 +46,8 @@ end
 -- leader.
 vim.g.mapleader = ","
 
+-- I set some global variables to use as configuration throughout my config.
+-- These don't have any special meaning.
 vim.g.snippets = "luasnip"
 
 -- Setup globals that I expect to be always available.
@@ -58,9 +56,6 @@ require "tj.globals"
 
 -- Force loading of astronauta first.
 vim.cmd [[runtime plugin/astronauta.vim]]
-
--- Load neovim options
-require "tj.options"
 
 -- Neovim builtin LSP configuration
 require "tj.lsp"

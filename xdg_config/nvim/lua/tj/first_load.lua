@@ -1,6 +1,3 @@
-
-vim.cmd [[packadd packer.nvim]]
-
 local download_packer = function()
   if vim.fn.input "Download Packer? (y for yes)" ~= "y" then
     return

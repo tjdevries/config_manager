@@ -1,3 +1,7 @@
+if v:true
+  finish
+end
+
 function! s:FindMap() abort
   let keymap = nvim_get_keymap('n')
 

@@ -1,4 +1,7 @@
-local dap = require "dap"
+local has_dap, dap = pcall(require, "dap")
+if not has_dap then
+  return
+end
 
 -- TODO: How does terminal work?
 dap.defaults.fallback.external_terminal = {

@@ -1,3 +1,7 @@
+if not pcall(require, "plenary") then
+  return
+end
+
 local nnoremap = vim.keymap.nnoremap
 local Path = require "plenary.path"
 

@@ -26,5 +26,3 @@ call cyclist#add_listchar_option_set('busy', {
         \ })
 
 nmap <leader>cl <Plug>CyclistNext
-
-

@@ -1,1 +1,1 @@
--- print("This is getting sourced automatically")
+vim.opt_local.shiftwidth = 2

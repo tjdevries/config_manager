@@ -3,13 +3,12 @@
 --
 -- Otherwise doesn't do anything.
 
-if vim.fn.executable "stylua"  == 0 then
+if vim.fn.executable "stylua" == 0 then
   return
 end
 
-
-vim.api.nvim_exec([[
+vim.cmd [[
   augroup StyluaAuto
     autocmd BufWritePre *.lua :lua require("tj.stylua").format()
   augroup END
-]], false)
+]]

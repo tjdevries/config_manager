@@ -1,4 +1,10 @@
 --[[
+Way to define query files for treesitter via lua code,
+so that you could compose queries together
+and re-use things, without having to get crazy w/ other things.
+--]]
+
+--[[
 ;; Functions definitions
 (function_declarator
   declarator: (identifier) @definition.function)

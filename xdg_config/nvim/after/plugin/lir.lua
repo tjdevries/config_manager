@@ -33,6 +33,10 @@ lir.setup {
   },
 }
 
+require("lir.git_status").setup {
+  show_ignored = false,
+}
+
 vim.api.nvim_set_keymap("n", "-", ":edit %:h<CR>", { noremap = true })
 
 -- Can do this if we want to get particular settings
@@ -67,3 +71,10 @@ vim.api.nvim_set_keymap("n", "-", ":edit %:h<CR>", { noremap = true })
 -- ['C'] = clipboard_actions.copy,
 -- ['X'] = clipboard_actions.cut,
 -- ['P'] = clipboard_actions.paste,
+
+-- highlight link LirGitStatusBracket Comment
+-- highlight link LirGitStatusIndex Special
+-- highlight link LirGitStatusWorktree WarningMsg
+-- highlight link LirGitStatusUnmerged ErrorMsg
+-- highlight link LirGitStatusUntracked Comment
+-- highlight link LirGitStatusIgnored Comment

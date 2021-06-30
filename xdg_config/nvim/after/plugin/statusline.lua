@@ -1,5 +1,3 @@
-vim.cmd [[packadd express_line.nvim]]
-
 -- TODO: Need to add those sweet sweet lsp workspace diagnostic counts
 
 RELOAD "el"
