@@ -12,8 +12,6 @@ end)()
 
 return require("packer").startup {
   function(use)
-    use "wbthomason/packer.nvim"
-
     local local_use = function(first, second, opts)
       opts = opts or {}
 
@@ -34,6 +32,16 @@ return require("packer").startup {
 
       use(opts)
     end
+
+    local py_use = function(opts)
+      if not has "python3" then
+        return
+      end
+
+      use(opts)
+    end
+
+    use "wbthomason/packer.nvim"
 
     -- My Plugins
     local_use "nlua.nvim"
@@ -62,9 +70,6 @@ return require("packer").startup {
     local_use "streamer.nvim"
     local_use "bandaid.nvim"
 
-    local_use "nsync.nvim"
-    use "bfredl/nvim-luadev"
-
     -- LSP Plugins:
 
     -- NOTE: lspconfig ONLY has configs, for people reading this :)
@@ -74,11 +79,18 @@ return require("packer").startup {
     local_use "lsp_extensions.nvim"
     use "glepnir/lspsaga.nvim"
     use "onsails/lspkind-nvim"
+    -- https://github.com/rmagatti/goto-preview
 
-    use { "akinsho/flutter-tools.nvim" }
+    use {
+      "akinsho/flutter-tools.nvim",
+      ft = { "flutter", "dart" },
+    }
+
+    -- https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
 
     use {
       "folke/lsp-trouble.nvim",
+      cmd = "LspTrouble",
       config = function()
         -- Can use P to toggle auto movement
         require("trouble").setup {
@@ -104,6 +116,9 @@ return require("packer").startup {
     local_use("nvim-telescope", "telescope-github.nvim")
     local_use("nvim-telescope", "telescope-symbols.nvim")
 
+    -- TODO: When i'm back w/ some npm stuff, get this working.
+    -- elianiva/telescope-npm.nvim
+
     local_use "telescope-hacks.nvim"
     local_use "telescope-sourcegraph.nvim"
     local_use "green_light.nvim"
@@ -123,27 +138,41 @@ return require("packer").startup {
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
 
-    -- PRACTICE: {{{
-    use "tpope/vim-projectionist" -- STREAM: Alternate file editting and some helpful stuff
+    -- PRACTICE:
+    use {
+      "tpope/vim-projectionist", -- STREAM: Alternate file editting and some helpful stuff,
+      enable = false,
+    }
 
     -- For narrowing regions of text to look at them alone
-    use "chrisbra/NrrwRgn" -- Figure out some good ways to use this on stream
+    use {
+      "chrisbra/NrrwRgn",
+      cmd = { "NarrowRegion", "NarrowWindow" },
+    }
 
     use "tweekmonster/spellrotate.vim"
     use "haya14busa/vim-metarepeat" -- Never figured out how to use this, but looks like fun.
-    -- }}}
-    -- VIM EDITOR: {{{
+    --
+    -- VIM EDITOR:
 
     -- Little know features:
     --   :SSave
     --   :SLoad
     --       These are wrappers for mksession that work great. I never have to use
     --       mksession anymore or worry about where things are saved / loaded from.
-    use "mhinz/vim-startify"
+    use {
+      "mhinz/vim-startify",
+      cmd = { "SLoad", "SSave" },
+      config = function()
+        vim.g.startify_disable_at_vimenter = true
+      end,
+    }
 
     -- Better profiling output for startup.
-    use "dstein64/vim-startuptime"
-    -- use 'tweekmonster/startuptime.vim'  -- Might switch back to this, but they are incompatible.
+    use {
+      "dstein64/vim-startuptime",
+      cmd = "StartupTime",
+    }
 
     -- Pretty colors
     use "norcalli/nvim-colorizer.lua"
@@ -155,19 +184,30 @@ return require("packer").startup {
     }
 
     -- Make comments appear IN YO FACE
-    use "tjdevries/vim-inyoface"
+    use {
+      "tjdevries/vim-inyoface",
+      config = function()
+        vim.api.nvim_set_keymap("n", "<leader>cc", "<Plug>(InYoFace_Toggle)", {})
+      end,
+    }
 
     -- Show only what you're searching for.
     -- STREAM: Could probably make this a bit better. Definitely needs docs
     use "tjdevries/fold_search.vim"
 
-    use "tweekmonster/exception.vim"
-    use "tweekmonster/haunted.vim"
+    use {
+      "tweekmonster/haunted.vim",
+      cmd = "Haunt",
+    }
 
-    -- :Messages <- view messages in quickfix list
-    -- :Verbose  <- view verbose output in preview window.
-    -- :Time     <- measure how long it takes to run some stuff.
-    use "tpope/vim-scriptease"
+    use {
+      "tpope/vim-scriptease",
+      cmd = {
+        "Messages", --view messages in quickfix list
+        "Verbose", -- view verbose output in preview window.
+        "Time", -- measure how long it takes to run some stuff.
+      },
+    }
 
     -- Quickfix enhancements. See :help vim-qf
     use "romainl/vim-qf"
@@ -204,12 +244,20 @@ return require("packer").startup {
     -- Better increment/decrement
     use "monaqa/dial.nvim"
 
-    --   FOCUSING: {{{
-    use "junegunn/goyo.vim"
-    use "junegunn/limelight.vim"
-    --   }}}
-    -- }}}
-    --  LANGUAGE: {{{
+    --   FOCUSING:
+    use {
+      "junegunn/goyo.vim",
+      cmd = "Goyo",
+    }
+
+    use {
+      "junegunn/limelight.vim",
+      after = "goyo.vim",
+    }
+
+    --
+    --
+    --  LANGUAGE:
     -- TODO: Should check on these if they are the best ones
     use { "neovimhaskell/haskell-vim", ft = "haskell" }
     use { "elzr/vim-json", ft = "json" }
@@ -226,7 +274,7 @@ return require("packer").startup {
 
     use { "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" }
 
-    -- Typescript {{{
+    -- Typescript
     if false then
       use "jelera/vim-javascript-syntax"
       use "othree/javascript-libraries-syntax.vim"
@@ -235,6 +283,10 @@ return require("packer").startup {
 
       use { "vim-scripts/JavaScript-Indent", ft = "javascript" }
       use { "pangloss/vim-javascript", ft = { "javascript", "html" } }
+
+      -- Godot
+      use "habamax/vim-godot"
+      --
     end
 
     -- Wonder if I can make LSP do this and respect .prettier files.
@@ -249,15 +301,12 @@ return require("packer").startup {
     -- use 'mattn/emmet-vim'
 
     use "tpope/vim-liquid"
-    -- }}}
-    -- Godot {{{
-    use "habamax/vim-godot"
-    -- }}}
-    -- Lisp {{{
+    --
+    -- Lisp
     -- use { 'eraserhd/parinfer-rust', run = 'cargo build --release' }
-    -- }}}
-    --  }}}
-    -- LSP {{{
+    --
+    --
+    -- LSP
 
     -- STREAM: Figure out how to use snippets better
     -- use 'haorenW1025/completion-nvim'
@@ -275,13 +324,7 @@ return require("packer").startup {
     use { "liuchengxu/vista.vim", cmd = "Vista" }
 
     -- Find and replace
-    use {
-      "brooth/far.vim",
-
-      cond = function()
-        return vim.fn.has "python3" == 1
-      end,
-    }
+    py_use "brooth/far.vim"
 
     -- Debug adapter protocol
     --   Have not yet checked this out, but looks awesome.
@@ -290,6 +333,7 @@ return require("packer").startup {
     use "theHamsta/nvim-dap-virtual-text"
     use "mfussenegger/nvim-dap-python"
     use "nvim-telescope/telescope-dap.nvim"
+    -- Pocco81/DAPInstall.nvim
 
     use "jbyuki/one-small-step-for-vimkind"
 
@@ -317,9 +361,9 @@ return require("packer").startup {
     if false and has "python3" then
       use "puremourning/vimspector"
     end
-    -- }}}
+    --
 
-    -- TREE SITTER: {{{
+    -- TREE SITTER:
     local_use("nvim-treesitter", "nvim-treesitter")
     use "nvim-treesitter/nvim-treesitter-textobjects"
     use "nvim-treesitter/playground"
@@ -342,46 +386,37 @@ return require("packer").startup {
     local_use "tree-sitter-lua"
     local_use "tree-sitter-sql"
 
-    -- }}}
-    -- NAVIGATION: {{{
+    --
+    -- NAVIGATION:
     -- STREAM: Show off edit_alternate.vim
     use "tjdevries/edit_alternate.vim"
 
     use "google/vim-searchindex"
 
-    -- use 'justinmk/vim-dirvish'
     use "tamago324/lir.nvim"
     use "tamago324/lir-git-status.nvim"
 
     use "pechorin/any-jump.vim"
 
-    -- Temporary disabled... getting real bad performance in some lua files.
-    --  Might just disable for Lua only?...
-    -- use 'andymass/vim-matchup'
-
-    -- }}}
-    -- TEXT MANIUPLATION {{{
+    --
+    -- TEXT MANIUPLATION
     use "godlygeek/tabular" -- Quickly align text by pattern
     use "tpope/vim-commentary" -- Easily comment out lines or objects
     use "tpope/vim-repeat" -- Repeat actions better
     use "tpope/vim-abolish" -- Cool things with words!
     use "tpope/vim-characterize"
-    use "tpope/vim-dispatch"
-    use "AndrewRadev/splitjoin.vim"
+    use { "tpope/vim-dispatch", cmd = { "Dispatch", "Make" } }
+
+    use {
+      "AndrewRadev/splitjoin.vim",
+      keys = { "gJ", "gS" },
+    }
 
     -- TODO: Check out macvhakann/vim-sandwich at some point
     use "tpope/vim-surround" -- Surround text objects easily
 
-    -- Do I even use any of these?
-    use "kana/vim-textobj-user"
-    use "bps/vim-textobj-python"
-    -- }}}
-    -- Python: {{{
-
-    -- }}}
-    -- GIT: {{{
-    -- gita replacement
-    -- use 'lambdalisue/gina.vim'
+    --
+    -- GIT:
     use "TimUntersberger/neogit"
 
     -- Github integration
@@ -392,14 +427,16 @@ return require("packer").startup {
 
     -- Sweet message committer
     use "rhysd/committia.vim"
+    use "sindrets/diffview.nvim"
 
     -- Floating windows are awesome :)
-    use "rhysd/git-messenger.vim"
+    use {
+      "rhysd/git-messenger.vim",
+      keys = "<Plug>(git-messenger)",
+    }
 
     -- Async signs!
-    if has "nvim-0.5" then
-      use "lewis6991/gitsigns.nvim"
-    end
+    use "lewis6991/gitsigns.nvim"
 
     -- Git worktree utility6
     use {
@@ -409,29 +446,35 @@ return require("packer").startup {
       end,
     }
 
-    -- }}}
-
     -- use 'untitled-ai/jupyter_ascending.vim'
 
     use "tjdevries/standard.vim"
     use "tjdevries/conf.vim"
-    use "junegunn/vader.vim"
 
-    use { "junegunn/fzf", run = "./install --all" } -- Fuzzy Searcher
+    use { "junegunn/fzf", run = "./install --all" }
     use { "junegunn/fzf.vim" }
-    -- use {'yuki-ycino/fzf-preview.vim', run = 'yarn global add' }
-    -- use {'yuki-ycino/fzf-preview.vim', run = 'npm install' }
 
-    use "lervag/wiki.vim"
-    use "ihsanturk/neuron.vim"
+    if false and vim.fn.executable "neuron" == 1 then
+      use {
+        "oberblastmeister/neuron.nvim",
+        branch = "unstable",
+        config = function()
+          -- these are all the default values
+          require("neuron").setup {
+            virtual_titles = true,
+            mappings = true,
+            run = nil,
+            neuron_dir = "~/neuron",
+            leader = "gz",
+          }
+        end,
+      }
+    end
 
-    -- use 'ThePrimeagen/vim-apm'
-    -- use 'ThePrimeagen/vim-be-good'
-
-    use "alec-gibson/nvim-tetris"
-
-    -- WIP:
-    local_use "py_package.nvim"
+    use {
+      "alec-gibson/nvim-tetris",
+      cmd = "Tetris",
+    }
 
     -- TODO: Figure out why this randomly popups
     --       Figure out if I want to use it later as well :)
@@ -454,6 +497,7 @@ return require("packer").startup {
     -- pretty sure I'm done w/ these
     -- local_use 'vlog.nvim'
   end,
+
   config = {
     display = {
       -- open_fn = require('packer.util').float,

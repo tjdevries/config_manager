@@ -15,7 +15,6 @@ let overlength#default_grace_length = 1
 
 " Disable highlighting in markdown.
 call overlength#disable_filetypes([
-      \ 'markdown',
       \ 'vimwiki',
       \ 'qf',
       \ 'term',
@@ -25,6 +24,7 @@ call overlength#disable_filetypes([
       \ 'term',
       \ '',
       \ ])
+
 call overlength#set_overlength('text', 80)
 call overlength#set_overlength('startify', 0)
 
@@ -36,6 +36,10 @@ call overlength#set_overlength('python', 240)
 call overlength#set_overlength('lua', 140)
 call overlength#set_overlength('go', 200)
 call overlength#set_overlength('rust', 140)
+
+" call overlength#set_overlength('lsp_markdown', 0)
+" call overlength#set_overlength('markdown', 0)
+" call overlength#set_overlength('', 0)
 
 " Some of my own "made up" filetypes
 call overlength#set_overlength('lookitt', 0)

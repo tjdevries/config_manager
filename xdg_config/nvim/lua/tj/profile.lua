@@ -1,5 +1,6 @@
 PROFILE_LOAD = false
+
 if PROFILE_LOAD then
-  require("jit.p").start("10,i1,s,m0,G", "/tmp/output_flame.log")
-  vim.cmd [[au VimLeave * lua require'jit.p'.stop()]]
+  require("plenary.profile").start("/tmp/output_flame.log", { flame = true })
+  -- vim.cmd [[autocmd VimLeave * lua require("plenary.profile").stop()]]
 end

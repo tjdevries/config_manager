@@ -81,8 +81,10 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/LuaSnip"
   },
   NrrwRgn = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/NrrwRgn"
+    commands = { "NarrowRegion", "NarrowWindow" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/NrrwRgn"
   },
   ["Vim-Jinja2-Syntax"] = {
     loaded = true,
@@ -136,30 +138,30 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/dial.nvim"
   },
+  ["diffview.nvim"] = {
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/diffview.nvim"
+  },
   ["edit_alternate.vim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/edit_alternate.vim"
-  },
-  ["exception.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/exception.vim"
   },
   ["express_line.nvim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/express_line.nvim"
   },
   ["far.vim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/far.vim"
+    loaded = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/far.vim"
   },
   firenvim = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/firenvim"
   },
   ["flutter-tools.nvim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/flutter-tools.nvim"
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/flutter-tools.nvim"
   },
   ["fold_search.vim"] = {
     loaded = true,
@@ -174,8 +176,10 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/fzf.vim"
   },
   ["git-messenger.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/git-messenger.vim"
+    keys = { { "", "<Plug>(git-messenger)" } },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/git-messenger.vim"
   },
   ["git-worktree.nvim"] = {
     config = { "\27LJ\2\n>\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\17git-worktree\frequire\0" },
@@ -191,8 +195,11 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
   },
   ["goyo.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/goyo.vim"
+    after = { "limelight.vim" },
+    commands = { "Goyo" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/goyo.vim"
   },
   ["green_light.nvim"] = {
     loaded = true,
@@ -212,12 +219,18 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/haskell-vim"
   },
   ["haunted.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/haunted.vim"
+    commands = { "Haunt" },
+    loaded = false,
+    needs_bufread = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/haunted.vim"
   },
   ["limelight.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/limelight.vim"
+    load_after = {
+      ["goyo.vim"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/limelight.vim"
   },
   ["lir-git-status.nvim"] = {
     loaded = true,
@@ -232,9 +245,11 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lsp-status.nvim"
   },
   ["lsp-trouble.nvim"] = {
+    commands = { "LspTrouble" },
     config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\17auto_preview\1\14auto_fold\2\nsetup\ftrouble\frequire\0" },
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim"
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/lsp-trouble.nvim"
   },
   ["lsp_extensions.nvim"] = {
     loaded = true,
@@ -265,17 +280,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/neogit"
   },
-  ["neuron.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/neuron.vim"
-  },
   ["nlua.nvim"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nlua.nvim"
-  },
-  ["nsync.nvim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nsync.nvim"
   },
   ["nvim-colorizer.lua"] = {
     loaded = true,
@@ -301,10 +308,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
   },
-  ["nvim-luadev"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-luadev"
-  },
   ["nvim-luaref"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-luaref"
@@ -315,8 +318,10 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-terminal.lua"
   },
   ["nvim-tetris"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/nvim-tetris"
+    commands = { "Tetris" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/nvim-tetris"
   },
   ["nvim-tree.lua"] = {
     loaded = true,
@@ -374,10 +379,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/popup.nvim"
   },
-  ["py_package.nvim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/py_package.nvim"
-  },
   ["pytest.vim"] = {
     loaded = false,
     needs_bufread = true,
@@ -392,8 +393,10 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/spellrotate.vim"
   },
   ["splitjoin.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/splitjoin.vim"
+    keys = { { "", "gJ" }, { "", "gS" } },
+    loaded = false,
+    needs_bufread = true,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/splitjoin.vim"
   },
   ["sql.nvim"] = {
     loaded = true,
@@ -479,10 +482,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/tree-sitter-sql"
   },
-  ["vader.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vader.vim"
-  },
   ["vim-abolish"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-abolish"
@@ -500,14 +499,13 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-commentary"
   },
   ["vim-dispatch"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-dispatch"
-  },
-  ["vim-godot"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-godot"
+    commands = { "Dispatch", "Make" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-dispatch"
   },
   ["vim-inyoface"] = {
+    config = { "\27LJ\2\nh\0\0\6\0\6\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0004\5\0\0B\0\5\1K\0\1\0\28<Plug>(InYoFace_Toggle)\15<leader>cc\6n\20nvim_set_keymap\bapi\bvim\0" },
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-inyoface"
   },
@@ -555,20 +553,27 @@ _G.packer_plugins = {
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-repeat"
   },
   ["vim-scriptease"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-scriptease"
+    commands = { "Messages", "Verbose", "Time" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-scriptease"
   },
   ["vim-searchindex"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-searchindex"
   },
   ["vim-startify"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-startify"
+    commands = { "SLoad", "SSave" },
+    config = { "\27LJ\2\n>\0\0\2\0\3\0\0056\0\0\0009\0\1\0+\1\2\0=\1\2\0K\0\1\0!startify_disable_at_vimenter\6g\bvim\0" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-startify"
   },
   ["vim-startuptime"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-startuptime"
+    commands = { "StartupTime" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-startuptime"
   },
   ["vim-surround"] = {
     loaded = true,
@@ -581,14 +586,6 @@ _G.packer_plugins = {
   ["vim-test"] = {
     loaded = true,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-test"
-  },
-  ["vim-textobj-python"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-textobj-python"
-  },
-  ["vim-textobj-user"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/vim-textobj-user"
   },
   ["vim-ultest"] = {
     config = { "\27LJ\2\nu\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0%nmap [t <Plug>(ultest-prev-fail)%nmap ]t <Plug>(ultest-next-fail)\bcmd\bvim\0" },
@@ -606,10 +603,6 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/tjdevries/.local/share/nvim/site/pack/packer/opt/vista.vim"
   },
-  ["wiki.vim"] = {
-    loaded = true,
-    path = "/home/tjdevries/.local/share/nvim/site/pack/packer/start/wiki.vim"
-  },
   ["zig.vim"] = {
     loaded = false,
     needs_bufread = true,
@@ -622,26 +615,23 @@ time([[Defining packer_plugins]], false)
 time([[Config for nvim-terminal.lua]], true)
 try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rterminal\frequire\0", "config", "nvim-terminal.lua")
 time([[Config for nvim-terminal.lua]], false)
--- Config for: lsp-trouble.nvim
-time([[Config for lsp-trouble.nvim]], true)
-try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\17auto_preview\1\14auto_fold\2\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
-time([[Config for lsp-trouble.nvim]], false)
+-- Config for: vim-inyoface
+time([[Config for vim-inyoface]], true)
+try_loadstring("\27LJ\2\nh\0\0\6\0\6\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0004\5\0\0B\0\5\1K\0\1\0\28<Plug>(InYoFace_Toggle)\15<leader>cc\6n\20nvim_set_keymap\bapi\bvim\0", "config", "vim-inyoface")
+time([[Config for vim-inyoface]], false)
 -- Config for: git-worktree.nvim
 time([[Config for git-worktree.nvim]], true)
 try_loadstring("\27LJ\2\n>\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\17git-worktree\frequire\0", "config", "git-worktree.nvim")
 time([[Config for git-worktree.nvim]], false)
 -- Conditional loads
-time("Condition for { 'pytest.vim', 'far.vim', 'vim-ultest' }", true)
+time("Condition for { 'pytest.vim', 'vim-ultest' }", true)
 if
-try_loadstring("\27LJ\2\nG\0\0\3\0\4\1\v6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\2\b\0\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\fpython3\bhas\afn\bvim\2\0", "condition", '{ "pytest.vim", "far.vim", "vim-ultest" }')
+try_loadstring("\27LJ\2\nG\0\0\3\0\4\1\v6\0\0\0009\0\1\0009\0\2\0'\2\3\0B\0\2\2\b\0\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\fpython3\bhas\afn\bvim\2\0", "condition", '{ "pytest.vim", "vim-ultest" }')
 then
-time("Condition for { 'pytest.vim', 'far.vim', 'vim-ultest' }", false)
+time("Condition for { 'pytest.vim', 'vim-ultest' }", false)
 time([[packadd for pytest.vim]], true)
 		vim.cmd [[packadd pytest.vim]]
 	time([[packadd for pytest.vim]], false)
-	time([[packadd for far.vim]], true)
-		vim.cmd [[packadd far.vim]]
-	time([[packadd for far.vim]], false)
 	time([[packadd for vim-ultest]], true)
 		vim.cmd [[packadd vim-ultest]]
 	time([[packadd for vim-ultest]], false)
@@ -650,32 +640,55 @@ time([[packadd for pytest.vim]], true)
 	try_loadstring("\27LJ\2\nu\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0%nmap [t <Plug>(ultest-prev-fail)%nmap ]t <Plug>(ultest-next-fail)\bcmd\bvim\0", "config", "vim-ultest")
 	time([[Config for vim-ultest]], false)
 else
-time("Condition for { 'pytest.vim', 'far.vim', 'vim-ultest' }", false)
+time("Condition for { 'pytest.vim', 'vim-ultest' }", false)
 end
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
+vim.cmd [[command! -nargs=* -range -bang -complete=file Time lua require("packer.load")({'vim-scriptease'}, { cmd = "Time", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file LspTrouble lua require("packer.load")({'lsp-trouble.nvim'}, { cmd = "LspTrouble", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Dispatch lua require("packer.load")({'vim-dispatch'}, { cmd = "Dispatch", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Make lua require("packer.load")({'vim-dispatch'}, { cmd = "Make", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file SLoad lua require("packer.load")({'vim-startify'}, { cmd = "SLoad", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file SSave lua require("packer.load")({'vim-startify'}, { cmd = "SSave", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file NarrowRegion lua require("packer.load")({'NrrwRgn'}, { cmd = "NarrowRegion", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file NarrowWindow lua require("packer.load")({'NrrwRgn'}, { cmd = "NarrowWindow", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'vim-startuptime'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file Vista lua require("packer.load")({'vista.vim'}, { cmd = "Vista", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Tetris lua require("packer.load")({'nvim-tetris'}, { cmd = "Tetris", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Goyo lua require("packer.load")({'goyo.vim'}, { cmd = "Goyo", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Haunt lua require("packer.load")({'haunted.vim'}, { cmd = "Haunt", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Messages lua require("packer.load")({'vim-scriptease'}, { cmd = "Messages", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Verbose lua require("packer.load")({'vim-scriptease'}, { cmd = "Verbose", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 time([[Defining lazy-load commands]], false)
+
+-- Keymap lazy-loads
+time([[Defining lazy-load keymaps]], true)
+vim.cmd [[noremap <silent> <Plug>(git-messenger) <cmd>lua require("packer.load")({'git-messenger.vim'}, { keys = "<lt>Plug>(git-messenger)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gS <cmd>lua require("packer.load")({'splitjoin.vim'}, { keys = "gS", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gJ <cmd>lua require("packer.load")({'splitjoin.vim'}, { keys = "gJ", prefix = "" }, _G.packer_plugins)<cr>]]
+time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
 vim.cmd [[au FileType haskell ++once lua require("packer.load")({'haskell-vim'}, { ft = "haskell" }, _G.packer_plugins)]]
-vim.cmd [[au FileType typescript ++once lua require("packer.load")({'vim-prettier'}, { ft = "typescript" }, _G.packer_plugins)]]
-vim.cmd [[au FileType mscgen ++once lua require("packer.load")({'vim-mscgen'}, { ft = "mscgen" }, _G.packer_plugins)]]
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'vim-prettier'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType zig ++once lua require("packer.load")({'zig.vim'}, { ft = "zig" }, _G.packer_plugins)]]
 vim.cmd [[au FileType json ++once lua require("packer.load")({'vim-json'}, { ft = "json" }, _G.packer_plugins)]]
+vim.cmd [[au FileType typescript ++once lua require("packer.load")({'vim-prettier'}, { ft = "typescript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType javascript ++once lua require("packer.load")({'vim-prettier'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType dart ++once lua require("packer.load")({'flutter-tools.nvim'}, { ft = "dart" }, _G.packer_plugins)]]
 vim.cmd [[au FileType html ++once lua require("packer.load")({'vim-prettier'}, { ft = "html" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType flutter ++once lua require("packer.load")({'flutter-tools.nvim'}, { ft = "flutter" }, _G.packer_plugins)]]
+vim.cmd [[au FileType mscgen ++once lua require("packer.load")({'vim-mscgen'}, { ft = "mscgen" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-json/ftdetect/json.vim]], true)
-vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-json/ftdetect/json.vim]]
-time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-json/ftdetect/json.vim]], false)
+time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/haskell-vim/ftdetect/haskell.vim]], true)
+vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/haskell-vim/ftdetect/haskell.vim]]
+time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/haskell-vim/ftdetect/haskell.vim]], false)
 time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-mscgen/ftdetect/mscgen.vim]], true)
 vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-mscgen/ftdetect/mscgen.vim]]
 time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-mscgen/ftdetect/mscgen.vim]], false)
@@ -685,6 +698,9 @@ time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/
 time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-mscgen/ftdetect/xu.vim]], true)
 vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-mscgen/ftdetect/xu.vim]]
 time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-mscgen/ftdetect/xu.vim]], false)
+time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/zig.vim/ftdetect/zig.vim]], true)
+vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/zig.vim/ftdetect/zig.vim]]
+time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/zig.vim/ftdetect/zig.vim]], false)
 time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/css.vim]], true)
 vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/css.vim]]
 time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/css.vim]], false)
@@ -733,12 +749,9 @@ time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/
 time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/yaml.vim]], true)
 vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/yaml.vim]]
 time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/yaml.vim]], false)
-time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/zig.vim/ftdetect/zig.vim]], true)
-vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/zig.vim/ftdetect/zig.vim]]
-time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/zig.vim/ftdetect/zig.vim]], false)
-time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/haskell-vim/ftdetect/haskell.vim]], true)
-vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/haskell-vim/ftdetect/haskell.vim]]
-time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/haskell-vim/ftdetect/haskell.vim]], false)
+time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-json/ftdetect/json.vim]], true)
+vim.cmd [[source /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-json/ftdetect/json.vim]]
+time([[Sourcing ftdetect script at: /home/tjdevries/.local/share/nvim/site/pack/packer/opt/vim-json/ftdetect/json.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 

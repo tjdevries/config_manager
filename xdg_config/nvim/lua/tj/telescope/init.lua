@@ -117,8 +117,8 @@ require("telescope").setup {
 
     -- file_sorter = sorters.get_fzy_sorter,
     file_ignore_patterns = {
-      "parser.c",
-      "mock_.*.go",
+      -- "parser.c",
+      -- "mock_.*.go",
     },
 
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
@@ -234,6 +234,20 @@ function M.sourcegraph_find()
     layout_strategy = "horizontal",
     layout_config = {
       width = 0.25,
+      preview_width = 0.65,
+    },
+  }
+end
+
+function M.sourcegraph_main_find()
+  require("telescope.builtin").find_files {
+    prompt_title = "~ main: sourcegraph ~",
+    shorten_path = false,
+    cwd = "~/sourcegraph/sourcegraph.git/main/",
+
+    layout_strategy = "horizontal",
+    layout_config = {
+      width = 0.95,
       preview_width = 0.65,
     },
   }

@@ -37,7 +37,7 @@ if has_compe then
       calc = false,
       nvim_lsp = true,
       nvim_lua = true,
-      spell = true,
+      spell = false,
       tags = true,
       luasnip = true,
 

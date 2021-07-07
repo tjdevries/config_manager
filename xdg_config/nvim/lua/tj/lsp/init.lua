@@ -201,6 +201,10 @@ lspconfig.gopls.setup {
       codelenses = { test = true },
     },
   },
+
+  flags = {
+    debounce_text_changes = 200,
+  },
 }
 
 lspconfig.gdscript.setup {

@@ -22,6 +22,8 @@ lir.setup {
   show_hidden_files = true,
   devicons_enable = true,
 
+  float = { winblend = 15 },
+
   mappings = {
     ["<CR>"] = actions.edit,
     ["-"] = actions.up,
