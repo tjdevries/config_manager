@@ -1,6 +1,6 @@
 if [[ $ZSH_PLUGIN_MANAGER = 'zplug' ]]; then # {{{
-  export ZSH_HOME=$CONFIG_HOME/zplug
-  export ZPLUG_HOME=$CONFIG_HOME/zplug
+  export ZSH_HOME=$XDG_CONFIG_HOME/zplug
+  export ZPLUG_HOME=$XDG_CONFIG_HOME/zplug
 
   source "$ZPLUG_HOME/init.zsh"
 
@@ -68,7 +68,7 @@ if [[ $ZSH_PLUGIN_MANAGER = 'oh-my-zsh' ]]; then
   }
 
 
-  ZSH_THEME="spaceship"
+  # ZSH_THEME="spaceship"
 
   export CASE_SENSITIVE=false
   export HYPHEN_INSENSITIVE=true

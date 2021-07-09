@@ -97,3 +97,5 @@ gnrebase() {
 gpo() {
     git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
 }
+
+cdr() { cd $(git rev-parse --show-toplevel) }

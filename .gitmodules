@@ -1,3 +1,6 @@
 [submodule "xdg_config/zsh/submods/gcloud-zsh-completion"]
 	path = xdg_config/zsh/submods/gcloud-zsh-completion
 	url = https://github.com/littleq0903/gcloud-zsh-completion
+[submodule "xdg_config/awesome/awesome-wm-widgets"]
+	path = xdg_config/awesome/awesome-wm-widgets
+	url = https://github.com/streetturtle/awesome-wm-widgets

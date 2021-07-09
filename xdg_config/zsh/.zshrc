@@ -1,3 +1,16 @@
+export _TJ_PROFILE=0
+
+if [[ $_TJ_PROFILE -eq 1 ]]; then
+  zmodload zsh/datetime
+  PS4='+$EPOCHREALTIME %N:%i> '
+
+  logfile=$(mktemp zsh_profile.XXXXXXXX)
+  echo "Logging to $logfile"
+  exec 3>&2 2>$logfile
+
+  setopt XTRACE
+fi
+
 # Set the shell to zsh
 export SHELL=/bin/zsh
 
@@ -11,9 +24,6 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export ZSH_CUSTOM=~/.config/zsh/custom/
 export ZSH_ENV_HOME=$HOME/
 
-export CONFIG_HOME=$HOME/.config
-export NVIM_HOME=$CONFIG_HOME/nvim
-
 export XDG_CONFIG_HOME=$HOME/.config/
 
 ## ZSH options
@@ -21,8 +31,9 @@ setopt functionargzero
 setopt hist_ignore_space
 
 ## ZSH environment options
-# export DISABLE_LS_COLORS='true'
 
+
+## ZSH plugins
 export ZSH_PLUGIN_MANAGER='antigen'
 
 fpath=($XDG_CONFIG_HOME/zsh/submods/gcloud-zsh-completion/src/ $fpath)
@@ -33,7 +44,7 @@ function git_clone_or_update() {
   git clone "$1" "$2" 2>/dev/null && print 'Update status: Success' || (cd "$2"; git pull)
 }
 
-source $CONFIG_HOME/antigen/antigen.zsh
+source $XDG_CONFIG_HOME/antigen/antigen.zsh
 
 antigen bundle 'zsh-users/zsh-syntax-highlighting'
 antigen bundle 'zsh-users/zsh-autosuggestions'
@@ -42,10 +53,9 @@ antigen bundle 'zsh-users/zsh-autosuggestions'
 antigen bundle 'agkozak/zsh-z'
 
 antigen theme denysdovhan/spaceship-prompt
+# antigen theme robbyrussell
 
 antigen apply
-
-# antigen theme robbyrussell
 
 bindkey '^ ' autosuggest-accept
 bindkey '^n' autosuggest-accept
@@ -166,14 +176,6 @@ else
   export EDITOR=vim
 fi
 
-export NVM_COMPLETION=true
-export NVM_DIR=$HOME/".nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-if hash yarn 2>/dev/null; then
-    export PATH="$PATH:$(yarn global bin)"
-fi
-
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
@@ -238,3 +240,29 @@ if [ -f "$HOME/.asdf/asdf.sh" ]; then
 fi
 
 
+export PATH="$HOME/.poetry/bin:$PATH"
+
+if [[ $_TJ_PROFILE -eq 1 ]]; then
+  unsetopt XTRACE
+  exec 2>&3 3>&-
+fi
+
+
+setopt PROMPT_SUBST
+
+# if hash luarocks 2>/dev/null; then
+#     export LUA_PATH=$(luarocks path --lr-path)
+#     export LUA_CPATH=$(luarocks path --lr-cpath)
+# fi
+
+function lua_statusline() {
+  luajit /home/tjdevries/.config/zsh/prompt.lua $?
+}
+
+function zshexit() {
+  # TODO: Clean up any associated things that are left open from lua land
+}
+
+# export PS1='$(luajit /home/tjdevries/.config/zsh/prompt.lua)'
+# export PS1='$(lua_statusline)'
+# export PS1='$(pwd) > '

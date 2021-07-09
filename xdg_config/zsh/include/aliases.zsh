@@ -41,3 +41,6 @@ alias gout='git checkout'
 #
 # Wiki Aliases
 alias viki='cd ~/viki/; nvim'
+
+# TY noah :)
+alias exit='echo "Yo... use ctrl+D..."'
