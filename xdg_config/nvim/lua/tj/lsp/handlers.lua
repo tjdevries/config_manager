@@ -1,3 +1,5 @@
+local protocol = require "vim.lsp.protocol"
+
 vim.lsp.handlers["textDocument/definition"] = function(_, _, result)
   if not result or vim.tbl_isempty(result) then
     print "[LSP] Could not find definition"
@@ -44,8 +46,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
-vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
-
 function DoSomeLens()
   print "Lens Requesting..."
 
@@ -56,74 +56,27 @@ function DoSomeLens()
   print "... Done"
 end
 
-vim.lsp.handlers["textDocument/codeLens"] = function(err, _, result)
-  print "Code Lens..."
-  P(result)
-  print "...Code Lens"
+-- vim.lsp.handlers["textDocument/codeLens"] = function(err, _, result)
+--   print "Code Lens..."
+--   P(result)
+--   print "...Code Lens"
+-- end
+
+vim.lsp.handlers["textDocument/codeLens"] = function(err, _, result, client_id, bufnr)
+  vim.lsp.codelens.on_codelens(err, _, result, client_id, bufnr)
 end
 
--- Override various utility functions.
--- vim.lsp.diagnostic.show_line_diagnostics = require('lspsaga.diagnostic').show_line_diagnostics
-
--- TODO: Move to colorbuddy
-vim.cmd [[highlight LspLinesDiagBorder guifg=white]]
-vim.cmd [[highlight LineDiagTuncateLine guifg=white]]
+vim.lsp.handlers["window/showMessage"] = function(...)
+  return R "tj.lsp.show_message"(...)
+end
 
 local ns_rename = vim.api.nvim_create_namespace "tj_rename"
-
-local saga_config = require("lspsaga").config_values
-saga_config.rename_prompt_prefix = ">"
 
 function MyLspRename()
   local bufnr = vim.api.nvim_get_current_buf()
   vim.api.nvim_buf_clear_namespace(bufnr, ns_rename, 0, -1)
 
   local current_word = vim.fn.expand "<cword>"
-
-  local has_saga, saga = pcall(require, "lspsaga.rename")
-
-  if has_saga then
-    local line, col = vim.fn.line ".", vim.fn.col "."
-    local contents = vim.api.nvim_buf_get_lines(bufnr, line - 1, line, false)[1]
-
-    local has_found_highlights, start, finish = false, 0, -1
-    while not has_found_highlights do
-      start, finish = contents:find(current_word, start + 1, true)
-
-      if not start or not finish then
-        break
-      end
-
-      if start <= col and finish >= col then
-        has_found_highlights = true
-      end
-    end
-
-    if has_found_highlights then
-      vim.api.nvim_buf_add_highlight(bufnr, ns_rename, "Visual", line - 1, start - 1, finish)
-      vim.cmd(
-        string.format(
-          "autocmd BufEnter <buffer=%s> ++once :call nvim_buf_clear_namespace(%s, %s, 0, -1)",
-          bufnr,
-          bufnr,
-          ns_rename
-        )
-      )
-    end
-
-    saga.rename()
-
-    -- Just make escape quit the window as well.
-    vim.api.nvim_buf_set_keymap(
-      0,
-      "n",
-      "<esc>",
-      '<cmd>lua require("lspsaga.rename").close_rename_win()<CR>',
-      { noremap = true, silent = true }
-    )
-
-    return
-  end
 
   local plenary_window = require("plenary.window.float").percentage_range_window(0.5, 0.2)
   vim.api.nvim_buf_set_option(plenary_window.bufnr, "buftype", "prompt")
@@ -180,7 +133,7 @@ GoImports = function(timeoutms)
       vim.lsp.util.apply_workspace_edit(edit)
     end
   end
-  vim.lsp.buf.formatting()
+  vim.lsp.buf.formatting_sync()
 end
 
 local M = {}
@@ -205,6 +158,64 @@ M.implementation = function()
     vim.lsp.handlers["textDocument/implementation"](err, method, result, client_id, bufnr, config)
     vim.cmd [[normal! zz]]
   end)
+end
+
+local has_saga = pcall(require, "lspsaga")
+if has_saga then
+  vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
+
+  local saga_config = require("lspsaga").config_values
+  saga_config.rename_prompt_prefix = ">"
+
+  -- vim.cmd [[highlight LspLinesDiagBorder guifg=white]]
+  -- vim.cmd [[highlight LineDiagTuncateLine guifg=white]]
+
+  --[[
+  local handle, saga = pcall(require, "lspsaga.rename")
+
+  if handle then
+    local line, col = vim.fn.line ".", vim.fn.col "."
+    local contents = vim.api.nvim_buf_get_lines(bufnr, line - 1, line, false)[1]
+
+    local has_found_highlights, start, finish = false, 0, -1
+    while not has_found_highlights do
+      start, finish = contents:find(current_word, start + 1, true)
+
+      if not start or not finish then
+        break
+      end
+
+      if start <= col and finish >= col then
+        has_found_highlights = true
+      end
+    end
+
+    if has_found_highlights then
+      vim.api.nvim_buf_add_highlight(bufnr, ns_rename, "Visual", line - 1, start - 1, finish)
+      vim.cmd(
+        string.format(
+          "autocmd BufEnter <buffer=%s> ++once :call nvim_buf_clear_namespace(%s, %s, 0, -1)",
+          bufnr,
+          bufnr,
+          ns_rename
+        )
+      )
+    end
+
+    saga.rename()
+
+    -- Just make escape quit the window as well.
+    vim.api.nvim_buf_set_keymap(
+      0,
+      "n",
+      "<esc>",
+      '<cmd>lua require("lspsaga.rename").close_rename_win()<CR>',
+      { noremap = true, silent = true }
+    )
+
+    return
+  end
+  --]]
 end
 
 return M

@@ -7,6 +7,16 @@ if ts_debugging then
   RELOAD "nvim-treesitter"
 end
 
+local list = require("nvim-treesitter.parsers").get_parser_configs()
+
+list.sql = {
+  install_info = {
+    url = "https://github.com/DerekStride/tree-sitter-sql",
+    files = { "src/parser.c" },
+    branch = "main",
+  },
+}
+
 -- :h nvim-treesitter-query-extensions
 local custom_captures = {
   ["function.call"] = "LuaFunctionCall",
@@ -20,6 +30,7 @@ end
 
 -- Overrides any existing tree sitter query for a particular name
 vim.treesitter.set_query("rust", "highlights", read_query "~/.config/nvim/queries/rust/highlights.scm")
+-- vim.treesitter.set_query("sql", "highlights", read_query "~/.config/nvim/queries/sql/highlights.scm")
 
 -- alt+<space>, alt+p -> swap next
 -- alt+<backspace>, alt+p -> swap previous

@@ -1,0 +1,8 @@
+-- local mappings = {
+--   i = {
+--     ["<c-e>"] = function()
+--       local picker = action_state.current_picker()
+--       picker:evolve("grep_string", optional_opts)
+--     end,
+--   },
+-- }

@@ -45,8 +45,8 @@ end
 
 LsifRange = lsif.range
 
-nnoremap { "<space>lp", lsif.position }
-
-vim.api.nvim_set_keymap("v", "<space>lr", ":'<,'>lua LsifRange()<CR>", { noremap = true })
+-- TODO: Gotta find the right ones
+-- nnoremap { "<space>lp", lsif.position }
+-- vim.api.nvim_set_keymap("v", "<space>lr", ":'<,'>lua LsifRange()<CR>", { noremap = true })
 
 return lsif

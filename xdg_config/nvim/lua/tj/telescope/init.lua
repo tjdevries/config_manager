@@ -1,3 +1,12 @@
+--[[
+
+TODO:
+- do the thing with auto picking shorter results if possible for conni
+- I wanna add something that gives a little minus points for certain pattern
+
+  - scratch files get mins -0.001
+
+--]]
 if not pcall(require, "telescope") then
   return
 end
@@ -8,6 +17,7 @@ local reloader = function()
     RELOAD "plenary"
     RELOAD "popup"
     RELOAD "telescope"
+    RELOAD "tj.telescope.custom"
   end
 end
 
@@ -54,6 +64,23 @@ require("telescope").setup {
   defaults = {
     prompt_prefix = "❯ ",
     selection_caret = "❯ ",
+
+    _get_status_text = function(self, opts)
+      local xx = (self.stats.processed or 0) - (self.stats.filtered or 0)
+      local yy = self.stats.processed or 0
+      if xx == 0 and yy == 0 then
+        return ""
+      end
+
+      local status_icon
+      if opts.completed then
+        status_icon = "✔️"
+      else
+        status_icon = "*"
+      end
+
+      return string.format("%s %-7s/%7s", status_icon, xx, yy)
+    end,
 
     winblend = 0,
 
@@ -110,6 +137,14 @@ require("telescope").setup {
 
         -- ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
         -- ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+
+        ["<C-space>"] = function(prompt_bufnr)
+          local opts = {
+            callback = actions.toggle_selection,
+            loop_callback = actions.send_selected_to_qflist,
+          }
+          require("telescope").extensions.hop._hop_loop(prompt_bufnr, opts)
+        end,
       },
     },
 
@@ -137,12 +172,33 @@ require("telescope").setup {
       minimum_grep_characters = 6,
     },
 
-    frecency = {
-      workspaces = {
-        ["conf"] = "/home/tj/.config/nvim/",
-        ["nvim"] = "/home/tj/build/neovim",
-      },
+    hop = {
+      -- keys define your hop keys in order; defaults to roughly lower- and uppercased home row
+      keys = { "a", "s", "d", "f", "g", "h", "j", "k", "l", ";" }, -- ... and more
+
+      -- Highlight groups to link to signs and lines; the below configuration refers to demo
+      -- sign_hl typically only defines foreground to possibly be combined with line_hl
+      sign_hl = { "WarningMsg", "Title" },
+
+      -- optional, typically a table of two highlight groups that are alternated between
+      line_hl = { "CursorLine", "Normal" },
+
+      -- options specific to `hop_loop`
+      -- true temporarily disables Telescope selection highlighting
+      clear_selection_hl = false,
+      -- highlight hopped to entry with telescope selection highlight
+      -- note: mutually exclusive with `clear_selection_hl`
+      trace_entry = true,
+      -- jump to entry where hoop loop was started from
+      reset_selection = true,
     },
+
+    -- frecency = {
+    --   workspaces = {
+    --     ["conf"] = "/home/tj/.config/nvim/",
+    --     ["nvim"] = "/home/tj/build/neovim",
+    --   },
+    -- },
   },
 }
 
@@ -161,8 +217,15 @@ if vim.fn.executable "gh" == 1 then
 end
 pcall(require("telescope").load_extension, "git_worktree")
 
-if pcall(require("telescope").load_extension, "frecency") then
-  require "tj.telescope.frecency"
+LOADED_FRECENCY = LOADED_FRECENCY or false
+
+local has_frecency = true
+if not LOADED_FRECENCY then
+  if not pcall(require("telescope").load_extension, "frecency") then
+    require "tj.telescope.frecency"
+  end
+
+  LOADED_FRECENCY = true
 end
 
 local M = {}
@@ -306,7 +369,8 @@ function M.edit_zsh()
 end
 
 function M.fd()
-  require("telescope.builtin").fd()
+  local opts = themes.get_ivy { hidden = true }
+  require("telescope.builtin").fd(opts)
 end
 
 function M.builtin()
@@ -358,8 +422,8 @@ function M.lsp_code_actions()
 end
 
 function M.live_grep()
-  require("telescope").extensions.fzf_writer.staged_grep {
-    shorten_path = true,
+  require("telescope.builtin").live_grep {
+    -- shorten_path = true,
     previewer = false,
     fzf_separator = "|>",
   }
@@ -367,7 +431,7 @@ end
 
 function M.grep_prompt()
   require("telescope.builtin").grep_string {
-    shorten_path = true,
+    path_display = { "shorten" },
     search = vim.fn.input "Grep String > ",
   }
 end
@@ -379,7 +443,7 @@ function M.grep_last_search(opts)
   -- -> Subs out the search things
   local register = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", "")
 
-  opts.shorten_path = true
+  opts.path_display = { "shorten" }
   opts.word_match = "-w"
   opts.search = register
 
@@ -387,10 +451,8 @@ function M.grep_last_search(opts)
 end
 
 function M.oldfiles()
-  if true then
+  if has_frecency then
     require("telescope").extensions.frecency.frecency()
-  end
-  if pcall(require("telescope").load_extension, "frecency") then
   else
     require("telescope.builtin").oldfiles { layout_strategy = "vertical" }
   end
@@ -535,12 +597,38 @@ function M.search_only_certain_files()
   }
 end
 
+function M.lsp_references()
+  require("telescope.builtin").lsp_references {
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+end
+
+function M.lsp_implementations()
+  require("telescope.builtin").lsp_implementations {
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+end
+
 return setmetatable({}, {
   __index = function(_, k)
     reloader()
 
+    local has_custom, custom = pcall(require, string.format("tj.telescope.custom.%s", k))
+
     if M[k] then
       return M[k]
+    elseif has_custom then
+      return custom
     else
       return require("telescope.builtin")[k]
     end

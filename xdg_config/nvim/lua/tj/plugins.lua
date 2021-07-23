@@ -5,6 +5,10 @@ local has = function(x)
   return vim.fn.has(x) == 1
 end
 
+local executable = function(x)
+  return vim.fn.executable(x) == 1
+end
+
 local is_wsl = (function()
   local output = vim.fn.systemlist "uname -r"
   return not not string.find(output[1] or "", "WSL")
@@ -42,8 +46,10 @@ return require("packer").startup {
     end
 
     use "wbthomason/packer.nvim"
+    -- use "camspiers/snap"
 
     -- My Plugins
+    local_use "refactoring.nvim"
     local_use "nlua.nvim"
     local_use "vim9jit"
     local_use "colorbuddy.nvim"
@@ -77,8 +83,8 @@ return require("packer").startup {
     use "wbthomason/lsp-status.nvim"
 
     local_use "lsp_extensions.nvim"
-    use "glepnir/lspsaga.nvim"
     use "onsails/lspkind-nvim"
+    -- use "glepnir/lspsaga.nvim"
     -- https://github.com/rmagatti/goto-preview
 
     use {
@@ -104,13 +110,16 @@ return require("packer").startup {
     -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
     local_use("nvim-lua", "popup.nvim")
-    local_use("nvim-lua", "plenary.nvim")
+    local_use("nvim-lua", "plenary.nvim", {
+      rocks = "lyaml",
+    })
 
     local_use("nvim-telescope", "telescope.nvim")
     local_use("nvim-telescope", "telescope-fzf-writer.nvim")
     local_use("nvim-telescope", "telescope-packer.nvim")
     local_use("nvim-telescope", "telescope-fzy-native.nvim")
     use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+    use { "nvim-telescope/telescope-hop.nvim" }
     -- local_use("nvim-telescope", "telescope-async-sorter-test.nvim")
 
     local_use("nvim-telescope", "telescope-github.nvim")
@@ -120,7 +129,7 @@ return require("packer").startup {
     -- elianiva/telescope-npm.nvim
 
     local_use "telescope-hacks.nvim"
-    local_use "telescope-sourcegraph.nvim"
+    local_use "sg.nvim"
     local_use "green_light.nvim"
 
     use "tami5/sql.nvim"
@@ -245,14 +254,22 @@ return require("packer").startup {
     use "monaqa/dial.nvim"
 
     --   FOCUSING:
+    local use_folke = true
+    if use_folke then
+      use "folke/zen-mode.nvim"
+      use "folke/twilight.nvim"
+    end
+
     use {
       "junegunn/goyo.vim",
       cmd = "Goyo",
+      disable = use_folke,
     }
 
     use {
       "junegunn/limelight.vim",
       after = "goyo.vim",
+      disable = use_folke,
     }
 
     --
@@ -301,6 +318,12 @@ return require("packer").startup {
     -- use 'mattn/emmet-vim'
 
     use "tpope/vim-liquid"
+
+    -- Sql
+    use "tpope/vim-dadbod"
+    use { "kristijanhusak/vim-dadbod-completion" }
+    use { "kristijanhusak/vim-dadbod-ui" }
+
     --
     -- Lisp
     -- use { 'eraserhd/parinfer-rust', run = 'cargo build --release' }
@@ -365,11 +388,19 @@ return require("packer").startup {
 
     -- TREE SITTER:
     local_use("nvim-treesitter", "nvim-treesitter")
-    use "nvim-treesitter/nvim-treesitter-textobjects"
     use "nvim-treesitter/playground"
     use "vigoux/architext.nvim"
 
+    use "nvim-treesitter/nvim-treesitter-textobjects"
     use "JoosepAlviste/nvim-ts-context-commentstring"
+    use {
+      "mfussenegger/nvim-ts-hint-textobject",
+      config = function()
+        vim.cmd [[omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>]]
+        vim.cmd [[vnoremap <silent> m :lua require('tsht').nodes()<CR>]]
+      end,
+    }
+
     -- use {
     --   "romgrk/nvim-treesitter-context",
     --   config = function()
@@ -384,7 +415,9 @@ return require("packer").startup {
 
     -- Grammars
     local_use "tree-sitter-lua"
-    local_use "tree-sitter-sql"
+    -- use { "m-novikov/tree-sitter-sql" }
+    -- use { "DerekStride/tree-sitter-sql" }
+    -- local_use "tree-sitter-sql"
 
     --
     -- NAVIGATION:
@@ -395,6 +428,9 @@ return require("packer").startup {
 
     use "tamago324/lir.nvim"
     use "tamago324/lir-git-status.nvim"
+    if executable "mmv" then
+      use "tamago324/lir-mmv.nvim"
+    end
 
     use "pechorin/any-jump.vim"
 
@@ -444,6 +480,7 @@ return require("packer").startup {
       config = function()
         require("git-worktree").setup {}
       end,
+      disable = true,
     }
 
     -- use 'untitled-ai/jupyter_ascending.vim'

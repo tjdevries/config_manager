@@ -3,6 +3,8 @@ if not has_dap then
   return
 end
 
+dap.set_log_level "TRACE"
+
 -- TODO: How does terminal work?
 dap.defaults.fallback.external_terminal = {
   command = "/home/tjdevries/.local/bin/kitty",
@@ -177,30 +179,48 @@ dap.configurations.c = {
 
 -- TODO: Try out the dlv command directly:
 --  https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#go-using-delve-directly
-local use_delve = true
+local use_delve = false
+local use_existing = false
 if use_delve then
-  dap.adapters.go = function(callback, config)
-    local handle, pid_or_err, port = nil, nil, 12346
+  dap.adapters.go = function(callback, _)
+    local stdout = vim.loop.new_pipe(false)
+    local handle, pid_or_err
+    local port = 38697
 
     handle, pid_or_err = vim.loop.spawn("dlv", {
+      stdio = { nil, stdout },
       args = { "dap", "-l", "127.0.0.1:" .. port },
       detached = true,
-      cwd = vim.loop.cwd(),
-    }, vim.schedule_wrap(
-      function(code)
-        handle:close()
-        print("Delve has exited with: " .. code)
+    }, function(code)
+      stdout:close()
+      handle:close()
+      if code ~= 0 then
+        print("dlv exited with code", code)
       end
-    ))
+    end)
 
-    if not handle then
-      error("FAILED:", pid_or_err)
-    end
+    assert(handle, "Error running dlv: " .. tostring(pid_or_err))
 
+    stdout:read_start(function(err, chunk)
+      assert(not err, err)
+      if chunk then
+        vim.schedule(function()
+          require("dap.repl").append(chunk)
+        end)
+      end
+    end)
+
+    -- Wait for delve to start
     vim.defer_fn(function()
       callback { type = "server", host = "127.0.0.1", port = port }
     end, 100)
   end
+elseif use_existing then
+  dap.adapters.go = {
+    type = "server",
+    host = "127.0.0.1",
+    port = 38697,
+  }
 else
   dap.adapters.go = {
     type = "executable",
@@ -213,12 +233,26 @@ end
 dap.configurations.go = {
   {
     type = "go",
+    name = "Debug (from vscode-go)",
+    request = "launch",
+    showLog = false,
+    program = "${file}",
+    dlvToolPath = vim.fn.exepath "dlv", -- Adjust to where delve is installed
+  },
+  {
+    type = "go",
+    name = "Debug (No File)",
+    request = "launch",
+    program = "",
+  },
+  {
+    type = "go",
     name = "Debug",
     request = "launch",
-    showLog = true,
     program = "${file}",
+    showLog = true,
     -- console = "externalTerminal",
-    dlvToolPath = vim.fn.exepath "dlv",
+    -- dlvToolPath = vim.fn.exepath "dlv",
   },
   {
     name = "Test Current File",

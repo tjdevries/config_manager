@@ -44,6 +44,8 @@ if has_compe then
       treesitter = false,
       snippets_nvim = false,
       vsnip = false,
+
+      vim_dadbod_completion = true,
     },
   }
 
