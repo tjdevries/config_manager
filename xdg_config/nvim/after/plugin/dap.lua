@@ -177,57 +177,40 @@ dap.configurations.c = {
   },
 }
 
--- TODO: Try out the dlv command directly:
 --  https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#go-using-delve-directly
-local use_delve = false
-local use_existing = false
-if use_delve then
-  dap.adapters.go = function(callback, _)
-    local stdout = vim.loop.new_pipe(false)
-    local handle, pid_or_err
-    local port = 38697
+dap.adapters.go = function(callback, _)
+  local stdout = vim.loop.new_pipe(false)
+  local handle, pid_or_err
+  local port = 38697
 
-    handle, pid_or_err = vim.loop.spawn("dlv", {
-      stdio = { nil, stdout },
-      args = { "dap", "-l", "127.0.0.1:" .. port },
-      detached = true,
-    }, function(code)
-      stdout:close()
-      handle:close()
-      if code ~= 0 then
-        print("dlv exited with code", code)
-      end
-    end)
+  handle, pid_or_err = vim.loop.spawn("dlv", {
+    stdio = { nil, stdout },
+    args = { "dap", "-l", "127.0.0.1:" .. port },
+    detached = true,
+  }, function(code)
+    stdout:close()
+    handle:close()
 
-    assert(handle, "Error running dlv: " .. tostring(pid_or_err))
+    print("[delve] Exit Code:", code)
+  end)
 
-    stdout:read_start(function(err, chunk)
-      assert(not err, err)
-      if chunk then
-        vim.schedule(function()
-          require("dap.repl").append(chunk)
-        end)
-      end
-    end)
+  assert(handle, "Error running dlv: " .. tostring(pid_or_err))
 
-    -- Wait for delve to start
-    vim.defer_fn(function()
-      callback { type = "server", host = "127.0.0.1", port = port }
-    end, 100)
-  end
-elseif use_existing then
-  dap.adapters.go = {
-    type = "server",
-    host = "127.0.0.1",
-    port = 38697,
-  }
-else
-  dap.adapters.go = {
-    type = "executable",
-    command = "/home/tjdevries/.nvm/versions/node/v14.16.0/bin/node",
-    args = { vim.fn.expand "~/build/vscode-go/dist/debugAdapter.js" },
-    console = "externalTerminal",
-  }
+  stdout:read_start(function(err, chunk)
+    assert(not err, err)
+
+    if chunk then
+      vim.schedule(function()
+        require("dap.repl").append(chunk)
+        print("[delve]", chunk)
+      end)
+    end
+  end)
+
+  -- Wait for delve to start
+  vim.defer_fn(function()
+    callback { type = "server", host = "127.0.0.1", port = port }
+  end, 100)
 end
 
 dap.configurations.go = {
@@ -278,6 +261,21 @@ dap.configurations.go = {
     },
     dlvToolPath = vim.fn.exepath "dlv",
   },
+  {
+    type = "go",
+    name = "Run lsif-go-imports in smol_go",
+    request = "launch",
+    showLog = true,
+    program = "./cmd/lsif-go",
+    args = {
+      "--project-root=/home/tjdevries/sourcegraph/smol_go/",
+      "--repository-root=/home/tjdevries/sourcegraph/smol_go/",
+      "--module-root=/home/tjdevries/sourcegraph/smol_go/",
+      "--repository-remote=github.com/tjdevries/smol_go",
+      "--no-animation",
+    },
+    dlvToolPath = vim.fn.exepath "dlv",
+  },
 }
 
 dap.configurations.python = {
@@ -304,16 +302,48 @@ require("dap-python").setup("python", {
 })
 
 vim.cmd [[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]]
+vim.cmd [[nnoremap <silent> <F1> :lua require'dap'.step_into()<CR>]]
 vim.cmd [[nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>]]
 
 vim.cmd [[nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>]]
+vim.cmd [[nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]]
 vim.cmd [[nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>]]
 
 vim.cmd [[nnoremap <silent> <space>dh :lua require('dap.ui.variables').hover()<CR>]]
 
+vim.cmd [[
+augroup DapRepl
+  au!
+  au FileType dap-repl lua require('dap.ext.autocompl').attach()
+augroup END
+]]
+
+require("dapui").setup {
+  sidebar = {
+    open_on_start = true,
+
+    -- You can change the order of elements in the sidebar
+    elements = {
+      -- Provide as ID strings or tables with "id" and "size" keys
+      {
+        id = "scopes",
+        size = 0.75, -- Can be float or integer > 1
+      },
+      { id = "watches", size = 00.25 },
+    },
+    width = 50,
+    position = "left", -- Can be "left" or "right"
+  },
+  tray = {
+    open_on_start = true,
+    elements = { "repl" },
+    height = 15,
+    position = "bottom", -- Can be "bottom" or "top"
+  },
+}
+
 --[[
 nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
-nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
 nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
 nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
 nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>

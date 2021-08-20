@@ -7,13 +7,11 @@ TODO:
   - scratch files get mins -0.001
 
 --]]
-if not pcall(require, "telescope") then
-  return
-end
 
-local should_reload = true
+SHOULD_RELOAD_TELESCOPE = true
+
 local reloader = function()
-  if should_reload then
+  if SHOULD_RELOAD_TELESCOPE then
     RELOAD "plenary"
     RELOAD "popup"
     RELOAD "telescope"
@@ -21,32 +19,9 @@ local reloader = function()
   end
 end
 
-reloader()
-
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
-local action_mt = require "telescope.actions.mt"
-local sorters = require "telescope.sorters"
 local themes = require "telescope.themes"
-
--- actions.master_stack = action_mt.create('master_stack', function(prompt_bufnr)
---   local picker = action_state.get_current_picker(prompt_bufnr)
-
---   actions.close(prompt_bufnr)
-
---   vim.cmd [[tabnew]]
---   for index, entry in ipairs(picker:get_multi_selection()) do
---     if index == 1 then
---       vim.cmd("edit " .. entry.filename)
---     elseif index == 2 then
---       vim.cmd("vsplit " .. entry.filename)
---     else
---       vim.cmd("split " .. entry.filename)
---     end
---   end
-
---   vim.cmd [[wincmd =]]
--- end)
 
 local set_prompt_to_entry_value = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
@@ -57,176 +32,7 @@ local set_prompt_to_entry_value = function(prompt_bufnr)
   action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
 end
 
--- local action_set = require('telescope.actions.set')
 local _ = pcall(require, "nvim-nonicons")
-
-require("telescope").setup {
-  defaults = {
-    prompt_prefix = "❯ ",
-    selection_caret = "❯ ",
-
-    _get_status_text = function(self, opts)
-      local xx = (self.stats.processed or 0) - (self.stats.filtered or 0)
-      local yy = self.stats.processed or 0
-      if xx == 0 and yy == 0 then
-        return ""
-      end
-
-      local status_icon
-      if opts.completed then
-        status_icon = "✔️"
-      else
-        status_icon = "*"
-      end
-
-      return string.format("%s %-7s/%7s", status_icon, xx, yy)
-    end,
-
-    winblend = 0,
-
-    layout_strategy = "horizontal",
-    layout_config = {
-      width = 0.95,
-      height = 0.85,
-      -- preview_cutoff = 120,
-      prompt_position = "top",
-
-      horizontal = {
-        -- width_padding = 0.1,
-        -- height_padding = 0.1,
-        preview_width = function(_, cols, _)
-          if cols > 200 then
-            return math.floor(cols * 0.4)
-          else
-            return math.floor(cols * 0.6)
-          end
-        end,
-      },
-
-      vertical = {
-        -- width_padding = 0.05,
-        -- height_padding = 1,
-        width = 0.9,
-        height = 0.95,
-        preview_height = 0.5,
-      },
-
-      flex = {
-        horizontal = {
-          preview_width = 0.9,
-        },
-      },
-    },
-
-    selection_strategy = "reset",
-    sorting_strategy = "descending",
-    scroll_strategy = "cycle",
-    color_devicons = true,
-
-    mappings = {
-      i = {
-        ["<C-x>"] = false,
-        ["<C-s>"] = actions.select_horizontal,
-
-        ["<C-y>"] = set_prompt_to_entry_value,
-
-        -- ["<M-m>"] = actions.master_stack,
-
-        -- Experimental
-        -- ["<tab>"] = actions.toggle_selection,
-
-        -- ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-        -- ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-
-        ["<C-space>"] = function(prompt_bufnr)
-          local opts = {
-            callback = actions.toggle_selection,
-            loop_callback = actions.send_selected_to_qflist,
-          }
-          require("telescope").extensions.hop._hop_loop(prompt_bufnr, opts)
-        end,
-      },
-    },
-
-    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-
-    -- file_sorter = sorters.get_fzy_sorter,
-    file_ignore_patterns = {
-      -- "parser.c",
-      -- "mock_.*.go",
-    },
-
-    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-  },
-
-  extensions = {
-    fzy_native = {
-      override_generic_sorter = true,
-      override_file_sorter = true,
-    },
-
-    fzf_writer = {
-      use_highlighter = false,
-      minimum_grep_characters = 6,
-    },
-
-    hop = {
-      -- keys define your hop keys in order; defaults to roughly lower- and uppercased home row
-      keys = { "a", "s", "d", "f", "g", "h", "j", "k", "l", ";" }, -- ... and more
-
-      -- Highlight groups to link to signs and lines; the below configuration refers to demo
-      -- sign_hl typically only defines foreground to possibly be combined with line_hl
-      sign_hl = { "WarningMsg", "Title" },
-
-      -- optional, typically a table of two highlight groups that are alternated between
-      line_hl = { "CursorLine", "Normal" },
-
-      -- options specific to `hop_loop`
-      -- true temporarily disables Telescope selection highlighting
-      clear_selection_hl = false,
-      -- highlight hopped to entry with telescope selection highlight
-      -- note: mutually exclusive with `clear_selection_hl`
-      trace_entry = true,
-      -- jump to entry where hoop loop was started from
-      reset_selection = true,
-    },
-
-    -- frecency = {
-    --   workspaces = {
-    --     ["conf"] = "/home/tj/.config/nvim/",
-    --     ["nvim"] = "/home/tj/build/neovim",
-    --   },
-    -- },
-  },
-}
-
--- Load the fzy native extension at the start.
-pcall(require("telescope").load_extension, "cheat")
-pcall(require("telescope").load_extension, "dap")
-pcall(require("telescope").load_extension, "arecibo")
-pcall(require("telescope").load_extension, "flutter")
-
--- pcall(require("telescope").load_extension, "fzy_native")
-pcall(require("telescope").load_extension, "fzf")
-
-if vim.fn.executable "gh" == 1 then
-  pcall(require("telescope").load_extension, "gh")
-  pcall(require("telescope").load_extension, "octo")
-end
-pcall(require("telescope").load_extension, "git_worktree")
-
-LOADED_FRECENCY = LOADED_FRECENCY or false
-
-local has_frecency = true
-if not LOADED_FRECENCY then
-  if not pcall(require("telescope").load_extension, "frecency") then
-    require "tj.telescope.frecency"
-  end
-
-  LOADED_FRECENCY = true
-end
 
 local M = {}
 
@@ -379,9 +185,12 @@ end
 
 function M.git_files()
   local path = vim.fn.expand "%:h"
+  if path == "" then
+    path = nil
+  end
 
   local width = 0.25
-  if string.find(path, "sourcegraph.*sourcegraph", 1, false) then
+  if path and string.find(path, "sourcegraph.*sourcegraph", 1, false) then
     width = 0.5
   end
 
@@ -451,11 +260,7 @@ function M.grep_last_search(opts)
 end
 
 function M.oldfiles()
-  if has_frecency then
-    require("telescope").extensions.frecency.frecency()
-  else
-    require("telescope.builtin").oldfiles { layout_strategy = "vertical" }
-  end
+  require("telescope").extensions.frecency.frecency()
 end
 
 function M.my_plugins()
@@ -544,8 +349,8 @@ function M.file_browser()
         return function()
           opts.depth = opts.depth + mod
 
-          local current_picker = action_state.get_current_picker(prompt_bufnr)
-          current_picker:refresh(opts.new_finder(current_picker.cwd), { reset_prompt = true })
+          local this_picker = action_state.get_current_picker(prompt_bufnr)
+          this_picker:refresh(opts.new_finder(current_picker.cwd), { reset_prompt = true })
         end
       end
 

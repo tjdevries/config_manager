@@ -61,6 +61,7 @@ return require("packer").startup {
     local_use "overlength.vim"
     local_use "pastery.vim"
     local_use "complextras.nvim"
+    local_use "lazy.nvim"
     local_use("tjdevries", "astronauta.nvim", {
       -- setup = function()
       --   vim.g.astronauta_load_plugins = false
@@ -92,6 +93,9 @@ return require("packer").startup {
       ft = { "flutter", "dart" },
     }
 
+    use "simrat39/rust-tools.nvim"
+
+    -- use "ray-x/go.nvim"
     -- https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
 
     use {
@@ -103,6 +107,13 @@ return require("packer").startup {
           auto_preview = false,
           auto_fold = true,
         }
+      end,
+    }
+
+    use {
+      "rcarriga/nvim-notify",
+      config = function()
+        vim.notify = require "notify"
       end,
     }
 
@@ -328,12 +339,19 @@ return require("packer").startup {
     -- Lisp
     -- use { 'eraserhd/parinfer-rust', run = 'cargo build --release' }
     --
-    --
-    -- LSP
-
     -- STREAM: Figure out how to use snippets better
-    -- use 'haorenW1025/completion-nvim'
+    --
+
+    -- LSP
     use "hrsh7th/nvim-compe"
+
+    -- ddc.vim
+    -- use "vim-denops/denops.vim"
+    -- use "Shougo/ddc.vim"
+    -- use "Shougo/ddc-nvim-lsp"
+
+    -- coq.nvim
+    -- use { "ms-jpq/coq_nvim", branch = "coq" }
 
     -- Completion stuff
     local_use "rofl.nvim"
@@ -347,44 +365,32 @@ return require("packer").startup {
     use { "liuchengxu/vista.vim", cmd = "Vista" }
 
     -- Find and replace
-    py_use "brooth/far.vim"
+    use "windwp/nvim-spectre"
 
     -- Debug adapter protocol
     --   Have not yet checked this out, but looks awesome.
     -- use 'puremourning/vimspector'
     use "mfussenegger/nvim-dap"
+    use "rcarriga/nvim-dap-ui"
     use "theHamsta/nvim-dap-virtual-text"
     use "mfussenegger/nvim-dap-python"
     use "nvim-telescope/telescope-dap.nvim"
+
     -- Pocco81/DAPInstall.nvim
 
     use "jbyuki/one-small-step-for-vimkind"
 
-    use {
-      "rcarriga/vim-ultest",
+    -- use {
+    --   "rcarriga/vim-ultest",
 
-      requires = { "vim-test/vim-test" },
-      run = ":UpdateRemotePlugins",
-      cond = function()
-        return vim.fn.has "python3" == 1
-      end,
-      config = function()
-        vim.cmd [[nmap ]t <Plug>(ultest-next-fail)]]
-        vim.cmd [[nmap [t <Plug>(ultest-prev-fail)]]
-      end,
-    }
-
-    use {
-      "alfredodeza/pytest.vim",
-      cond = function()
-        return vim.fn.has "python3" == 1
-      end,
-    }
-
-    if false and has "python3" then
-      use "puremourning/vimspector"
-    end
-    --
+    --   enable = false,
+    --   requires = { "vim-test/vim-test" },
+    --   run = ":UpdateRemotePlugins",
+    --   config = function()
+    --     vim.cmd [[nmap ]t <Plug>(ultest-next-fail)]]
+    --     vim.cmd [[nmap [t <Plug>(ultest-prev-fail)]]
+    --   end,
+    -- }
 
     -- TREE SITTER:
     local_use("nvim-treesitter", "nvim-treesitter")
@@ -422,7 +428,19 @@ return require("packer").startup {
     --
     -- NAVIGATION:
     -- STREAM: Show off edit_alternate.vim
-    use "tjdevries/edit_alternate.vim"
+    use {
+      "tjdevries/edit_alternate.vim",
+      keys = { "<leader>ea" },
+      config = function()
+        vim.fn["edit_alternate#rule#add"]("go", function(filename)
+          if filename:find "_test.go" then
+            return (filename:gsub("_test%.go", ".go"))
+          else
+            return (filename:gsub("%.go", "_test.go"))
+          end
+        end)
+      end,
+    }
 
     use "google/vim-searchindex"
 
@@ -530,6 +548,8 @@ return require("packer").startup {
     -- It would be fun to think about making a wiki again...
     -- local_use 'wander.nvim'
     -- local_use 'riki.nvim'
+
+    use { "Vhyrro/neorg", branch = "unstable" }
 
     -- pretty sure I'm done w/ these
     -- local_use 'vlog.nvim'

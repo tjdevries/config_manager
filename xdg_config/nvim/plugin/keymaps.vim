@@ -30,10 +30,6 @@ inoremap <C-CR> <C-O>O
 " inoremap <describe> asdf my mapping here other stuff<CR>
 "       \ <description> asdf
 
-
-" Set kj to be escape in insert mode
-inoremap kj <esc>
-
 nnoremap j <cmd>call tj#jump_direction('j')<CR>
 nnoremap k <cmd>call tj#jump_direction('k')<CR>
 

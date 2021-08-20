@@ -53,3 +53,12 @@ if has_compe then
   vim.api.nvim_set_keymap("i", "<c-e>", 'compe#close("<c-e>")', { silent = true, noremap = true, expr = true })
   vim.api.nvim_set_keymap("i", "<c-space>", "compe#complete()", { silent = true, noremap = true, expr = true })
 end
+
+-- Must be using ddc if we're doing this.
+-- vim.fn["ddc#custom#patch_global"]("sources", { "around", "nvimlsp" })
+-- vim.fn["ddc#custom#patch_global"]("sourceOptions", {
+--   _ = { matchers = { "matcher_head" } },
+--   nvimlsp = { mark = "lsp", forceCompletionPattern = ".|:|->" },
+-- })
+
+-- vim.fn["ddc#enable"]()

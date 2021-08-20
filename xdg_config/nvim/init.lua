@@ -54,6 +54,9 @@ vim.g.snippets = "luasnip"
 --  See `./lua/tj/globals/*.lua` for more information.
 require "tj.globals"
 
+-- Turn off builtin plugins I do not use.
+require "tj.disable_builtin"
+
 -- Force loading of astronauta first.
 vim.cmd [[runtime plugin/astronauta.vim]]
 
@@ -61,5 +64,5 @@ vim.cmd [[runtime plugin/astronauta.vim]]
 require "tj.lsp"
 
 -- Telescope BTW
-require "tj.telescope"
+require "tj.telescope.setup"
 require "tj.telescope.mappings"

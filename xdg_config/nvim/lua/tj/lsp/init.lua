@@ -1,13 +1,12 @@
 local inoremap = vim.keymap.inoremap
 local nnoremap = vim.keymap.nnoremap
 
-local Path = require "plenary.path"
-
 local has_lsp, lspconfig = pcall(require, "lspconfig")
-local _, lspconfig_util = pcall(require, "lspconfig.util")
 if not has_lsp then
   return
 end
+
+local lspconfig_util = require "lspconfig.util"
 
 local nvim_status = require "lsp-status"
 
@@ -23,13 +22,6 @@ local status = require "tj.lsp.status"
 
 lspkind.init()
 status.activate()
-
-local nvim_exec = function(txt)
-  vim.api.nvim_exec(txt, false)
-end
-
--- Turn on status.
--- status.activate()
 
 local custom_init = function(client)
   client.config.flags = client.config.flags or {}
@@ -52,9 +44,9 @@ local filetype_attach = setmetatable({
       query = "#",
     }, true)
 
-    vim.cmd [[
-      autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
-    ]]
+    -- vim.cmd [[
+    --   autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
+    -- ]]
 
     vim.cmd [[
       augroup lsp_buf_format
@@ -65,8 +57,7 @@ local filetype_attach = setmetatable({
   end,
 }, {
   __index = function()
-    return function()
-    end
+    return function() end
   end,
 })
 
@@ -105,7 +96,7 @@ local custom_attach = function(client)
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
   telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
-  telescope_mapper("<space>ww", "lsp_workspace_symbols", { ignore_filename = true }, true)
+  telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
 
   if filetype ~= "lua" then
     buf_nnoremap { "K", vim.lsp.buf.hover }
@@ -115,7 +106,7 @@ local custom_attach = function(client)
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
-    nvim_exec [[
+    vim.cmd [[
       augroup lsp_document_highlight
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -153,7 +144,6 @@ local servers = {
   gdscript = true,
   graphql = true,
   pyright = true,
-  rust_analyzer = true,
   vimls = true,
   yamlls = true,
 
@@ -177,6 +167,8 @@ local servers = {
 
   gopls = {
     root_dir = function(fname)
+      local Path = require "plenary.path"
+
       local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
       local absolute_fname = Path:new(fname):absolute()
 
@@ -201,6 +193,12 @@ local servers = {
   omnisharp = {
     cmd = { vim.fn.expand "~/build/omnisharp/run", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
   },
+
+  -- rust_analyzer = {
+  --   settings = {
+  --     ["rust-analyzer"] = {
+  --     },
+  -- },
 
   tsserver = {
     cmd = { "typescript-language-server", "--stdio" },
@@ -320,6 +318,7 @@ require("sg.lsp").setup {
 -- }
 
 return {
+  on_init = custom_init,
   on_attach = custom_attach,
   capabilities = updated_capabilities,
 }
