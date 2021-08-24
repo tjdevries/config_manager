@@ -175,7 +175,7 @@ function M.edit_zsh()
 end
 
 function M.fd()
-  local opts = themes.get_ivy { hidden = true }
+  local opts = themes.get_ivy { hidden = false }
   require("telescope.builtin").fd(opts)
 end
 
