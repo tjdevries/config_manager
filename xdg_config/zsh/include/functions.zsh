@@ -83,13 +83,3 @@ function list_vid_option {
 function set_vid_option {
   v4l2-ctl -d $DEFAULT_VIDEO --set-ctrl $1=$2
 }
-
-function setup_js {
-  export NVM_COMPLETION=true
-  export NVM_DIR=$HOME/".nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-  if hash yarn 2>/dev/null; then
-      export PATH="$PATH:$(yarn global bin)"
-  fi
-}

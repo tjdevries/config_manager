@@ -93,6 +93,12 @@ gnrebase() {
     echo ""
 }
 
+gmsquash() {
+    COMMIT_HASH=$(git merge-base master HEAD)
+    echo "Rebasing from: $COMMIT_HASH"
+    git rebase -i "$COMMIT_HASH"
+}
+
 
 gpo() {
     git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)

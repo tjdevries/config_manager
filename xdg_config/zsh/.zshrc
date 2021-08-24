@@ -128,12 +128,12 @@ extract () {
 if [ -d /usr/local/go/bin/ ]; then
   export GOPATH=~/go
   export GOBIN="$GOPATH/bin"
-  export PATH="$PATH:/usr/local/go/bin:$GOBIN"
+  export PATH="/usr/local/go/bin:$GOBIN:$PATH"
 elif [ -d ~/.go/bin/ ]; then
   export GOPATH="$HOME/.gopath"
   export GOROOT="$HOME/.go"
   export GOBIN="$GOPATH/bin"
-  export PATH="$PATH:$GOPATH/bin"
+  export PATH="$GOPATH/bin:$PATH"
 fi
 
 # }}}
@@ -159,7 +159,7 @@ fi
 export PATH="$HOME/.cargo/bin:$PATH"
 # }}}
 # {{{ NPM configuratoin
-export PATH=~/.npm-global/bin:$PATH
+# export PATH=~/.npm-global/bin:$PATH
 # }}}
 # }}}
 #
@@ -266,3 +266,19 @@ function zshexit() {
 # export PS1='$(luajit /home/tjdevries/.config/zsh/prompt.lua)'
 # export PS1='$(lua_statusline)'
 # export PS1='$(pwd) > '
+
+export NVM_COMPLETION=true
+export NVM_DIR=$HOME/".nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+if hash yarn 2>/dev/null; then
+  export PATH="$PATH:$(yarn global bin)"
+fi
+
+
+
+export DENO_INSTALL="/home/tjdevries/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
