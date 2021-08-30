@@ -33,6 +33,8 @@ Much of the configuration of individual plugins you can find in either:
 
 --]]
 
+pcall(require, "impatient")
+
 require "tj.profile"
 
 if require "tj.first_load"() then

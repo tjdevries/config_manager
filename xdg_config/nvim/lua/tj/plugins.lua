@@ -46,6 +46,7 @@ return require("packer").startup {
     end
 
     use "wbthomason/packer.nvim"
+    use "lewis6991/impatient.nvim"
     -- use "camspiers/snap"
 
     -- My Plugins
@@ -354,7 +355,8 @@ return require("packer").startup {
     use "saadparwaiz1/cmp_luasnip"
 
     -- ddc.vim
-    -- use "vim-denops/denops.vim"
+    use "vim-denops/denops.vim"
+    use "lambdalisue/guise.vim"
     -- use "Shougo/ddc.vim"
     -- use "Shougo/ddc-nvim-lsp"
 
