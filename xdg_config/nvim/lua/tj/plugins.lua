@@ -481,7 +481,7 @@ return require("packer").startup {
 
     --
     -- GIT:
-    -- use "TimUntersberger/neogit"
+    use "TimUntersberger/neogit"
 
     -- Github integration
     if vim.fn.executable "gh" == 1 then
