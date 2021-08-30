@@ -49,7 +49,10 @@ return require("packer").startup {
     -- use "camspiers/snap"
 
     -- My Plugins
-    local_use "refactoring.nvim"
+    if not is_wsl then
+      local_use "refactoring.nvim"
+    end
+
     local_use "nlua.nvim"
     local_use "vim9jit"
     local_use "colorbuddy.nvim"
@@ -342,8 +345,13 @@ return require("packer").startup {
     -- STREAM: Figure out how to use snippets better
     --
 
-    -- LSP
-    use "hrsh7th/nvim-compe"
+    -- Completion
+    use "hrsh7th/nvim-cmp"
+    use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/cmp-nvim-lua"
+    use "hrsh7th/cmp-nvim-lsp"
+    use "saadparwaiz1/cmp_luasnip"
 
     -- ddc.vim
     -- use "vim-denops/denops.vim"
@@ -471,7 +479,7 @@ return require("packer").startup {
 
     --
     -- GIT:
-    use "TimUntersberger/neogit"
+    -- use "TimUntersberger/neogit"
 
     -- Github integration
     if vim.fn.executable "gh" == 1 then

@@ -47,9 +47,10 @@ signs.setup {
     -- ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
   },
 
-  current_line_blame = true,
-  current_line_blame_delay = 2000,
-  current_line_blame_position = "eol",
+  current_line_blame_opts = {
+    delay = 2000,
+    virt_text_pos = "eol",
+  },
 }
 
 -- TODO: decide mappings for this

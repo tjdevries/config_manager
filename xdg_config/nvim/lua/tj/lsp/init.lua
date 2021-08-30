@@ -131,14 +131,7 @@ end
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, nvim_status.capabilities)
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
-updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
-updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    "documentation",
-    "detail",
-    "additionalTextEdits",
-  },
-}
+updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
 
 local servers = {
   gdscript = true,

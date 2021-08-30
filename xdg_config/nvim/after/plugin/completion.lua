@@ -18,41 +18,50 @@ vim.api.nvim_set_keymap(
   { noremap = true }
 )
 
-local has_compe, compe = pcall(require, "compe")
-if has_compe then
-  compe.setup {
-    enabled = true,
-    autocomplete = true,
-    debug = false,
-    min_length = 1,
-    preselect = "enable",
-    throttle_time = 200,
-    source_timeout = 200,
-    incomplete_delay = 400,
-    allow_prefix_unmatch = false,
+-- TODO: vim_dadbod_completion = true
 
-    source = {
-      path = true,
-      buffer = true,
-      calc = false,
-      nvim_lsp = true,
-      nvim_lua = true,
-      spell = false,
-      tags = true,
-      luasnip = true,
+vim.cmd [[
+  augroup DadbodSql
+    au!
+    autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni
+  augroup END
+]]
 
-      treesitter = false,
-      snippets_nvim = false,
-      vsnip = false,
+local cmp = require "cmp"
 
-      vim_dadbod_completion = true,
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
+
+  mapping = {
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<c-y>"] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
     },
-  }
 
-  vim.api.nvim_set_keymap("i", "<c-y>", 'compe#confirm("<c-y>")', { silent = true, noremap = true, expr = true })
-  vim.api.nvim_set_keymap("i", "<c-e>", 'compe#close("<c-e>")', { silent = true, noremap = true, expr = true })
-  vim.api.nvim_set_keymap("i", "<c-space>", "compe#complete()", { silent = true, noremap = true, expr = true })
-end
+    -- TODO: Not sure I'm in love with this one.
+    ["<C-Space>"] = cmp.mapping.complete(),
+
+    -- These mappings are useless. I already use C-n and C-p correctly.
+    -- This simply overrides them and makes them do bad things in other buffers.
+    -- ["<C-p>"] = cmp.mapping.select_prev_item(),
+    -- ["<C-n>"] = cmp.mapping.select_next_item(),
+  },
+
+  sources = {
+    { name = "buffer" },
+    { name = "path" },
+    { name = "nvim_lua" },
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+  },
+}
 
 -- Must be using ddc if we're doing this.
 -- vim.fn["ddc#custom#patch_global"]("sources", { "around", "nvimlsp" })

@@ -1,4 +1,4 @@
-if vim.g.snippets ~= "luasnip" then
+if vim.g.snippets ~= "luasnip" or true then
   return
 end
 
@@ -61,13 +61,17 @@ local ts_utils = require "nvim-treesitter.ts_utils"
 
 local get_node_text = vim.treesitter.get_node_text
 
-vim.treesitter.set_query("go", "LuaSnip_Result", [[
+vim.treesitter.set_query(
+  "go",
+  "LuaSnip_Result",
+  [[
   [
     (method_declaration result: (*) @id)
     (function_declaration result: (*) @id)
     (func_literal result: (*) @id)
   ]
-]])
+]]
+)
 
 local transform = function(text, info)
   if text == "int" then
@@ -119,11 +123,7 @@ local function go_result_type(info)
 
   local function_node
   for _, v in ipairs(scope) do
-    if
-      v:type() == "function_declaration"
-      or v:type() == "method_declaration"
-      or v:type() == "func_literal"
-    then
+    if v:type() == "function_declaration" or v:type() == "method_declaration" or v:type() == "func_literal" then
       function_node = v
       break
     end
