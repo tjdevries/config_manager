@@ -252,7 +252,7 @@ return require("packer").startup {
     end
 
     -- use { 'Shougo/defx.nvim', }
-    use "kyazdani42/nvim-tree.lua"
+    -- use "kyazdani42/nvim-tree.lua"
     use "lambdalisue/vim-protocol"
 
     -- Undo helper

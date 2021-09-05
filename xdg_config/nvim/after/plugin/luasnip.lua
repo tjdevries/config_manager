@@ -1,4 +1,4 @@
-if vim.g.snippets ~= "luasnip" or true then
+if vim.g.snippets ~= "luasnip" then
   return
 end
 
@@ -223,6 +223,33 @@ snippets.go = make {
 
   -- TODO: Fix this up so that it actually uses the tree sitter thing
   ie = { "if err != nil {", "\treturn err", i(0), "}" },
+}
+
+snippets.rust = make {
+  modtest = {
+    t {
+      "#[cfg(test)]",
+      "mod test {",
+      "    use super::*;",
+      "    ",
+    },
+    i(0),
+    t {
+      "",
+      "}",
+    },
+  },
+
+  test = {
+    t {
+      "#[test]",
+      "fn ",
+    },
+    i(1, "testname"),
+    t { "() {", "    " },
+    i(0),
+    t { "", "}" },
+  },
 }
 
 ls.snippets = snippets

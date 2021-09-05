@@ -173,8 +173,6 @@ cnoremap E<S-space> e<space>
 " inoremap ? ?<C-g>u
 
 " Move line(s) up and down
-nnoremap <M-j> :m .+1<CR>==
-nnoremap <M-k> :m .-2<CR>==
 inoremap <M-j> <Esc>:m .+1<CR>==gi
 inoremap <M-k> <Esc>:m .-2<CR>==gi
 vnoremap <M-j> :m '>+1<CR>gv=gv
