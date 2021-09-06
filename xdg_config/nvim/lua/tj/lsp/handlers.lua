@@ -1,6 +1,5 @@
-local protocol = require "vim.lsp.protocol"
-
-vim.lsp.handlers["textDocument/definition"] = function(_, _, result)
+-- Jump directly to the first available definition every time.
+vim.lsp.handlers["textDocument/definition"] = function(_, result)
   if not result or vim.tbl_isempty(result) then
     print "[LSP] Could not find definition"
     return
@@ -45,26 +44,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     virtual_text = true,
   }
 )
-
-function DoSomeLens()
-  print "Lens Requesting..."
-
-  vim.lsp.buf_request(0, "textDocument/codeLens", {
-    textDocument = vim.lsp.util.make_text_document_params(),
-  })
-
-  print "... Done"
-end
-
--- vim.lsp.handlers["textDocument/codeLens"] = function(err, _, result)
---   print "Code Lens..."
---   P(result)
---   print "...Code Lens"
--- end
-
-vim.lsp.handlers["textDocument/codeLens"] = function(err, _, result, client_id, bufnr)
-  vim.lsp.codelens.on_codelens(err, _, result, client_id, bufnr)
-end
 
 vim.lsp.handlers["window/showMessage"] = function(...)
   return R "tj.lsp.show_message"(...)
@@ -141,7 +120,8 @@ local M = {}
 M.implementation = function()
   local params = vim.lsp.util.make_position_params()
 
-  vim.lsp.buf_request(0, "textDocument/implementation", params, function(err, method, result, client_id, bufnr, config)
+  vim.lsp.buf_request(0, "textDocument/implementation", params, function(err, result, ctx, config)
+    local bufnr = ctx.bufnr
     local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
 
     -- In go code, I do not like to see any mocks for impls
@@ -155,67 +135,9 @@ M.implementation = function()
       end
     end
 
-    vim.lsp.handlers["textDocument/implementation"](err, method, result, client_id, bufnr, config)
+    vim.lsp.handlers["textDocument/implementation"](err, result, ctx, config)
     vim.cmd [[normal! zz]]
   end)
-end
-
-local has_saga = pcall(require, "lspsaga")
-if has_saga then
-  vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
-
-  local saga_config = require("lspsaga").config_values
-  saga_config.rename_prompt_prefix = ">"
-
-  -- vim.cmd [[highlight LspLinesDiagBorder guifg=white]]
-  -- vim.cmd [[highlight LineDiagTuncateLine guifg=white]]
-
-  --[[
-  local handle, saga = pcall(require, "lspsaga.rename")
-
-  if handle then
-    local line, col = vim.fn.line ".", vim.fn.col "."
-    local contents = vim.api.nvim_buf_get_lines(bufnr, line - 1, line, false)[1]
-
-    local has_found_highlights, start, finish = false, 0, -1
-    while not has_found_highlights do
-      start, finish = contents:find(current_word, start + 1, true)
-
-      if not start or not finish then
-        break
-      end
-
-      if start <= col and finish >= col then
-        has_found_highlights = true
-      end
-    end
-
-    if has_found_highlights then
-      vim.api.nvim_buf_add_highlight(bufnr, ns_rename, "Visual", line - 1, start - 1, finish)
-      vim.cmd(
-        string.format(
-          "autocmd BufEnter <buffer=%s> ++once :call nvim_buf_clear_namespace(%s, %s, 0, -1)",
-          bufnr,
-          bufnr,
-          ns_rename
-        )
-      )
-    end
-
-    saga.rename()
-
-    -- Just make escape quit the window as well.
-    vim.api.nvim_buf_set_keymap(
-      0,
-      "n",
-      "<esc>",
-      '<cmd>lua require("lspsaga.rename").close_rename_win()<CR>',
-      { noremap = true, silent = true }
-    )
-
-    return
-  end
-  --]]
 end
 
 return M

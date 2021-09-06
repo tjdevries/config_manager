@@ -46,7 +46,9 @@ function LspShowMessageBuffer()
   vim.cmd([[buffer ]] .. _LspMessageBuffer)
 end
 
-return function(_, _, result, client_id)
+return function(_, result, ctx)
+  local client_id = ctx.client_id
+
   local message_type = result.type
   local client_message = result.message
   local client = vim.lsp.get_client_by_id(client_id)
@@ -70,9 +72,12 @@ return function(_, _, result, client_id)
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, messages)
 
   local win_id = create_little_window(messages)
-  vim.cmd(string.format([[
+  vim.cmd(string.format(
+    [[
     autocmd CursorMoved * ++once :call nvim_win_close(%s, v:true)
-  ]], win_id))
+  ]],
+    win_id
+  ))
 
   return result
 end
