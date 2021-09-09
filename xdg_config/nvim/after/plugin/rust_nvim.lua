@@ -85,6 +85,10 @@ require("rust-tools").setup {
     on_init = lsp.on_init,
     on_attach = lsp.on_attach,
 
+    flags = {
+      debounce_text_changes = false,
+    },
+
     settings = {
       ["rust-analyzer"] = {
         assist = {
