@@ -104,8 +104,9 @@ return require("packer").startup {
       ft = { "flutter", "dart" },
     }
 
+    -- use "simrat39/rust-tools.nvim"
     -- use "ray-x/go.nvim"
-    -- https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
+    -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
     use {
       "folke/lsp-trouble.nvim",
@@ -378,8 +379,11 @@ return require("packer").startup {
     use "lukas-reineke/cmp-under-comparator"
 
     -- ddc.vim
-    use "vim-denops/denops.vim"
-    use "lambdalisue/guise.vim"
+    if executable "deno" then
+      use "vim-denops/denops.vim"
+      use "lambdalisue/guise.vim"
+    end
+
     -- use "Shougo/ddc.vim"
     -- use "Shougo/ddc-nvim-lsp"
 

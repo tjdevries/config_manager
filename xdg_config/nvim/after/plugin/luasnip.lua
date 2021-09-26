@@ -268,6 +268,8 @@ snippets.rust = make {
     t { "", "}" },
   },
 
+  eq = { "assert_eq!(", i(1), ",", i(2), ");", i(0) },
+
   enum = {
     t { "#[derive(Debug, PartialEq)]", "enum " },
     i(1, "Name"),
