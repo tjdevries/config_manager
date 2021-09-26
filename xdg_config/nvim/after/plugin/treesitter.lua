@@ -17,6 +17,14 @@ list.sql = {
   },
 }
 
+-- list.vim = {
+--   install_info = {
+--     url = "https://github.com/vigoux/tree-sitter-viml",
+--     files = { "src/parser.c", "src/scanner.c" },
+--     branch = "master",
+--   },
+-- }
+
 -- :h nvim-treesitter-query-extensions
 local custom_captures = {
   ["function.call"] = "LuaFunctionCall",

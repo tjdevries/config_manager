@@ -15,6 +15,7 @@ local reloader = function()
     RELOAD "plenary"
     RELOAD "popup"
     RELOAD "telescope"
+    RELOAD "tj.telescope.setup"
     RELOAD "tj.telescope.custom"
   end
 end

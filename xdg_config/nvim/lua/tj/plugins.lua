@@ -46,7 +46,7 @@ return require("packer").startup {
     end
 
     use "wbthomason/packer.nvim"
-    use "lewis6991/impatient.nvim"
+    -- use "lewis6991/impatient.nvim"
     -- use "camspiers/snap"
 
     -- My Plugins
@@ -96,8 +96,6 @@ return require("packer").startup {
       "akinsho/flutter-tools.nvim",
       ft = { "flutter", "dart" },
     }
-
-    use "simrat39/rust-tools.nvim"
 
     -- use "ray-x/go.nvim"
     -- https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
@@ -217,7 +215,7 @@ return require("packer").startup {
 
     -- Show only what you're searching for.
     -- STREAM: Could probably make this a bit better. Definitely needs docs
-    use "tjdevries/fold_search.vim"
+    -- use "tjdevries/fold_search.vim"
 
     use {
       "tweekmonster/haunted.vim",

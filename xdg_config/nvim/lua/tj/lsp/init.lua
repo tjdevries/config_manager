@@ -51,7 +51,7 @@ local filetype_attach = setmetatable({
     vim.cmd [[
       augroup lsp_buf_format
         au! BufWritePre <buffer>
-        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting(nil, 5000)
+        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()
       augroup END
     ]]
   end,
@@ -77,10 +77,6 @@ local custom_attach = function(client)
   nvim_status.on_attach(client)
 
   buf_inoremap { "<c-s>", vim.lsp.buf.signature_help }
-
-  buf_nnoremap { "<space>dn", vim.lsp.diagnostic.goto_next }
-  buf_nnoremap { "<space>dp", vim.lsp.diagnostic.goto_prev }
-  buf_nnoremap { "<space>sl", vim.lsp.diagnostic.show_line_diagnostics }
 
   buf_nnoremap { "<space>cr", vim.lsp.buf.rename }
   telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
@@ -187,7 +183,7 @@ local servers = {
     cmd = { vim.fn.expand "~/build/omnisharp/run", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
   },
 
-  -- rust_analyzer = {
+  rust_analyzer = true,
   --   settings = {
   --     ["rust-analyzer"] = {
   --     },

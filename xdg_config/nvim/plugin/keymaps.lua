@@ -21,5 +21,10 @@ nnoremap {
     end
   end,
 }
+
+nnoremap { "<space>dn", vim.diagnostic.goto_next }
+nnoremap { "<space>dp", vim.diagnostic.goto_prev }
+nnoremap { "<space>sl", vim.diagnostic.show_line_diagnostics }
+
 -- nnoremap <M-j> :m .+1<CR>==
 -- nnoremap <M-k> :m .-2<CR>==

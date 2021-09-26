@@ -331,13 +331,13 @@ require("dapui").setup {
       },
       { id = "watches", size = 00.25 },
     },
-    width = 50,
+    size = 50,
     position = "left", -- Can be "left" or "right"
   },
   tray = {
     open_on_start = true,
     elements = { "repl" },
-    height = 15,
+    size = 15,
     position = "bottom", -- Can be "bottom" or "top"
   },
 }
