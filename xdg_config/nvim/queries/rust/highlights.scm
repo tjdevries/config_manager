@@ -1,244 +1,246 @@
-((identifier) @constant
- (#vim-match? @constant "^[A-Z][A-Z\\d_]+$'"))
+; (token_binding_pattern) @parameter.inner
 
-(type_identifier) @type
-(primitive_type) @type.builtin
-(field_identifier) @field
-(mod_item
- name: (identifier) @namespace)
+; ((identifier) @constant
+;  (#vim-match? @constant "^[A-Z][A-Z\\d_]+$'"))
 
-(call_expression
-  function: (identifier) @function)
-(call_expression
-  function: (scoped_identifier
-              (identifier) @function .))
-(call_expression
-  function: (field_expression
-    field: (field_identifier) @function))
+; (type_identifier) @type
+; (primitive_type) @type.builtin
+; (field_identifier) @field
+; (mod_item
+;  name: (identifier) @namespace)
 
-(generic_function
-  function: (identifier) @function)
-(generic_function
-  function: (scoped_identifier
-    name: (identifier) @function))
-(generic_function
-  function: (field_expression
-    field: (field_identifier) @function))
+; (call_expression
+;   function: (identifier) @function)
+; (call_expression
+;   function: (scoped_identifier
+;               (identifier) @function .))
+; (call_expression
+;   function: (field_expression
+;     field: (field_identifier) @function))
 
-; Assume other uppercase names are enum constructors
-([(identifier) (field_identifier)] @constant
- (#match? @constant "^[A-Z]"))
+; (generic_function
+;   function: (identifier) @function)
+; (generic_function
+;   function: (scoped_identifier
+;     name: (identifier) @function))
+; (generic_function
+;   function: (field_expression
+;     field: (field_identifier) @function))
 
-; Assume that uppercase names in paths are types
-(scoped_identifier
-  path: (identifier) @namespace)
-(scoped_identifier
- (scoped_identifier
-  name: (identifier) @namespace))
-(scoped_type_identifier
-  path: (identifier) @namespace)
-(scoped_type_identifier
- (scoped_identifier
-  name: (identifier) @namespace))
-((scoped_identifier
-  path: (identifier) @TSNamespaceType)
- (#match? @TSNamespaceType "^[A-Z]"))
-((scoped_identifier
-    name: (identifier) @TSNamespaceType)
- (#match? @TSNamespaceType "^[A-Z]"))
+; ; Assume other uppercase names are enum constructors
+; ([(identifier) (field_identifier)] @constant
+;  (#match? @constant "^[A-Z]"))
 
-(crate) @namespace
+; ; Assume that uppercase names in paths are types
+; (scoped_identifier
+;   path: (identifier) @namespace)
+; (scoped_identifier
+;  (scoped_identifier
+;   name: (identifier) @namespace))
+; (scoped_type_identifier
+;   path: (identifier) @namespace)
+; (scoped_type_identifier
+;  (scoped_identifier
+;   name: (identifier) @namespace))
+; ((scoped_identifier
+;   path: (identifier) @TSNamespaceType)
+;  (#match? @TSNamespaceType "^[A-Z]"))
+; ((scoped_identifier
+;     name: (identifier) @TSNamespaceType)
+;  (#match? @TSNamespaceType "^[A-Z]"))
 
-(scoped_use_list
-  path: (identifier) @namespace)
-(scoped_use_list
-  path: (scoped_identifier
-            (identifier) @namespace))
-(use_list (scoped_identifier (identifier) @namespace . (_)))
-(use_list (identifier) @type (#match? @type "^[A-Z]"))
-(use_as_clause alias: (identifier) @type (#match? @type "^[A-Z]"))
+; (crate) @namespace
 
-;; Correct enum constructors
-(call_expression
-  function: (scoped_identifier
-    "::"
-    name: (identifier) @constant)
-  (#match? @constant "^[A-Z]"))
+; (scoped_use_list
+;   path: (identifier) @namespace)
+; (scoped_use_list
+;   path: (scoped_identifier
+;             (identifier) @namespace))
+; (use_list (scoped_identifier (identifier) @namespace . (_)))
+; (use_list (identifier) @type (#match? @type "^[A-Z]"))
+; (use_as_clause alias: (identifier) @type (#match? @type "^[A-Z]"))
 
-;; Assume that all `#[derive]` arguments are types
-(meta_item
-  (identifier) @type
-  arguments: (meta_arguments (meta_item (identifier) @type))
-  (#eq? @type "derive"))
+; ;; Correct enum constructors
+; (call_expression
+;   function: (scoped_identifier
+;     "::"
+;     name: (identifier) @constant)
+;   (#match? @constant "^[A-Z]"))
 
-(macro_invocation
-  macro: (identifier) @function.macro)
-(macro_invocation
-  macro: (scoped_identifier
-           (identifier) @function.macro .))
+; ;; Assume that all `#[derive]` arguments are types
+; (meta_item
+;   (identifier) @type
+;   arguments: (meta_arguments (meta_item (identifier) @type))
+;   (#eq? @type "derive"))
 
-(metavariable) @function.macro
+; (macro_invocation
+;   macro: (identifier) @function.macro)
+; (macro_invocation
+;   macro: (scoped_identifier
+;            (identifier) @function.macro .))
 
-"$" @function.macro
+; (metavariable) @function.macro
 
-; Function definitions
+; "$" @function.macro
 
-(function_item (identifier) @function)
-(function_signature_item (identifier) @function)
+; ; Function definitions
 
-[
-(line_comment)
-(block_comment)
- ] @comment
+; (function_item (identifier) @function)
+; (function_signature_item (identifier) @function)
 
-[
- "("
- ")"
- "["
- "]"
- "{"
- "}"
-] @punctuation.bracket
+; [
+; (line_comment)
+; (block_comment)
+;  ] @comment
 
-(type_arguments
-  "<" @punctuation.bracket
-  ">" @punctuation.bracket)
-(type_parameters
-  "<" @punctuation.bracket
-  ">" @punctuation.bracket)
+; [
+;  "("
+;  ")"
+;  "["
+;  "]"
+;  "{"
+;  "}"
+; ] @punctuation.bracket
 
-[
-"::"
-"."
-";"
- ] @punctuation.delimiter
+; (type_arguments
+;   "<" @punctuation.bracket
+;   ">" @punctuation.bracket)
+; (type_parameters
+;   "<" @punctuation.bracket
+;   ">" @punctuation.bracket)
 
-(parameter (identifier) @parameter)
+; [
+; "::"
+; "."
+; ";"
+;  ] @punctuation.delimiter
 
-(lifetime (identifier) @label)
+; (parameter (identifier) @parameter)
 
-(self) @variable.builtin
+; (lifetime (identifier) @label)
 
-[
- "use"
- "mod"
-] @include
+; (self) @variable.builtin
 
-[
-"break"
-"const"
-"default"
-"dyn"
-"enum"
-"extern"
-"impl"
-"let"
-"macro_rules!"
-"match"
-"move"
-"pub"
-"ref"
-"return"
-"static"
-"struct"
-"trait"
-"type"
-"union"
-"unsafe"
-"async"
-"await"
-"where"
-(mutable_specifier)
-(super)
- ] @keyword
+; [
+;  "use"
+;  "mod"
+; ] @include
+
+; [
+; "break"
+; "const"
+; "default"
+; "dyn"
+; "enum"
+; "extern"
+; "impl"
+; "let"
+; "macro_rules!"
+; "match"
+; "move"
+; "pub"
+; "ref"
+; "return"
+; "static"
+; "struct"
+; "trait"
+; "type"
+; "union"
+; "unsafe"
+; "async"
+; "await"
+; "where"
+; (mutable_specifier)
+; (super)
+;  ] @keyword
 
 
-; TODO(vigoux): attribute items should have some kind of injections
-[
-  (attribute_item)
-  (inner_attribute_item)
-] @TSAttribute
+; ; TODO(vigoux): attribute items should have some kind of injections
+; [
+;   (attribute_item)
+;   (inner_attribute_item)
+; ] @TSAttribute
 
-"fn" @keyword.function
+; "fn" @keyword.function
 
-(use_list (self) @keyword)
-(scoped_use_list (self) @keyword)
-(scoped_identifier (self) @keyword)
+; (use_list (self) @keyword)
+; (scoped_use_list (self) @keyword)
+; (scoped_identifier (self) @keyword)
 
-[
-"continue"
-"else"
-"if"
-] @conditional
+; [
+; "continue"
+; "else"
+; "if"
+; ] @conditional
 
-[
-"for"
-"in"
-"loop"
-"while"
-] @repeat
+; [
+; "for"
+; "in"
+; "loop"
+; "while"
+; ] @repeat
 
-[
-(char_literal)
-(string_literal)
-(raw_string_literal)
-] @string
+; [
+; (char_literal)
+; (string_literal)
+; (raw_string_literal)
+; ] @string
 
-(boolean_literal) @boolean
-(integer_literal) @number
-(float_literal) @float
+; (boolean_literal) @boolean
+; (integer_literal) @number
+; (float_literal) @float
 
-(escape_sequence) @string.escape
+; (escape_sequence) @string.escape
 
-[
-  "as"
-] @keyword.operator
+; [
+;   "as"
+; ] @keyword.operator
 
-[
-"*"
-"'"
-"->"
-"=>"
-"<="
-"="
-"=="
-"!"
-"!="
-"%"
-"%="
-"&"
-"&="
-"&&"
-"|"
-"|="
-"||"
-"^"
-"^="
-"*"
-"*="
-"-"
-"-="
-"+"
-"+="
-"/"
-"/="
-">"
-"<"
-">="
-">>"
-"<<"
-">>="
-"@"
-".."
-"..="
-] @operator
+; [
+; "*"
+; "'"
+; "->"
+; "=>"
+; "<="
+; "="
+; "=="
+; "!"
+; "!="
+; "%"
+; "%="
+; "&"
+; "&="
+; "&&"
+; "|"
+; "|="
+; "||"
+; "^"
+; "^="
+; "*"
+; "*="
+; "-"
+; "-="
+; "+"
+; "+="
+; "/"
+; "/="
+; ">"
+; "<"
+; ">="
+; ">>"
+; "<<"
+; ">>="
+; "@"
+; ".."
+; "..="
+; ] @operator
 
-(closure_parameters "|" @operator "|" @operator)
+; (closure_parameters "|" @operator "|" @operator)
 
-[
-  "let"
-] @Statement
+; [
+;   "let"
+; ] @Statement
 
-(let_declaration (type_identifier) @LetType)
-(struct_expression
- name: (type_identifier) @StructType)
+; (let_declaration (type_identifier) @LetType)
+; (struct_expression
+;  name: (type_identifier) @StructType)

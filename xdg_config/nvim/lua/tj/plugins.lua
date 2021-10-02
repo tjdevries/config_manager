@@ -112,12 +112,7 @@ return require("packer").startup {
       end,
     }
 
-    use {
-      "rcarriga/nvim-notify",
-      config = function()
-        vim.notify = require "notify"
-      end,
-    }
+    use "rcarriga/nvim-notify"
 
     -- TODO: Investigate
     -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
@@ -137,6 +132,13 @@ return require("packer").startup {
 
     local_use("nvim-telescope", "telescope-github.nvim")
     local_use("nvim-telescope", "telescope-symbols.nvim")
+
+    use {
+      "AckslD/nvim-neoclip.lua",
+      config = function()
+        require("neoclip").setup()
+      end,
+    }
 
     -- TODO: When i'm back w/ some npm stuff, get this working.
     -- elianiva/telescope-npm.nvim

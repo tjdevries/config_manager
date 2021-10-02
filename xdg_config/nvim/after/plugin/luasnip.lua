@@ -267,6 +267,22 @@ snippets.rust = make {
     i(0),
     t { "", "}" },
   },
+
+  enum = {
+    t { "#[derive(Debug, PartialEq)]", "enum " },
+    i(1, "Name"),
+    t { " {", "  " },
+    i(0),
+    t { "", "}" },
+  },
+
+  struct = {
+    t { "#[derive(Debug, PartialEq)]", "struct " },
+    i(1, "Name"),
+    t { " {", "    " },
+    i(0),
+    t { "", "}" },
+  },
 }
 
 ls.snippets = snippets

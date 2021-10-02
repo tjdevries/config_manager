@@ -146,6 +146,8 @@ if vim.fn.executable "gh" == 1 then
 end
 pcall(require("telescope").load_extension, "git_worktree")
 
+require("telescope").load_extension "neoclip"
+
 -- LOADED_FRECENCY = LOADED_FRECENCY or true
 -- local has_frecency = true
 -- if not LOADED_FRECENCY then

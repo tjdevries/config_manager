@@ -276,6 +276,20 @@ dap.configurations.go = {
     },
     dlvToolPath = vim.fn.exepath "dlv",
   },
+  {
+    type = "go",
+    name = "Run lsif-go-imports in sourcegraph",
+    request = "launch",
+    showLog = true,
+    program = "./cmd/lsif-go",
+    args = {
+      "--project-root=/home/tjdevries/sourcegraph/sourcegraph.git/main",
+      "--repository-root=/home/tjdevries/sourcegraph/sourcegraph.git/main",
+      "--module-root=/home/tjdevries/sourcegraph/sourcegraph.git/main",
+      "--no-animation",
+    },
+    dlvToolPath = vim.fn.exepath "dlv",
+  },
 }
 
 dap.configurations.python = {
@@ -318,11 +332,11 @@ augroup DapRepl
 augroup END
 ]]
 
-require("dapui").setup {
-  sidebar = {
-    open_on_start = true,
+local dap_ui = require "dapui"
 
-    -- You can change the order of elements in the sidebar
+local _ = dap_ui.setup {
+  -- You can change the order of elements in the sidebar
+  sidebar = {
     elements = {
       -- Provide as ID strings or tables with "id" and "size" keys
       {
@@ -334,13 +348,25 @@ require("dapui").setup {
     size = 50,
     position = "left", -- Can be "left" or "right"
   },
+
   tray = {
-    open_on_start = true,
     elements = { "repl" },
     size = 15,
     position = "bottom", -- Can be "bottom" or "top"
   },
 }
+
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  dap_ui.open()
+end
+
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  dap_ui.close()
+end
+
+dap.listeners.before.event_exited["dapui_config"] = function()
+  dap_ui.close()
+end
 
 --[[
 nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>

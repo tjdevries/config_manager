@@ -17,13 +17,7 @@ list.sql = {
   },
 }
 
--- list.vim = {
---   install_info = {
---     url = "https://github.com/vigoux/tree-sitter-viml",
---     files = { "src/parser.c", "src/scanner.c" },
---     branch = "master",
---   },
--- }
+-- list.lua = nil
 
 -- :h nvim-treesitter-query-extensions
 local custom_captures = {
@@ -31,14 +25,6 @@ local custom_captures = {
   ["function.bracket"] = "Type",
   ["namespace.type"] = "TSNamespaceType",
 }
-
-local read_query = function(filename)
-  return table.concat(vim.fn.readfile(vim.fn.expand(filename)), "\n")
-end
-
--- Overrides any existing tree sitter query for a particular name
-vim.treesitter.set_query("rust", "highlights", read_query "~/.config/nvim/queries/rust/highlights.scm")
--- vim.treesitter.set_query("sql", "highlights", read_query "~/.config/nvim/queries/sql/highlights.scm")
 
 -- alt+<space>, alt+p -> swap next
 -- alt+<backspace>, alt+p -> swap previous
@@ -65,7 +51,7 @@ local swap_next, swap_prev = (function()
   return n, p
 end)()
 
-require("nvim-treesitter.configs").setup {
+local _ = require("nvim-treesitter.configs").setup {
   ensure_installed = { "go", "rust", "toml", "query", "html", "typescript", "tsx" },
 
   highlight = {
@@ -179,6 +165,14 @@ require("nvim-treesitter.configs").setup {
     },
   },
 }
+
+local read_query = function(filename)
+  return table.concat(vim.fn.readfile(vim.fn.expand(filename)), "\n")
+end
+
+-- Overrides any existing tree sitter query for a particular name
+-- vim.treesitter.set_query("rust", "highlights", read_query "~/.config/nvim/queries/rust/highlights.scm")
+-- vim.treesitter.set_query("sql", "highlights", read_query "~/.config/nvim/queries/sql/highlights.scm")
 
 vim.cmd [[highlight IncludedC guibg=#373b41]]
 
