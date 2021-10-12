@@ -9,6 +9,6 @@ nnoremap {
   end,
 }
 
-nnoremap { "<space>dp", function()
-  vim.fn.setreg("+", string.format("attach %s", vim.fn.getpid()))
-end }
+-- nnoremap { "<space>dp", function()
+--   vim.fn.setreg("+", string.format("attach %s", vim.fn.getpid()))
+-- end }

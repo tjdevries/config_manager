@@ -29,6 +29,16 @@ vim.cmd [[
 
 local cmp = require "cmp"
 
+--[[
+" Setup buffer configuration (nvim-lua source only enables in Lua filetype).
+autocmd FileType lua lua require'cmp'.setup.buffer {
+\   sources = {
+\     { name = 'nvim_lua' },
+\     { name = 'buffer' },
+\   },
+\ }
+--]]
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -45,8 +55,23 @@ cmp.setup {
       select = true,
     },
 
-    -- TODO: Not sure I'm in love with this one.
-    ["<C-Space>"] = cmp.mapping.complete(),
+    -- If you want tab completion :'(
+    --  First you have to just promise to read `:help ins-completion`.
+    --
+    -- ["<Tab>"] = function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_next_item()
+    --   else
+    --     fallback()
+    --   end
+    -- end,
+    -- ["<S-Tab>"] = function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_prev_item()
+    --   else
+    --     fallback()
+    --   end
+    -- end,
 
     -- These mappings are useless. I already use C-n and C-p correctly.
     -- This simply overrides them and makes them do bad things in other buffers.
@@ -55,10 +80,10 @@ cmp.setup {
   },
 
   sources = {
-    { name = "buffer" },
-    { name = "path" },
     { name = "nvim_lua" },
-    { name = "nvim_lsp" },
+    { name = "nvim_lsp", priority = 10 },
+    { name = "path" },
+    { name = "buffer", priority = 2, keyword_length = 5, max_item_count = 5 },
     { name = "luasnip" },
   },
 }

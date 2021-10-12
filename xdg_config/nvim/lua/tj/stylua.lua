@@ -69,7 +69,7 @@ stylua.format = function(bufnr)
   end
 
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, output)
-  vim.api.nvim_buf_clear_namespace(bufnr, Luasnip_ns_id, 0, -1)
+  pcall(vim.api.nvim_buf_clear_namespace, bufnr, Luasnip_ns_id, 0, -1)
 
   -- Handle some weird snippet problems. Not everyone will necessarily have this problem.
   Luasnip_current_nodes = Luasnip_current_nodes or {}

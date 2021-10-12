@@ -15,7 +15,7 @@ local handlers = require "tj.lsp.handlers"
 
 -- Can set this lower if needed.
 -- require("vim.lsp.log").set_level "debug"
--- require('vim.lsp.log').set_level("trace")
+-- require("vim.lsp.log").set_level "trace"
 
 local lspkind = require "lspkind"
 local status = require "tj.lsp.status"
@@ -128,6 +128,9 @@ local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, nvim_status.capabilities)
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
+
+-- TODO: check if this is the problem.
+updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
 
 local servers = {
   gdscript = true,

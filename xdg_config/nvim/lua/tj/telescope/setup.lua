@@ -49,7 +49,7 @@ require("telescope").setup {
 
     selection_strategy = "reset",
     sorting_strategy = "descending",
-    -- scroll_strategy = "scroll",
+    scroll_strategy = "cycle",
     color_devicons = true,
 
     mappings = {
@@ -134,11 +134,12 @@ require("telescope").setup {
 
 -- pcall(require("telescope").load_extension, "cheat")
 -- pcall(require("telescope").load_extension, "arecibo")
-pcall(require("telescope").load_extension, "dap")
-pcall(require("telescope").load_extension, "flutter")
+-- require("telescope").load_extension "flutter"
+require("telescope").load_extension "dap"
+require("telescope").load_extension "notify"
 
 -- pcall(require("telescope").load_extension, "fzy_native")
-pcall(require("telescope").load_extension, "fzf")
+require("telescope").load_extension "fzf"
 
 if vim.fn.executable "gh" == 1 then
   pcall(require("telescope").load_extension, "gh")

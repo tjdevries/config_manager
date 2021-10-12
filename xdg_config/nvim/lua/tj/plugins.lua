@@ -46,7 +46,7 @@ return require("packer").startup {
     end
 
     use "wbthomason/packer.nvim"
-    -- use "lewis6991/impatient.nvim"
+    use "lewis6991/impatient.nvim"
     -- use "camspiers/snap"
 
     -- My Plugins
@@ -253,7 +253,9 @@ return require("packer").startup {
 
     -- use { 'Shougo/defx.nvim', }
     -- use "kyazdani42/nvim-tree.lua"
-    use "lambdalisue/vim-protocol"
+
+    -- TODO: This would be cool to add back, but it breaks sg.nvim for now.
+    -- use "lambdalisue/vim-protocol"
 
     -- Undo helper
     use "sjl/gundo.vim"
@@ -355,8 +357,8 @@ return require("packer").startup {
     use "saadparwaiz1/cmp_luasnip"
 
     -- ddc.vim
-    use "vim-denops/denops.vim"
-    use "lambdalisue/guise.vim"
+    -- use "vim-denops/denops.vim"
+    -- use "lambdalisue/guise.vim"
     -- use "Shougo/ddc.vim"
     -- use "Shougo/ddc-nvim-lsp"
 
@@ -510,6 +512,8 @@ return require("packer").startup {
       end,
       disable = true,
     }
+
+    use "ThePrimeagen/harpoon"
 
     -- use 'untitled-ai/jupyter_ascending.vim'
 
