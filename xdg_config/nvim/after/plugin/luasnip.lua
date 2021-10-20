@@ -285,13 +285,53 @@ snippets.rust = make {
   },
 }
 
+local js_attr_split = function(args, old_state)
+  local val = args[1][1]
+  local split = vim.split(val, ".", { plain = true })
+
+  local choices = {}
+  local thus_far = {}
+  for index = 0, #split - 1 do
+    table.insert(thus_far, 1, split[#split - index])
+    table.insert(choices, t { table.concat(thus_far, ".") })
+  end
+
+  return snippet_from_nodes(nil, c(1, choices))
+end
+
+local fill_line = function(char)
+  return function()
+    local row = vim.api.nvim_win_get_cursor(0)[1]
+    local lines = vim.api.nvim_buf_get_lines(0, row - 2, row, false)
+    return string.rep(char, #lines[1] - #lines[2])
+  end
+end
+
+snippets.rst = make {
+  jsa = {
+    ":js:attr:`",
+    d(2, js_attr_split, { 1 }),
+    " <",
+    i(1),
+    ">",
+    "`",
+  },
+
+  link = { ".. _", i(1), ":" },
+
+  sub = f(fill_line "-", {}),
+  head = f(fill_line "=", {}),
+
+  ref = { ":ref:`", same(1), " <", i(1), ">`" },
+}
+
 ls.snippets = snippets
 
 vim.cmd [[
   imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-k>'
   inoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
 
-  imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
+  imap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'
 
   snoremap <silent> <c-k> <cmd>lua require('luasnip').jump(1)<CR>
   snoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>

@@ -56,6 +56,7 @@ return require("packer").startup {
 
     local_use "nlua.nvim"
     local_use "vim9jit"
+    local_use "vimterface.nvim"
     local_use "colorbuddy.nvim"
     local_use "gruvbuddy.nvim"
     local_use "apyrori.nvim"
@@ -86,6 +87,12 @@ return require("packer").startup {
     -- NOTE: lspconfig ONLY has configs, for people reading this :)
     use "neovim/nvim-lspconfig"
     use "wbthomason/lsp-status.nvim"
+    use {
+      "ericpubu/lsp_codelens_extensions.nvim",
+      config = function()
+        require("codelens_extensions").setup()
+      end,
+    }
 
     local_use "lsp_extensions.nvim"
     use "onsails/lspkind-nvim"
@@ -173,6 +180,13 @@ return require("packer").startup {
       "chrisbra/NrrwRgn",
       cmd = { "NarrowRegion", "NarrowWindow" },
     }
+
+    -- use {
+    --   "luukvbaal/stabilize.nvim",
+    --   config = function()
+    --     require("stabilize").setup()
+    --   end,
+    -- }
 
     use "tweekmonster/spellrotate.vim"
     use "haya14busa/vim-metarepeat" -- Never figured out how to use this, but looks like fun.

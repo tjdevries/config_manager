@@ -17,10 +17,8 @@ local handlers = require "tj.lsp.handlers"
 -- require("vim.lsp.log").set_level "debug"
 -- require("vim.lsp.log").set_level "trace"
 
-local lspkind = require "lspkind"
 local status = require "tj.lsp.status"
 
-lspkind.init()
 status.activate()
 
 local custom_init = function(client)
@@ -131,6 +129,8 @@ updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capab
 
 -- TODO: check if this is the problem.
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
+
+-- vim.lsp.buf_request(0, "textDocument/codeLens", { textDocument = vim.lsp.util.make_text_document_params() })
 
 local servers = {
   gdscript = true,
