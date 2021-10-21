@@ -369,10 +369,11 @@ return require("packer").startup {
     use "hrsh7th/cmp-nvim-lua"
     use "hrsh7th/cmp-nvim-lsp"
     use "saadparwaiz1/cmp_luasnip"
+    use "tamago324/cmp-zsh"
 
     -- ddc.vim
-    -- use "vim-denops/denops.vim"
-    -- use "lambdalisue/guise.vim"
+    use "vim-denops/denops.vim"
+    use "lambdalisue/guise.vim"
     -- use "Shougo/ddc.vim"
     -- use "Shougo/ddc-nvim-lsp"
 
@@ -481,11 +482,13 @@ return require("packer").startup {
     --
     -- TEXT MANIUPLATION
     use "godlygeek/tabular" -- Quickly align text by pattern
-    use "tpope/vim-commentary" -- Easily comment out lines or objects
     use "tpope/vim-repeat" -- Repeat actions better
     use "tpope/vim-abolish" -- Cool things with words!
     use "tpope/vim-characterize"
     use { "tpope/vim-dispatch", cmd = { "Dispatch", "Make" } }
+
+    use "tpope/vim-commentary" -- Easily comment out lines or objects
+    -- use "numToStr/Comment.nvim"
 
     use {
       "AndrewRadev/splitjoin.vim",
@@ -527,7 +530,7 @@ return require("packer").startup {
       disable = true,
     }
 
-    use "ThePrimeagen/harpoon"
+    -- use "ThePrimeagen/harpoon"
 
     -- use 'untitled-ai/jupyter_ascending.vim'
 

@@ -135,6 +135,7 @@ updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport
 local servers = {
   gdscript = true,
   graphql = true,
+  html = true,
   pyright = true,
   vimls = true,
   yamlls = true,

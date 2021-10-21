@@ -1,6 +1,11 @@
 local nnoremap = vim.keymap.nnoremap
 
-require("harpoon").setup {}
+local ok, harpoon = pcall(require, "harpoon")
+if not ok then
+  return
+end
+
+harpoon.setup {}
 
 nnoremap { "<M-h><M-m>", require("harpoon.mark").add_file }
 nnoremap { "<M-h><M-l>", require("harpoon.ui").toggle_quick_menu }

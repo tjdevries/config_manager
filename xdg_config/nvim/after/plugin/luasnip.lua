@@ -319,8 +319,9 @@ snippets.rst = make {
 
   link = { ".. _", i(1), ":" },
 
-  sub = f(fill_line "-", {}),
   head = f(fill_line "=", {}),
+  sub = f(fill_line "-", {}),
+  subsub = f(fill_line "^", {}),
 
   ref = { ":ref:`", same(1), " <", i(1), ">`" },
 }

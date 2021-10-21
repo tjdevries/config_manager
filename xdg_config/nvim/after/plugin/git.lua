@@ -8,9 +8,16 @@ if not ok then
   return
 end
 
-neogit.setup {}
+neogit.setup {
+  integrations = {
+    diffview = true,
+  },
+}
 
 nnoremap { "<leader>gs", neogit.open }
-nnoremap { "<leader>gc", function()
-  neogit.open { "commit" }
-end }
+nnoremap {
+  "<leader>gc",
+  function()
+    neogit.open { "commit" }
+  end,
+}
