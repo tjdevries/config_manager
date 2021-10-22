@@ -130,6 +130,7 @@ return require("packer").startup {
     })
 
     local_use("nvim-telescope", "telescope.nvim")
+    local_use("nvim-telescope", "telescope-rs.nvim")
     local_use("nvim-telescope", "telescope-fzf-writer.nvim")
     local_use("nvim-telescope", "telescope-packer.nvim")
     local_use("nvim-telescope", "telescope-fzy-native.nvim")

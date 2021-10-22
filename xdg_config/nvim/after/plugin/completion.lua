@@ -108,7 +108,9 @@ cmp.setup {
 --[[
 " Setup buffer configuration (nvim-lua source only enables in Lua filetype).
 "
-" This only _adds_ sources for a filetype, not removes the global ones.
+" ON YOUTUBE I SAID: This only _adds_ sources for a filetype, not removes the global ones.
+"
+" BUT I WAS WRONG! This will override the global setup. Sorry for any confusion.
 autocmd FileType lua lua require'cmp'.setup.buffer {
 \   sources = {
 \     { name = 'nvim_lua' },
