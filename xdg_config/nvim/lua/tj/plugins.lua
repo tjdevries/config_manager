@@ -364,6 +364,8 @@ return require("packer").startup {
     --
 
     -- Completion
+
+    -- Sources
     use "hrsh7th/nvim-cmp"
     use "hrsh7th/cmp-buffer"
     use "hrsh7th/cmp-path"
@@ -371,6 +373,9 @@ return require("packer").startup {
     use "hrsh7th/cmp-nvim-lsp"
     use "saadparwaiz1/cmp_luasnip"
     use "tamago324/cmp-zsh"
+
+    -- Comparators
+    use "lukas-reineke/cmp-under-comparator"
 
     -- ddc.vim
     use "vim-denops/denops.vim"
@@ -458,7 +463,6 @@ return require("packer").startup {
     -- STREAM: Show off edit_alternate.vim
     use {
       "tjdevries/edit_alternate.vim",
-      keys = { "<leader>ea" },
       config = function()
         vim.fn["edit_alternate#rule#add"]("go", function(filename)
           if filename:find "_test.go" then
@@ -467,6 +471,8 @@ return require("packer").startup {
             return (filename:gsub("%.go", "_test.go"))
           end
         end)
+
+        vim.api.nvim_set_keymap("n", "<leader>ea", "<cmd>EditAlternate<CR>", { silent = true })
       end,
     }
 
