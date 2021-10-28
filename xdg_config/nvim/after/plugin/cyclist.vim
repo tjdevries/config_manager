@@ -25,4 +25,12 @@ call cyclist#add_listchar_option_set('busy', {
         \ 'nbsp': '☠',
         \ })
 
+if $USER == 'tj-wsl'
+  call cyclist#add_listchar_option_set('wsl', {
+          \ 'tab': '» ',
+          \ })
+
+  call cyclist#activate_listchars('wsl')
+endif
+
 nmap <leader>cl <Plug>CyclistNext
