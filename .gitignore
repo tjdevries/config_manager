@@ -129,3 +129,31 @@ xdg_config/caddy/
 xdg_config/noyau.json
 xdg_config/dlv/
 xdg_config/kernel.org/
+
+xdg_config/Chia Blockchain/
+xdg_config/Epic/
+xdg_config/MonoDevelop/
+xdg_config/NuGet/
+xdg_config/Radarr/
+xdg_config/Signal/
+xdg_config/Unity Hub/
+xdg_config/UnityHub/
+xdg_config/aseprite/
+xdg_config/bin/neuron
+xdg_config/compiz-1/
+xdg_config/filezilla/
+xdg_config/ftb-app/
+xdg_config/jack/
+xdg_config/kdeconnect/
+xdg_config/kdeglobals
+xdg_config/kdenliverc
+xdg_config/lbry/
+xdg_config/libaccounts-glib/
+xdg_config/mapeditor.org/
+xdg_config/packer
+xdg_config/rncbc.org/
+xdg_config/settings
+xdg_config/stetic/
+xdg_config/tool_state
+xdg_config/xbuild/
+

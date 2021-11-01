@@ -4,7 +4,7 @@
 
 [core]
   editor = nvim
-  excludesfile = /home/tj/.gitignore_global
+	excludesFile = ~/.gitignore
 
   pager = delta
     ; autocrlf = input
@@ -31,5 +31,6 @@
 
 [interactive]
   diffFilter = delta --color-only
-[credential]
-	helper = cache
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

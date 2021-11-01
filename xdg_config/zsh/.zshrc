@@ -166,12 +166,12 @@ export PATH="$HOME/.cargo/bin:$PATH"
 if hash nvim 2>/dev/null; then
   export EDITOR=nvim
 
-  if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
+  # if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+  #   alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
 
-    export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-    export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-  fi
+  #   export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+  #   export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+  # fi
 else
   export EDITOR=vim
 fi
