@@ -21,3 +21,5 @@ nnoremap {
     neogit.open { "commit" }
   end,
 }
+
+nnoremap { "<space>vv", ":DiffviewOpen " }

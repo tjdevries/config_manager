@@ -1,5 +1,6 @@
 local lspconfig_util = require "lspconfig.util"
 local Job = require "plenary.job"
+local Path = require "plenary.path"
 
 local M = {}
 
@@ -12,25 +13,33 @@ M.run = function()
     return
   end
 
+  print("Running now:", root)
+
+  local lint_exe = "golangci-lint"
+  if Path:new(golang_lint_bin):exists() then
+    lint_exe = golang_lint_bin
+  end
+
   --stylua: ignore
   local j = Job:new {
-    golang_lint_bin,
+    lint_exe,
     "run",
-    "-c", ".golangci.yml",
+    -- "-c", ".golangci.yml",
     "--out-format", "json",
 
     cwd = root,
 
     on_exit = vim.schedule_wrap(function(self)
-      local output = self:result()
-      local issues = vim.fn.json_decode(output).Issues
+    print "Complete!"
+    local output = self:result()
+    local issues = vim.fn.json_decode(output).Issues
 
-      if not issues or vim.tbl_isempty(issues) then
-        print("[golangci lint] No Issues")
-        return
-      end
+    if not issues or vim.tbl_isempty(issues) then
+      print "[golangci lint] No Issues"
+      return
+    end
 
-      --[[
+    --[[
         Each entry looks like:
 
           Pos = {
@@ -48,17 +57,17 @@ M.run = function()
           Replacement = vim.NIL, Severity = "", SourceLines = vim.NIL,
       --]]
 
-      local results = {}
-      for _, issue in ipairs(issues) do
-        table.insert(results, {
-          filename = issue.Pos.Filename,
-          lnum = issue.Pos.Line,
-          text = issue.Text,
-        })
-      end
+    local results = {}
+    for _, issue in ipairs(issues) do
+      table.insert(results, {
+        filename = issue.Pos.Filename,
+        lnum = issue.Pos.Line,
+        text = issue.Text,
+      })
+    end
 
-      vim.fn.setqflist(results)
-      vim.cmd [[copen]]
+    vim.fn.setqflist(results)
+    vim.cmd [[copen]]
     end),
   }
 

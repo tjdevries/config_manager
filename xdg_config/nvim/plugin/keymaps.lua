@@ -22,21 +22,5 @@ nnoremap {
   end,
 }
 
-nnoremap {
-  "<space>dn",
-  function()
-    vim.diagnostic.goto_next()
-  end,
-}
-
-nnoremap {
-  "<space>dp",
-  function()
-    vim.diagnostic.goto_prev()
-  end,
-}
-
-nnoremap { "<space>sl", vim.diagnostic.show_line_diagnostics }
-
 -- nnoremap <M-j> :m .+1<CR>==
 -- nnoremap <M-k> :m .-2<CR>==

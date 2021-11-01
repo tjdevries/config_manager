@@ -1,3 +1,5 @@
+local is_wsl = vim.env.USER == "tj-wsl"
+
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 -- Don't show the dumb matching stuff.
@@ -28,16 +30,41 @@ cmp.setup {
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-e>"] = cmp.mapping.close(),
-    ["<c-y>"] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
+    ["<c-y>"] = cmp.mapping(
+      cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      },
+      { "i", "c" }
+    ),
+
+    ["<c-space>"] = cmp.mapping {
+      i = cmp.mapping.complete(),
+      c = function(
+        _ --[[fallback]]
+      )
+        if cmp.visible() then
+          if not cmp.confirm { select = true } then
+            return
+          end
+        else
+          cmp.complete()
+        end
+      end,
     },
+
+    ["<tab>"] = cmp.mapping {
+      i = cmp.config.disable,
+      c = function(fallback)
+        fallback()
+      end,
+    },
+
+    -- Testing
     ["<c-q>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-
-    ["<c-space>"] = cmp.mapping.complete(),
 
     -- If you want tab completion :'(
     --  First you have to just promise to read `:help ins-completion`.
@@ -67,6 +94,7 @@ cmp.setup {
   --        (more?)
   sources = {
     { name = "gh_issues" },
+    -- { name = "tn" },
 
     -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
     { name = "nvim_lua" },
@@ -124,6 +152,7 @@ cmp.setup {
         path = "[path]",
         luasnip = "[snip]",
         gh_issues = "[issues]",
+        tn = "[TabNine]",
       },
     },
   },
@@ -133,9 +162,42 @@ cmp.setup {
     native_menu = false,
 
     -- Let's play with this for a day or two
-    ghost_text = true,
+    ghost_text = not is_wsl,
   },
 }
+
+cmp.setup.cmdline("/", {
+  completion = {
+    -- Might allow this later, but I don't like it right now really.
+    -- Although, perhaps if it just triggers w/ @ then we could.
+    --
+    -- I will have to come back to this.
+    autocomplete = false,
+  },
+  sources = cmp.config.sources({
+    { name = "nvim_lsp_document_symbol" },
+  }, {
+    -- { name = "buffer", keyword_length = 5 },
+  }),
+})
+
+cmp.setup.cmdline(":", {
+  completion = {
+    autocomplete = false,
+  },
+
+  sources = cmp.config.sources({
+    {
+      name = "path",
+    },
+  }, {
+    {
+      name = "cmdline",
+      max_item_count = 20,
+      keyword_length = 4,
+    },
+  }),
+})
 
 --[[
 " Setup buffer configuration (nvim-lua source only enables in Lua filetype).

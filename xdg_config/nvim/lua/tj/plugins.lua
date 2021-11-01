@@ -50,9 +50,7 @@ return require("packer").startup {
     -- use "camspiers/snap"
 
     -- My Plugins
-    if not is_wsl then
-      local_use "refactoring.nvim"
-    end
+    local_use("ThePrimeagen", "refactoring.nvim")
 
     local_use "nlua.nvim"
     local_use "vim9jit"
@@ -368,10 +366,12 @@ return require("packer").startup {
 
     -- Sources
     use "hrsh7th/nvim-cmp"
+    use "hrsh7th/cmp-cmdline"
     use "hrsh7th/cmp-buffer"
     use "hrsh7th/cmp-path"
     use "hrsh7th/cmp-nvim-lua"
     use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-nvim-lsp-document-symbol"
     use "saadparwaiz1/cmp_luasnip"
     use "tamago324/cmp-zsh"
 

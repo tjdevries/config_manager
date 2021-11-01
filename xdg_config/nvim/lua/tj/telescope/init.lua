@@ -425,6 +425,15 @@ function M.lsp_implementations()
   }
 end
 
+function M.vim_options()
+  require("telescope.builtin").vim_options {
+    layout_config = {
+      width = 0.5,
+    },
+    sorting_strategy = "ascending",
+  }
+end
+
 return setmetatable({}, {
   __index = function(_, k)
     reloader()

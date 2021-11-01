@@ -6,14 +6,9 @@ local opt = vim.opt
 opt.wildignore = "__pycache__"
 opt.wildignore = opt.wildignore + { "*.o", "*~", "*.pyc", "*pycache*" }
 
-opt.wildmode = { "longest", "list", "full" }
-
 -- Cool floating window popup menu for completion on command line
 opt.pumblend = 17
-
-opt.wildmode = opt.wildmode - "list"
-opt.wildmode = opt.wildmode + { "longest", "full" }
-
+opt.wildmode = "longest:full"
 opt.wildoptions = "pum"
 
 opt.showmode = false

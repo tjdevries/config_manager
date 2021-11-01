@@ -4,6 +4,10 @@ end
 
 vim.opt.termguicolors = true
 
+if vim.env.USER == "tj-wsl" then
+  rawset(require("colorbuddy").styles, "italic", require("colorbuddy").styles.none)
+end
+
 require("colorbuddy").colorscheme "gruvbuddy"
 require("colorizer").setup()
 

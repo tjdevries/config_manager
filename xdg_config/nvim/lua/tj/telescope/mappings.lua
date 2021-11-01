@@ -69,8 +69,9 @@ map_tele("<space>fa", "installed_plugins")
 map_tele("<space>fi", "search_all_files")
 map_tele("<space>ff", "curbuf")
 map_tele("<space>fh", "help_tags")
-map_tele("<space>vo", "vim_options")
+map_tele("<space>bo", "vim_options")
 map_tele("<space>gp", "grep_prompt")
+map_tele("<space>wt", "treesitter")
 
 -- Telescope Meta
 map_tele("<space>fB", "builtin")
