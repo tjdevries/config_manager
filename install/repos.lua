@@ -70,6 +70,9 @@ local build_repos = {
 
   -- Delta
   "dandavison/delta",
+
+  -- toggle's cool typing test
+  "togglebyte/toggle_cool_cow_says_type",
 }
 
 local testing = false
