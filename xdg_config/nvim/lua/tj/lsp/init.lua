@@ -18,7 +18,6 @@ local handlers = require "tj.lsp.handlers"
 -- require("vim.lsp.log").set_level "trace"
 
 local status = require "tj.lsp.status"
-
 status.activate()
 
 local custom_init = function(client)
@@ -113,7 +112,8 @@ local custom_attach = function(client)
     vim.cmd [[
       augroup lsp_document_codelens
         au! * <buffer>
-        autocmd BufWritePost,CursorHold <buffer> lua vim.lsp.codelens.refresh()
+        autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
+        autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
       augroup END
     ]]
   end
@@ -259,10 +259,10 @@ require("nlua.lsp.nvim").setup(lspconfig, {
   },
 })
 
-require("sg.lsp").setup {
-  on_init = custom_init,
-  on_attach = custom_attach,
-}
+-- require("sg.lsp").setup {
+--   on_init = custom_init,
+--   on_attach = custom_attach,
+-- }
 
 --[ An example of using functions...
 -- 0. nil -> do default (could be enabled or disabled)

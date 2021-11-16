@@ -1,5 +1,5 @@
-vim.cmd [[packadd packer.nvim]]
-vim.cmd [[packadd vimball]]
+_ = vim.cmd [[packadd packer.nvim]]
+_ = vim.cmd [[packadd vimball]]
 
 local has = function(x)
   return vim.fn.has(x) == 1
@@ -124,9 +124,7 @@ return require("packer").startup {
     -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
     local_use("nvim-lua", "popup.nvim")
-    local_use("nvim-lua", "plenary.nvim", {
-      rocks = "lyaml",
-    })
+    local_use("nvim-lua", "plenary.nvim")
 
     local_use("nvim-telescope", "telescope.nvim")
     local_use("nvim-telescope", "telescope-rs.nvim")
@@ -498,8 +496,7 @@ return require("packer").startup {
     use "tpope/vim-characterize"
     use { "tpope/vim-dispatch", cmd = { "Dispatch", "Make" } }
 
-    use "tpope/vim-commentary" -- Easily comment out lines or objects
-    -- use "numToStr/Comment.nvim"
+    use "numToStr/Comment.nvim"
 
     use {
       "AndrewRadev/splitjoin.vim",
@@ -541,7 +538,7 @@ return require("packer").startup {
       disable = true,
     }
 
-    -- use "ThePrimeagen/harpoon"
+    use "ThePrimeagen/harpoon"
 
     -- use 'untitled-ai/jupyter_ascending.vim'
 

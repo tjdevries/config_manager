@@ -53,12 +53,12 @@ cmp.setup {
       end,
     },
 
-    ["<tab>"] = cmp.mapping {
-      i = cmp.config.disable,
-      c = function(fallback)
-        fallback()
-      end,
-    },
+    -- ["<tab>"] = cmp.mapping {
+    --   i = cmp.config.disable,
+    --   c = function(fallback)
+    --     fallback()
+    --   end,
+    -- },
 
     -- Testing
     ["<c-q>"] = cmp.mapping.confirm {
@@ -98,7 +98,6 @@ cmp.setup {
 
     -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
     { name = "nvim_lua" },
-    { name = "zsh" },
 
     { name = "nvim_lsp" },
     { name = "path" },
@@ -162,7 +161,7 @@ cmp.setup {
     native_menu = false,
 
     -- Let's play with this for a day or two
-    ghost_text = not is_wsl,
+    ghost_text = false,
   },
 }
 
@@ -214,10 +213,17 @@ autocmd FileType lua lua require'cmp'.setup.buffer {
 --]]
 
 -- Add vim-dadbod-completion in sql files
-vim.cmd [[
+_ = vim.cmd [[
   augroup DadbodSql
     au!
     autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer { sources = { { name = 'vim-dadbod-completion' } } }
+  augroup END
+]]
+
+_ = vim.cmd [[
+  augroup CmpZsh
+    au!
+    autocmd Filetype zsh lua require'cmp'.setup.buffer { sources = { { name = "zsh" }, } }
   augroup END
 ]]
 

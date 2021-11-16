@@ -1,3 +1,18 @@
+-- local og_lsp = vim.lsp
+-- vim.lsp = setmetatable({}, {
+--   __index = function(_, v)
+--     if v == "codelens" then
+--       print(debug.traceback "CodeLens access:")
+--     end
+--
+--     return og_lsp[v]
+--   end,
+--
+--   __newindex = function(...)
+--     error(vim.inspect { ... })
+--   end,
+-- })
+
 --       __________________    __
 --      /_  __/ ____/ ____/   / /    TJ DeVries
 --       / / / __/ / __/ __  / /     https://github.com/tjdevries
@@ -33,7 +48,8 @@ Much of the configuration of individual plugins you can find in either:
 
 --]]
 
-require "impatient"
+pcall(require, "impatient")
+
 require "tj.profile"
 
 if require "tj.first_load"() then
