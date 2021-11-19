@@ -34,8 +34,6 @@ setopt hist_ignore_space
 
 
 ## ZSH plugins
-export ZSH_PLUGIN_MANAGER='antigen'
-
 fpath=($XDG_CONFIG_HOME/zsh/submods/gcloud-zsh-completion/src/ $fpath)
 
 autoload -U +X bashcompinit && bashcompinit
@@ -52,13 +50,16 @@ antigen bundle 'zsh-users/zsh-autosuggestions'
 
 antigen bundle 'agkozak/zsh-z'
 
-antigen theme denysdovhan/spaceship-prompt
+# antigen theme spaceship-prompt/spaceship-prompt
 # antigen theme robbyrussell
 
 antigen apply
 
+eval "$(starship init zsh)"
+
 bindkey '^ ' autosuggest-accept
 bindkey '^n' autosuggest-accept
+
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
 ## My "Plugins"
@@ -70,22 +71,12 @@ sources=(
   'pyenv'
 )
 
-if [[ $ZSH_PLUGIN_MANAGER =~ 'oh-my-zsh' ]]; then
-  # TODO: This comparison isn't working?
-  # sources+=('prompt')
-fi
-
-if [[ $ZSH_THEME = 'spaceship' ]]; then
-  sources+=('spaceship')
-fi
-
 for s in "${sources[@]}"; do
   source $HOME/.config/zsh/include/${s}.zsh
 done
 
 
 export LC_ALL=en_US.UTF-8
-
 
 # {{{1 Functions
 # {{{2 Alias paths
@@ -158,23 +149,8 @@ fi
 # {{{ Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 # }}}
-# {{{ NPM configuratoin
-# export PATH=~/.npm-global/bin:$PATH
-# }}}
 # }}}
 #
-if hash nvim 2>/dev/null; then
-  export EDITOR=nvim
-
-  # if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-  #   alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
-
-  #   export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-  #   export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-  # fi
-else
-  export EDITOR=vim
-fi
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -217,9 +193,6 @@ if [[ -f "$XDG_CONFIG_HOME/broot/launcher/bash/br" ]]; then
   source /home/tj/.config/broot/launcher/bash/br
 fi
 
-# Use nvim as manpager `:h Man`
-export MANPAGER='nvim +Man!'
-
 export GCLOUD_HOME="$HOME/Downloads/google-cloud-sdk"
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -255,17 +228,16 @@ setopt PROMPT_SUBST
 #     export LUA_CPATH=$(luarocks path --lr-cpath)
 # fi
 
-function lua_statusline() {
-  luajit /home/tjdevries/.config/zsh/prompt.lua $?
-}
+# function lua_statusline() {
+#   luajit /home/tjdevries/.config/zsh/prompt.lua $?
+# }
+# export PS1='$(luajit /home/tjdevries/.config/zsh/prompt.lua)'
+# export PS1='$(lua_statusline)'
+# export PS1='$(pwd) > '
 
 function zshexit() {
   # TODO: Clean up any associated things that are left open from lua land
 }
-
-# export PS1='$(luajit /home/tjdevries/.config/zsh/prompt.lua)'
-# export PS1='$(lua_statusline)'
-# export PS1='$(pwd) > '
 
 export NVM_COMPLETION=true
 export NVM_DIR=$HOME/".nvm"
@@ -274,8 +246,6 @@ export NVM_DIR=$HOME/".nvm"
 if hash yarn 2>/dev/null; then
   export PATH="$PATH:$(yarn global bin)"
 fi
-
-
 
 export DENO_INSTALL="/home/tjdevries/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
