@@ -9,6 +9,7 @@ local sections = require "el.sections"
 local subscribe = require "el.subscribe"
 local lsp_statusline = require "el.plugins.lsp_status"
 local helper = require "el.helper"
+local diagnostic = require "el.diagnostic"
 
 local has_lsp_extensions, ws_diagnostics = pcall(require, "lsp_extensions.workspace.diagnostic")
 
@@ -78,6 +79,8 @@ local is_sourcegraph = function(_, buffer)
   end
 end
 
+local diagnostic_display = diagnostic.make_buffer()
+
 require("el").setup {
   generator = function(window, buffer)
     local is_minimal = minimal_status_line(window, buffer)
@@ -100,9 +103,10 @@ require("el").setup {
       { " " },
       { sections.split, required = true },
       { git_icon },
-      { sections.maximum_width(builtin.responsive_file(140, 90), 0.40), required = true },
+      { sections.maximum_width(builtin.make_responsive_file(140, 90), 0.40), required = true },
       { sections.collapse_builtin { { " " }, { builtin.modified_flag } } },
       { sections.split, required = true },
+      { diagnostic_display },
       { show_current_func },
       { lsp_statusline.server_progress },
       -- { ws_diagnostic_counts },

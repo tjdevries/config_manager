@@ -94,7 +94,6 @@ cmp.setup {
   --        (more?)
   sources = {
     { name = "gh_issues" },
-    -- { name = "tn" },
 
     -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
     { name = "nvim_lua" },

@@ -10,4 +10,7 @@ require("zen-mode").setup {
   },
 }
 
-require("twilight").setup {}
+require("twilight").setup {
+  context = -1,
+  treesitter = false,
+}

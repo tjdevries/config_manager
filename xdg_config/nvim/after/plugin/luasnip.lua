@@ -5,138 +5,70 @@ end
 local ls = require "luasnip"
 
 ls.config.set_config {
+  -- I have this on, but might not be necessary
   history = true,
+
+  -- This one is cool cause if you have dynamic snippets, it updates as you type!
   updateevents = "TextChanged,TextChangedI",
+
+  region_check_events = nil,
+
+  -- Autosnippets??
+  enable_autosnippets = nil,
+
+  -- Crazy highlights!!
+  ext_opts = nil,
 }
 
 -- create snippet
 -- s(context, nodes, condition, ...)
 local snippet = ls.s
+
+-- TODO: Write about this.
+--  Useful for dynamic nodes and choice nodes
 local snippet_from_nodes = ls.sn
 
--- This a choice snippet. You can move through with <c-e> (in my config)
--- tbl_snip {
---   trig = "c",
---   t { "-- this has a choice: " },
+-- This is the simplest node.
+--  Creates a new text node. Places cursor after node by default.
+--  t { "this will be inserted" }
+--
+--  Multiple lines are by passing a table of strings.
+--  t { "line 1", "line 2" }
+local t = ls.text_node
+
+-- Insert Node
+--  Creates a location for the cursor to jump to.
+--      Possible options to jump to are 1 - N
+--      If you use 0, that's the final place to jump to.
+--
+--  To create placeholder text, pass it as the second argument
+--      i(2, "this is placeholder text")
+local i = ls.insert_node
+
+-- Function Node
+--  Takes a function that returns text
+local f = ls.function_node
+
+-- This a choice snippet. You can move through with <c-l> (in my config)
 --   c(1, { t {"hello"}, t {"world"}, }),
---   i(0),
--- }
-local c = ls.c -- choice node
+--
+-- The first argument is the jump position
+-- The second argument is a table of possible nodes.
+--  Note, one thing that's nice is you don't have to include
+--  the jump position for nodes that normally require one (can be nil)
+local c = ls.choice_node
 
-local f = ls.f -- function node
-local i = ls.i -- insert node
-local t = ls.t -- text node
-local d = ls.d -- dynamic node
+local d = ls.dynamic_node
 
-local str = function(text)
-  return t { text }
-end
+-- TODO: Document what I've learned about lambda
+local l = require("luasnip.extras").lambda
 
-local newline = function(text)
-  return t { "", text }
-end
+local events = require "luasnip.util.events"
 
-local str_snip = function(trig, expanded)
-  return ls.parser.parse_snippet({ trig = trig }, expanded)
-end
+-- local str_snip = function(trig, expanded)
+--   return ls.parser.parse_snippet({ trig = trig }, expanded)
+-- end
 
-local tbl_snip = function(t)
-  return snippet({ trig = t.trig, dscr = t.desc }, { unpack(t) })
-end
-
-local function char_count_same(c1, c2)
-  local line = vim.api.nvim_get_current_line()
-  local _, ct1 = string.gsub(line, c1, "")
-  local _, ct2 = string.gsub(line, c2, "")
-  return ct1 == ct2
-end
-
-local function neg(fn, ...)
-  return not fn(...)
-end
-
--- {{{ Go stuff
-local ts_locals = require "nvim-treesitter.locals"
-local ts_utils = require "nvim-treesitter.ts_utils"
-
-local get_node_text = vim.treesitter.get_node_text
-
-vim.treesitter.set_query(
-  "go",
-  "LuaSnip_Result",
-  [[
-  [
-    (method_declaration result: (*) @id)
-    (function_declaration result: (*) @id)
-    (func_literal result: (*) @id)
-  ]
-]]
-)
-
-local transform = function(text, info)
-  if text == "int" then
-    return str "0"
-  elseif text == "error" then
-    if info then
-      info.index = info.index + 1
-
-      return c(info.index, {
-        str(string.format('errors.Wrap(%s, "%s")', info.err_name, info.func_name)),
-        str(info.err_name),
-      })
-    else
-      return str "err"
-    end
-  elseif text == "bool" then
-    return str "false"
-  elseif string.find(text, "*", 1, true) then
-    return str "nil"
-  end
-
-  return str(text)
-end
-
-local handlers = {
-  ["parameter_list"] = function(node, info)
-    local result = {}
-
-    local count = node:named_child_count()
-    for i = 0, count - 1 do
-      table.insert(result, transform(get_node_text(node:named_child(i), 0), info))
-      if i ~= count - 1 then
-        table.insert(result, t { ", " })
-      end
-    end
-
-    return result
-  end,
-
-  ["type_identifier"] = function(node, info)
-    local text = get_node_text(node, 0)
-    return { transform(text, info) }
-  end,
-}
-
-local function go_result_type(info)
-  local cursor_node = ts_utils.get_node_at_cursor()
-  local scope = ts_locals.get_scope_tree(cursor_node, 0)
-
-  local function_node
-  for _, v in ipairs(scope) do
-    if v:type() == "function_declaration" or v:type() == "method_declaration" or v:type() == "func_literal" then
-      function_node = v
-      break
-    end
-  end
-
-  local query = vim.treesitter.get_query("go", "LuaSnip_Result")
-  for id, node in query:iter_captures(function_node, 0) do
-    if handlers[node:type()] then
-      return handlers[node:type()](node, info)
-    end
-  end
-end
--- }}}
 local shortcut = function(val)
   if type(val) == "string" then
     return { t { val }, i(0) }
@@ -170,124 +102,153 @@ end
 
 local snippets = {}
 
--- snippets.all = {
---   snippet({ trig = "(" }, { t { "(" }, i(1), t { ")" }, i(0) }, neg, char_count_same, "%(", "%)"),
--- }
+local toexpand_count = 0
 
---stylua: ignore
-snippets.lua = make {
-  ignore = "--stylua: ignore",
+-- `all` key means for all filetypes.
+-- Shared between all filetypes. Has lower priority than a particular ft tho
+snippets.all = {
+  -- basic, don't need to know anything else
+  --    arg 1: string
+  --    arg 2: a node
+  snippet("simple", t "wow, you were right!"),
 
-  lf = { 
-    desc = "table function" ,
-    "local ", i(1), " = function(", i(2), ")", newline "  ", i(0), newline "end",
-  },
+  -- callbacks table
+  snippet("toexpand", c(1, { t "hello", t "world", t "last" }), {
+    callbacks = {
+      [1] = {
+        [events.enter] = function(--[[ node ]])
+          toexpand_count = toexpand_count + 1
+          print("Number of times entered:", toexpand_count)
+        end,
+      },
+    },
+  }),
 
-  -- TODO: I don't know how I would like to set this one up.
-  f = { "function(", i(1), ")", i(0), newline "end" },
+  -- regTrig
+  --    snippet.captures
+  -- snippet({ trig = "AbstractGenerator.*Factory", regTrig = true }, { t "yo" }),
 
-  test = { "mirrored: ", i(1), " // ", same(1), " | ", i(0)},
+  -- third arg,
+  snippet("never_expands", t "this will never expand, condition is false", {
+    condition = function()
+      return false
+    end,
+  }),
 
-  -- test = { "local ", i(1), ' = require("', f(function(args)
-  --   table.insert(RESULT, args[1])
-  --   return { "hi" }
-  -- end, { 1 }), '")', i(0) },
+  -- docTrig ??
 
-  -- test = { i(1), " // ", d(2, function(args)
-  --   return snippet_from_nodes(nil, { str "hello" })
-  -- end, { 1 }), i(0) },
+  -- functions
+
+  -- date -> Tue 16 Nov 2021 09:43:49 AM EST
+  snippet({ trig = "date" }, {
+    f(function()
+      return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date())
+    end, {}),
+  }),
+
+  -- Simple snippet, basics
+  snippet("for", {
+    t "for ",
+    i(1, "k, v"),
+    t " in ",
+    i(2, "ipairs()"),
+    t { "do", "  " },
+    i(0),
+    t { "", "" },
+    t "end",
+  }),
+
+  --[[
+        -- Alternative printf-like notation for defining snippets. It uses format
+        -- string with placeholders similar to the ones used with Python's .format().
+        s(
+            "fmt1",
+            fmt("To {title} {} {}.", {
+                i(2, "Name"),
+                i(3, "Surname"),
+                title = c(1, { t("Mr."), t("Ms.") }),
+            })
+        ),
+  --]]
+
+  -- LSP version (this allows for simple snippets / copy-paste from vs code things)
+
+  -- function(args, snip) ... end
+
+  -- Using captured text <-- think of a fun way to use this.
+  -- s({trig = "b(%d)", regTrig = true},
+  -- f(function(args, snip) return
+  -- "Captured Text: " .. snip.captures[1] .. "." end, {})
+
+  -- the first few letters of a commit hash -> expand to correct one
+  -- type the first few words of a commit message -> expands to commit hash that matches
+  -- commit:Fixes #
+
+  -- tree sitter
+  -- :func:x -> find all functions in the file with x in the name, and choice between them
+
+  -- auto-insert markdown footer?
+  -- footer:(hello world)
+  -- ^link
+  -- callbacks [event.leave]
+
+  --
+  -- ls.parser.parse_snippet({trig = "lsp"}, "$1 is ${2|hard,easy,challenging|}")
 }
 
-local go_ret_vals = function(args, old_state)
-  local info = { index = 0, err_name = args[1][1], func_name = args[2][1] }
-  return snippet_from_nodes(nil, go_result_type(info))
+table.insert(
+  snippets.all,
+  snippet("cond", {
+    t "will only expand in c-style comments",
+  }, {
+    condition = function(
+      line_to_cursor --[[ , matched_trigger, captures ]]
+    )
+      local commentstring = "%s*" .. vim.bo.commentstring:gsub("%%s", "")
+      -- optional whitespace followed by //
+      return line_to_cursor:match(commentstring)
+    end,
+  })
+)
+
+-- Make sure to not pass an invalid command, as io.popen() may write over nvim-text.
+local function bash(_, snip, command)
+  if snip.captures[1] then
+    command = snip.captures[1]
+  end
+
+  local file = io.popen(command, "r")
+  local res = { "$ " .. snip.captures[1] }
+  for line in file:lines() do
+    table.insert(res, line)
+  end
+  return res
 end
 
---stylua: ignore
-snippets.go = make {
-  main = {
-    t { "func main() {", "\t" },
-    i(0),
-    t { "", "}" },
-  },
+table.insert(snippets.all, snippet({ trig = "$$ (.*)", regTrig = true }, f(bash, {}, "ls")))
 
-  ef = {
-    i(1, { "val" }),
-    str ", err := ",
-    i(2, { "f" }),
-    str "(",
-    i(3),
-    str ")",
-    i(0),
-  },
+-- Lambda example
+table.insert(
+  snippets.all,
+  snippet("transform2", {
+    i(1, "initial text here"),
+    t " :: ",
+    i(2, "replacement for text"),
+    t " :: ",
+    -- t { "", "" },
+    -- Lambdas can also apply transforms USING the text of other nodes:
+    l(l._1:gsub("text", l._2), { 1, 2 }),
+  })
+)
 
-  efi = {
-    i(1, { "val" }),
-    ", ",
-    i(2, { "err" }),
-    " := ",
-    i(3, { "f" }),
-    "(",
-    i(4),
-    ")",
-    t { "", "if " },
-    same(2),
-    t { " != nil {", "\treturn " },
-    d(5, go_ret_vals, { 2, 3 }),
-    t { "", "}" },
-    i(0),
-  },
+-- initial text :: this is going to be replaced :: initial tthis is going to be replacedxt
+-- this is where we have text :: TEXT :: this is where we have TEXT
 
-  -- TODO: Fix this up so that it actually uses the tree sitter thing
-  ie = { "if err != nil {", "\treturn err", i(0), "}" },
-}
+snippets.lua = make(R "tj.snips.ft.lua")
+snippets.go = make(R "tj.snips.ft.go")
+snippets.rust = make(R "tj.snips.ft.rust")
 
-snippets.rust = make {
-  modtest = {
-    t {
-      "#[cfg(test)]",
-      "mod test {",
-      "    use super::*;",
-      "    ",
-    },
-    i(0),
-    t {
-      "",
-      "}",
-    },
-  },
-
-  test = {
-    t {
-      "#[test]",
-      "fn ",
-    },
-    i(1, "testname"),
-    t { "() {", "    " },
-    i(0),
-    t { "", "}" },
-  },
-
-  eq = { "assert_eq!(", i(1), ",", i(2), ");", i(0) },
-
-  enum = {
-    t { "#[derive(Debug, PartialEq)]", "enum " },
-    i(1, "Name"),
-    t { " {", "  " },
-    i(0),
-    t { "", "}" },
-  },
-
-  struct = {
-    t { "#[derive(Debug, PartialEq)]", "struct " },
-    i(1, "Name"),
-    t { " {", "    " },
-    i(0),
-    t { "", "}" },
-  },
-}
-
-local js_attr_split = function(args, old_state)
+local js_attr_split = function(args)
   local val = args[1][1]
   local split = vim.split(val, ".", { plain = true })
 
@@ -331,7 +292,7 @@ snippets.rst = make {
 ls.snippets = snippets
 
 vim.cmd [[
-  imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-k>'
+  imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : ''
   inoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
 
   imap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'

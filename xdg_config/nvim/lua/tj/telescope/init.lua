@@ -13,7 +13,6 @@ SHOULD_RELOAD_TELESCOPE = true
 local reloader = function()
   if SHOULD_RELOAD_TELESCOPE then
     RELOAD "plenary"
-    RELOAD "popup"
     RELOAD "telescope"
     RELOAD "tj.telescope.setup"
     RELOAD "tj.telescope.custom"
@@ -60,6 +59,12 @@ function M.edit_neovim()
       },
       vertical = {
         preview_height = 0.75,
+      },
+    },
+
+    mappings = {
+      i = {
+        ["<C-y>"] = false,
       },
     },
 
@@ -176,7 +181,7 @@ function M.edit_zsh()
 end
 
 function M.fd()
-  local opts = themes.get_ivy { hidden = false }
+  local opts = themes.get_ivy { hidden = false, sorting_strategy = "ascending" }
   require("telescope.builtin").fd(opts)
 end
 
@@ -261,7 +266,7 @@ function M.grep_last_search(opts)
 end
 
 function M.oldfiles()
-  require("telescope").extensions.frecency.frecency()
+  require("telescope").extensions.frecency.frecency(themes.get_ivy {})
 end
 
 function M.my_plugins()
@@ -334,8 +339,11 @@ function M.file_browser()
       local current_picker = action_state.get_current_picker(prompt_bufnr)
 
       local modify_cwd = function(new_cwd)
-        current_picker.cwd = new_cwd
-        current_picker:refresh(opts.new_finder(new_cwd), { reset_prompt = true })
+        local finder = current_picker.finder
+
+        finder.path = new_cwd
+        finder.files = true
+        current_picker:refresh(false, { reset_prompt = true })
       end
 
       map("i", "-", function()
@@ -346,17 +354,16 @@ function M.file_browser()
         modify_cwd(vim.fn.expand "~")
       end)
 
-      local modify_depth = function(mod)
-        return function()
-          opts.depth = opts.depth + mod
-
-          local this_picker = action_state.get_current_picker(prompt_bufnr)
-          this_picker:refresh(opts.new_finder(current_picker.cwd), { reset_prompt = true })
-        end
-      end
-
-      map("i", "<M-=>", modify_depth(1))
-      map("i", "<M-+>", modify_depth(-1))
+      -- local modify_depth = function(mod)
+      --   return function()
+      --     opts.depth = opts.depth + mod
+      --
+      --     current_picker:refresh(false, { reset_prompt = true })
+      --   end
+      -- end
+      --
+      -- map("i", "<M-=>", modify_depth(1))
+      -- map("i", "<M-+>", modify_depth(-1))
 
       map("n", "yy", function()
         local entry = action_state.get_selected_entry()
@@ -367,7 +374,7 @@ function M.file_browser()
     end,
   }
 
-  require("telescope.builtin").file_browser(opts)
+  require("telescope").extensions.file_browser.file_browser(opts)
 end
 
 function M.git_status()

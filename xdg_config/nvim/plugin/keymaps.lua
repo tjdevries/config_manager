@@ -91,3 +91,4 @@ local markdown_paste = function(link)
 end
 
 nnoremap { "<leader>mdp", markdown_paste }
+nnoremap { "<space><space>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>" }

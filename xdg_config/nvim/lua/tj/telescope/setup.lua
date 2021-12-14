@@ -1,5 +1,6 @@
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
+local action_layout = require "telescope.actions.layout"
 
 local set_prompt_to_entry_value = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
@@ -60,15 +61,21 @@ require("telescope").setup {
 
         ["<C-y>"] = set_prompt_to_entry_value,
 
-        -- ["<M-m>"] = actions.master_stack,
+        -- These are new :)
+        ["<M-p>"] = action_layout.toggle_preview,
+        ["<M-m>"] = action_layout.toggle_mirror,
+        -- ["<M-p>"] = action_layout.toggle_prompt_position,
 
-        -- Experimental
-        -- ["<tab>"] = actions.toggle_selection,
+        -- ["<M-m>"] = actions.master_stack,
 
         -- ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
         -- ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
 
-        ["<C-space>"] = function(prompt_bufnr)
+        -- This is nicer when used with smart-history plugin.
+        ["<C-k>"] = actions.cycle_history_next,
+        ["<C-j>"] = actions.cycle_history_prev,
+
+        ["<c-space>"] = function(prompt_bufnr)
           local opts = {
             callback = actions.toggle_selection,
             loop_callback = actions.send_selected_to_qflist,
@@ -78,17 +85,35 @@ require("telescope").setup {
       },
     },
 
-    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-
-    -- file_sorter = sorters.get_fzy_sorter,
-    file_ignore_patterns = {
-      -- "parser.c",
-      -- "mock_.*.go",
-    },
+    -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+    -- file_ignore_patterns = nil,
 
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+
+    history = {
+      path = "~/.local/share/nvim/databases/telescope_history.sqlite3",
+      limit = 100,
+    },
+  },
+
+  pickers = {
+    fd = {
+      mappings = {
+        n = {
+          ["kj"] = "close",
+        },
+      },
+    },
+
+    git_branches = {
+      mappings = {
+        i = {
+          ["<C-a>"] = false,
+        },
+      },
+    },
   },
 
   extensions = {
@@ -123,6 +148,12 @@ require("telescope").setup {
       reset_selection = true,
     },
 
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+      },
+    },
+
     -- frecency = {
     --   workspaces = {
     --     ["conf"] = "/home/tj/.config/nvim/",
@@ -135,19 +166,21 @@ require("telescope").setup {
 -- pcall(require("telescope").load_extension, "cheat")
 -- pcall(require("telescope").load_extension, "arecibo")
 -- require("telescope").load_extension "flutter"
-require("telescope").load_extension "dap"
-require("telescope").load_extension "notify"
 
--- pcall(require("telescope").load_extension, "fzy_native")
-require("telescope").load_extension "fzf"
+_ = require("telescope").load_extension "dap"
+_ = require("telescope").load_extension "notify"
+_ = require("telescope").load_extension "file_browser"
+_ = require("telescope").load_extension "ui-select"
+_ = require("telescope").load_extension "fzf"
+_ = require("telescope").load_extension "git_worktree"
+_ = require("telescope").load_extension "neoclip"
+_ = require("telescope").load_extension "frecency"
+_ = require("telescope").load_extension "smart_history"
 
 if vim.fn.executable "gh" == 1 then
   pcall(require("telescope").load_extension, "gh")
   pcall(require("telescope").load_extension, "octo")
 end
-pcall(require("telescope").load_extension, "git_worktree")
-
-require("telescope").load_extension "neoclip"
 
 -- LOADED_FRECENCY = LOADED_FRECENCY or true
 -- local has_frecency = true

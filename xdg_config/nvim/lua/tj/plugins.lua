@@ -65,11 +65,7 @@ return require("packer").startup {
     local_use "pastery.vim"
     local_use "complextras.nvim"
     local_use "lazy.nvim"
-    local_use("tjdevries", "astronauta.nvim", {
-      -- setup = function()
-      --   vim.g.astronauta_load_plugins = false
-      -- end,
-    })
+    local_use("tjdevries", "astronauta.nvim")
 
     -- Contributor Plugins
     local_use("L3MON4D3", "LuaSnip")
@@ -131,12 +127,16 @@ return require("packer").startup {
     local_use("nvim-telescope", "telescope-fzf-writer.nvim")
     local_use("nvim-telescope", "telescope-packer.nvim")
     local_use("nvim-telescope", "telescope-fzy-native.nvim")
-    use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
-    use { "nvim-telescope/telescope-hop.nvim" }
-    -- local_use("nvim-telescope", "telescope-async-sorter-test.nvim")
-
     local_use("nvim-telescope", "telescope-github.nvim")
     local_use("nvim-telescope", "telescope-symbols.nvim")
+
+    use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+    use { "nvim-telescope/telescope-hop.nvim" }
+    use { "nvim-telescope/telescope-file-browser.nvim" }
+    use { "nvim-telescope/telescope-ui-select.nvim" }
+    use { "nvim-telescope/telescope-smart-history.nvim" }
+
+    -- local_use("nvim-telescope", "telescope-async-sorter-test.nvim")
 
     use {
       "AckslD/nvim-neoclip.lua",
@@ -529,13 +529,12 @@ return require("packer").startup {
     -- Async signs!
     use "lewis6991/gitsigns.nvim"
 
-    -- Git worktree utility6
+    -- Git worktree utility
     use {
       "ThePrimeagen/git-worktree.nvim",
       config = function()
         require("git-worktree").setup {}
       end,
-      disable = true,
     }
 
     use "ThePrimeagen/harpoon"

@@ -15,4 +15,5 @@ func AnotherExample() (*MyStruct, error, bool) {
 	if err != nil {
 		return nil, errors.Wrap(err, "f"), false
 	}
+
 }

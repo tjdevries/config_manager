@@ -1,7 +1,13 @@
+if true then
+  return
+end
+
 local source = {}
 
 source.new = function()
-  return setmetatable({}, { __index = source })
+  return setmetatable({
+    get_entries = source.get_entries,
+  }, { __index = source })
 end
 
 local count = 0

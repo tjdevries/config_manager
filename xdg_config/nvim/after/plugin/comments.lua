@@ -1,22 +1,4 @@
-local comment_ft = require "Comment.ft"
-
-comment_ft.set("lua", { "--%s", "--[[%s]]" })
-
---- Pre hook
----@param ctx Ctx: The context for pre_hook
--- local pre_hook = function(ctx)
---   local comment_lang = comment_ft.lang(ctx.lang)
---   if ctx.contained then
---     print("Contained:", ctx.contained:type(), vim.inspect(comment_lang[ctx.contained:type()]))
---     local config = comment_lang[ctx.contained:type()]
---     return config[ctx.ctype] or config[1]
---   else
---     print "No node found"
---   end
--- end
-
 require("Comment").setup {
-  ignore = nil,
 
   -- LHS of operator-pending mapping in NORMAL + VISUAL mode
   opleader = {
@@ -28,8 +10,13 @@ require("Comment").setup {
 
   -- Create basic (operator-pending) and extended mappings for NORMAL + VISUAL mode
   mappings = {
+
     -- operator-pending mapping
-    -- Includes `gcc`, `gcb`, `gc[count]{motion}` and `gb[count]{motion}`
+    -- Includes:
+    --  `gcc`               -> line-comment  the current line
+    --  `gcb`               -> block-comment the current line
+    --  `gc[count]{motion}` -> line-comment  the region contained in {motion}
+    --  `gb[count]{motion}` -> block-comment the region contained in {motion}
     basic = true,
 
     -- extra mapping
@@ -38,22 +25,33 @@ require("Comment").setup {
 
     -- extended mapping
     -- Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
-    extended = false,
+    extended = true,
   },
 
   -- LHS of toggle mapping in NORMAL + VISUAL mode
-  -- @type table
   toggler = {
     -- line-comment keymap
+    --  Makes sense to be related to your opleader.line
     line = "gcc",
 
     -- block-comment keymap
+    --  Make sense to be related to your opleader.block
     block = "gbc",
   },
 
   -- Pre-hook, called before commenting the line
-  -- pre_hook = pre_hook,
+  --    Can be used to determine the commentstring value
+  pre_hook = nil,
 
   -- Post-hook, called after commenting is done
+  --    Can be used to alter any formatting / newlines / etc. after commenting
   post_hook = nil,
+
+  -- Can be used to ignore certain lines when doing linewise motions.
+  --    Can be string (lua regex)
+  --    Or function (that returns lua regex)
+  ignore = nil,
 }
+
+local comment_ft = require "Comment.ft"
+comment_ft.set("lua", { "--%s", "--[[%s]]" })

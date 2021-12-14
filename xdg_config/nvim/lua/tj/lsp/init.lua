@@ -232,7 +232,7 @@ for server, config in pairs(servers) do
 end
 
 -- Load lua configuration from nlua.
-require("nlua.lsp.nvim").setup(lspconfig, {
+_ = require("nlua.lsp.nvim").setup(lspconfig, {
   on_init = custom_init,
   on_attach = custom_attach,
   capabilities = updated_capabilities,
