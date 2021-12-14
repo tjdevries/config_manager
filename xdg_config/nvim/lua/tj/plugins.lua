@@ -14,6 +14,8 @@ local is_wsl = (function()
   return not not string.find(output[1] or "", "WSL")
 end)()
 
+-- require('packer.luarocks').cfg({ luarocks =
+
 return require("packer").startup {
   function(use)
     local local_use = function(first, second, opts)
@@ -152,7 +154,7 @@ return require("packer").startup {
     local_use "sg.nvim"
     local_use "green_light.nvim"
 
-    use "tami5/sql.nvim"
+    use { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
     use "nvim-telescope/telescope-frecency.nvim"
     use "nvim-telescope/telescope-cheat.nvim"
     use { "nvim-telescope/telescope-arecibo.nvim", rocks = { "openssl", "lua-http-parser" } }
@@ -587,13 +589,19 @@ return require("packer").startup {
     -- local_use 'wander.nvim'
     -- local_use 'riki.nvim'
 
-    use { "Vhyrro/neorg", branch = "unstable" }
+    use {
+      "Vhyrro/neorg",
+      -- branch = "unstable"
+    }
 
     -- pretty sure I'm done w/ these
     -- local_use 'vlog.nvim'
   end,
 
   config = {
+    luarocks = {
+      python_cmd = "python3",
+    },
     display = {
       -- open_fn = require('packer.util').float,
     },
