@@ -67,7 +67,7 @@ return require("packer").startup {
     local_use "pastery.vim"
     local_use "complextras.nvim"
     local_use "lazy.nvim"
-    local_use("tjdevries", "astronauta.nvim")
+    -- local_use("tjdevries", "astronauta.nvim")
 
     -- Contributor Plugins
     local_use("L3MON4D3", "LuaSnip")
@@ -106,7 +106,7 @@ return require("packer").startup {
 
     use {
       "folke/lsp-trouble.nvim",
-      cmd = "LspTrouble",
+      cmd = "Trouble",
       config = function()
         -- Can use P to toggle auto movement
         require("trouble").setup {
@@ -366,7 +366,7 @@ return require("packer").startup {
 
     -- Sources
     use "hrsh7th/nvim-cmp"
-    use "hrsh7th/cmp-cmdline"
+    -- use "hrsh7th/cmp-cmdline"
     use "hrsh7th/cmp-buffer"
     use "hrsh7th/cmp-path"
     use "hrsh7th/cmp-nvim-lua"

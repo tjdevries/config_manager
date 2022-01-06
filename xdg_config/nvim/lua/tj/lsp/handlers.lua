@@ -14,9 +14,8 @@ vim.lsp.handlers["textDocument/definition"] = function(_, result)
   end
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  require("lsp_extensions.workspace.diagnostic").handler,
-  {
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+  vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
     signs = {
       severity_limit = "Error",
     },
@@ -24,8 +23,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       severity_limit = "Warning",
     },
     virtual_text = true,
-  }
-)
+  })
 
 vim.lsp.handlers["window/showMessage"] = require "tj.lsp.show_message"
 

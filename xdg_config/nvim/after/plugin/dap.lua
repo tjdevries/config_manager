@@ -315,6 +315,176 @@ require("dap-python").setup("python", {
   include_configs = true,
 })
 
+dap.adapters.lldb = {
+  type = "executable",
+  command = "/usr/bin/lldb-vscode-12",
+  name = "lldb",
+}
+
+local extension_path = vim.fn.expand "~/.vscode/extensions/vadimcn.vscode-lldb-1.6.10/"
+local codelldb_path = extension_path .. "adapter/codelldb"
+local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
+-- dap.adapters.rt_lldb = {
+--   type = "executable",
+--   command = codelldb_path,
+--   name = "rt_lldb",
+-- }
+
+dap.adapters.rt_lldb = function(callback, _)
+  local stdout = vim.loop.new_pipe(false)
+  local stderr = vim.loop.new_pipe(false)
+  local handle
+  local pid_or_err
+  local port
+  local error_message = ""
+
+  local opts = {
+    stdio = { nil, stdout, stderr },
+    args = { "--liblldb", liblldb_path },
+    detached = true,
+  }
+
+  handle, pid_or_err = vim.loop.spawn(codelldb_path, opts, function(code)
+    stdout:close()
+    stderr:close()
+    handle:close()
+    if code ~= 0 then
+      print("codelldb exited with code", code)
+      print("error message", error_message)
+    end
+  end)
+
+  assert(handle, "Error running codelldb: " .. tostring(pid_or_err))
+
+  stdout:read_start(function(err, chunk)
+    assert(not err, err)
+    if chunk then
+      if not port then
+        local chunks = {}
+        for substring in chunk:gmatch "%S+" do
+          table.insert(chunks, substring)
+        end
+        port = tonumber(chunks[#chunks])
+        vim.schedule(function()
+          callback {
+            type = "server",
+            host = "127.0.0.1",
+            port = port,
+          }
+        end)
+      else
+        vim.schedule(function()
+          require("dap.repl").append(chunk)
+        end)
+      end
+    end
+  end)
+  stderr:read_start(function(_, chunk)
+    if chunk then
+      error_message = error_message .. chunk
+
+      vim.schedule(function()
+        require("dap.repl").append(chunk)
+      end)
+    end
+  end)
+end
+
+-- function M.setup_adapter()
+-- 	local dap = require("dap")
+-- 	dap.adapters.rt_lldb = config.options.dap.adapter
+-- end
+
+function StartRustServer(args)
+  args = args or {}
+
+  if not pcall(require, "dap") then
+    vim.notify "nvim-dap not found."
+    return
+  end
+
+  if not pcall(require, "plenary.job") then
+    vim.notify "plenary not found."
+    return
+  end
+
+  local Job = require "plenary.job"
+
+  -- local cargo_args = get_cargo_args_from_runnables_args(args)
+
+  vim.notify "Compiling a debug build for debugging. This might take some time..."
+
+  Job
+    :new({
+      command = "cargo",
+      args = { "build", "--message-format=json" },
+      cwd = nil,
+      on_exit = function(j, code)
+        if code and code > 0 then
+          vim.notify "An error occured while compiling. Please fix all compilation issues and try again."
+        end
+        vim.schedule(function()
+          for _, value in pairs(j:result()) do
+            local json = vim.fn.json_decode(value)
+            if type(json) == "table" and json.executable ~= vim.NIL and json.executable ~= nil then
+              local dap_config = {
+                name = "Rust tools debug",
+                type = "rt_lldb",
+                request = "launch",
+                program = json.executable,
+                args = args.executableArgs or { "lsif", "/home/tjdevries/build/rmpv/" },
+                cwd = args.workspaceRoot,
+                stopOnEntry = false,
+                runInTerminal = false,
+              }
+              dap.run(dap_config)
+
+              break
+            end
+          end
+        end)
+      end,
+    })
+    :start()
+end
+
+dap.configurations.rust = {
+  {
+    name = "Launch",
+    type = "lldb",
+    request = "launch",
+    program = function()
+      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+    end,
+    cwd = "${workspaceFolder}",
+    stopOnEntry = false,
+    args = {},
+
+    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+    --
+    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    --
+    -- Otherwise you might get the following error:
+    --
+    --    Error on launch: Failed to attach to the target process
+    --
+    -- But you should be aware of the implications:
+    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+    runInTerminal = false,
+  },
+  {
+    name = "Launch rust-analyzer lsif",
+    type = "lldb",
+    request = "launch",
+    program = "/home/tjdevries/sourcegraph/rust-analyzer.git/monikers-1/target/debug/rust-analyzer",
+    args = { "lsif", "/home/tjdevries/build/rmpv/" },
+    cwd = "/home/tjdevries/sourcegraph/rust-analyzer.git/monikers-1/",
+    stopOnEntry = false,
+    runInTerminal = false,
+  },
+}
+
 vim.cmd [[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]]
 vim.cmd [[nnoremap <silent> <F1> :lua require'dap'.step_into()<CR>]]
 vim.cmd [[nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>]]

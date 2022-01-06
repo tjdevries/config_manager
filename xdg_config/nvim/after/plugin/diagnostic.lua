@@ -1,4 +1,4 @@
-local nnoremap = vim.keymap.nnoremap
+local nmap = require("tj.keymap").nmap
 
 vim.diagnostic.config {
   underline = true,
@@ -24,21 +24,21 @@ local goto_opts = {
   float = true,
 }
 
-nnoremap {
+nmap {
   "<space>dn",
   function()
     vim.diagnostic.goto_next(goto_opts)
   end,
 }
 
-nnoremap {
+nmap {
   "<space>dp",
   function()
     vim.diagnostic.goto_prev(goto_opts)
   end,
 }
 
-nnoremap {
+nmap {
   "<space>sl",
   function()
     vim.diagnostic.open_float(0, {

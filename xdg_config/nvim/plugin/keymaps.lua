@@ -1,9 +1,8 @@
 local curl = require "plenary.curl"
 
-local nnoremap = vim.keymap.nnoremap
-local nmap = vim.keymap.nmap
+local nmap = require("tj.keymap").nmap
 
-nnoremap {
+nmap {
   "<M-j>",
   function()
     if vim.opt.diff:get() then
@@ -14,7 +13,7 @@ nnoremap {
   end,
 }
 
-nnoremap {
+nmap {
   "<M-k>",
   function()
     if vim.opt.diff:get() then
@@ -27,7 +26,6 @@ nnoremap {
 
 nmap {
   "<leader>t",
-
   function()
     if vim.bo.filetype == "lua" then
       return "<Plug>PlenaryTestFile"
@@ -36,8 +34,7 @@ nmap {
       return ""
     end
   end,
-
-  expr = true,
+  { expr = true },
 }
 
 local markdown_paste = function(link)
@@ -90,5 +87,5 @@ local markdown_paste = function(link)
   end
 end
 
-nnoremap { "<leader>mdp", markdown_paste }
-nnoremap { "<space><space>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>" }
+nmap { "<leader>mdp", markdown_paste }
+-- nnoremap { "<space><space>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>" }

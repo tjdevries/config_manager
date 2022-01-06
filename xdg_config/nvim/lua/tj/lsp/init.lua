@@ -1,5 +1,5 @@
-local inoremap = vim.keymap.inoremap
-local nnoremap = vim.keymap.nnoremap
+local imap = require("tj.keymap").imap
+local nmap = require("tj.keymap").nmap
 
 local has_lsp, lspconfig = pcall(require, "lspconfig")
 if not has_lsp then
@@ -60,12 +60,12 @@ local filetype_attach = setmetatable({
 
 local buf_nnoremap = function(opts)
   opts.buffer = 0
-  nnoremap(opts)
+  nmap(opts)
 end
 
 local buf_inoremap = function(opts)
   opts.buffer = 0
-  inoremap(opts)
+  imap(opts)
 end
 
 local custom_attach = function(client)
@@ -108,7 +108,7 @@ local custom_attach = function(client)
     ]]
   end
 
-  if client.resolved_capabilities.code_lens then
+  if client.resolved_capabilities.code_lens and false then
     vim.cmd [[
       augroup lsp_document_codelens
         au! * <buffer>
@@ -136,7 +136,7 @@ local servers = {
   gdscript = true,
   graphql = true,
   html = true,
-  pyright = true,
+  -- pyright = true,
   vimls = true,
   yamlls = true,
 

@@ -82,6 +82,10 @@ require("telescope").setup {
           }
           require("telescope").extensions.hop._hop_loop(prompt_bufnr, opts)
         end,
+
+        ["<C-w>"] = function()
+          vim.api.nvim_input "<c-s-w>"
+        end,
       },
     },
 

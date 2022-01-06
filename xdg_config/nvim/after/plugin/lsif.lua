@@ -2,7 +2,6 @@ if not pcall(require, "plenary") then
   return
 end
 
-local nnoremap = vim.keymap.nnoremap
 local Path = require "plenary.path"
 
 local lsif = {}
@@ -14,12 +13,22 @@ lsif.position = function()
 
   local filename = Path:new(vim.api.nvim_buf_get_name(0)):make_relative()
 
-  vim.fn.setreg("+", string.format([[{
-  "textDocument": "%s",
-  "position": {
-    "line": %s, "character": %s
-  }
-}]], filename, row - 1, col))
+  vim.fn.setreg(
+    "+",
+    string.format(
+      [[
+        {
+          "textDocument": "%s",
+          "position": {
+            "line": %s, "character": %s
+          }
+        }
+      ]],
+      filename,
+      row - 1,
+      col
+    )
+  )
 end
 
 lsif.range = function()
@@ -32,7 +41,10 @@ lsif.range = function()
 
   local filename = "file://" .. Path:new(vim.api.nvim_buf_get_name(0)):make_relative()
 
-  vim.fn.setreg("+", string.format([[
+  vim.fn.setreg(
+    "+",
+    string.format(
+      [[
     {
       "uri": "%s",
       "range": {
@@ -40,7 +52,14 @@ lsif.range = function()
         "end": {"line": %s, "character": %s }
       }
     }
-  ]], filename, start[2] - 1, start[3] - 1, finish[2] - 1, finish[3] - 1))
+  ]],
+      filename,
+      start[2] - 1,
+      start[3] - 1,
+      finish[2] - 1,
+      finish[3] - 1
+    )
+  )
 end
 
 LsifRange = lsif.range

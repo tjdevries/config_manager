@@ -225,7 +225,7 @@ local function bash(_, snip, command)
   return res
 end
 
-table.insert(snippets.all, snippet({ trig = "$$ (.*)", regTrig = true }, f(bash, {}, "ls")))
+-- table.insert(snippets.all, snippet({ trig = "$$ (.*)", regTrig = true }, f(bash, {}, "ls")))
 
 -- Lambda example
 table.insert(

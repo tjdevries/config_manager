@@ -3,8 +3,6 @@ RELOAD "tj.nvim_dev"
 local Job = require "plenary.job"
 local plenary_window = require "plenary.window.float"
 
-local nnoremap = vim.keymap.nnoremap
-
 local nvim_dev = {}
 
 nvim_dev.run_this_test = function()
@@ -100,8 +98,8 @@ nvim_dev.make = function()
     :start()
 end
 
-nnoremap { "<space>tt", nvim_dev.run_this_test }
-nnoremap { "<space>tf", nvim_dev.run_this_file }
-nnoremap { "<space>m", nvim_dev.make }
+-- nnoremap { "<space>tt", nvim_dev.run_this_test }
+-- nnoremap { "<space>tf", nvim_dev.run_this_file }
+-- nnoremap { "<space>m", nvim_dev.make }
 
 return nvim_dev
