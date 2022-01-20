@@ -3,21 +3,29 @@ if vim.g.snippets ~= "luasnip" then
 end
 
 local ls = require "luasnip"
+local types = require "luasnip.util.types"
 
 ls.config.set_config {
-  -- I have this on, but might not be necessary
+  -- This tells LuaSnip to remember to keep around the last snippet.
+  -- You can jump back into it even if you move outside of the selection
   history = true,
 
   -- This one is cool cause if you have dynamic snippets, it updates as you type!
   updateevents = "TextChanged,TextChangedI",
 
-  region_check_events = nil,
-
-  -- Autosnippets??
-  enable_autosnippets = nil,
+  -- Autosnippets:
+  enable_autosnippets = true,
 
   -- Crazy highlights!!
-  ext_opts = nil,
+  -- #vid3
+  -- ext_opts = nil,
+  ext_opts = {
+    [types.choiceNode] = {
+      active = {
+        virt_text = { { "<-", "Error" } },
+      },
+    },
+  },
 }
 
 -- create snippet
@@ -196,6 +204,11 @@ snippets.all = {
   -- ls.parser.parse_snippet({trig = "lsp"}, "$1 is ${2|hard,easy,challenging|}")
 }
 
+table.insert(snippets.all, ls.parser.parse_snippet("example", "-- $TM_FILENAME\nfunc $1($2) $3 {\n\t$0\n}"))
+
+-- luasnip.lua
+-- func() {}
+
 table.insert(
   snippets.all,
   snippet("cond", {
@@ -212,20 +225,30 @@ table.insert(
 )
 
 -- Make sure to not pass an invalid command, as io.popen() may write over nvim-text.
-local function bash(_, snip, command)
-  if snip.captures[1] then
-    command = snip.captures[1]
-  end
+table.insert(
+  snippets.all,
+  snippet(
+    { trig = "$$ (.*)", regTrig = true },
+    f(function(_, snip, command)
+      if snip.captures[1] then
+        command = snip.captures[1]
+      end
 
-  local file = io.popen(command, "r")
-  local res = { "$ " .. snip.captures[1] }
-  for line in file:lines() do
-    table.insert(res, line)
-  end
-  return res
-end
-
--- table.insert(snippets.all, snippet({ trig = "$$ (.*)", regTrig = true }, f(bash, {}, "ls")))
+      local file = io.popen(command, "r")
+      local res = { "$ " .. snip.captures[1] }
+      for line in file:lines() do
+        table.insert(res, line)
+      end
+      return res
+    end, {}, "ls"),
+    {
+      -- Don't show this one, because it's not useful as a general purpose snippet.
+      show_condition = function()
+        return false
+      end,
+    }
+  )
+)
 
 -- Lambda example
 table.insert(
@@ -244,9 +267,10 @@ table.insert(
 -- initial text :: this is going to be replaced :: initial tthis is going to be replacedxt
 -- this is where we have text :: TEXT :: this is where we have TEXT
 
-snippets.lua = make(R "tj.snips.ft.lua")
-snippets.go = make(R "tj.snips.ft.go")
-snippets.rust = make(R "tj.snips.ft.rust")
+for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/tj/snips/ft/*.lua", true)) do
+  local ft = vim.fn.fnamemodify(ft_path, ":t:r")
+  snippets[ft] = make(loadfile(ft_path)())
+end
 
 local js_attr_split = function(args)
   local val = args[1][1]
@@ -266,7 +290,7 @@ local fill_line = function(char)
   return function()
     local row = vim.api.nvim_win_get_cursor(0)[1]
     local lines = vim.api.nvim_buf_get_lines(0, row - 2, row, false)
-    return string.rep(char, #lines[1] - #lines[2])
+    return string.rep(char, #lines[1])
   end
 end
 
@@ -291,12 +315,35 @@ snippets.rst = make {
 
 ls.snippets = snippets
 
-vim.cmd [[
-  imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : ''
-  inoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
+ls.autosnippets = {
+  all = {
+    ls.parser.parse_snippet("$file$", "$TM_FILENAME"),
+  },
+}
 
-  imap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'
+-- <c-k> is my expansion key
+-- this will expand the current item or jump to the next item within the snippet.
+vim.keymap.set({ "i", "s" }, "<c-k>", function()
+  if ls.expand_or_jumpable() then
+    ls.expand_or_jump()
+  end
+end, { silent = true })
 
-  snoremap <silent> <c-k> <cmd>lua require('luasnip').jump(1)<CR>
-  snoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
-]]
+-- <c-j> is my jump backwards key.
+-- this always moves to the previous item within the snippet
+vim.keymap.set({ "i", "s" }, "<c-j>", function()
+  if ls.jumpable(-1) then
+    ls.jump(-1)
+  end
+end, { silent = true })
+
+-- <c-l> is selecting within a list of options.
+-- This is useful for choice nodes (introduced in the forthcoming episode 2)
+vim.keymap.set("i", "<c-l>", function()
+  if ls.choice_active() then
+    ls.change_choice(1)
+  end
+end)
+
+-- shorcut to source my luasnips file again, which will reload my snippets
+vim.keymap.set("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>")

@@ -136,7 +136,7 @@ local servers = {
   gdscript = true,
   graphql = true,
   html = true,
-  -- pyright = true,
+  pyright = true,
   vimls = true,
   yamlls = true,
 
@@ -220,7 +220,7 @@ local setup_server = function(server, config)
     on_attach = custom_attach,
     capabilities = updated_capabilities,
     flags = {
-      debounce_text_changes = 50,
+      debounce_text_changes = nil,
     },
   }, config)
 
