@@ -1,15 +1,42 @@
+-- Explore:
+-- - External terminal
+-- - make the virt lines thing available if ppl want it
+-- - find the nearest codelens above cursor
+
 local has_dap, dap = pcall(require, "dap")
 if not has_dap then
   return
 end
 
-dap.set_log_level "TRACE"
+require("nvim-dap-virtual-text").setup {
+  enabled = true,
+
+  -- DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, DapVirtualTextForceRefresh
+  enabled_commands = false,
+
+  -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+  highlight_changed_variables = true,
+  highlight_new_as_changed = true,
+
+  -- prefix virtual text with comment string
+  commented = false,
+
+  show_stop_reason = true,
+
+  -- experimental features:
+  virt_text_pos = "eol", -- position of virtual text, see `:h nvim_buf_set_extmark()`
+  all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+}
 
 -- TODO: How does terminal work?
 dap.defaults.fallback.external_terminal = {
   command = "/home/tjdevries/.local/bin/kitty",
   args = { "-e" },
 }
+
+dap.adapters.nlua = function(callback, config)
+  callback { type = "server", host = config.host, port = config.port }
+end
 
 dap.configurations.lua = {
   {
@@ -27,25 +54,6 @@ dap.configurations.lua = {
     end,
   },
 }
-
-dap.adapters.nlua = function(callback, config)
-  callback { type = "server", host = config.host, port = config.port }
-end
-
-vim.g.dap_virtual_text = true
-
--- dap.adapters.cpp = {
---   type = 'executable',
---   attach = {
---     pidProperty = "pid",
---     pidSelect = "ask"
---   },
---   command = 'lldb-vscode-11',
---   env = {
---     LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"
---   },
---   name = "lldb"
--- }
 
 dap.adapters.c = {
   name = "lldb",
@@ -174,6 +182,26 @@ dap.configurations.c = {
     remote = true,
     cwd = vim.fn.expand "~/build/neovim",
     gdbpath = vim.fn.exepath "gdb",
+  },
+  -- {
+  --   name = "Launch rust-analyzer lsif",
+  --   type = "lldb",
+  --   request = "launch",
+  --   program = "/home/tjdevries/sourcegraph/rust-analyzer.git/monikers-1/target/debug/rust-analyzer",
+  --   args = { "lsif", "/home/tjdevries/build/rmpv/" },
+  --   cwd = "/home/tjdevries/sourcegraph/rust-analyzer.git/monikers-1/",
+  --   stopOnEntry = false,
+  --   runInTerminal = false,
+  -- },
+  {
+    name = "Launch ./build/bin/nvim",
+    type = "lldb",
+    request = "launch",
+    program = "/home/tjdevries/build/neovim.git/lua_autocmd/build/bin/nvim",
+    args = { "--headless" },
+    cwd = "/home/tjdevries/build/neovim.git/lua_autocmd/",
+    stopOnEntry = false,
+    runInTerminal = false,
   },
 }
 
@@ -317,7 +345,7 @@ require("dap-python").setup("python", {
 
 dap.adapters.lldb = {
   type = "executable",
-  command = "/usr/bin/lldb-vscode-12",
+  command = "/usr/bin/lldb-vscode-11",
   name = "lldb",
 }
 
@@ -391,64 +419,6 @@ dap.adapters.rt_lldb = function(callback, _)
   end)
 end
 
--- function M.setup_adapter()
--- 	local dap = require("dap")
--- 	dap.adapters.rt_lldb = config.options.dap.adapter
--- end
-
-function StartRustServer(args)
-  args = args or {}
-
-  if not pcall(require, "dap") then
-    vim.notify "nvim-dap not found."
-    return
-  end
-
-  if not pcall(require, "plenary.job") then
-    vim.notify "plenary not found."
-    return
-  end
-
-  local Job = require "plenary.job"
-
-  -- local cargo_args = get_cargo_args_from_runnables_args(args)
-
-  vim.notify "Compiling a debug build for debugging. This might take some time..."
-
-  Job
-    :new({
-      command = "cargo",
-      args = { "build", "--message-format=json" },
-      cwd = nil,
-      on_exit = function(j, code)
-        if code and code > 0 then
-          vim.notify "An error occured while compiling. Please fix all compilation issues and try again."
-        end
-        vim.schedule(function()
-          for _, value in pairs(j:result()) do
-            local json = vim.fn.json_decode(value)
-            if type(json) == "table" and json.executable ~= vim.NIL and json.executable ~= nil then
-              local dap_config = {
-                name = "Rust tools debug",
-                type = "rt_lldb",
-                request = "launch",
-                program = json.executable,
-                args = args.executableArgs or { "lsif", "/home/tjdevries/build/rmpv/" },
-                cwd = args.workspaceRoot,
-                stopOnEntry = false,
-                runInTerminal = false,
-              }
-              dap.run(dap_config)
-
-              break
-            end
-          end
-        end)
-      end,
-    })
-    :start()
-end
-
 dap.configurations.rust = {
   {
     name = "Launch",
@@ -484,6 +454,15 @@ dap.configurations.rust = {
     runInTerminal = false,
   },
 }
+
+vim.keymap.set("n", "<leader><F5>", function()
+  if vim.bo.filetype ~= "rust" then
+    vim.notify "This wasn't rust. I don't know what to do"
+    return
+  end
+
+  R("tj.dap").select_rust_runnable()
+end)
 
 vim.cmd [[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]]
 vim.cmd [[nnoremap <silent> <F1> :lua require'dap'.step_into()<CR>]]

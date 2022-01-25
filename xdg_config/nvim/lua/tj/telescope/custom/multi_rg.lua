@@ -11,11 +11,13 @@ local flatten = vim.tbl_flatten
 return function(opts)
   opts = opts or {}
   opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.loop.cwd()
-  opts.shortcuts = opts.shortcuts or {
-    ["l"] = "*.lua",
-    ["v"] = "*.vim",
-    ["n"] = "*.{vim,lua}",
-  }
+  opts.shortcuts = opts.shortcuts
+    or {
+      ["l"] = "*.lua",
+      ["v"] = "*.vim",
+      ["n"] = "*.{vim,lua}",
+      ["c"] = "*.c",
+    }
   opts.pattern = opts.pattern or "%s"
 
   local custom_grep = finders.new_async_job {

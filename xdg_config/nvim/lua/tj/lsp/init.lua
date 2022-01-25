@@ -108,7 +108,7 @@ local custom_attach = function(client)
     ]]
   end
 
-  if client.resolved_capabilities.code_lens and false then
+  if client.resolved_capabilities.code_lens then
     vim.cmd [[
       augroup lsp_document_codelens
         au! * <buffer>
