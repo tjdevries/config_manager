@@ -83,6 +83,7 @@ return require("packer").startup {
     -- NOTE: lspconfig ONLY has configs, for people reading this :)
     use "neovim/nvim-lspconfig"
     use "wbthomason/lsp-status.nvim"
+    use "j-hui/fidget.nvim"
     use {
       "ericpubu/lsp_codelens_extensions.nvim",
       config = function()
