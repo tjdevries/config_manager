@@ -435,6 +435,9 @@ return require("packer").startup {
     use "nvim-treesitter/playground"
     use "vigoux/architext.nvim"
 
+    -- TODO: YouTube Highlight
+    use "danymat/neogen"
+
     use "nvim-treesitter/nvim-treesitter-textobjects"
     use "JoosepAlviste/nvim-ts-context-commentstring"
     use {

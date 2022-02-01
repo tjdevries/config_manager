@@ -339,9 +339,12 @@ dap.configurations.python = {
   },
 }
 
-require("dap-python").setup("python", {
+local dap_python = require "dap-python"
+dap_python.setup("python", {
   include_configs = true,
 })
+
+dap_python.test_runner = "pytest"
 
 dap.adapters.lldb = {
   type = "executable",
@@ -455,7 +458,15 @@ dap.configurations.rust = {
   },
 }
 
-vim.keymap.set("n", "<leader><F5>", function()
+local map = function(lhs, rhs, desc)
+  if desc then
+    desc = "[DAP] " .. desc
+  end
+
+  vim.keymap.set("n", lhs, rhs, { silent = true, desc = desc })
+end
+
+map("<leader><F5>", function()
   if vim.bo.filetype ~= "rust" then
     vim.notify "This wasn't rust. I don't know what to do"
     return
@@ -464,16 +475,29 @@ vim.keymap.set("n", "<leader><F5>", function()
   R("tj.dap").select_rust_runnable()
 end)
 
-vim.cmd [[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]]
-vim.cmd [[nnoremap <silent> <F1> :lua require'dap'.step_into()<CR>]]
-vim.cmd [[nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>]]
+map("<F1>", require("dap").step_back, "step_back")
+map("<F2>", require("dap").step_into, "step_into")
+map("<F3>", require("dap").step_over, "step_over")
+map("<F4>", require("dap").step_out, "step_out")
+map("<F5>", require("dap").continue, "continue")
 
-vim.cmd [[nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>]]
-vim.cmd [[nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]]
-vim.cmd [[nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>]]
+-- TODO:
+-- disconnect vs. terminate
 
-vim.cmd [[nnoremap <silent> <space>dh :lua require('dap.ui.variables').hover()<CR>]]
+map("<leader>dr", require("dap").repl.open)
 
+map("<leader>db", require("dap").toggle_breakpoint)
+map("<leader>dB", function()
+  require("dap").set_breakpoint(vim.fn.input "[DAP] Condition > ")
+end)
+
+map("<leader>de", require("dapui").eval)
+map("<leader>dE", function()
+  require("dapui").eval(vim.fn.input "[DAP] Expression > ")
+end)
+
+-- You can set trigger characters OR it will default to '.'
+-- You can also trigger with the omnifunc, <c-x><c-o>
 vim.cmd [[
 augroup DapRepl
   au!
@@ -505,11 +529,46 @@ local _ = dap_ui.setup {
   },
 }
 
+local original = {}
+local debug_map = function(lhs, rhs, desc)
+  local keymaps = vim.api.nvim_get_keymap "n"
+  original[lhs] = vim.tbl_filter(function(v)
+    return v.lhs == lhs
+  end, keymaps)[1] or true
+
+  vim.keymap.set("n", lhs, rhs, { desc = desc })
+end
+
+local debug_unmap = function()
+  for k, v in pairs(original) do
+    if v == true then
+      vim.keymap.del("n", k)
+    else
+      local rhs = v.rhs
+
+      v.lhs = nil
+      v.rhs = nil
+      v.buffer = nil
+      v.mode = nil
+      v.sid = nil
+      v.lnum = nil
+
+      vim.keymap.set("n", k, rhs, v)
+    end
+  end
+
+  original = {}
+end
+
 dap.listeners.after.event_initialized["dapui_config"] = function()
+  debug_map("asdf", ":echo 'hello world<CR>", "showing things")
+
   dap_ui.open()
 end
 
 dap.listeners.before.event_terminated["dapui_config"] = function()
+  debug_unmap()
+
   dap_ui.close()
 end
 

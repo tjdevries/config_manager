@@ -14,7 +14,7 @@ local telescope_mapper = require "tj.telescope.mappings"
 local handlers = require "tj.lsp.handlers"
 
 -- Can set this lower if needed.
--- require("vim.lsp.log").set_level "debug"
+require("vim.lsp.log").set_level "debug"
 -- require("vim.lsp.log").set_level "trace"
 
 local status = require "tj.lsp.status"
@@ -59,12 +59,20 @@ local filetype_attach = setmetatable({
 })
 
 local buf_nnoremap = function(opts)
-  opts.buffer = 0
+  if opts[3] == nil then
+    opts[3] = {}
+  end
+  opts[3].buffer = 0
+
   nmap(opts)
 end
 
 local buf_inoremap = function(opts)
-  opts.buffer = 0
+  if opts[3] == nil then
+    opts[3] = {}
+  end
+  opts[3].buffer = 0
+
   imap(opts)
 end
 
@@ -92,7 +100,7 @@ local custom_attach = function(client)
   telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
 
   if filetype ~= "lua" then
-    buf_nnoremap { "K", vim.lsp.buf.hover }
+    buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }
   end
 
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
@@ -259,10 +267,10 @@ _ = require("nlua.lsp.nvim").setup(lspconfig, {
   },
 })
 
--- require("sg.lsp").setup {
---   on_init = custom_init,
---   on_attach = custom_attach,
--- }
+require("sg.lsp").setup {
+  on_init = custom_init,
+  on_attach = custom_attach,
+}
 
 --[ An example of using functions...
 -- 0. nil -> do default (could be enabled or disabled)

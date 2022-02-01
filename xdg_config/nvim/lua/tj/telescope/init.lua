@@ -185,6 +185,11 @@ function M.fd()
   require("telescope.builtin").fd(opts)
 end
 
+function M.fs()
+  local opts = themes.get_ivy { hidden = false, sorting_strategy = "descending" }
+  require("telescope.builtin").fd(opts)
+end
+
 function M.builtin()
   require("telescope.builtin").builtin()
 end
