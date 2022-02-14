@@ -47,7 +47,7 @@ return {
   },
 
   -- TODO: I don't know how I would like to set this one up.
-  f = { "function(", i(1), ")", i(0), newline "end" },
+  f = fmt("function({})\n  {}\nend", { i(1), i(0) }),
 
   test = { "mirrored: ", i(1), " // ", same(1), " | ", i(0) },
 

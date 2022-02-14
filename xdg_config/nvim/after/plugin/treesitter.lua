@@ -84,7 +84,6 @@ local _ = require("nvim-treesitter.configs").setup {
       },
     },
 
-    -- TODO: This seems broken...
     navigation = {
       enable = false,
       keymaps = {
@@ -123,6 +122,7 @@ local _ = require("nvim-treesitter.configs").setup {
       set_jumps = true,
 
       goto_next_start = {
+        ["]p"] = "@parameter.inner",
         ["]m"] = "@function.outer",
         ["]]"] = "@class.outer",
       },
@@ -131,6 +131,7 @@ local _ = require("nvim-treesitter.configs").setup {
         ["]["] = "@class.outer",
       },
       goto_previous_start = {
+        ["[p"] = "@parameter.inner",
         ["[m"] = "@function.outer",
         ["[["] = "@class.outer",
       },

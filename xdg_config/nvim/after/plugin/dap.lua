@@ -3,10 +3,22 @@
 -- - make the virt lines thing available if ppl want it
 -- - find the nearest codelens above cursor
 
+-- Must Show:
+-- - Connect to an existing neovim instance, and step through some plugin
+-- - Connect using configuration from VS **** json file (see if VS **** is actually just "it works" LUL)
+-- - Completion in the repl, very cool for exploring objects / data
+
+-- - Generating your own config w/ dap.run (can show rust example) (rust BTW)
+
 local has_dap, dap = pcall(require, "dap")
 if not has_dap then
   return
 end
+
+vim.fn.sign_define("DapBreakpoint", { text = "ß", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapBreakpointCondition", { text = "ü", texthl = "", linehl = "", numhl = "" })
+-- Setup cool Among Us as avatar
+vim.fn.sign_define("DapStopped", { text = "ඞ", texthl = "Error" })
 
 require("nvim-dap-virtual-text").setup {
   enabled = true,
@@ -341,6 +353,11 @@ dap.configurations.python = {
 
 local dap_python = require "dap-python"
 dap_python.setup("python", {
+  -- So if configured correctly, this will open up new terminal.
+  --    Could probably get this to target a particular terminal
+  --    and/or add a tab to kitty or something like that as well.
+  console = "externalTerminal",
+
   include_configs = true,
 })
 

@@ -1,3 +1,13 @@
+--[[
+
+      enrich_config = function(config, on_config)
+        local final_config = vim.deepcopy(config)
+        final_config.extra_property = 'This got injected by the adapter'
+        on_config(final_config)
+      end;
+
+--]]
+
 local Job = require "plenary.job"
 local dap = require "dap"
 
@@ -119,7 +129,7 @@ M.debug_rust_runnable = function(item)
           for _, value in pairs(j:result()) do
             local json = vim.fn.json_decode(value)
             if type(json) == "table" and json.executable ~= vim.NIL and json.executable ~= nil then
-              local dap_config = {
+              dap.run {
                 name = "Rust tools debug",
                 type = "rt_lldb",
                 request = "launch",
@@ -129,8 +139,6 @@ M.debug_rust_runnable = function(item)
                 stopOnEntry = false,
                 runInTerminal = false,
               }
-
-              dap.run(dap_config)
               break
             end
           end

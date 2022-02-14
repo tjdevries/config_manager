@@ -14,7 +14,7 @@ local telescope_mapper = require "tj.telescope.mappings"
 local handlers = require "tj.lsp.handlers"
 
 -- Can set this lower if needed.
-require("vim.lsp.log").set_level "debug"
+-- require("vim.lsp.log").set_level "debug"
 -- require("vim.lsp.log").set_level "trace"
 
 local status = require "tj.lsp.status"
@@ -147,6 +147,7 @@ local servers = {
   pyright = true,
   vimls = true,
   yamlls = true,
+  eslint = true,
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
   dartls = pcall(require, "flutter-tools"),
@@ -195,7 +196,9 @@ local servers = {
     cmd = { vim.fn.expand "~/build/omnisharp/run", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
   },
 
-  rust_analyzer = true,
+  rust_analyzer = {
+    cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+  },
   --   settings = {
   --     ["rust-analyzer"] = {
   --     },

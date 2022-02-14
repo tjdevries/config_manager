@@ -151,6 +151,9 @@ require("fidget").setup {
   align = {
     bottom = true,
   },
+  window = {
+    relative = "editor",
+  },
 }
 
 --[[

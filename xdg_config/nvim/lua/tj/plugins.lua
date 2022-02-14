@@ -101,6 +101,9 @@ return require("packer").startup {
       ft = { "flutter", "dart" },
     }
 
+    use "/home/tjdevries/plugins/stackmap.nvim"
+    -- Plug "/home/bash/plugins/stackmap.nvim"
+
     -- use "simrat39/rust-tools.nvim"
     -- use "ray-x/go.nvim"
     -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
@@ -342,7 +345,7 @@ return require("packer").startup {
     --  I don't write enough typescript to think about this.
     use {
       "prettier/vim-prettier",
-      ft = { "html", "javascript", "typescript" },
+      ft = { "html", "javascript", "typescript", "typescriptreact" },
       run = "yarn install",
     }
 

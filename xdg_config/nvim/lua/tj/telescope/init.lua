@@ -200,7 +200,7 @@ function M.git_files()
     path = nil
   end
 
-  local width = 0.25
+  local width = 0.75
   if path and string.find(path, "sourcegraph.*sourcegraph", 1, false) then
     width = 0.5
   end
