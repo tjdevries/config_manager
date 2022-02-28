@@ -181,7 +181,12 @@ function M.edit_zsh()
 end
 
 function M.fd()
-  local opts = themes.get_ivy { hidden = false, sorting_strategy = "ascending" }
+  local opts = themes.get_ivy {
+    hidden = false,
+    sorting_strategy = "ascending",
+    layout_config = { --[[ height = 9  ]]
+    },
+  }
   require("telescope.builtin").fd(opts)
 end
 

@@ -540,7 +540,7 @@ local _ = dap_ui.setup {
   },
 
   tray = {
-    elements = { "repl" },
+    elements = {},
     size = 15,
     position = "bottom", -- Can be "bottom" or "top"
   },

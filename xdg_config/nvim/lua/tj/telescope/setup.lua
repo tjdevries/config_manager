@@ -13,8 +13,10 @@ end
 
 require("telescope").setup {
   defaults = {
-    prompt_prefix = "❯ ",
-    selection_caret = "❯ ",
+    prompt_prefix = "> ",
+    selection_caret = "> ",
+    entry_prefix = "  ",
+    multi_icon = "<>",
 
     winblend = 0,
 
@@ -74,6 +76,8 @@ require("telescope").setup {
         -- This is nicer when used with smart-history plugin.
         ["<C-k>"] = actions.cycle_history_next,
         ["<C-j>"] = actions.cycle_history_prev,
+        ["<c-g>s"] = actions.select_all,
+        ["<c-g>a"] = actions.add_selection,
 
         ["<c-space>"] = function(prompt_bufnr)
           local opts = {

@@ -10,9 +10,6 @@ scriptencoding utf-8
 
 nnoremap <Up> <C-y>
 nnoremap <Down> <C-e>
-" Switch between tabs
-nnoremap <Right> gt
-nnoremap <Left>  gT
 
 inoremap <Up>     <C-o>:echom "--> k <-- "<CR>
 inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
