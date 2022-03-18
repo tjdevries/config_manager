@@ -61,7 +61,9 @@ require("telescope").setup {
         ["<C-s>"] = actions.select_horizontal,
         ["<C-n>"] = "move_selection_next",
 
-        ["<C-y>"] = set_prompt_to_entry_value,
+        ["<C-e>"] = actions.results_scrolling_down,
+        ["<C-y>"] = actions.results_scrolling_up,
+        -- ["<C-y>"] = set_prompt_to_entry_value,
 
         -- These are new :)
         ["<M-p>"] = action_layout.toggle_preview,
@@ -90,6 +92,11 @@ require("telescope").setup {
         ["<C-w>"] = function()
           vim.api.nvim_input "<c-s-w>"
         end,
+      },
+
+      n = {
+        ["<C-e>"] = actions.results_scrolling_down,
+        ["<C-y>"] = actions.results_scrolling_up,
       },
     },
 

@@ -90,6 +90,7 @@ return require("packer").startup {
         require("codelens_extensions").setup()
       end,
     }
+    use "jose-elias-alvarez/null-ls.nvim"
 
     local_use "lsp_extensions.nvim"
     use "onsails/lspkind-nvim"
@@ -106,7 +107,7 @@ return require("packer").startup {
 
     -- use "simrat39/rust-tools.nvim"
     -- use "ray-x/go.nvim"
-    -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
+    use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
     use {
       "folke/lsp-trouble.nvim",
@@ -409,8 +410,6 @@ return require("packer").startup {
     use "windwp/nvim-spectre"
 
     -- Debug adapter protocol
-    --   Have not yet checked this out, but looks awesome.
-    -- use 'puremourning/vimspector'
     use "mfussenegger/nvim-dap"
     use "rcarriga/nvim-dap-ui"
     use "theHamsta/nvim-dap-virtual-text"

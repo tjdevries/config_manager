@@ -7,7 +7,6 @@ local i = ls.insert_node
 local t = ls.text_node
 local d = ls.dynamic_node
 local c = ls.choice_node
-local f = ls.function_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 local shared = R "tj.snips"
@@ -21,13 +20,11 @@ local get_node_text = vim.treesitter.get_node_text
 vim.treesitter.set_query(
   "go",
   "LuaSnip_Result",
-  [[
-  [
+  [[ [
     (method_declaration result: (_) @id)
     (function_declaration result: (_) @id)
     (func_literal result: (_) @id)
-  ]
-]]
+  ] ]]
 )
 
 local transform = function(text, info)
@@ -97,8 +94,14 @@ local function go_result_type(info)
 end
 
 local go_ret_vals = function(args)
-  local info = { index = 0, err_name = args[1][1], func_name = args[2][1] }
-  return snippet_from_nodes(nil, go_result_type(info))
+  return snippet_from_nodes(
+    nil,
+    go_result_type {
+      index = 0,
+      err_name = args[1][1],
+      func_name = args[2][1],
+    }
+  )
 end
 
 local M = {

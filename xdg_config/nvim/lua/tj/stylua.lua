@@ -1,3 +1,6 @@
+-- TODO: Use vim.diff to calculate the lines that need to be set, so we don't redo the whole buffer
+-- every time. I think that would do better for undo and all that kind of stuff.
+
 local Path = require "plenary.path"
 local Job = require "plenary.job"
 

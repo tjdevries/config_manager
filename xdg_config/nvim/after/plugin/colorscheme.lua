@@ -35,6 +35,9 @@ Group.new("goTSType", g.Type.fg:dark(), nil, g.Type)
 Group.new("typescriptTSConstructor", g.pythonTSType)
 Group.new("typescriptTSProperty", c.blue)
 
+-- vim.cmd [[highlight WinSeparator guifg=#4e545c guibg=None]]
+Group.new("WinSeparator", nil, nil)
+
 -- I don't think I like highlights for text
 -- Group.new("LspReferenceText", nil, c.gray0:light(), s.bold)
 -- Group.new("LspReferenceWrite", nil, c.gray0:light())

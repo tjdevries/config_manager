@@ -26,6 +26,8 @@ local custom_captures = {
   ["namespace.type"] = "TSNamespaceType",
 }
 
+require("nvim-treesitter.highlight").set_custom_captures(custom_captures)
+
 -- alt+<space>, alt+p -> swap next
 -- alt+<backspace>, alt+p -> swap previous
 -- swap_previous = {

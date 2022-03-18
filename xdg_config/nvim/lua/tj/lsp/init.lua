@@ -13,6 +13,8 @@ local nvim_status = require "lsp-status"
 local telescope_mapper = require "tj.telescope.mappings"
 local handlers = require "tj.lsp.handlers"
 
+local ts_util = require "nvim-lsp-ts-utils"
+
 -- Can set this lower if needed.
 -- require("vim.lsp.log").set_level "debug"
 -- require("vim.lsp.log").set_level "trace"
@@ -205,6 +207,7 @@ local servers = {
   -- },
 
   tsserver = {
+    init_options = ts_util.init_options,
     cmd = { "typescript-language-server", "--stdio" },
     filetypes = {
       "javascript",
@@ -214,6 +217,13 @@ local servers = {
       "typescriptreact",
       "typescript.tsx",
     },
+
+    on_attach = function(client)
+      custom_attach(client)
+
+      ts_util.setup { auto_inlay_hints = false }
+      ts_util.setup_client(client)
+    end,
   },
 }
 
@@ -320,6 +330,19 @@ require("sg.lsp").setup {
 --   on_attach = custom_attach,
 --   capabilities = updated_capabilities,
 -- }
+
+-- Set up null-ls
+local use_null = false
+if use_null then
+  require("null-ls").setup {
+    sources = {
+      -- require("null-ls").builtins.formatting.stylua,
+      -- require("null-ls").builtins.diagnostics.eslint,
+      -- require("null-ls").builtins.completion.spell,
+      require("null-ls").builtins.diagnostics.selene,
+    },
+  }
+end
 
 return {
   on_init = custom_init,

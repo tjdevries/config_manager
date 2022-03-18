@@ -22,7 +22,7 @@ ls.config.set_config {
   ext_opts = {
     [types.choiceNode] = {
       active = {
-        virt_text = { { "<-", "Error" } },
+        virt_text = { { " <- Current Choice", "NonTest" } },
       },
     },
   },
@@ -344,6 +344,8 @@ vim.keymap.set("i", "<c-l>", function()
     ls.change_choice(1)
   end
 end)
+
+vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice")
 
 -- shorcut to source my luasnips file again, which will reload my snippets
 vim.keymap.set("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>")

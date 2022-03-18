@@ -3,6 +3,8 @@
 RELOAD "el"
 require("el").reset_windows()
 
+vim.opt.laststatus = 3
+
 local builtin = require "el.builtin"
 local extensions = require "el.extensions"
 local sections = require "el.sections"
