@@ -68,6 +68,7 @@ return require("packer").startup {
     local_use "complextras.nvim"
     local_use "lazy.nvim"
     -- local_use("tjdevries", "astronauta.nvim")
+    local_use "diff-therapy.nvim"
 
     -- Contributor Plugins
     local_use("L3MON4D3", "LuaSnip")

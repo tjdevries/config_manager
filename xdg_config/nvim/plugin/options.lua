@@ -32,18 +32,18 @@ opt.scrolloff = 10 -- Make it so there are always ten lines below my cursor
 --  Only have it on in the active buffer
 opt.cursorline = true -- Highlight the current line
 local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
-vim.api.nvim_create_autocmd("WinLeave", {
-  group = group,
-  callback = function()
-    vim.opt_local.cursorline = false
-  end,
-})
-vim.api.nvim_create_autocmd("WinEnter", {
-  group = group,
-  callback = function()
-    vim.opt_local.cursorline = true
-  end,
-})
+local set_cursorline = function(event, value, pattern)
+  vim.api.nvim_create_autocmd(event, {
+    group = group,
+    pattern = pattern,
+    callback = function()
+      vim.opt_local.cursorline = value
+    end,
+  })
+end
+set_cursorline("WinLeave", false)
+set_cursorline("WinEnter", true)
+set_cursorline("FileType", false, "TelescopePrompt")
 
 -- Tabs
 opt.autoindent = true
@@ -94,3 +94,5 @@ opt.joinspaces = false -- Two spaces and grade school, we're done
 
 -- set fillchars=eob:~
 opt.fillchars = { eob = "~" }
+
+vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }

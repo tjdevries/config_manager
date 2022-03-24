@@ -44,3 +44,6 @@ Group.new("WinSeparator", nil, nil)
 
 -- Group.new("TSKeyword", c.purple, nil, s.underline, c.blue)
 -- Group.new("LuaFunctionCall", c.green, nil, s.underline + s.nocombine, g.TSKeyword.guisp)
+
+-- Hello
+Group.new("TSTitle", c.blue)

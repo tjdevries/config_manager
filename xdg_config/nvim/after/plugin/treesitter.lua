@@ -154,6 +154,9 @@ local _ = require("nvim-treesitter.configs").setup {
 
         ["aa"] = "@parameter.outer",
         ["ia"] = "@parameter.inner",
+
+        ["av"] = "@variable.outer",
+        ["iv"] = "@variable.inner",
       },
     },
 
