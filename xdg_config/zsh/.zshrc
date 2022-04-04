@@ -252,3 +252,5 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+alias luamake=/home/tjdevries/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
