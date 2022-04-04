@@ -1,3 +1,7 @@
+if not pcall(require, "neorg") then
+  return
+end
+
 require("neorg").setup {
   -- Tell Neorg what modules to load
   load = {

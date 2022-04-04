@@ -1,3 +1,7 @@
+if not pcall(require, "telescope") then
+  return
+end
+
 local sorters = require "telescope.sorters"
 
 TelescopeMapArgs = TelescopeMapArgs or {}

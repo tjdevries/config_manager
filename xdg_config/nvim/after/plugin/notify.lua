@@ -1,12 +1,6 @@
--- Automatically opening the UI is deprecated.
--- You can replicate previous behaviour by adding the following to your config
-
--- local dap, dapui = require('dap'), require('dapui')
--- dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
--- dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
--- dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-
--- To hide this message, remove the `open_on_start` settings from your config
+if not pcall(require, "plenary") then
+  return
+end
 
 local log = require("plenary.log").new {
   plugin = "notify",

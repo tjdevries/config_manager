@@ -14,6 +14,9 @@ local is_wsl = (function()
   return not not string.find(output[1] or "", "WSL")
 end)()
 
+local is_mac = has "maxunix"
+local is_linx = not is_wsl and not is_mac
+
 -- require('packer.luarocks').cfg({ luarocks =
 
 return require("packer").startup {
@@ -48,7 +51,7 @@ return require("packer").startup {
     end
 
     use "wbthomason/packer.nvim"
-    use "lewis6991/impatient.nvim"
+    -- use "lewis6991/impatient.nvim"
     -- use "camspiers/snap"
 
     -- My Plugins
@@ -103,7 +106,7 @@ return require("packer").startup {
       ft = { "flutter", "dart" },
     }
 
-    use "/home/tjdevries/plugins/stackmap.nvim"
+    -- use "/home/tjdevries/plugins/stackmap.nvim"
     -- Plug "/home/bash/plugins/stackmap.nvim"
 
     -- use "simrat39/rust-tools.nvim"
@@ -142,7 +145,6 @@ return require("packer").startup {
     use { "nvim-telescope/telescope-hop.nvim" }
     use { "nvim-telescope/telescope-file-browser.nvim" }
     use { "nvim-telescope/telescope-ui-select.nvim" }
-    use { "nvim-telescope/telescope-smart-history.nvim" }
 
     -- local_use("nvim-telescope", "telescope-async-sorter-test.nvim")
 
@@ -157,13 +159,17 @@ return require("packer").startup {
     -- elianiva/telescope-npm.nvim
 
     local_use "telescope-hacks.nvim"
-    local_use "sg.nvim"
+    -- local_use "sg.nvim"
     local_use "green_light.nvim"
 
-    use { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
-    use "nvim-telescope/telescope-frecency.nvim"
-    use "nvim-telescope/telescope-cheat.nvim"
-    use { "nvim-telescope/telescope-arecibo.nvim", rocks = { "openssl", "lua-http-parser" } }
+    -- TODO: Need to figure out how to install all of this stuff on mac
+    if not is_mac then
+      use { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
+      use { "nvim-telescope/telescope-smart-history.nvim" }
+      use "nvim-telescope/telescope-frecency.nvim"
+      use "nvim-telescope/telescope-cheat.nvim"
+      use { "nvim-telescope/telescope-arecibo.nvim", rocks = { "openssl", "lua-http-parser" } }
+    end
 
     use {
       "antoinemadec/FixCursorHold.nvim",
@@ -267,22 +273,15 @@ return require("packer").startup {
     use "mkitt/tabline.vim"
 
     use "kyazdani42/nvim-web-devicons"
-    if not is_wsl then
+    if is_linux then
       use "yamatsum/nvim-web-nonicons"
     end
-
-    -- use { 'Shougo/defx.nvim', }
-    -- use "kyazdani42/nvim-tree.lua"
 
     -- TODO: This would be cool to add back, but it breaks sg.nvim for now.
     -- use "lambdalisue/vim-protocol"
 
     -- Undo helper
     use "sjl/gundo.vim"
-
-    -- TODO: This randomly disappeared? Find a replacement sometime.
-    -- Make cool signs for your files
-    -- use 'johannesthyssen/vim-signit'
 
     -- Crazy good box drawing
     use "gyim/vim-boxdraw"
@@ -295,19 +294,19 @@ return require("packer").startup {
     if use_folke then
       use "folke/zen-mode.nvim"
       use "folke/twilight.nvim"
+    else
+      use {
+        "junegunn/goyo.vim",
+        cmd = "Goyo",
+        disable = use_folke,
+      }
+
+      use {
+        "junegunn/limelight.vim",
+        after = "goyo.vim",
+        disable = use_folke,
+      }
     end
-
-    use {
-      "junegunn/goyo.vim",
-      cmd = "Goyo",
-      disable = use_folke,
-    }
-
-    use {
-      "junegunn/limelight.vim",
-      after = "goyo.vim",
-      disable = use_folke,
-    }
 
     --
     --
@@ -340,7 +339,6 @@ return require("packer").startup {
 
       -- Godot
       use "habamax/vim-godot"
-      --
     end
 
     -- Wonder if I can make LSP do this and respect .prettier files.
@@ -399,10 +397,6 @@ return require("packer").startup {
     -- Completion stuff
     local_use "rofl.nvim"
 
-    -- use "hrsh7th/vim-vsnip"
-    -- use "hrsh7th/vim-vsnip-integ"
-    -- use 'norcalli/snippets.nvim'
-
     -- Cool tags based viewer
     --   :Vista  <-- Opens up a really cool sidebar with info about file.
     use { "liuchengxu/vista.vim", cmd = "Vista" }
@@ -414,11 +408,9 @@ return require("packer").startup {
     use "mfussenegger/nvim-dap"
     use "rcarriga/nvim-dap-ui"
     use "theHamsta/nvim-dap-virtual-text"
-    use "mfussenegger/nvim-dap-python"
     use "nvim-telescope/telescope-dap.nvim"
 
-    -- Pocco81/DAPInstall.nvim
-
+    use "mfussenegger/nvim-dap-python"
     use "jbyuki/one-small-step-for-vimkind"
 
     -- use {
@@ -546,7 +538,7 @@ return require("packer").startup {
       end,
     }
 
-    use "ThePrimeagen/harpoon"
+    -- use "ThePrimeagen/harpoon"
 
     -- use 'untitled-ai/jupyter_ascending.vim'
 

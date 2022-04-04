@@ -280,10 +280,12 @@ _ = require("nlua.lsp.nvim").setup(lspconfig, {
   },
 })
 
-require("sg.lsp").setup {
-  on_init = custom_init,
-  on_attach = custom_attach,
-}
+if pcall(require, "sg.lsp") then
+  require("sg.lsp").setup {
+    on_init = custom_init,
+    on_attach = custom_attach,
+  }
+end
 
 --[ An example of using functions...
 -- 0. nil -> do default (could be enabled or disabled)

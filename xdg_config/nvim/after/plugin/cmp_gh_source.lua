@@ -1,4 +1,7 @@
-local Job = require "plenary.job"
+local ok, Job = pcall(require, "plenary.job")
+if not ok then
+  return
+end
 
 local source = {}
 

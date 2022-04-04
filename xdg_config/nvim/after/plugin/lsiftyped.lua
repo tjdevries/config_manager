@@ -1,4 +1,7 @@
-local Job = require "plenary.job"
+local ok, Job = pcall(require, "plenary.job")
+if not ok then
+  return
+end
 
 local group = vim.api.nvim_create_augroup("LsifTyped", { clear = true })
 vim.api.nvim_create_autocmd("BufReadCmd", {

@@ -1,4 +1,9 @@
 -- TODO: Need to add those sweet sweet lsp workspace diagnostic counts
+if not pcall(require, "el") then
+  -- TODO: Add in a nice default statusline here.
+  -- Would be good to research anyway for the course
+  return
+end
 
 RELOAD "el"
 require("el").reset_windows()

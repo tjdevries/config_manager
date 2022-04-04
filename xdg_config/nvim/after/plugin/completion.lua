@@ -20,7 +20,11 @@ vim.api.nvim_set_keymap(
   { noremap = true }
 )
 
-local lspkind = require "lspkind"
+local ok, lspkind = pcall(require, "lspkind")
+if not ok then
+  return
+end
+
 lspkind.init()
 
 local cmp = require "cmp"

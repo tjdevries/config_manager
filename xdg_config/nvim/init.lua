@@ -48,9 +48,14 @@ Much of the configuration of individual plugins you can find in either:
 
 --]]
 
-pcall(require, "impatient")
+-- Attempt to run impatient, but it may not have been installed yet
+-- pcall(require, "impatient")
 
 require "tj.profile"
+
+-- Setup globals that I expect to be always available.
+--  See `./lua/tj/globals.lua` for more information.
+require "tj.globals"
 
 if require "tj.first_load"() then
   return
@@ -66,10 +71,6 @@ vim.g.mapleader = ","
 -- I set some global variables to use as configuration throughout my config.
 -- These don't have any special meaning.
 vim.g.snippets = "luasnip"
-
--- Setup globals that I expect to be always available.
---  See `./lua/tj/globals/*.lua` for more information.
-require "tj.globals"
 
 -- Turn off builtin plugins I do not use.
 require "tj.disable_builtin"

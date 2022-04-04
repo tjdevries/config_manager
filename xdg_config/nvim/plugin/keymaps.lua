@@ -1,5 +1,3 @@
-local curl = require "plenary.curl"
-
 local nmap = require("tj.keymap").nmap
 
 nmap {
@@ -38,6 +36,8 @@ nmap {
 }
 
 local markdown_paste = function(link)
+  local curl = require "plenary.curl"
+
   link = link or vim.fn.getreg "+"
 
   if not vim.startswith(link, "https://") then

@@ -1,3 +1,7 @@
+if not pcall(require, "telescope") then
+  return
+end
+
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local action_layout = require "telescope.actions.layout"
@@ -189,8 +193,9 @@ _ = require("telescope").load_extension "ui-select"
 _ = require("telescope").load_extension "fzf"
 _ = require("telescope").load_extension "git_worktree"
 _ = require("telescope").load_extension "neoclip"
-_ = require("telescope").load_extension "frecency"
-_ = require("telescope").load_extension "smart_history"
+
+pcall(require("telescope").load_extension, "smart_history")
+pcall(require("telescope").load_extension, "frecency")
 
 if vim.fn.executable "gh" == 1 then
   pcall(require("telescope").load_extension, "gh")
