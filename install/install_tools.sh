@@ -7,8 +7,8 @@ mkdir -p ~/build
 mkdir -p ~/git
 
 if ! command -v gh &> /dev/null ; then
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-    sudo apt-add-repository https://cli.github.com/packages
+    # sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+    # sudo apt-add-repository https://cli.github.com/packages
 fi
 
 sudo apt update
@@ -65,6 +65,7 @@ cargo install \
   git-trim \
   ripgrep \
   broot \
+  watchexec-cli \
   starship
 
 if ! [ -d ~/build/delta ]; then
