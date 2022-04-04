@@ -2,8 +2,6 @@
 title: Why did Neovim implement LSP?
 author: TJ DeVries (twitch.tv/teej_dv)
 date: 2021-01-05
-extensions:
-  - qrcode
 ---
 
 # Intro
