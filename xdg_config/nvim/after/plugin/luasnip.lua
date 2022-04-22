@@ -339,7 +339,7 @@ end, { silent = true })
 
 -- <c-l> is selecting within a list of options.
 -- This is useful for choice nodes (introduced in the forthcoming episode 2)
-vim.keymap.set("i", "<c-l>", function()
+vim.keymap.set({ "i", "s" }, "<c-l>", function()
   if ls.choice_active() then
     ls.change_choice(1)
   end
