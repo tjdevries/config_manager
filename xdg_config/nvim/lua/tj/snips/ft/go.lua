@@ -1,8 +1,11 @@
 local ls = require "luasnip"
 
+require("luasnip.session.snippet_collection").clear_snippets "go"
+
 -- local snippet = ls.s
 local snippet_from_nodes = ls.sn
 
+local s = ls.s
 local i = ls.insert_node
 local t = ls.text_node
 local d = ls.dynamic_node
@@ -11,6 +14,7 @@ local fmt = require("luasnip.extras.fmt").fmt
 
 local shared = R "tj.snips"
 local same = shared.same
+local make = shared.make
 
 local ts_locals = require "nvim-treesitter.locals"
 local ts_utils = require "nvim-treesitter.ts_utils"
@@ -104,44 +108,47 @@ local go_ret_vals = function(args)
   )
 end
 
-local M = {
-  main = {
-    t { "func main() {", "\t" },
-    i(0),
-    t { "", "}" },
-  },
+ls.add_snippets(
+  "go",
+  make {
+    main = {
+      t { "func main() {", "\t" },
+      i(0),
+      t { "", "}" },
+    },
 
-  ef = {
-    i(1, { "val" }),
-    t ", err := ",
-    i(2, { "f" }),
-    t "(",
-    i(3),
-    t ")",
-    i(0),
-  },
+    ef = {
+      i(1, { "val" }),
+      t ", err := ",
+      i(2, { "f" }),
+      t "(",
+      i(3),
+      t ")",
+      i(0),
+    },
 
-  efi = {
-    i(1, { "val" }),
-    ", ",
-    i(2, { "err" }),
-    " := ",
-    i(3, { "f" }),
-    "(",
-    i(4),
-    ")",
-    t { "", "if " },
-    same(2),
-    t { " != nil {", "\treturn " },
-    d(5, go_ret_vals, { 2, 3 }),
-    t { "", "}" },
-    i(0),
-  },
+    efi = {
+      i(1, { "val" }),
+      ", ",
+      i(2, { "err" }),
+      " := ",
+      i(3, { "f" }),
+      "(",
+      i(4),
+      ")",
+      t { "", "if " },
+      same(2),
+      t { " != nil {", "\treturn " },
+      d(5, go_ret_vals, { 2, 3 }),
+      t { "", "}" },
+      i(0),
+    },
 
-  -- TODO: Fix this up so that it actually uses the tree sitter thing
-  ie = { "if err != nil {", "\treturn err", i(0), "}" },
-}
+    -- TODO: Fix this up so that it actually uses the tree sitter thing
+    ie = { "if err != nil {", "\treturn err", i(0), "}" },
+  }
+)
 
-M.f = fmt("func {}({}) {} {{\n\t{}\n}}", { i(1, "name"), i(2), i(3), i(0) })
-
-return M
+ls.add_snippets("go", {
+  s("f", fmt("func {}({}) {} {{\n\t{}\n}}", { i(1, "name"), i(2), i(3), i(0) })),
+})

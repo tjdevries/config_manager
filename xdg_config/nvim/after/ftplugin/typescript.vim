@@ -4,4 +4,5 @@ augroup MyTypescriptCommands
   " autocmd BufWritePost <buffer>  :silent! !prettier --write %
 augroup END
 
-setlocal shiftwidth=2
+setlocal shiftwidth=4
+setlocal formatoptions-=o

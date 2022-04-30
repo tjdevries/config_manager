@@ -2,6 +2,8 @@ if vim.g.snippets ~= "luasnip" or not pcall(require, "luasnip") then
   return
 end
 
+local make = R("tj.snips").make
+
 local ls = require "luasnip"
 local types = require "luasnip.util.types"
 
@@ -77,44 +79,18 @@ local events = require "luasnip.util.events"
 --   return ls.parser.parse_snippet({ trig = trig }, expanded)
 -- end
 
-local shortcut = function(val)
-  if type(val) == "string" then
-    return { t { val }, i(0) }
-  end
-
-  if type(val) == "table" then
-    for k, v in ipairs(val) do
-      if type(v) == "string" then
-        val[k] = t { v }
-      end
-    end
-  end
-
-  return val
-end
-
-local make = function(tbl)
-  local result = {}
-  for k, v in pairs(tbl) do
-    table.insert(result, (snippet({ trig = k, desc = v.desc }, shortcut(v))))
-  end
-
-  return result
-end
-
 local same = function(index)
   return f(function(args)
     return args[1]
   end, { index })
 end
 
-local snippets = {}
-
 local toexpand_count = 0
 
 -- `all` key means for all filetypes.
 -- Shared between all filetypes. Has lower priority than a particular ft tho
-snippets.all = {
+-- snippets.all = {
+ls.add_snippets(nil, {
   -- basic, don't need to know anything else
   --    arg 1: string
   --    arg 2: a node
@@ -202,31 +178,25 @@ snippets.all = {
 
   --
   -- ls.parser.parse_snippet({trig = "lsp"}, "$1 is ${2|hard,easy,challenging|}")
-}
+})
 
-table.insert(snippets.all, ls.parser.parse_snippet("example", "-- $TM_FILENAME\nfunc $1($2) $3 {\n\t$0\n}"))
-
--- luasnip.lua
--- func() {}
-
-table.insert(
-  snippets.all,
-  snippet("cond", {
-    t "will only expand in c-style comments",
-  }, {
-    condition = function(
-      line_to_cursor --[[ , matched_trigger, captures ]]
-    )
-      local commentstring = "%s*" .. vim.bo.commentstring:gsub("%%s", "")
-      -- optional whitespace followed by //
-      return line_to_cursor:match(commentstring)
-    end,
-  })
-)
+-- table.insert(
+--   snippets.all,
+--   snippet("cond", {
+--     t "will only expand in c-style comments",
+--   }, {
+--     condition = function(
+--       line_to_cursor --[[ , matched_trigger, captures ]]
+--     )
+--       local commentstring = "%s*" .. vim.bo.commentstring:gsub("%%s", "")
+--       -- optional whitespace followed by //
+--       return line_to_cursor:match(commentstring)
+--     end,
+--   })
+-- )
 
 -- Make sure to not pass an invalid command, as io.popen() may write over nvim-text.
-table.insert(
-  snippets.all,
+ls.add_snippets(nil, {
   snippet(
     { trig = "$$ (.*)", regTrig = true },
     f(function(_, snip, command)
@@ -247,30 +217,8 @@ table.insert(
         return false
       end,
     }
-  )
-)
-
--- Lambda example
-table.insert(
-  snippets.all,
-  snippet("transform2", {
-    i(1, "initial text here"),
-    t " :: ",
-    i(2, "replacement for text"),
-    t " :: ",
-    -- t { "", "" },
-    -- Lambdas can also apply transforms USING the text of other nodes:
-    l(l._1:gsub("text", l._2), { 1, 2 }),
-  })
-)
-
--- initial text :: this is going to be replaced :: initial tthis is going to be replacedxt
--- this is where we have text :: TEXT :: this is where we have TEXT
-
-for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/tj/snips/ft/*.lua", true)) do
-  local ft = vim.fn.fnamemodify(ft_path, ":t:r")
-  snippets[ft] = make(loadfile(ft_path)())
-end
+  ),
+})
 
 local js_attr_split = function(args)
   local val = args[1][1]
@@ -294,32 +242,31 @@ local fill_line = function(char)
   end
 end
 
-snippets.rst = make {
-  jsa = {
-    ":js:attr:`",
-    d(2, js_attr_split, { 1 }),
-    " <",
-    i(1),
-    ">",
-    "`",
-  },
+ls.add_snippets(
+  "rst",
+  make {
+    jsa = {
+      ":js:attr:`",
+      d(2, js_attr_split, { 1 }),
+      " <",
+      i(1),
+      ">",
+      "`",
+    },
 
-  link = { ".. _", i(1), ":" },
+    link = { ".. _", i(1), ":" },
 
-  head = f(fill_line "=", {}),
-  sub = f(fill_line "-", {}),
-  subsub = f(fill_line "^", {}),
+    head = f(fill_line "=", {}),
+    sub = f(fill_line "-", {}),
+    subsub = f(fill_line "^", {}),
 
-  ref = { ":ref:`", same(1), " <", i(1), ">`" },
-}
+    ref = { ":ref:`", same(1), " <", i(1), ">`" },
+  }
+)
 
-ls.snippets = snippets
-
-ls.autosnippets = {
-  all = {
-    ls.parser.parse_snippet("$file$", "$TM_FILENAME"),
-  },
-}
+for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/tj/snips/ft/*.lua", true)) do
+  loadfile(ft_path)()
+end
 
 -- <c-k> is my expansion key
 -- this will expand the current item or jump to the next item within the snippet.

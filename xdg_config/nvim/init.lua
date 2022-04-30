@@ -84,3 +84,7 @@ require "tj.lsp"
 -- Telescope BTW
 require "tj.telescope.setup"
 require "tj.telescope.mappings"
+
+vim.keymap.set("n", "<space>hello", function()
+  print "live demos!!"
+end)

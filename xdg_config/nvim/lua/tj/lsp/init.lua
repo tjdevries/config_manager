@@ -86,7 +86,7 @@ local custom_attach = function(client)
   buf_inoremap { "<c-s>", vim.lsp.buf.signature_help }
 
   buf_nnoremap { "<space>cr", vim.lsp.buf.rename }
-  telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
+  buf_nnoremap { "<space>ca", vim.lsp.buf.code_action }
 
   buf_nnoremap { "gd", vim.lsp.buf.definition }
   buf_nnoremap { "gD", vim.lsp.buf.declaration }
@@ -119,13 +119,15 @@ local custom_attach = function(client)
   end
 
   if client.resolved_capabilities.code_lens then
-    vim.cmd [[
-      augroup lsp_document_codelens
-        au! * <buffer>
-        autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
-        autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
-      augroup END
-    ]]
+    if filetype ~= "elm" then
+      vim.cmd [[
+        augroup lsp_document_codelens
+          au! * <buffer>
+          autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
+          autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
+        augroup END
+      ]]
+    end
   end
 
   -- Attach any filetype specific options to the client
@@ -205,6 +207,8 @@ local servers = {
   --     ["rust-analyzer"] = {
   --     },
   -- },
+
+  elmls = true,
 
   tsserver = {
     init_options = ts_util.init_options,
