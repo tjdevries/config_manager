@@ -1,5 +1,4 @@
 
-export PATH="$HOME/.cargo/bin:$PATH"
 
 if hash nvim 2>/dev/null; then
   export EDITOR=nvim
@@ -9,3 +8,5 @@ if hash nvim 2>/dev/null; then
 else
   export EDITOR=vim
 fi
+
+eval "$(/opt/homebrew/bin/brew shellenv)"

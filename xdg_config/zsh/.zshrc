@@ -208,8 +208,10 @@ fi
 export PATH="$HOME/.local/bin/:$PATH"
 
 if [ -f "$HOME/.asdf/asdf.sh" ]; then
-  . $HOME/.asdf/asdf.sh
-  . $HOME/.asdf/completions/asdf.bash
+  # . $HOME/.asdf/asdf.sh
+  # . $HOME/.asdf/completions/asdf.bash
+
+  . /opt/homebrew/opt/asdf/libexec/asdf.sh
 fi
 
 
