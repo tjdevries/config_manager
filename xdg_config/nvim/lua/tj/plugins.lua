@@ -86,7 +86,7 @@ return require("packer").startup {
 
     -- NOTE: lspconfig ONLY has configs, for people reading this :)
     use "neovim/nvim-lspconfig"
-    use "wbthomason/lsp-status.nvim"
+    -- use "wbthomason/lsp-status.nvim"
     use "j-hui/fidget.nvim"
     use {
       "ericpubu/lsp_codelens_extensions.nvim",
@@ -538,8 +538,7 @@ return require("packer").startup {
       end,
     }
 
-    -- use "ThePrimeagen/harpoon"
-
+    use "ThePrimeagen/harpoon"
     -- use 'untitled-ai/jupyter_ascending.vim'
 
     use "tjdevries/standard.vim"

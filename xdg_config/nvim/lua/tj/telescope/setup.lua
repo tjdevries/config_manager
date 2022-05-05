@@ -22,6 +22,8 @@ require("telescope").setup {
     entry_prefix = "  ",
     multi_icon = "<>",
 
+    -- path_display = "truncate",
+
     winblend = 0,
 
     layout_strategy = "horizontal",

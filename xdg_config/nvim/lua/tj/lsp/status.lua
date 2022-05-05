@@ -1,4 +1,7 @@
-local nvim_status = require "lsp-status"
+local ok, nvim_status = pcall(require, "lsp-status")
+if not ok then
+  return false
+end
 
 local status = {}
 

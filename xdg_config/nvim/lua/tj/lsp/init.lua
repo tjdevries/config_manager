@@ -8,7 +8,10 @@ end
 
 local lspconfig_util = require "lspconfig.util"
 
-local nvim_status = require "lsp-status"
+local ok, nvim_status = pcall(require, "lsp-status")
+if not ok then
+  nvim_status = nil
+end
 
 local telescope_mapper = require "tj.telescope.mappings"
 local handlers = require "tj.lsp.handlers"
@@ -20,7 +23,10 @@ local ts_util = require "nvim-lsp-ts-utils"
 -- require("vim.lsp.log").set_level "trace"
 
 local status = require "tj.lsp.status"
-status.activate()
+print("STATUS", status)
+if status then
+  status.activate()
+end
 
 local custom_init = function(client)
   client.config.flags = client.config.flags or {}
@@ -81,7 +87,9 @@ end
 local custom_attach = function(client)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
-  nvim_status.on_attach(client)
+  if nvim_status then
+    nvim_status.on_attach(client)
+  end
 
   buf_inoremap { "<c-s>", vim.lsp.buf.signature_help }
 
@@ -108,7 +116,7 @@ local custom_attach = function(client)
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.documentHighlightProvider then
     vim.cmd [[
       augroup lsp_document_highlight
         autocmd! * <buffer>
@@ -118,7 +126,7 @@ local custom_attach = function(client)
     ]]
   end
 
-  if client.resolved_capabilities.code_lens then
+  if client.server_capabilities.codeLensProvider then
     if filetype ~= "elm" then
       vim.cmd [[
         augroup lsp_document_codelens
@@ -135,7 +143,9 @@ local custom_attach = function(client)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, nvim_status.capabilities)
+if nvim_status then
+  updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, nvim_status.capabilities)
+end
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
 
@@ -168,7 +178,7 @@ local servers = {
     init_options = {
       clangdFileStatus = true,
     },
-    handlers = nvim_status.extensions.clangd.setup(),
+    handlers = nvim_status and nvim_status.extensions.clangd.setup() or nil,
   },
 
   gopls = {
