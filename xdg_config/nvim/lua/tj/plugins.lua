@@ -19,10 +19,19 @@ local is_wsl = (function()
   return not not string.find(output[1] or "", "WSL")
 end)()
 
-local is_mac = has "maxunix"
-local is_linx = not is_wsl and not is_mac
+local is_mac = has "macunix"
+local is_linux = not is_wsl and not is_mac
 
--- require('packer.luarocks').cfg({ luarocks =
+local max_jobs = nil
+if is_mac then
+  max_jobs = 32
+end
+
+require("packer").startup {
+  function(use)
+    use "wbthomason/packer.nvim"
+  end,
+}
 
 return require("packer").startup {
   function(use)
@@ -59,7 +68,7 @@ return require("packer").startup {
 
     -- Alternative to impatient, uses sqlite. Faster ;)
     -- use https://github.com/tami5/impatient.nvim
-    -- use "lewis6991/impatient.nvim"
+    use "lewis6991/impatient.nvim"
 
     -- My Plugins
     local_use("ThePrimeagen", "refactoring.nvim")
@@ -93,6 +102,9 @@ return require("packer").startup {
 
     -- NOTE: lspconfig ONLY has configs, for people reading this :)
     use "neovim/nvim-lspconfig"
+    if is_mac then
+      use "williamboman/nvim-lsp-installer"
+    end
     -- use "wbthomason/lsp-status.nvim"
     use "j-hui/fidget.nvim"
     use {
@@ -613,6 +625,7 @@ return require("packer").startup {
   end,
 
   config = {
+    max_jobs = max_jobs,
     luarocks = {
       python_cmd = "python3",
     },

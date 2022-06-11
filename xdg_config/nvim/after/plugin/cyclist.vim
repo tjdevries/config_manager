@@ -9,7 +9,7 @@ call cyclist#add_listchar_option_set('limited', {
         \ 'tab': '» ',
         \ 'trail': '·',
         \ 'extends': '<',
-        \ 'precedes': '>',    
+        \ 'precedes': '>',
         \ 'conceal': '┊',
         \ 'nbsp': '␣',
         \ })
@@ -20,7 +20,7 @@ call cyclist#add_listchar_option_set('busy', {
         \ 'space': '␣',
         \ 'trail': '-',
         \ 'extends': '☛',
-        \ 'precedes': '☚',    
+        \ 'precedes': '☚',
         \ 'conceal': '┊',
         \ 'nbsp': '☠',
         \ })
@@ -31,6 +31,11 @@ if $USER == 'tj-wsl'
           \ })
 
   call cyclist#activate_listchars('wsl')
+endif
+
+" I can't figure out fonts and stuff on mac.
+if has("macunix")
+  silent! call cyclist#activate_listchars('limited')
 endif
 
 nmap <leader>cl <Plug>CyclistNext
