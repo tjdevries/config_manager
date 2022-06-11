@@ -1,6 +1,11 @@
 _ = vim.cmd [[packadd packer.nvim]]
 _ = vim.cmd [[packadd vimball]]
 
+-- vim.api.nvim_cmd({
+--   cmd = "packadd",
+--   args = { "packer.vim" },
+-- }, {})
+
 local has = function(x)
   return vim.fn.has(x) == 1
 end
@@ -51,8 +56,10 @@ return require("packer").startup {
     end
 
     use "wbthomason/packer.nvim"
+
+    -- Alternative to impatient, uses sqlite. Faster ;)
+    -- use https://github.com/tami5/impatient.nvim
     -- use "lewis6991/impatient.nvim"
-    -- use "camspiers/snap"
 
     -- My Plugins
     local_use("ThePrimeagen", "refactoring.nvim")
@@ -169,6 +176,15 @@ return require("packer").startup {
       use "nvim-telescope/telescope-frecency.nvim"
       use "nvim-telescope/telescope-cheat.nvim"
       use { "nvim-telescope/telescope-arecibo.nvim", rocks = { "openssl", "lua-http-parser" } }
+    end
+
+    if executable "jq" then
+      use {
+        "NTBBloodbath/rest.nvim",
+        config = function()
+          require("rest-nvim").setup()
+        end,
+      }
     end
 
     use {

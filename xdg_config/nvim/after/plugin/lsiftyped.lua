@@ -3,10 +3,10 @@ if not ok then
   return
 end
 
-local group = vim.api.nvim_create_augroup("LsifTyped", { clear = true })
+local group = vim.api.nvim_create_augroup("scip", { clear = true })
 vim.api.nvim_create_autocmd("BufReadCmd", {
   group = group,
-  pattern = "*.lsif-typed",
+  pattern = "*.scip",
   callback = function()
     local bufnr = vim.api.nvim_get_current_buf()
     local file = vim.fn.expand "<afile>"
@@ -17,9 +17,9 @@ vim.api.nvim_create_autocmd("BufReadCmd", {
     Job
       :new({
         "protoc",
-        "--decode=lib.codeintel.lsiftyped.Index",
-        "--proto_path=/home/tjdevries/sourcegraph/sourcegraph.git/main/proto/lib/codeintel/lsiftyped",
-        "lsif.proto",
+        "--decode=scip.Index",
+        "--proto_path=/home/tjdevries/sourcegraph/scip/",
+        "scip.proto",
 
         writer = Job:new { "cat", file },
 

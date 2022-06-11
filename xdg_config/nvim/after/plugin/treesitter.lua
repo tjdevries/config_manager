@@ -17,6 +17,14 @@ list.sql = {
   },
 }
 
+list.rsx = {
+  install_info = {
+    url = "https://github.com/tjdevries/tree-sitter-rsx",
+    files = { "src/parser.c", "src/scanner.cc" },
+    branch = "master",
+  },
+}
+
 -- list.lua = nil
 
 -- :h nvim-treesitter-query-extensions
@@ -58,6 +66,7 @@ local _ = require("nvim-treesitter.configs").setup {
     "go",
     "html",
     "javascript",
+    "json",
     "markdown",
     "python",
     "query",
@@ -70,7 +79,7 @@ local _ = require("nvim-treesitter.configs").setup {
   highlight = {
     enable = true,
     use_languagetree = false,
-    disable = { "json" },
+    -- disable = { "json" },
     custom_captures = custom_captures,
   },
 

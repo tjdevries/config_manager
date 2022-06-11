@@ -23,7 +23,6 @@ local ts_util = require "nvim-lsp-ts-utils"
 -- require("vim.lsp.log").set_level "trace"
 
 local status = require "tj.lsp.status"
-print("STATUS", status)
 if status then
   status.activate()
 end
@@ -33,32 +32,49 @@ local custom_init = function(client)
   client.config.flags.allow_incremental_sync = true
 end
 
+local augroup_format = vim.api.nvim_create_augroup("my_lsp_format", { clear = true })
+local autocmd_format = function(async, filter)
+  vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    buffer = 0,
+    callback = function()
+      vim.lsp.buf.format { async = async, filter = filter }
+    end,
+  })
+end
+
 local filetype_attach = setmetatable({
-  go = function(client)
-    vim.cmd [[
-      augroup lsp_buf_format
-        au! BufWritePre <buffer>
-        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()
-      augroup END
-    ]]
+  go = function()
+    autocmd_format(false)
+  end,
+
+  scss = function()
+    autocmd_format(false)
+  end,
+
+  css = function()
+    autocmd_format(false)
   end,
 
   rust = function()
+    -- vim.cmd [[
+    --   autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
+    -- ]]
+
     telescope_mapper("<space>wf", "lsp_workspace_symbols", {
       ignore_filename = true,
       query = "#",
     }, true)
 
-    -- vim.cmd [[
-    --   autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
-    -- ]]
+    autocmd_format(false)
+  end,
 
-    vim.cmd [[
-      augroup lsp_buf_format
-        au! BufWritePre <buffer>
-        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()
-      augroup END
-    ]]
+  typescript = function()
+    autocmd_format(false, function(clients)
+      return vim.tbl_filter(function(client)
+        return client.name ~= "tsserver"
+      end, clients)
+    end)
   end,
 }, {
   __index = function()
@@ -117,6 +133,8 @@ local custom_attach = function(client)
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
+    P(client.server_capabilities.documentHighlightProvider)
+
     vim.cmd [[
       augroup lsp_document_highlight
         autocmd! * <buffer>
@@ -213,12 +231,9 @@ local servers = {
   rust_analyzer = {
     cmd = { "rustup", "run", "nightly", "rust-analyzer" },
   },
-  --   settings = {
-  --     ["rust-analyzer"] = {
-  --     },
-  -- },
 
   elmls = true,
+  cssls = true,
 
   tsserver = {
     init_options = ts_util.init_options,
@@ -348,14 +363,15 @@ end
 -- }
 
 -- Set up null-ls
-local use_null = false
+local use_null = true
 if use_null then
   require("null-ls").setup {
     sources = {
       -- require("null-ls").builtins.formatting.stylua,
       -- require("null-ls").builtins.diagnostics.eslint,
       -- require("null-ls").builtins.completion.spell,
-      require("null-ls").builtins.diagnostics.selene,
+      -- require("null-ls").builtins.diagnostics.selene,
+      require("null-ls").builtins.formatting.prettierd,
     },
   }
 end
