@@ -27,12 +27,6 @@ if is_mac then
   max_jobs = 32
 end
 
-require("packer").startup {
-  function(use)
-    use "wbthomason/packer.nvim"
-  end,
-}
-
 return require("packer").startup {
   function(use)
     local local_use = function(first, second, opts)
@@ -455,6 +449,7 @@ return require("packer").startup {
 
     -- TREE SITTER:
     local_use("nvim-treesitter", "nvim-treesitter")
+    use "nvim-treesitter/nvim-treesitter-context"
     use "nvim-treesitter/playground"
     use "vigoux/architext.nvim"
 

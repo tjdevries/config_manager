@@ -135,8 +135,6 @@ local custom_attach = function(client)
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
-    P(client.server_capabilities.documentHighlightProvider)
-
     vim.cmd [[
       augroup lsp_document_highlight
         autocmd! * <buffer>
@@ -279,15 +277,11 @@ local setup_server = function(server, config)
   lspconfig[server].setup(config)
 end
 
-for server, config in pairs(servers) do
-  setup_server(server, config)
-end
-
 if is_mac then
   local sumneko_cmd, sumneko_env = nil, nil
   require("nvim-lsp-installer").setup {
     automatic_installation = false,
-    ensure_installed = { "sumneko_lua" },
+    ensure_installed = { "sumneko_lua", "gopls" },
   }
 
   sumneko_cmd = {
@@ -310,6 +304,18 @@ if is_mac then
       Lua = {
         diagnostics = {
           globals = {
+            -- vim
+            "vim",
+
+            -- Busted
+            "describe",
+            "it",
+            "before_each",
+            "after_each",
+            "teardown",
+            "pending",
+            "clear",
+
             -- Colorbuddy
             "Color",
             "c",
@@ -332,8 +338,6 @@ if is_mac then
 else
   -- Load lua configuration from nlua.
   _ = require("nlua.lsp.nvim").setup(lspconfig, {
-    cmd = sumneko_cmd,
-    cmd_env = sumneko_env,
     on_init = custom_init,
     on_attach = custom_attach,
     capabilities = updated_capabilities,
@@ -359,6 +363,10 @@ else
       "RELOAD",
     },
   })
+end
+
+for server, config in pairs(servers) do
+  setup_server(server, config)
 end
 
 if pcall(require, "sg.lsp") then
