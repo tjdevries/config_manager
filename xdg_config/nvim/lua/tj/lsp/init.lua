@@ -72,10 +72,8 @@ local filetype_attach = setmetatable({
   end,
 
   typescript = function()
-    autocmd_format(false, function(clients)
-      return vim.tbl_filter(function(client)
-        return client.name ~= "tsserver"
-      end, clients)
+    autocmd_format(false, function(client)
+      return client.name ~= "tsserver"
     end)
   end,
 }, {
@@ -144,7 +142,7 @@ local custom_attach = function(client)
     ]]
   end
 
-  if client.server_capabilities.codeLensProvider then
+  if false and client.server_capabilities.codeLensProvider then
     if filetype ~= "elm" then
       vim.cmd [[
         augroup lsp_document_codelens
@@ -173,13 +171,17 @@ updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport
 -- vim.lsp.buf_request(0, "textDocument/codeLens", { textDocument = vim.lsp.util.make_text_document_params() })
 
 local servers = {
+
+  -- Also uses `shellcheck` and `explainshell`
+  bashls = true,
+
+  eslint = true,
   gdscript = true,
-  graphql = true,
+  -- graphql = true,
   html = true,
   pyright = true,
   vimls = true,
   yamlls = true,
-  eslint = true,
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
   dartls = pcall(require, "flutter-tools"),
@@ -200,18 +202,18 @@ local servers = {
   },
 
   gopls = {
-    root_dir = function(fname)
-      local Path = require "plenary.path"
-
-      local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
-      local absolute_fname = Path:new(fname):absolute()
-
-      if string.find(absolute_cwd, "/cmd/", 1, true) and string.find(absolute_fname, absolute_cwd, 1, true) then
-        return absolute_cwd
-      end
-
-      return lspconfig_util.root_pattern("go.mod", ".git")(fname)
-    end,
+    -- root_dir = function(fname)
+    --   local Path = require "plenary.path"
+    --
+    --   local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
+    --   local absolute_fname = Path:new(fname):absolute()
+    --
+    --   if string.find(absolute_cwd, "/cmd/", 1, true) and string.find(absolute_fname, absolute_cwd, 1, true) then
+    --     return absolute_cwd
+    --   end
+    --
+    --   return lspconfig_util.root_pattern("go.mod", ".git")(fname)
+    -- end,
 
     settings = {
       gopls = {
@@ -230,11 +232,11 @@ local servers = {
 
   rust_analyzer = {
     cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+    -- cmd = { "rust-analyzer" },
   },
 
   elmls = true,
   cssls = true,
-
   tsserver = {
     init_options = ts_util.init_options,
     cmd = { "typescript-language-server", "--stdio" },
@@ -367,13 +369,6 @@ end
 
 for server, config in pairs(servers) do
   setup_server(server, config)
-end
-
-if pcall(require, "sg.lsp") then
-  require("sg.lsp").setup {
-    on_init = custom_init,
-    on_attach = custom_attach,
-  }
 end
 
 --[ An example of using functions...

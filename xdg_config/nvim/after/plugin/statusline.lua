@@ -10,6 +10,23 @@ require("el").reset_windows()
 
 vim.opt.laststatus = 3
 
+if false then
+  -- Disappearing statusline for commands
+  vim.opt.cmdheight = 0
+  vim.api.nvim_create_autocmd("ModeChanged", {
+    group = vim.api.nvim_create_augroup("StatusDisappear", { clear = true }),
+    callback = function()
+      if vim.v.event.new_mode == "c" then
+        vim.opt.laststatus = 0
+      elseif vim.v.event.old_mode == "c" then
+        vim.opt.laststatus = 3
+      end
+
+      pcall(vim.cmd, [[silent! redraw]])
+    end,
+  })
+end
+
 local builtin = require "el.builtin"
 local extensions = require "el.extensions"
 local sections = require "el.sections"

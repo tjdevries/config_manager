@@ -17,3 +17,7 @@
 
   ; "||"
 ] @Operator
+
+(identifier) @variable
+
+(parameter) @Todo

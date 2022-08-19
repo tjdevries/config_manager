@@ -178,7 +178,7 @@ dap.configurations.c = {
     "executable": "<path to the elf/exe file relativ to workspace root in order to load the symbols>",
     "target": "X.X.X.X:9999",
     "remote": true,
-    "cwd": "${workspaceRoot}", 
+    "cwd": "${workspaceRoot}",
     "gdbpath": "path/to/your/gdb",
     "autorun": [
             "any gdb commands to initiate your environment, if it is needed"
@@ -525,25 +525,45 @@ augroup END
 local dap_ui = require "dapui"
 
 local _ = dap_ui.setup {
-  -- You can change the order of elements in the sidebar
-  sidebar = {
-    elements = {
-      -- Provide as ID strings or tables with "id" and "size" keys
-      {
-        id = "scopes",
-        size = 0.75, -- Can be float or integer > 1
+  layouts = {
+    {
+      elements = {
+        "scopes",
+        "breakpoints",
+        "stacks",
+        "watches",
       },
-      { id = "watches", size = 00.25 },
+      size = 40,
+      position = "left",
     },
-    size = 50,
-    position = "left", -- Can be "left" or "right"
+    {
+      elements = {
+        "repl",
+        "console",
+      },
+      size = 10,
+      position = "bottom",
+    },
   },
-
-  tray = {
-    elements = {},
-    size = 15,
-    position = "bottom", -- Can be "bottom" or "top"
-  },
+  -- -- You can change the order of elements in the sidebar
+  -- sidebar = {
+  --   elements = {
+  --     -- Provide as ID strings or tables with "id" and "size" keys
+  --     {
+  --       id = "scopes",
+  --       size = 0.75, -- Can be float or integer > 1
+  --     },
+  --     { id = "watches", size = 00.25 },
+  --   },
+  --   size = 50,
+  --   position = "left", -- Can be "left" or "right"
+  -- },
+  --
+  -- tray = {
+  --   elements = {},
+  --   size = 15,
+  --   position = "bottom", -- Can be "bottom" or "top"
+  -- },
 }
 
 local original = {}

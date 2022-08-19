@@ -19,6 +19,55 @@ local same = shared.same
 snippet_collection.clear_snippets "rust"
 ls.add_snippets("rust", {
   s(
+    "tmain",
+    fmt(
+      [[
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {{
+  Ok(())
+}}]],
+      {}
+    )
+  ),
+
+  s(
+    "yew_comp",
+    fmt(
+      [[use yew::prelude::*;
+
+#[derive(Clone, PartialEq, Properties)]
+pub struct {}Props {{}}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum {}Msg {{}}
+
+pub struct {} {{}}
+
+impl Component for {} {{
+  type Message = {}Msg;
+  type Properties = {}Props;
+
+  fn create(ctx: &Context<Self>) -> Self {{
+      Self {{}}
+  }}
+
+  fn view(&self, ctx: &Context<Self>) -> Html {{
+    todo!()
+  }}
+}}
+]],
+      {
+        same(1),
+        same(1),
+        same(1),
+        i(1),
+        same(1),
+        same(1),
+      }
+    )
+  ),
+
+  s(
     "main",
     fmt(
       [[

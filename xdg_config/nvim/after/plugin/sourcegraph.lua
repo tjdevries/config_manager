@@ -6,3 +6,7 @@ local dbs = vim.g.dbs
 dbs["sg-local"] = "postgres://sourcegraph:sourcegraph@localhost:5432/sourcegraph"
 
 vim.g.dbs = dbs
+
+require("sg").setup {
+  on_attach = require("tj.lsp").on_attach,
+}

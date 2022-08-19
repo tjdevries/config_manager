@@ -174,6 +174,7 @@ return require("packer").startup {
     local_use "telescope-hacks.nvim"
     -- local_use "sg.nvim"
     local_use "green_light.nvim"
+    use "/home/tjdevries/sourcegraph/sg.nvim"
 
     -- TODO: Need to figure out how to install all of this stuff on mac
     if not is_mac then
@@ -449,7 +450,7 @@ return require("packer").startup {
 
     -- TREE SITTER:
     local_use("nvim-treesitter", "nvim-treesitter")
-    use "nvim-treesitter/nvim-treesitter-context"
+    -- use "nvim-treesitter/nvim-treesitter-context"
     use "nvim-treesitter/playground"
     use "vigoux/architext.nvim"
 
@@ -502,7 +503,8 @@ return require("packer").startup {
       end,
     }
 
-    use "google/vim-searchindex"
+    -- cmdheight=0 problems?
+    -- use "google/vim-searchindex"
 
     use "tamago324/lir.nvim"
     use "tamago324/lir-git-status.nvim"

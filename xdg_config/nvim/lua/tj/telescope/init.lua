@@ -180,13 +180,13 @@ function M.edit_zsh()
   }
 end
 
-function M.fd()
+function M.find_files()
   -- local opts = themes.get_ivy {
   --   hidden = false,
   --   sorting_strategy = "ascending",
   --   layout_config = { height = 9 },
   -- }
-  require("telescope.builtin").fd {
+  require("telescope.builtin").find_files {
     sorting_strategy = "descending",
     scroll_strategy = "cycle",
     layout_config = {
@@ -197,7 +197,7 @@ end
 
 function M.fs()
   local opts = themes.get_ivy { hidden = false, sorting_strategy = "descending" }
-  require("telescope.builtin").fd(opts)
+  require("telescope.builtin").find_files(opts)
 end
 
 function M.builtin()

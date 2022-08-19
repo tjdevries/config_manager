@@ -87,13 +87,13 @@ require("telescope").setup {
         ["<c-g>s"] = actions.select_all,
         ["<c-g>a"] = actions.add_selection,
 
-        ["<c-space>"] = function(prompt_bufnr)
-          local opts = {
-            callback = actions.toggle_selection,
-            loop_callback = actions.send_selected_to_qflist,
-          }
-          require("telescope").extensions.hop._hop_loop(prompt_bufnr, opts)
-        end,
+        -- ["<c-space>"] = function(prompt_bufnr)
+        --   local opts = {
+        --     callback = actions.toggle_selection,
+        --     loop_callback = actions.send_selected_to_qflist,
+        --   }
+        --   require("telescope").extensions.hop._hop_loop(prompt_bufnr, opts)
+        -- end,
 
         ["<C-w>"] = function()
           vim.api.nvim_input "<c-s-w>"
@@ -120,7 +120,10 @@ require("telescope").setup {
   },
 
   pickers = {
-    fd = {
+    find_files = {
+      -- I don't like having the cwd prefix in my files
+      find_command = { "fdfind", "--strip-cwd-prefix", "--type", "f" },
+
       mappings = {
         n = {
           ["kj"] = "close",

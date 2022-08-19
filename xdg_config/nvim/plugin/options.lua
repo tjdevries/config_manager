@@ -4,7 +4,8 @@ local opt = vim.opt
 
 -- Ignore compiled files
 opt.wildignore = "__pycache__"
-opt.wildignore = opt.wildignore + { "*.o", "*~", "*.pyc", "*pycache*" }
+opt.wildignore:append { "*.o", "*~", "*.pyc", "*pycache*" }
+opt.wildignore:append "Cargo.lock"
 
 -- Cool floating window popup menu for completion on command line
 opt.pumblend = 17
@@ -71,7 +72,7 @@ opt.inccommand = "split"
 opt.swapfile = false -- Living on the edge
 opt.shada = { "!", "'1000", "<50", "s10", "h" }
 
-opt.mouse = "n"
+opt.mouse = "a"
 
 -- Helpful related items:
 --   1. :center, :left, :right
@@ -96,3 +97,5 @@ opt.joinspaces = false -- Two spaces and grade school, we're done
 opt.fillchars = { eob = "~" }
 
 vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }
+
+vim.opt.undofile = true

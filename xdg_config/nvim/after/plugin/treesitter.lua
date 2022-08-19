@@ -29,7 +29,7 @@ list.rsx = {
 
 -- :h nvim-treesitter-query-extensions
 local custom_captures = {
-  ["function.call"] = "LuaFunctionCall",
+  ["function.call.lua"] = "LuaFunctionCall",
   ["function.bracket"] = "Type",
   ["namespace.type"] = "TSNamespaceType",
 }
