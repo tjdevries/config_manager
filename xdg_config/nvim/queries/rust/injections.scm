@@ -18,15 +18,12 @@
     (#eq? @_html_def "html")
 )
 
-(
- (macro_invocation
-  (scoped_identifier
-     path: (identifier) @_path
-     name: (identifier) @_identifier)
+; Inject into sqlx::query!(r#"..."#, ...) as sql
+(macro_invocation
+ (scoped_identifier
+    path: (identifier) @_path (#eq? @_path "sqlx")
+    name: (identifier) @_name (#eq? @_name "query"))
 
-  (token_tree (raw_string_literal) @sql))
-
- (#eq? @_path "sqlx")
- (#eq? @_identifier "query")
- (#offset! @sql 1 0 0 0)
-)
+ (token_tree
+   (raw_string_literal) @sql) 
+   (#offset! @sql 1 0 0 0))

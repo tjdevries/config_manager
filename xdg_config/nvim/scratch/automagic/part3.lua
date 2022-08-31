@@ -18,7 +18,8 @@ local test_function_query_string = [[
 ]]
 
 local find_test_line = function(go_bufnr, name)
-  local query = vim.treesitter.parse_query("go", string.format(test_function_query_string, name))
+  local formatted = string.format(test_function_query_string, name)
+  local query = vim.treesitter.parse_query("go", formatted)
   local parser = vim.treesitter.get_parser(go_bufnr, "go", {})
   local tree = parser:parse()[1]
   local root = tree:root()
@@ -57,6 +58,7 @@ end
 -- local display_golang_output = function(state, bufnr) end
 
 local ns = vim.api.nvim_create_namespace "live-tests"
+local group = vim.api.nvim_create_augroup("teej-automagic", { clear = true })
 
 local attach_to_buffer = function(bufnr, command)
   local state = {
@@ -65,18 +67,17 @@ local attach_to_buffer = function(bufnr, command)
   }
 
   vim.api.nvim_buf_create_user_command(bufnr, "GoTestLineDiag", function()
-    -- print(vim.inspect(state))
     local line = vim.fn.line "." - 1
     for _, test in pairs(state.tests) do
       if test.line == line then
-        vim.cmd.vnew()
+        vim.cmd.new()
         vim.api.nvim_buf_set_lines(vim.api.nvim_get_current_buf(), 0, -1, false, test.output)
       end
     end
   end, {})
 
   vim.api.nvim_create_autocmd("BufWritePost", {
-    group = vim.api.nvim_create_augroup(string.format("teej-automagic-%s", bufnr), { clear = true }),
+    group = group,
     pattern = "*.go",
     callback = function()
       vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
@@ -146,6 +147,10 @@ local attach_to_buffer = function(bufnr, command)
   })
 end
 
+vim.api.nvim_create_user_command("GoTestOnSave", function()
+  attach_to_buffer(vim.api.nvim_get_current_buf(), { "go", "test", "./...", "-v", "-json" })
+end, {})
+
 -- attach_to_buffer(80, { "go", "run", "main.go" })
-attach_to_buffer(16, { "go", "test", "./...", "-v", "-json" })
+-- attach_to_buffer(16, { "go", "test", "./...", "-v", "-json" })
 -- attach_to_buffer(1, { "go", "test", "./...", "-v", "-json", "-run", "TestDoesFailStill" })

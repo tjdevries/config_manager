@@ -45,5 +45,9 @@ Group.new("WinSeparator", nil, nil)
 -- Group.new("TSKeyword", c.purple, nil, s.underline, c.blue)
 -- Group.new("LuaFunctionCall", c.green, nil, s.underline + s.nocombine, g.TSKeyword.guisp)
 
--- Hello
 Group.new("TSTitle", c.blue)
+
+-- TODO: It would be nice if we could only highlight
+-- the text with characters or something like that...
+-- but we'll have to stick to that for later.
+Group.new("InjectedLanguage", nil, g.Normal.bg:dark())

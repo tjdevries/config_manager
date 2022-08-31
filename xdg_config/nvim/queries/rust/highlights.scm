@@ -244,3 +244,15 @@
 ; (let_declaration (type_identifier) @LetType)
 ; (struct_expression
 ;  name: (type_identifier) @StructType)
+
+; (
+;  (macro_invocation
+;   (scoped_identifier
+;      path: (identifier) @_path
+;      name: (identifier) @_identifier)
+;
+;   (token_tree (raw_string_literal) @InjectedLanguage))
+;
+;  (#eq? @_path "sqlx")
+;  (#eq? @_identifier "query")
+; )
