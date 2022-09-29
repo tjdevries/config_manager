@@ -122,7 +122,7 @@ return require("packer").startup {
     -- use "/home/tjdevries/plugins/stackmap.nvim"
     -- Plug "/home/bash/plugins/stackmap.nvim"
 
-    -- use "simrat39/rust-tools.nvim"
+    use "simrat39/rust-tools.nvim"
     -- use "ray-x/go.nvim"
     use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
@@ -194,12 +194,13 @@ return require("packer").startup {
       }
     end
 
-    use {
-      "antoinemadec/FixCursorHold.nvim",
-      run = function()
-        vim.g.curshold_updatime = 1000
-      end,
-    }
+    -- After https://github.com/neovim/neovim/pull/20198 this is no longer needed
+    -- use {
+    --   "antoinemadec/FixCursorHold.nvim",
+    --   run = function()
+    --     vim.g.curshold_updatime = 1000
+    --   end,
+    -- }
 
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
@@ -411,6 +412,26 @@ return require("packer").startup {
       use "lambdalisue/guise.vim"
     end
 
+    -- racket
+    use {
+      "Olical/conjure",
+      ft = { "racket" },
+    }
+    use {
+      "PaterJason/cmp-conjure",
+      ft = { "racket" },
+      after = "conjure",
+    }
+
+    -- <space>ee eval expression
+    -- <space>er eval root
+    -- <space>eb eval buffer
+    -- <space>E  eval <movement>
+
+    -- <space>e! replace (dunno how often i'd use that?)
+
+    use "benknoble/vim-racket"
+
     -- use "Shougo/ddc.vim"
     -- use "Shougo/ddc-nvim-lsp"
 
@@ -612,10 +633,10 @@ return require("packer").startup {
     -- local_use 'wander.nvim'
     -- local_use 'riki.nvim'
 
-    use {
-      "Vhyrro/neorg",
-      -- branch = "unstable"
-    }
+    -- use {
+    --   "Vhyrro/neorg",
+    --   -- branch = "unstable"
+    -- }
 
     -- pretty sure I'm done w/ these
     -- local_use 'vlog.nvim'

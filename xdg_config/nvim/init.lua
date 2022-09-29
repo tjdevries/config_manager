@@ -73,6 +73,7 @@ end
 -- if you have any mappings you set BEFORE doing this, they will be set to the OLD
 -- leader.
 vim.g.mapleader = ","
+vim.g.maplocalleader = " "
 
 -- I set some global variables to use as configuration throughout my config.
 -- These don't have any special meaning.

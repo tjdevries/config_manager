@@ -59,15 +59,15 @@ local filetype_attach = setmetatable({
   end,
 
   rust = function()
-    -- vim.cmd [[
-    --   autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
-    -- ]]
-
     telescope_mapper("<space>wf", "lsp_workspace_symbols", {
       ignore_filename = true,
       query = "#",
     }, true)
 
+    autocmd_format(false)
+  end,
+
+  racket = function()
     autocmd_format(false)
   end,
 
@@ -164,11 +164,37 @@ if nvim_status then
 end
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
-
--- TODO: check if this is the problem.
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
 
--- vim.lsp.buf_request(0, "textDocument/codeLens", { textDocument = vim.lsp.util.make_text_document_params() })
+local rust_analyzer
+
+local has_rt, rt = pcall(require, "rust-tools")
+if has_rt then
+  local extension_path = vim.fn.expand "~/.vscode/extensions/sadge-vscode/extension/"
+  local codelldb_path = extension_path .. "adapter/codelldb"
+  local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
+  rt.setup {
+    server = {
+      cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+      capabilities = updated_capabilities,
+      on_attach = custom_attach,
+    },
+    dap = {
+      adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+    },
+    tools = {
+      inlay_hints = {
+        auto = false,
+      },
+    },
+  }
+else
+  rust_analyzer = {
+    cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+    -- cmd = { "rust-analyzer" },
+  }
+end
 
 local servers = {
 
@@ -230,10 +256,9 @@ local servers = {
     cmd = { vim.fn.expand "~/build/omnisharp/run", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
   },
 
-  rust_analyzer = {
-    cmd = { "rustup", "run", "nightly", "rust-analyzer" },
-    -- cmd = { "rust-analyzer" },
-  },
+  rust_analyzer = rust_analyzer,
+
+  racket_langserver = true,
 
   elmls = true,
   cssls = true,

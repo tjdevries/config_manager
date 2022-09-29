@@ -70,6 +70,7 @@ local _ = require("nvim-treesitter.configs").setup {
     "markdown",
     "python",
     "query",
+    "racket",
     "rust",
     "toml",
     "tsx",

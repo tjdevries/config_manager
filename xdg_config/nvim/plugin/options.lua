@@ -99,3 +99,4 @@ opt.fillchars = { eob = "~" }
 vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }
 
 vim.opt.undofile = true
+vim.opt.signcolumn = "yes"
