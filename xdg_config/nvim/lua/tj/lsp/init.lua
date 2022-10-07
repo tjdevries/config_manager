@@ -1,40 +1,34 @@
-local imap = require("tj.keymap").imap
-local nmap = require("tj.keymap").nmap
-
-local has_lsp, lspconfig = pcall(require, "lspconfig")
-if not has_lsp then
+local lspconfig = vim.F.npcall(require, "lspconfig")
+if not lspconfig then
   return
 end
+
+local imap = require("tj.keymap").imap
+local nmap = require("tj.keymap").nmap
+local autocmd = require("tj.auto").autocmd
+local autocmd_clear = vim.api.nvim_clear_autocmds
+
+local semantic = vim.F.npcall(require, "nvim-semantic-tokens")
 
 local is_mac = vim.fn.has "macunix" == 1
 
 local lspconfig_util = require "lspconfig.util"
-
-local ok, nvim_status = pcall(require, "lsp-status")
-if not ok then
-  nvim_status = nil
-end
 
 local telescope_mapper = require "tj.telescope.mappings"
 local handlers = require "tj.lsp.handlers"
 
 local ts_util = require "nvim-lsp-ts-utils"
 
--- Can set this lower if needed.
--- require("vim.lsp.log").set_level "debug"
--- require("vim.lsp.log").set_level "trace"
-
-local status = require "tj.lsp.status"
-if status then
-  status.activate()
-end
-
 local custom_init = function(client)
   client.config.flags = client.config.flags or {}
   client.config.flags.allow_incremental_sync = true
 end
 
-local augroup_format = vim.api.nvim_create_augroup("my_lsp_format", { clear = true })
+local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
+local augroup_codelens = vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
+local augroup_format = vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
+local augroup_semantic = vim.api.nvim_create_augroup("custom-lsp-semantic", { clear = true })
+
 local autocmd_format = function(async, filter)
   vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
   vim.api.nvim_create_autocmd("BufWritePre", {
@@ -100,12 +94,8 @@ local buf_inoremap = function(opts)
   imap(opts)
 end
 
-local custom_attach = function(client)
+local custom_attach = function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
-
-  if nvim_status then
-    nvim_status.on_attach(client)
-  end
 
   buf_inoremap { "<c-s>", vim.lsp.buf.signature_help }
 
@@ -133,25 +123,23 @@ local custom_attach = function(client)
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
-    vim.cmd [[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]]
+    autocmd_clear { group = augroup_highlight, buffer = bufnr }
+    autocmd { "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr }
+    autocmd { "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr }
   end
 
   if false and client.server_capabilities.codeLensProvider then
     if filetype ~= "elm" then
-      vim.cmd [[
-        augroup lsp_document_codelens
-          au! * <buffer>
-          autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
-          autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
-        augroup END
-      ]]
+      autocmd_clear { group = augroup_codelens, buffer = bufnr }
+      autocmd { "BufEnter", augroup_codelens, vim.lsp.codelens.refresh, bufnr, once = true }
+      autocmd { { "BufWritePost", "CursorHold" }, augroup_codelens, vim.lsp.codelens.refresh, bufnr }
     end
+  end
+
+  local caps = client.server_capabilities
+  if semantic and caps.semanticTokensProvider and caps.semanticTokensProvider.full then
+    autocmd_clear { group = augroup_semantic, buffer = bufnr }
+    autocmd { "TextChanged", augroup_semantic, vim.lsp.buf.semantic_tokens_full, bufnr }
   end
 
   -- Attach any filetype specific options to the client
@@ -159,15 +147,24 @@ local custom_attach = function(client)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-if nvim_status then
-  updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, nvim_status.capabilities)
-end
-updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
-updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
+
+-- Completion configuration
+require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
 
-local rust_analyzer
+-- Semantic token configuration
+if semantic then
+  semantic.setup {
+    preset = "default",
+    highlighters = { require "nvim-semantic-tokens.table-highlighter" },
+  }
 
+  semantic.extend_capabilities(updated_capabilities)
+end
+
+updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
+
+local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
 local has_rt, rt = pcall(require, "rust-tools")
 if has_rt then
   local extension_path = vim.fn.expand "~/.vscode/extensions/sadge-vscode/extension/"
@@ -176,7 +173,7 @@ if has_rt then
 
   rt.setup {
     server = {
-      cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+      cmd = rust_analyzer_cmd,
       capabilities = updated_capabilities,
       on_attach = custom_attach,
     },
@@ -191,13 +188,11 @@ if has_rt then
   }
 else
   rust_analyzer = {
-    cmd = { "rustup", "run", "nightly", "rust-analyzer" },
-    -- cmd = { "rust-analyzer" },
+    cmd = rust_analyzer_cmd,
   }
 end
 
 local servers = {
-
   -- Also uses `shellcheck` and `explainshell`
   bashls = true,
 
@@ -220,11 +215,9 @@ local servers = {
       "--clang-tidy",
       "--header-insertion=iwyu",
     },
-    -- Required for lsp-status
     init_options = {
       clangdFileStatus = true,
     },
-    handlers = nvim_status and nvim_status.extensions.clangd.setup() or nil,
   },
 
   gopls = {
@@ -423,25 +416,6 @@ end
 -- end
 --]]
 
--- python graveyard
--- lspconfig.pyls.setup {
---   plugins = {
---     pyls_mypy = {
---       enabled = true,
---       live_mode = false
---     }
---   },
---   on_init = custom_init,
---   on_attach = custom_attach,
---   capabilities = updated_capabilities,
--- }
-
--- lspconfig.jedi_language_server.setup {
---   on_init = custom_init,
---   on_attach = custom_attach,
---   capabilities = updated_capabilities,
--- }
-
 -- Set up null-ls
 local use_null = true
 if use_null then
@@ -455,6 +429,10 @@ if use_null then
     },
   }
 end
+
+-- Can set this lower if needed.
+-- require("vim.lsp.log").set_level "debug"
+-- require("vim.lsp.log").set_level "trace"
 
 return {
   on_init = custom_init,

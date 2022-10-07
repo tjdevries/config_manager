@@ -51,3 +51,6 @@ Group.new("TSTitle", c.blue)
 -- the text with characters or something like that...
 -- but we'll have to stick to that for later.
 Group.new("InjectedLanguage", nil, g.Normal.bg:dark())
+
+Group.new("LspParameter", nil, nil, s.italic)
+Group.new("LspDeprecated", nil, nil, s.strikethrough)

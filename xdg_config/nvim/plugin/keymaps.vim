@@ -125,7 +125,7 @@ if has('nvim')
 endif
 
 " Clears hlsearch after doing a search, otherwise just does normal <CR> stuff
-nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
+nnoremap <silent> <expr> <CR> {-> v:hlsearch ? "<cmd>nohl\<CR>" : "\<CR>"}()
 
 if v:false
   " TODO: Explore why I wrote this for someone and why I thought it was good.

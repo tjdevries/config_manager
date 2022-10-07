@@ -1,5 +1,3 @@
-local override = require "tj.lsp.override"
-
 -- Jump directly to the first available definition every time.
 vim.lsp.handlers["textDocument/definition"] = function(_, result)
   if not result or vim.tbl_isempty(result) then
@@ -79,14 +77,5 @@ vim.lsp.codelens.display = require("gl.codelens").display
 --     })
 --     :run()
 -- end
-
--- override.set("workspace/executeCommand", function(err, result, ctx, config)
---   if vim.bo[ctx.bufnr].filetype ~= "go" then
---     return override.get(ctx.method)(err, result, ctx, config)
---   end
---
---   print("filetype:", vim.bo[ctx.bufnr].filetype)
---   P(ctx)
--- end)
 
 return M

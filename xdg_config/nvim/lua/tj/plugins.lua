@@ -94,6 +94,7 @@ return require("packer").startup {
 
     -- LSP Plugins:
 
+    use "theHamsta/nvim-semantic-tokens"
     -- NOTE: lspconfig ONLY has configs, for people reading this :)
     use "neovim/nvim-lspconfig"
     if is_mac then
@@ -122,9 +123,22 @@ return require("packer").startup {
     -- use "/home/tjdevries/plugins/stackmap.nvim"
     -- Plug "/home/bash/plugins/stackmap.nvim"
 
-    use "simrat39/rust-tools.nvim"
+    -- use "simrat39/rust-tools.nvim"
     -- use "ray-x/go.nvim"
     use "jose-elias-alvarez/nvim-lsp-ts-utils"
+
+    -- use {
+    --   "folke/noice.nvim",
+    --   event = "VimEnter",
+    --   config = function()
+    --     require("noice").setup()
+    --   end,
+    --   requires = {
+    --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+    --     "MunifTanjim/nui.nvim",
+    --     "rcarriga/nvim-notify",
+    --   },
+    -- }
 
     use {
       "folke/lsp-trouble.nvim",
@@ -555,7 +569,7 @@ return require("packer").startup {
 
     --
     -- GIT:
-    use "TimUntersberger/neogit"
+    -- use "TimUntersberger/neogit"
 
     -- Github integration
     if vim.fn.executable "gh" == 1 then
