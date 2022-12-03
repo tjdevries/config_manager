@@ -14,5 +14,9 @@ local log = require("plenary.log").new {
 
 vim.notify = function(msg, level, opts)
   log.info(msg, level, opts)
+  if string.find(msg, "method .* is not supported") then
+    return
+  end
+
   require "notify"(msg, level, opts)
 end

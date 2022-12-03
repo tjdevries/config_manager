@@ -1,11 +1,3 @@
-_ = vim.cmd [[packadd packer.nvim]]
-_ = vim.cmd [[packadd vimball]]
-
--- vim.api.nvim_cmd({
---   cmd = "packadd",
---   args = { "packer.vim" },
--- }, {})
-
 local has = function(x)
   return vim.fn.has(x) == 1
 end
@@ -67,6 +59,7 @@ return require("packer").startup {
     -- My Plugins
     local_use("ThePrimeagen", "refactoring.nvim")
 
+    local_use "monkey.nvim"
     local_use "nlua.nvim"
     local_use "vim9jit"
     local_use "vimterface.nvim"
@@ -80,7 +73,6 @@ return require("packer").startup {
     local_use "pastery.vim"
     local_use "complextras.nvim"
     local_use "lazy.nvim"
-    -- local_use("tjdevries", "astronauta.nvim")
     local_use "diff-therapy.nvim"
 
     -- Contributor Plugins
@@ -94,13 +86,10 @@ return require("packer").startup {
 
     -- LSP Plugins:
 
-    use "theHamsta/nvim-semantic-tokens"
+    -- use "theHamsta/nvim-semantic-tokens"
     -- NOTE: lspconfig ONLY has configs, for people reading this :)
     use "neovim/nvim-lspconfig"
-    if is_mac then
-      use "williamboman/nvim-lsp-installer"
-    end
-    -- use "wbthomason/lsp-status.nvim"
+    use "simrat39/inlay-hints.nvim"
     use "j-hui/fidget.nvim"
     use {
       "ericpubu/lsp_codelens_extensions.nvim",
@@ -110,10 +99,9 @@ return require("packer").startup {
     }
     use "jose-elias-alvarez/null-ls.nvim"
 
-    local_use "lsp_extensions.nvim"
-    use "onsails/lspkind-nvim"
-    -- use "glepnir/lspsaga.nvim"
-    -- https://github.com/rmagatti/goto-preview
+    if is_mac then
+      use "williamboman/nvim-lsp-installer"
+    end
 
     use {
       "akinsho/flutter-tools.nvim",
@@ -154,10 +142,6 @@ return require("packer").startup {
 
     use "rcarriga/nvim-notify"
 
-    -- TODO: Investigate
-    -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-
-    local_use("nvim-lua", "popup.nvim")
     local_use("nvim-lua", "plenary.nvim")
 
     local_use("nvim-telescope", "telescope.nvim")
@@ -186,9 +170,9 @@ return require("packer").startup {
     -- elianiva/telescope-npm.nvim
 
     local_use "telescope-hacks.nvim"
-    -- local_use "sg.nvim"
     local_use "green_light.nvim"
-    use "/home/tjdevries/sourcegraph/sg.nvim"
+    -- use "/home/tjdevries/sourcegraph/sg.nvim"
+    -- local_use "rs-nvim"
 
     -- TODO: Need to figure out how to install all of this stuff on mac
     if not is_mac then
@@ -207,14 +191,6 @@ return require("packer").startup {
         end,
       }
     end
-
-    -- After https://github.com/neovim/neovim/pull/20198 this is no longer needed
-    -- use {
-    --   "antoinemadec/FixCursorHold.nvim",
-    --   run = function()
-    --     vim.g.curshold_updatime = 1000
-    --   end,
-    -- }
 
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
@@ -318,9 +294,6 @@ return require("packer").startup {
     -- TODO: This would be cool to add back, but it breaks sg.nvim for now.
     -- use "lambdalisue/vim-protocol"
 
-    -- Undo helper
-    use "sjl/gundo.vim"
-
     -- Crazy good box drawing
     use "gyim/vim-boxdraw"
 
@@ -381,11 +354,11 @@ return require("packer").startup {
 
     -- Wonder if I can make LSP do this and respect .prettier files.
     --  I don't write enough typescript to think about this.
-    use {
-      "prettier/vim-prettier",
-      ft = { "html", "javascript", "typescript", "typescriptreact" },
-      run = "yarn install",
-    }
+    -- use {
+    --   "prettier/vim-prettier",
+    --   ft = { "html", "javascript", "typescript", "typescriptreact" },
+    --   run = "yarn install",
+    -- }
 
     -- TODO: Turn emmet back on when I someday use it
     -- use 'mattn/emmet-vim'
@@ -396,6 +369,12 @@ return require("packer").startup {
     use "tpope/vim-dadbod"
     use { "kristijanhusak/vim-dadbod-completion" }
     use { "kristijanhusak/vim-dadbod-ui" }
+    use {
+      "lifepillar/pgsql.vim",
+      config = function()
+        vim.g.sql_type_default = "pgsql"
+      end,
+    }
 
     --
     -- Lisp
@@ -413,9 +392,26 @@ return require("packer").startup {
     use "hrsh7th/cmp-path"
     use "hrsh7th/cmp-nvim-lua"
     use "hrsh7th/cmp-nvim-lsp"
-    use "hrsh7th/cmp-nvim-lsp-document-symbol"
+    use "onsails/lspkind-nvim"
     use "saadparwaiz1/cmp_luasnip"
     use "tamago324/cmp-zsh"
+
+    use {
+      "zbirenbaum/copilot.lua",
+      config = function()
+        require("copilot").setup()
+      end,
+    }
+
+    use {
+      "zbirenbaum/copilot-cmp",
+      after = { "copilot.lua" },
+      config = function()
+        require("copilot_cmp").setup()
+      end,
+    }
+
+    -- use "hrsh7th/cmp-nvim-lsp-document-symbol"
 
     -- Comparators
     use "lukas-reineke/cmp-under-comparator"
@@ -429,13 +425,15 @@ return require("packer").startup {
     -- racket
     use {
       "Olical/conjure",
-      ft = { "racket" },
+      ft = { "fennel" },
     }
     use {
       "PaterJason/cmp-conjure",
-      ft = { "racket" },
       after = "conjure",
     }
+    use { "rktjmp/hotpot.nvim" }
+    use { "Olical/aniseed" }
+    use { "eraserhd/parinfer-rust", run = "cargo build --release" }
 
     -- <space>ee eval expression
     -- <space>er eval root
@@ -446,21 +444,8 @@ return require("packer").startup {
 
     use "benknoble/vim-racket"
 
-    -- use "Shougo/ddc.vim"
-    -- use "Shougo/ddc-nvim-lsp"
-
-    -- coq.nvim
-    -- use { "ms-jpq/coq_nvim", branch = "coq" }
-
-    -- Completion stuff
-    local_use "rofl.nvim"
-
-    -- Cool tags based viewer
-    --   :Vista  <-- Opens up a really cool sidebar with info about file.
-    use { "liuchengxu/vista.vim", cmd = "Vista" }
-
     -- Find and replace
-    use "windwp/nvim-spectre"
+    -- use "windwp/nvim-spectre"
 
     -- Debug adapter protocol
     use "mfussenegger/nvim-dap"
@@ -468,7 +453,9 @@ return require("packer").startup {
     use "theHamsta/nvim-dap-virtual-text"
     use "nvim-telescope/telescope-dap.nvim"
 
-    use "mfussenegger/nvim-dap-python"
+    --  Adaparter configuration for specific languages
+    use { "leoluz/nvim-dap-go" }
+    use { "mfussenegger/nvim-dap-python" }
     use "jbyuki/one-small-step-for-vimkind"
 
     -- use {
@@ -485,7 +472,6 @@ return require("packer").startup {
 
     -- TREE SITTER:
     local_use("nvim-treesitter", "nvim-treesitter")
-    -- use "nvim-treesitter/nvim-treesitter-context"
     use "nvim-treesitter/playground"
     use "vigoux/architext.nvim"
 
@@ -547,8 +533,6 @@ return require("packer").startup {
       use "tamago324/lir-mmv.nvim"
     end
 
-    use "pechorin/any-jump.vim"
-
     --
     -- TEXT MANIUPLATION
     use "godlygeek/tabular" -- Quickly align text by pattern
@@ -575,7 +559,6 @@ return require("packer").startup {
     if vim.fn.executable "gh" == 1 then
       use "pwntester/octo.nvim"
     end
-    use "ruifm/gitlinker.nvim"
 
     -- Sweet message committer
     use "rhysd/committia.vim"
@@ -588,7 +571,7 @@ return require("packer").startup {
     }
 
     -- Async signs!
-    use "lewis6991/gitsigns.nvim"
+    -- use "lewis6991/gitsigns.nvim"
 
     -- Git worktree utility
     use {
@@ -643,17 +626,10 @@ return require("packer").startup {
     --   end,
     -- }
 
-    -- It would be fun to think about making a wiki again...
-    -- local_use 'wander.nvim'
-    -- local_use 'riki.nvim'
-
     -- use {
     --   "Vhyrro/neorg",
     --   -- branch = "unstable"
     -- }
-
-    -- pretty sure I'm done w/ these
-    -- local_use 'vlog.nvim'
   end,
 
   config = {

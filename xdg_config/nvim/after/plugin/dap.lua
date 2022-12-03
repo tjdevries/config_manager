@@ -613,13 +613,7 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dap_ui.close()
 end
 
---[[
-nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
-nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
-nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <leader>dl :lua require'dap'.repl.run_last()<CR>
---]]
-
--- vim.cmd [[nmap <silent> <space>db <Plug>VimspectorToggleBreakpoint]]
--- vim.cmd [[nmap <space>ds <Plug>VimscectorContinue]]
+local ok, dap_go = pcall(require, "dap-go")
+if ok then
+  dap_go.setup()
+end

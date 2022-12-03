@@ -1,3 +1,7 @@
+if not pcall(require, "sg") then
+  return
+end
+
 if vim.g.dbs == nil then
   vim.g.dbs = vim.empty_dict()
 end

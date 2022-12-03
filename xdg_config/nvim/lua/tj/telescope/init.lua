@@ -1,15 +1,4 @@
---[[
-
-TODO:
-- do the thing with auto picking shorter results if possible for conni
-- I wanna add something that gives a little minus points for certain pattern
-
-  - scratch files get mins -0.001
-
---]]
-
 SHOULD_RELOAD_TELESCOPE = true
-
 local reloader = function()
   if SHOULD_RELOAD_TELESCOPE then
     RELOAD "plenary"
@@ -36,11 +25,6 @@ local _ = pcall(require, "nvim-nonicons")
 
 local M = {}
 
---[[
-lua require('plenary.reload').reload_module("my_user.tele")
-
-nnoremap <leader>en <cmd>lua require('my_user.tele').edit_neovim()<CR>
---]]
 function M.edit_neovim()
   local opts_with_preview, opts_without_preview
 

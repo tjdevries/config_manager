@@ -18,6 +18,7 @@ local telescope_mapper = require "tj.telescope.mappings"
 local handlers = require "tj.lsp.handlers"
 
 local ts_util = require "nvim-lsp-ts-utils"
+local inlays = require "tj.lsp.inlay"
 
 local custom_init = function(client)
   client.config.flags = client.config.flags or {}
@@ -40,6 +41,10 @@ local autocmd_format = function(async, filter)
 end
 
 local filetype_attach = setmetatable({
+  ocaml = function()
+    autocmd_format(false)
+  end,
+
   go = function()
     autocmd_format(false)
   end,
@@ -70,6 +75,12 @@ local filetype_attach = setmetatable({
       return client.name ~= "tsserver"
     end)
   end,
+
+  javascript = function()
+    autocmd_format(false, function(client)
+      return client.name ~= "tsserver"
+    end)
+  end,
 }, {
   __index = function()
     return function() end
@@ -95,6 +106,10 @@ local buf_inoremap = function(opts)
 end
 
 local custom_attach = function(client, bufnr)
+  if client.name == "copilot" then
+    return
+  end
+
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
   buf_inoremap { "<c-s>", vim.lsp.buf.signature_help }
@@ -124,8 +139,8 @@ local custom_attach = function(client, bufnr)
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
     autocmd_clear { group = augroup_highlight, buffer = bufnr }
-    autocmd { "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr }
-    autocmd { "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr }
+    autocmd { "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, bufnr }
+    autocmd { "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, bufnr }
   end
 
   if false and client.server_capabilities.codeLensProvider then
@@ -149,7 +164,7 @@ end
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- Completion configuration
-require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
+vim.tbl_deep_extend("force", updated_capabilities, require("cmp_nvim_lsp").default_capabilities())
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
 
 -- Semantic token configuration
@@ -164,7 +179,7 @@ end
 
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 
-local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
+local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "stable", "rust-analyzer" }
 local has_rt, rt = pcall(require, "rust-tools")
 if has_rt then
   local extension_path = vim.fn.expand "~/.vscode/extensions/sadge-vscode/extension/"
@@ -203,6 +218,7 @@ local servers = {
   pyright = true,
   vimls = true,
   yamlls = true,
+  ocamllsp = true,
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
   dartls = pcall(require, "flutter-tools"),
@@ -237,6 +253,15 @@ local servers = {
     settings = {
       gopls = {
         codelenses = { test = true },
+        hints = inlays and {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          compositeLiteralTypes = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
+        } or nil,
       },
     },
 

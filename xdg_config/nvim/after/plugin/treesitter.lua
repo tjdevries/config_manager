@@ -9,13 +9,13 @@ end
 
 local list = require("nvim-treesitter.parsers").get_parser_configs()
 
-list.sql = {
-  install_info = {
-    url = "https://github.com/DerekStride/tree-sitter-sql",
-    files = { "src/parser.c" },
-    branch = "main",
-  },
-}
+-- list.sql = {
+--   install_info = {
+--     url = "https://github.com/DerekStride/tree-sitter-sql",
+--     files = { "src/parser.c" },
+--     branch = "main",
+--   },
+-- }
 
 list.rsx = {
   install_info = {
@@ -24,17 +24,6 @@ list.rsx = {
     branch = "master",
   },
 }
-
--- list.lua = nil
-
--- :h nvim-treesitter-query-extensions
-local custom_captures = {
-  ["function.call.lua"] = "LuaFunctionCall",
-  ["function.bracket"] = "Type",
-  ["namespace.type"] = "TSNamespaceType",
-}
-
-require("nvim-treesitter.highlight").set_custom_captures(custom_captures)
 
 -- alt+<space>, alt+p -> swap next
 -- alt+<backspace>, alt+p -> swap previous
@@ -68,9 +57,9 @@ local _ = require("nvim-treesitter.configs").setup {
     "javascript",
     "json",
     "markdown",
+    "ocaml",
     "python",
     "query",
-    "racket",
     "rust",
     "toml",
     "tsx",
@@ -79,9 +68,6 @@ local _ = require("nvim-treesitter.configs").setup {
 
   highlight = {
     enable = true,
-    use_languagetree = false,
-    -- disable = { "json" },
-    custom_captures = custom_captures,
   },
 
   refactor = {
@@ -155,6 +141,8 @@ local _ = require("nvim-treesitter.configs").setup {
 
     select = {
       enable = true,
+      lookahead = true,
+
       keymaps = {
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
