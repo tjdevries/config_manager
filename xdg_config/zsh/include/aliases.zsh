@@ -8,7 +8,7 @@ alias en='$EDITOR ~/Git/config_manager/vim/.nvimrc'
 # }}}
 
 # {{{1 General Aliases
-if [ "$(uname)" == "Darwin" ]; then
+if [ "$(uname)" = "Darwin" ]; then
 else
     alias ls='ls -F --color=auto --group-directories-first --sort=version'
     alias ldr='ls --color --group-directories-first'

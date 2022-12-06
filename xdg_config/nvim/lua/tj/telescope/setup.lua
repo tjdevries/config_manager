@@ -127,7 +127,7 @@ require("telescope").setup {
   pickers = {
     find_files = {
       -- I don't like having the cwd prefix in my files
-      find_command = { "fdfind", "--strip-cwd-prefix", "--type", "f" },
+      find_command = vim.fn.executable "fdfind" == 1 and { "fdfind", "--strip-cwd-prefix", "--type", "f" } or nil,
 
       mappings = {
         n = {

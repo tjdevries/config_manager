@@ -31,3 +31,5 @@ fi
 # if [ -e /home/tj/.nix-profile/etc/profile.d/nix.sh ]; then . /home/tj/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 . "$HOME/.cargo/env"
+
+export PATH=/Users/tjdevries@sourcegraph.com/.sg:$PATH
