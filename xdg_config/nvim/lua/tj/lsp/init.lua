@@ -395,7 +395,7 @@ else
     on_attach = custom_attach,
     capabilities = updated_capabilities,
     settings = {
-      Lua = { workspace = { checkThirdParty = false } },
+      Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false } },
     },
   }
 end

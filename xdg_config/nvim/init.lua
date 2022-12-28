@@ -33,18 +33,9 @@ Much of the configuration of individual plugins you can find in either:
 
 --]]
 
--- Attempt to run impatient, but it may not have been installed yet
--- pcall(require, "impatient")
-
-require "tj.profile"
-
 -- Setup globals that I expect to be always available.
 --  See `./lua/tj/globals.lua` for more information.
 require "tj.globals"
-
-if require "tj.first_load"() then
-  return
-end
 
 if vim.g.neovide then
   vim.g.neovide_cursor_trail_legnth = 0
@@ -60,16 +51,36 @@ end
 vim.g.mapleader = ","
 vim.g.maplocalleader = " "
 
--- I set some global variables to use as configuration throughout my config.
--- These don't have any special meaning.
-vim.g.snippets = "luasnip"
-
 -- Turn off builtin plugins I do not use.
 require "tj.disable_builtin"
 
--- Neovim builtin LSP configuration
-require "tj.lsp"
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system {
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--single-branch",
+    "https://github.com/folke/lazy.nvim.git",
+    lazypath,
+  }
+end
+vim.opt.runtimepath:prepend(lazypath)
 
--- Telescope BTW
-require "tj.telescope.setup"
-require "tj.telescope.mappings"
+require("lazy").setup("custom.plugins", {
+  ui = {
+    icons = {
+      cmd = "⌘",
+      config = "🛠",
+      event = "📅",
+      ft = "📂",
+      init = "⚙",
+      keys = "🗝",
+      plugin = "🔌",
+      runtime = "💻",
+      source = "📄",
+      start = "🚀",
+      task = "📌",
+    },
+  },
+})

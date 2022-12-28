@@ -1,4 +1,4 @@
-if vim.g.snippets ~= "luasnip" or not pcall(require, "luasnip") then
+if not pcall(require, "luasnip") then
   return
 end
 

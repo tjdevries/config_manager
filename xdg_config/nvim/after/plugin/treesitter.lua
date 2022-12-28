@@ -2,29 +2,6 @@ if not pcall(require, "nvim-treesitter") then
   return
 end
 
-local ts_debugging = false
-if ts_debugging then
-  RELOAD "nvim-treesitter"
-end
-
-local list = require("nvim-treesitter.parsers").get_parser_configs()
-
--- list.sql = {
---   install_info = {
---     url = "https://github.com/DerekStride/tree-sitter-sql",
---     files = { "src/parser.c" },
---     branch = "main",
---   },
--- }
-
-list.rsx = {
-  install_info = {
-    url = "https://github.com/tjdevries/tree-sitter-rsx",
-    files = { "src/parser.c", "src/scanner.cc" },
-    branch = "master",
-  },
-}
-
 -- alt+<space>, alt+p -> swap next
 -- alt+<backspace>, alt+p -> swap previous
 -- swap_previous = {
@@ -53,6 +30,7 @@ end)()
 local _ = require("nvim-treesitter.configs").setup {
   ensure_installed = {
     "go",
+    "help",
     "html",
     "javascript",
     "json",
@@ -64,6 +42,7 @@ local _ = require("nvim-treesitter.configs").setup {
     "toml",
     "tsx",
     "typescript",
+    "vim",
   },
 
   highlight = {

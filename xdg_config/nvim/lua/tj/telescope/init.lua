@@ -1,10 +1,9 @@
-SHOULD_RELOAD_TELESCOPE = true
+SHOULD_RELOAD_TELESCOPE = false
 local reloader = function()
   if SHOULD_RELOAD_TELESCOPE then
     RELOAD "plenary"
     RELOAD "telescope"
     RELOAD "tj.telescope.setup"
-    RELOAD "tj.telescope.custom"
   end
 end
 
@@ -276,7 +275,7 @@ end
 
 function M.installed_plugins()
   require("telescope.builtin").find_files {
-    cwd = vim.fn.stdpath "data" .. "/site/pack/packer/start/",
+    cwd = vim.fn.stdpath "data" .. "/lazy/",
   }
 end
 
