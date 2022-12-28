@@ -1,3 +1,13 @@
+local neodev = vim.F.npcall(require, "neodev")
+if neodev then
+  neodev.setup {
+    override = function(root_dir, library)
+      library.enabled = true
+      library.plugins = true
+    end,
+  }
+end
+
 local lspconfig = vim.F.npcall(require, "lspconfig")
 if not lspconfig then
   return
@@ -120,6 +130,7 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap { "gd", vim.lsp.buf.definition }
   buf_nnoremap { "gD", vim.lsp.buf.declaration }
   buf_nnoremap { "gT", vim.lsp.buf.type_definition }
+  buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }
 
   buf_nnoremap { "<space>gI", handlers.implementation }
   buf_nnoremap { "<space>lr", "<cmd>lua R('tj.lsp.codelens').run()<CR>" }
@@ -129,10 +140,6 @@ local custom_attach = function(client, bufnr)
   telescope_mapper("gI", "lsp_implementations", nil, true)
   telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
   telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
-
-  if filetype ~= "lua" then
-    buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }
-  end
 
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
@@ -301,6 +308,11 @@ local servers = {
   },
 }
 
+require("mason").setup()
+require("mason-lspconfig").setup {
+  ensure_installed = { "sumneko_lua" },
+}
+
 local setup_server = function(server, config)
   if not config then
     return
@@ -324,10 +336,6 @@ end
 
 if is_mac then
   local sumneko_cmd, sumneko_env = nil, nil
-  require("nvim-lsp-installer").setup {
-    automatic_installation = false,
-    ensure_installed = { "sumneko_lua", "gopls" },
-  }
 
   sumneko_cmd = {
     vim.fn.stdpath "data" .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",
@@ -382,32 +390,14 @@ if is_mac then
   })
 else
   -- Load lua configuration from nlua.
-  _ = require("nlua.lsp.nvim").setup(lspconfig, {
+  require("lspconfig").sumneko_lua.setup {
     on_init = custom_init,
     on_attach = custom_attach,
     capabilities = updated_capabilities,
-
-    root_dir = function(fname)
-      if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
-        return vim.fn.expand "~/git/config_manager/xdg_config/nvim/"
-      end
-
-      -- ~/git/config_manager/xdg_config/nvim/...
-      return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
-    end,
-
-    globals = {
-      -- Colorbuddy
-      "Color",
-      "c",
-      "Group",
-      "g",
-      "s",
-
-      -- Custom
-      "RELOAD",
+    settings = {
+      Lua = { workspace = { checkThirdParty = false } },
     },
-  })
+  }
 end
 
 for server, config in pairs(servers) do

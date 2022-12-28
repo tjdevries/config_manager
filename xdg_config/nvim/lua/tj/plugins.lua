@@ -60,7 +60,6 @@ return require("packer").startup {
     local_use("ThePrimeagen", "refactoring.nvim")
 
     local_use "monkey.nvim"
-    local_use "nlua.nvim"
     local_use "vim9jit"
     local_use "vimterface.nvim"
     local_use "colorbuddy.nvim"
@@ -91,17 +90,23 @@ return require("packer").startup {
     use "neovim/nvim-lspconfig"
     use "simrat39/inlay-hints.nvim"
     use "j-hui/fidget.nvim"
+    use "folke/neodev.nvim"
     use {
       "ericpubu/lsp_codelens_extensions.nvim",
       config = function()
         require("codelens_extensions").setup()
       end,
     }
+
     use "jose-elias-alvarez/null-ls.nvim"
 
-    if is_mac then
-      use "williamboman/nvim-lsp-installer"
-    end
+    use {
+      "williamboman/mason.nvim",
+      requires = {
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+      },
+    }
 
     use {
       "akinsho/flutter-tools.nvim",

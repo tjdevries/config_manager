@@ -1,18 +1,3 @@
--- local og_lsp = vim.lsp
--- vim.lsp = setmetatable({}, {
---   __index = function(_, v)
---     if v == "codelens" then
---       print(debug.traceback "CodeLens access:")
---     end
---
---     return og_lsp[v]
---   end,
---
---   __newindex = function(...)
---     error(vim.inspect { ... })
---   end,
--- })
-
 --       __________________    __
 --      /_  __/ ____/ ____/   / /    TJ DeVries
 --       / / / __/ / __/ __  / /     https://github.com/tjdevries
@@ -82,16 +67,9 @@ vim.g.snippets = "luasnip"
 -- Turn off builtin plugins I do not use.
 require "tj.disable_builtin"
 
--- Force loading of astronauta first.
-vim.cmd [[runtime plugin/astronauta.vim]]
-
 -- Neovim builtin LSP configuration
 require "tj.lsp"
 
 -- Telescope BTW
 require "tj.telescope.setup"
 require "tj.telescope.mappings"
-
-vim.keymap.set("n", "<space>hello", function()
-  print "live demos!!"
-end)
