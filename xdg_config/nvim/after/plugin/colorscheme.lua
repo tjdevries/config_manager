@@ -57,6 +57,7 @@ Group.new("InjectedLanguage", nil, g.Normal.bg:dark())
 Group.new("LspParameter", nil, nil, s.italic)
 Group.new("LspDeprecated", nil, nil, s.strikethrough)
 Group.new("@function.bracket", g.Normal, g.Normal)
+Group.new("@variable.builtin", c.purple:light():light(), g.Normal)
 
 -- Group.new("@function.call.lua"
 vim.cmd [[highlight link @function.call.lua LuaFunctionCall]]

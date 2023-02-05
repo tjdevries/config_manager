@@ -118,6 +118,7 @@ cmp.setup {
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "copilot" },
+    { name = "eruby" },
   }, {
     { name = "path" },
     { name = "buffer", keyword_length = 5 },
@@ -172,6 +173,7 @@ cmp.setup {
         luasnip = "[snip]",
         gh_issues = "[issues]",
         tn = "[TabNine]",
+        eruby = "[erb]",
       },
     },
   },

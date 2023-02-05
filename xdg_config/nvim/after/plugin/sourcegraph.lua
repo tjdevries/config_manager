@@ -1,4 +1,6 @@
-if not pcall(require, "sg") then
+local ok, msg = pcall(require, "sg")
+if not ok then
+  print("sg failed to load with:", msg)
   return
 end
 

@@ -55,6 +55,10 @@ local filetype_attach = setmetatable({
     autocmd_format(false)
   end,
 
+  ruby = function()
+    autocmd_format(false)
+  end,
+
   go = function()
     autocmd_format(false)
   end,
@@ -186,7 +190,7 @@ end
 
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 
-local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "stable", "rust-analyzer" }
+local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
 local has_rt, rt = pcall(require, "rust-tools")
 if has_rt then
   local extension_path = vim.fn.expand "~/.vscode/extensions/sadge-vscode/extension/"
@@ -211,6 +215,13 @@ if has_rt then
 else
   rust_analyzer = {
     cmd = rust_analyzer_cmd,
+    settings = {
+      ["rust-analyzer"] = {
+        checkOnSave = {
+          command = "clippy",
+        },
+      },
+    },
   }
 end
 
@@ -226,6 +237,10 @@ local servers = {
   vimls = true,
   yamlls = true,
   ocamllsp = true,
+
+  -- TODO: Test the other Ruby LSPs?
+  -- solargraph = { cmd = { "bundle", "exec", "solargraph", "stdio" } },
+  -- sorbet = true,
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
   dartls = pcall(require, "flutter-tools"),

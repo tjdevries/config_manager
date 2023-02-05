@@ -63,6 +63,11 @@ require("telescope").setup {
 
     mappings = {
       i = {
+        ["<RightMouse>"] = actions.close,
+        ["<LeftMouse>"] = actions.select_default,
+        ["<ScrollWheelDown>"] = actions.move_selection_next,
+        ["<ScrollWheelUp>"] = actions.move_selection_previous,
+
         ["<C-x>"] = false,
         ["<C-s>"] = actions.select_horizontal,
         ["<C-n>"] = "move_selection_next",
