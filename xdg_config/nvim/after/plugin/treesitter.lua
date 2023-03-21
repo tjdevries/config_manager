@@ -2,6 +2,32 @@ if not pcall(require, "nvim-treesitter") then
   return
 end
 
+local list = require("nvim-treesitter.parsers").get_parser_configs()
+list.lua = {
+  install_info = {
+    url = "https://github.com/tjdevries/tree-sitter-lua",
+    revision = "0e860f697901c9b610104eb61d3812755d5211fc",
+    files = { "src/parser.c", "src/scanner.c" },
+    branch = "master",
+  },
+}
+list.rsx = {
+  install_info = {
+    url = "https://github.com/tjdevries/tree-sitter-rsx",
+    files = { "src/parser.c", "src/scanner.cc" },
+    branch = "master",
+  },
+}
+list.perl = {
+  install_info = {
+    url = "https://github.com/tree-sitter-perl/tree-sitter-perl",
+    -- revision = "release",
+    branch = "master",
+    files = { "src/parser.c", "src/scanner.c" },
+    requires_generate_from_grammar = true,
+  },
+}
+
 -- alt+<space>, alt+p -> swap next
 -- alt+<backspace>, alt+p -> swap previous
 -- swap_previous = {

@@ -5,4 +5,6 @@ return {
 
   "rhysd/committia.vim", -- Sweet commit messages
   "sindrets/diffview.nvim", -- Sweet diff helper
+
+  "Rawnly/gist.nvim", -- Gist helper
 }

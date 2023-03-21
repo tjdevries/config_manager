@@ -1,7 +1,7 @@
 local neodev = vim.F.npcall(require, "neodev")
 if neodev then
   neodev.setup {
-    override = function(root_dir, library)
+    override = function(_, library)
       library.enabled = true
       library.plugins = true
     end,
@@ -21,8 +21,6 @@ local autocmd_clear = vim.api.nvim_clear_autocmds
 local semantic = vim.F.npcall(require, "nvim-semantic-tokens")
 
 local is_mac = vim.fn.has "macunix" == 1
-
-local lspconfig_util = require "lspconfig.util"
 
 local telescope_mapper = require "tj.telescope.mappings"
 local handlers = require "tj.lsp.handlers"
@@ -94,6 +92,10 @@ local filetype_attach = setmetatable({
     autocmd_format(false, function(client)
       return client.name ~= "tsserver"
     end)
+  end,
+
+  python = function()
+    autocmd_format(false)
   end,
 }, {
   __index = function()
@@ -169,7 +171,7 @@ local custom_attach = function(client, bufnr)
   end
 
   -- Attach any filetype specific options to the client
-  filetype_attach[filetype](client)
+  filetype_attach[filetype]()
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -258,6 +260,8 @@ local servers = {
     },
   },
 
+  svelte = true,
+
   gopls = {
     -- root_dir = function(fname)
     --   local Path = require "plenary.path"
@@ -302,6 +306,8 @@ local servers = {
 
   elmls = true,
   cssls = true,
+  perlnavigator = true,
+
   tsserver = {
     init_options = ts_util.init_options,
     cmd = { "typescript-language-server", "--stdio" },
@@ -323,9 +329,25 @@ local servers = {
   },
 }
 
+-- Can remove later if not installed (TODO: enable for not linux)
+if vim.fn.executable "tree-sitter-grammar-lsp-linux" == 1 then
+  vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+    pattern = { "grammar.js", "*/corpus/*.txt" },
+    callback = function()
+      vim.lsp.start {
+        name = "tree-sitter-grammar-lsp",
+        cmd = { "tree-sitter-grammar-lsp-linux" },
+        root_dir = "/",
+        capabilities = updated_capabilities,
+        on_attach = custom_attach,
+      }
+    end,
+  })
+end
+
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "sumneko_lua" },
+  ensure_installed = { "lua_ls" },
 }
 
 local setup_server = function(server, config)
@@ -350,24 +372,7 @@ local setup_server = function(server, config)
 end
 
 if is_mac then
-  local sumneko_cmd, sumneko_env = nil, nil
-
-  sumneko_cmd = {
-    vim.fn.stdpath "data" .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",
-  }
-
-  local process = require "nvim-lsp-installer.core.process"
-  local path = require "nvim-lsp-installer.core.path"
-
-  sumneko_env = {
-    cmd_env = {
-      PATH = process.extend_path {
-        path.concat { vim.fn.stdpath "data", "lsp_servers", "sumneko_lua", "extension", "server", "bin" },
-      },
-    },
-  }
-
-  setup_server("sumneko_lua", {
+  setup_server("lua_ls", {
     settings = {
       Lua = {
         diagnostics = {
@@ -404,8 +409,7 @@ if is_mac then
     },
   })
 else
-  -- Load lua configuration from nlua.
-  require("lspconfig").sumneko_lua.setup {
+  require("lspconfig").lua_ls.setup {
     on_init = custom_init,
     on_attach = custom_attach,
     capabilities = updated_capabilities,
@@ -446,23 +450,42 @@ end
 -- end
 --]]
 
--- Set up null-ls
-local use_null = true
-if use_null then
-  require("null-ls").setup {
-    sources = {
-      -- require("null-ls").builtins.formatting.stylua,
-      -- require("null-ls").builtins.diagnostics.eslint,
-      -- require("null-ls").builtins.completion.spell,
-      -- require("null-ls").builtins.diagnostics.selene,
-      require("null-ls").builtins.formatting.prettierd,
-    },
-  }
-end
+require("null-ls").setup {
+  sources = {
+    -- require("null-ls").builtins.formatting.stylua,
+    -- require("null-ls").builtins.diagnostics.eslint,
+    -- require("null-ls").builtins.completion.spell,
+    -- require("null-ls").builtins.diagnostics.selene,
+    require("null-ls").builtins.formatting.prettierd,
+    require("null-ls").builtins.formatting.isort,
+    require("null-ls").builtins.formatting.black,
+  },
+}
 
--- Can set this lower if needed.
--- require("vim.lsp.log").set_level "debug"
--- require("vim.lsp.log").set_level "trace"
+local has_metals = pcall(require, "metals")
+if has_metals then
+  local metals_config = require("metals").bare_config()
+  metals_config.on_attach = custom_attach
+
+  -- Example of settings
+  metals_config.settings = {
+    showImplicitArguments = true,
+    excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+  }
+
+  -- Autocmd that will actually be in charging of starting the whole thing
+  local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+  vim.api.nvim_create_autocmd("FileType", {
+    -- NOTE: You may or may not want java included here. You will need it if you
+    -- want basic Java support but it may also conflict if you are using
+    -- something like nvim-jdtls which also works on a java filetype autocmd.
+    pattern = { "scala", "sbt", "java" },
+    callback = function()
+      require("metals").initialize_or_attach(metals_config)
+    end,
+    group = nvim_metals_group,
+  })
+end
 
 return {
   on_init = custom_init,

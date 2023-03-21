@@ -363,11 +363,11 @@ dap_python.setup("python", {
 
 dap_python.test_runner = "pytest"
 
--- dap.adapters.lldb = {
---   type = "executable",
---   command = "/usr/bin/lldb-vscode-11",
---   name = "lldb",
--- }
+dap.adapters.lldb = {
+  type = "executable",
+  command = "/usr/bin/lldb-vscode-11",
+  name = "lldb",
+}
 
 -- local extension_path = vim.fn.expand "~/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/"
 -- local codelldb_path = extension_path .. "adapter/codelldb"
@@ -470,6 +470,16 @@ dap.configurations.rust = {
     program = "/home/tjdevries/sourcegraph/rust-analyzer.git/monikers-1/target/debug/rust-analyzer",
     args = { "lsif", "/home/tjdevries/build/rmpv/" },
     cwd = "/home/tjdevries/sourcegraph/rust-analyzer.git/monikers-1/",
+    stopOnEntry = false,
+    runInTerminal = false,
+  },
+  {
+    name = "Launch syntect_server",
+    type = "lldb",
+    request = "launch",
+    program = "/home/tjdevries/sourcegraph/sourcegraph.git/scip-syntax-documents/docker-images/syntax-highlighter/target/debug/syntect_server",
+    args = {},
+    cwd = "/home/tjdevries/sourcegraph/sourcegraph.git/scip-syntax-documents/docker-images/syntax-highlighter/",
     stopOnEntry = false,
     runInTerminal = false,
   },

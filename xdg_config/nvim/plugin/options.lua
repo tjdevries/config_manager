@@ -5,7 +5,7 @@ local opt = vim.opt
 -- Ignore compiled files
 opt.wildignore = "__pycache__"
 opt.wildignore:append { "*.o", "*~", "*.pyc", "*pycache*" }
-opt.wildignore:append "Cargo.lock"
+opt.wildignore:append { "Cargo.lock", "Cargo.Bazel.lock" }
 
 -- Cool floating window popup menu for completion on command line
 opt.pumblend = 17
