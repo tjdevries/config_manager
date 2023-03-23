@@ -414,54 +414,6 @@ local setup_server = function(server, config)
   lspconfig[server].setup(config)
 end
 
-if is_mac then
-  setup_server("lua_ls", {
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = {
-            -- vim
-            "vim",
-
-            -- Busted
-            "describe",
-            "it",
-            "before_each",
-            "after_each",
-            "teardown",
-            "pending",
-            "clear",
-
-            -- Colorbuddy
-            "Color",
-            "c",
-            "Group",
-            "g",
-            "s",
-
-            -- Custom
-            "RELOAD",
-          },
-        },
-
-        workspace = {
-          -- Make the server aware of Neovim runtime files
-          library = vim.api.nvim_get_runtime_file("", true),
-        },
-      },
-    },
-  })
-else
-  require("lspconfig").lua_ls.setup {
-    on_init = custom_init,
-    on_attach = custom_attach,
-    capabilities = updated_capabilities,
-    settings = {
-      Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false } },
-    },
-  }
-end
-
 for server, config in pairs(servers) do
   setup_server(server, config)
 end

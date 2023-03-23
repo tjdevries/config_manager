@@ -14,23 +14,24 @@
 --  - /home/tjdevries/plugins/stackmap.nvim
 
 return {
-  { dir = "~/plugins/plenary.nvim" },
+  { "nvim-lua/plenary.nvim", dev = false },
   { dir = "~/plugins/streamer-tools" },
   { dir = "~/plugins/ocaml.nvim", config = true },
 
   { dir = "~/plugins/monkey.nvim" },
   { dir = "~/plugins/vim9jit" },
-  { dir = "~/plugins/colorbuddy.nvim" },
-  { dir = "~/plugins/gruvbuddy.nvim" },
-  { dir = "~/plugins/cyclist.vim" },
-  { dir = "~/plugins/express_line.nvim" },
-  { dir = "~/plugins/overlength.vim" },
+  { dir = "~/plugins/sg.nvim" },
+  { "tjdevries/colorbuddy.nvim", dev = false },
+  { "tjdevries/gruvbuddy.nvim", dev = false },
+  { "tjdevries/cyclist.vim" },
+  { "tjdevries/express_line.nvim", dev = false },
+  { "tjdevries/overlength.vim" },
   { dir = "~/plugins/complextras.nvim" },
 
   -- "~/plugins/diff-therapy.nvim",
   -- "~/plugins/pastery.vim",
 
-  { dir = "~/plugins/green_light.nvim" },
+  { "tjdevries/green_light.nvim" },
 
   "milisims/nvim-luaref",
   "tpope/vim-surround",
