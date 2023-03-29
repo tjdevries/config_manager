@@ -1,9 +1,9 @@
-SHOULD_RELOAD_TELESCOPE = false
+SHOULD_RELOAD_TELESCOPE = true
 local reloader = function()
   if SHOULD_RELOAD_TELESCOPE then
-    RELOAD "plenary"
-    RELOAD "telescope"
-    RELOAD "tj.telescope.setup"
+    R "plenary"
+    R "telescope"
+    R "tj.telescope.setup"
   end
 end
 

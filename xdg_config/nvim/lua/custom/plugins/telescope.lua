@@ -6,6 +6,7 @@ return {
       require "tj.telescope.setup"
       require "tj.telescope.keys"
     end,
+    dev = true,
   },
   "nvim-telescope/telescope-file-browser.nvim",
   "nvim-telescope/telescope-hop.nvim",

@@ -51,6 +51,22 @@ end
 local filetype_attach = setmetatable({
   ocaml = function()
     autocmd_format(false)
+
+    -- Display type information
+    autocmd_clear { group = augroup_codelens, buffer = 0 }
+    autocmd {
+      { "BufEnter", "BufWritePost", "CursorHold" },
+      augroup_codelens,
+      require("tj.lsp.codelens").refresh_virtlines,
+      0,
+    }
+
+    vim.keymap.set(
+      "n",
+      "<space>tt",
+      require("tj.lsp.codelens").toggle_virtlines,
+      { silent = true, desc = "[T]oggle [T]ypes", buffer = 0 }
+    )
   end,
 
   ruby = function()

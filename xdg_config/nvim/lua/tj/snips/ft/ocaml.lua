@@ -110,4 +110,10 @@ end]],
       },
     }
   ),
+  -- It's annoying to type the comment syntax.
+  -- Let's not do that anymore
+  s({
+    trig = "//",
+    snippetType = "autosnippet",
+  }, { t "(* ", i(1), t " *)", i(0) }),
 })
