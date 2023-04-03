@@ -68,6 +68,11 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup("custom.plugins", {
+  dev = {
+    -- directory where you store your local plugin projects
+    path = "~/plugins",
+    fallback = false,
+  },
   ui = {
     icons = {
       cmd = "⌘",

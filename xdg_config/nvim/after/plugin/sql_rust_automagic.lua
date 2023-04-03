@@ -13,7 +13,7 @@ local run_formatter = function(text)
   return j:sync()
 end
 
-local embedded_sql = vim.treesitter.parse_query(
+local embedded_sql = vim.treesitter.query.parse(
   "rust",
   [[
 (macro_invocation

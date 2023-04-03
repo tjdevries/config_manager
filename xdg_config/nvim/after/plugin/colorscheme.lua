@@ -59,5 +59,12 @@ Group.new("LspDeprecated", nil, nil, s.strikethrough)
 Group.new("@function.bracket", g.Normal, g.Normal)
 Group.new("@variable.builtin", c.purple:light():light(), g.Normal)
 
+-- Group.new("VirtNonText", c.yellow:light():light(), nil, s.italic)
+Group.new("VirtNonText", c.gray3:dark(), nil, s.italic)
+
 -- Group.new("@function.call.lua"
 vim.cmd [[highlight link @function.call.lua LuaFunctionCall]]
+vim.cmd [[
+  hi link @lsp.type.variable.ocaml variable
+  hi link @lsp.type.namespace @namespace
+]]

@@ -9,6 +9,7 @@ return {
       vim.g.parinfer_filetypes = {
         -- Mine
         "query",
+        "dune",
         -- Defaults
         "clojure",
         "scheme",

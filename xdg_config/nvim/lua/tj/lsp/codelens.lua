@@ -36,14 +36,15 @@ M.toggle_virtlines = function()
 end
 
 M.refresh_virtlines = function()
+  local bufnr = vim.api.nvim_get_current_buf()
   local params = { textDocument = vim.lsp.util.make_text_document_params() }
-  vim.lsp.buf_request(0, "textDocument/codeLens", params, function(err, result, ctx, _)
+  vim.lsp.buf_request(bufnr, "textDocument/codeLens", params, function(err, result, _, _)
     if err then
       return
     end
 
     local ns = vim.api.nvim_create_namespace "custom-lsp-codelens"
-    vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+    vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
 
     if not virtlines_enabled then
       return
@@ -54,7 +55,8 @@ M.refresh_virtlines = function()
       local range = lens.range
       local text = string.rep(" ", lens.range.start.character) .. title
 
-      vim.api.nvim_buf_set_extmark(0, ns, range.start.line - 1, 0, {
+      vim.api.nvim_buf_set_extmark(bufnr, ns, range.start.line, 0, {
+        virt_lines_above = true,
         virt_lines = {
           { { text, "VirtNonText" } },
         },

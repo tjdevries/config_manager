@@ -18,8 +18,6 @@ local nmap = require("tj.keymap").nmap
 local autocmd = require("tj.auto").autocmd
 local autocmd_clear = vim.api.nvim_clear_autocmds
 
-local semantic = vim.F.npcall(require, "nvim-semantic-tokens")
-
 local is_mac = vim.fn.has "macunix" == 1
 
 local telescope_mapper = require "tj.telescope.mappings"
@@ -180,10 +178,8 @@ local custom_attach = function(client, bufnr)
     end
   end
 
-  local caps = client.server_capabilities
-  if semantic and caps.semanticTokensProvider and caps.semanticTokensProvider.full then
-    autocmd_clear { group = augroup_semantic, buffer = bufnr }
-    autocmd { "TextChanged", augroup_semantic, vim.lsp.buf.semantic_tokens_full, bufnr }
+  if filetype == "tsserver" then
+    client.server_capabilities.semanticTokensProvider = nil
   end
 
   -- Attach any filetype specific options to the client
@@ -195,16 +191,6 @@ local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Completion configuration
 vim.tbl_deep_extend("force", updated_capabilities, require("cmp_nvim_lsp").default_capabilities())
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
-
--- Semantic token configuration
-if semantic then
-  semantic.setup {
-    preset = "default",
-    highlighters = { require "nvim-semantic-tokens.table-highlighter" },
-  }
-
-  semantic.extend_capabilities(updated_capabilities)
-end
 
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 

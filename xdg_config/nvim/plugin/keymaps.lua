@@ -62,7 +62,7 @@ local markdown_paste = function(link)
     return
   end
 
-  local query = vim.treesitter.parse_query(
+  local query = vim.treesitter.query.parse(
     "html",
     [[
       (

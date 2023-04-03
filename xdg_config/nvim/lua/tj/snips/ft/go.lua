@@ -117,7 +117,7 @@ local function go_result_type(info)
     return t ""
   end
 
-  local query = vim.treesitter.parse_query(
+  local query = vim.treesitter.query.parse(
     "go",
     [[
       [

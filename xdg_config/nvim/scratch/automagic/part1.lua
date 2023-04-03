@@ -36,7 +36,7 @@ local test_function_query_string = [[
 ]]
 
 local find_test_line = function(go_bufnr, name)
-  local query = vim.treesitter.parse_query("go", string.format(test_function_query_string, name))
+  local query = vim.treesitter.query.parse("go", string.format(test_function_query_string, name))
   local parser = vim.treesitter.get_parser(go_bufnr, "go", {})
   local tree = parser:parse()[1]
   local root = tree:root()
