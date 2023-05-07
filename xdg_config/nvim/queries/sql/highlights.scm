@@ -1,3 +1,5 @@
+;; extends
+
 (comment) @comment
 
 [
@@ -6,17 +8,17 @@
   (keyword_where)
   (keyword_in)
   (keyword_or)
-  (keyword_null)
-] @keyword
+  (keyword_null)]
+@keyword
 
 [
   "("
   ")"
   "-"
-  ">"
+  ">"]
 
   ; "||"
-] @Operator
+@Operator
 
 (identifier) @variable
 

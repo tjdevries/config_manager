@@ -15,6 +15,14 @@ return {
         end
       end)
 
+      vim.fn["edit_alternate#rule#add"]("ml", function(filename)
+        return (filename:gsub("%.ml", ".mli"))
+      end)
+
+      vim.fn["edit_alternate#rule#add"]("mli", function(filename)
+        return (filename:gsub("%.mli", ".ml"))
+      end)
+
       vim.api.nvim_set_keymap("n", "<leader>ea", "<cmd>EditAlternate<CR>", { silent = true })
     end,
     priority = 80,

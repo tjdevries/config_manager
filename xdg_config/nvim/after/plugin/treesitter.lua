@@ -27,6 +27,15 @@ list.perl = {
     requires_generate_from_grammar = true,
   },
 }
+list.just = {
+  install_info = {
+    url = "https://github.com/IndianBoy42/tree-sitter-just", -- local path or git repo
+    files = { "src/parser.c", "src/scanner.cc" },
+    branch = "main",
+    -- use_makefile = true -- this may be necessary on MacOS (try if you see compiler errors)
+  },
+  maintainers = { "@IndianBoy42" },
+}
 
 -- alt+<space>, alt+p -> swap next
 -- alt+<backspace>, alt+p -> swap previous
@@ -69,6 +78,8 @@ local _ = require("nvim-treesitter.configs").setup {
     "tsx",
     "typescript",
     "vim",
+    -- my own...
+    "rapper",
   },
 
   highlight = {
@@ -190,6 +201,9 @@ local _ = require("nvim-treesitter.configs").setup {
     },
   },
 }
+
+require("treesitter-context").setup { enable = true }
+vim.treesitter.query.set("lua", "context", "")
 
 local read_query = function(filename)
   return table.concat(vim.fn.readfile(vim.fn.expand(filename)), "\n")

@@ -16,6 +16,7 @@
 return {
   { dir = "~/plugins/plenary.nvim" },
   { dir = "~/plugins/streamer-tools" },
+  { dir = "~/plugins/ocaml.nvim", config = true },
 
   { dir = "~/plugins/monkey.nvim" },
   { dir = "~/plugins/vim9jit" },
@@ -25,7 +26,6 @@ return {
   { dir = "~/plugins/express_line.nvim" },
   { dir = "~/plugins/overlength.vim" },
   { dir = "~/plugins/complextras.nvim" },
-  { dir = "~/plugins/sg.nvim" },
 
   -- "~/plugins/diff-therapy.nvim",
   -- "~/plugins/pastery.vim",

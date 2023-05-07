@@ -62,9 +62,22 @@ Group.new("@variable.builtin", c.purple:light():light(), g.Normal)
 -- Group.new("VirtNonText", c.yellow:light():light(), nil, s.italic)
 Group.new("VirtNonText", c.gray3:dark(), nil, s.italic)
 
+Group.new("TreesitterContext", nil, g.Normal.bg:light())
+Group.new("TreesitterContextLineNumber", c.blue)
+-- hi TreesitterContextBottom gui=underline guisp=Grey
+-- Group.new("TreesitterContextBottom", nil, nil, s.underline)
+
+Group.new("@property", c.blue)
+Group.new("@punctuation.bracket.rapper", c.gray3, nil, s.none)
+Group.new("@rapper_argument", c.red, nil, s.italic)
+Group.new("@rapper_return", c.orange:light(), nil, s.italic)
+
 -- Group.new("@function.call.lua"
 vim.cmd [[highlight link @function.call.lua LuaFunctionCall]]
 vim.cmd [[
   hi link @lsp.type.variable.ocaml variable
+  hi link @lsp.type.variable.rust variable
   hi link @lsp.type.namespace @namespace
+  hi link @punctuation.bracket.rapper @text.literal
+  hi link @normal Normal
 ]]

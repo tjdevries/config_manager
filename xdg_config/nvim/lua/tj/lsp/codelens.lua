@@ -53,13 +53,29 @@ M.refresh_virtlines = function()
     for _, lens in ipairs(result) do
       local title = lens.command.title
       local range = lens.range
-      local text = string.rep(" ", lens.range.start.character) .. title
+      local prefix = string.rep(" ", lens.range.start.character)
+      local text = prefix .. title
+
+      local lines = { { { text, "VirtNonText" } } }
+      if string.len(text) > 50 then
+        vim.g.something = true
+        lines = {}
+
+        -- TODO: If we're in ocaml only, do this...
+        local split_text = vim.split(text, "->")
+
+        for i, line in ipairs(split_text) do
+          if i ~= #split_text then
+            line = line .. " ->"
+          end
+
+          table.insert(lines, { { line, "VirtNonText" } })
+        end
+      end
 
       vim.api.nvim_buf_set_extmark(bufnr, ns, range.start.line, 0, {
         virt_lines_above = true,
-        virt_lines = {
-          { { text, "VirtNonText" } },
-        },
+        virt_lines = lines,
       })
     end
   end)

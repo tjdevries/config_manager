@@ -47,6 +47,10 @@ local autocmd_format = function(async, filter)
 end
 
 local filetype_attach = setmetatable({
+  clojure_lsp = function()
+    autocmd_format(false)
+  end,
+
   ocaml = function()
     autocmd_format(false)
 
@@ -178,7 +182,7 @@ local custom_attach = function(client, bufnr)
     end
   end
 
-  if filetype == "tsserver" then
+  if filetype == "typescript" then
     client.server_capabilities.semanticTokensProvider = nil
   end
 
@@ -187,6 +191,8 @@ local custom_attach = function(client, bufnr)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
+updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 
 -- Completion configuration
 vim.tbl_deep_extend("force", updated_capabilities, require("cmp_nvim_lsp").default_capabilities())
@@ -241,6 +247,18 @@ local servers = {
   vimls = true,
   yamlls = true,
   ocamllsp = true,
+
+  clojure_lsp = true,
+
+  -- Enable jsonls with json schemas
+  jsonls = {
+    settings = {
+      json = {
+        schemas = require("schemastore").json.schemas(),
+        validate = { enable = true },
+      },
+    },
+  },
 
   -- TODO: Test the other Ruby LSPs?
   -- solargraph = { cmd = { "bundle", "exec", "solargraph", "stdio" } },
@@ -331,6 +349,29 @@ local servers = {
   },
 }
 
+if vim.fn.executable "llmsp" == 1 and vim.env.SRC_ACCESS_TOKEN then
+  vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+    pattern = { "*" },
+    callback = function()
+      vim.lsp.start {
+        name = "llmsp",
+        cmd = { "llmsp" },
+        root_dir = vim.fs.dirname(vim.fs.find({ "go.mod", ".git" }, { upward = true })[1]),
+        capabilities = updated_capabilities,
+        on_attach = custom_attach,
+        settings = {
+          llmsp = {
+            sourcegraph = {
+              url = vim.env.SRC_ENDPOINT,
+              accessToken = vim.env.SRC_ACCESS_TOKEN,
+            },
+          },
+        },
+      }
+    end,
+  })
+end
+
 -- Can remove later if not installed (TODO: enable for not linux)
 if vim.fn.executable "tree-sitter-grammar-lsp-linux" == 1 then
   vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
@@ -349,7 +390,7 @@ end
 
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls" },
+  ensure_installed = { "lua_ls", "jsonls" },
 }
 
 local setup_server = function(server, config)

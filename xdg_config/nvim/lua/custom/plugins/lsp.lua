@@ -63,4 +63,6 @@ return {
   "jose-elias-alvarez/null-ls.nvim",
   "jose-elias-alvarez/nvim-lsp-ts-utils",
   "scalameta/nvim-metals",
+  "b0o/schemastore.nvim",
+  { "pjlast/llmsp", build = "go install" },
 }
