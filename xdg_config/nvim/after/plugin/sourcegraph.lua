@@ -1,3 +1,7 @@
+if true then
+  return
+end
+
 local ok, msg = pcall(require, "sg")
 if not ok then
   print("sg failed to load with:", msg)

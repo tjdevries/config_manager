@@ -5,6 +5,8 @@ if neodev then
       library.enabled = true
       library.plugins = true
     end,
+    lspconfig = true,
+    pathStrict = true,
   }
 end
 
@@ -182,7 +184,7 @@ local custom_attach = function(client, bufnr)
     end
   end
 
-  if filetype == "typescript" then
+  if filetype == "typescript" or filetype == "lua" then
     client.server_capabilities.semanticTokensProvider = nil
   end
 
@@ -238,6 +240,7 @@ end
 local servers = {
   -- Also uses `shellcheck` and `explainshell`
   bashls = true,
+  lua_ls = true,
 
   eslint = true,
   gdscript = true,
@@ -246,7 +249,11 @@ local servers = {
   pyright = true,
   vimls = true,
   yamlls = true,
-  ocamllsp = true,
+  ocamllsp = {
+    get_language_id = function(_, ftype)
+      return ftype
+    end,
+  },
 
   clojure_lsp = true,
 
@@ -406,9 +413,6 @@ local setup_server = function(server, config)
     on_init = custom_init,
     on_attach = custom_attach,
     capabilities = updated_capabilities,
-    flags = {
-      debounce_text_changes = nil,
-    },
   }, config)
 
   lspconfig[server].setup(config)

@@ -10,6 +10,9 @@ harpoon.setup {}
 nmap { "<M-h><M-m>", require("harpoon.mark").add_file }
 nmap { "<M-h><M-l>", require("harpoon.ui").toggle_quick_menu }
 
+nmap { "<space>hm", require("harpoon.mark").add_file }
+nmap { "<space>hl", require("harpoon.ui").toggle_quick_menu }
+
 for i = 1, 5 do
   nmap {
     string.format("<space>%s", i),

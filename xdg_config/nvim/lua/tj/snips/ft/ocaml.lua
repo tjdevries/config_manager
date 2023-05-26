@@ -116,4 +116,6 @@ end]],
     trig = "//",
     snippetType = "autosnippet",
   }, { t "(* ", i(1), t " *)", i(0) }),
+
+  s("expect", fmt('let%expect_test "{}" =\n  {}\n  [%expect {{||}}]\n', { i(1), i(0) })),
 })

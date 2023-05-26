@@ -60,4 +60,6 @@ return {
       vim.fn["firenvim#install"](0)
     end,
   },
+
+  "projekt0n/github-nvim-theme",
 }

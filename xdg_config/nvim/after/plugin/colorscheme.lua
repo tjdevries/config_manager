@@ -75,6 +75,7 @@ Group.new("@rapper_return", c.orange:light(), nil, s.italic)
 -- Group.new("@function.call.lua"
 vim.cmd [[highlight link @function.call.lua LuaFunctionCall]]
 vim.cmd [[
+  hi link @lsp.type.variable.lua variable
   hi link @lsp.type.variable.ocaml variable
   hi link @lsp.type.variable.rust variable
   hi link @lsp.type.namespace @namespace

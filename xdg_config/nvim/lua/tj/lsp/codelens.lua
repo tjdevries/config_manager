@@ -57,7 +57,7 @@ M.refresh_virtlines = function()
       local text = prefix .. title
 
       local lines = { { { text, "VirtNonText" } } }
-      if string.len(text) > 50 then
+      if string.len(text) > 100 then
         vim.g.something = true
         lines = {}
 
