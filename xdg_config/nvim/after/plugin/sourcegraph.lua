@@ -1,3 +1,12 @@
+-- Toggle cody chat
+vim.keymap.set("n", "<space>cc", require("sg.cody.commands").toggle)
+vim.keymap.set("n", "<space>cn", function()
+  local name = vim.fn.input "chat name: "
+  require("sg.cody.commands").chat(name)
+end)
+vim.keymap.set("v", "<space>a", ":CodyContext<CR>")
+vim.keymap.set("v", "<space>e", ":CodyExplain<CR>")
+
 if true then
   return
 end

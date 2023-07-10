@@ -58,7 +58,7 @@ return {
   },
 
   "simrat39/inlay-hints.nvim",
-  "j-hui/fidget.nvim",
+  { "j-hui/fidget.nvim", branch = "legacy" },
   "folke/neodev.nvim",
   "jose-elias-alvarez/null-ls.nvim",
   "jose-elias-alvarez/nvim-lsp-ts-utils",

@@ -240,7 +240,13 @@ end
 local servers = {
   -- Also uses `shellcheck` and `explainshell`
   bashls = true,
-  lua_ls = true,
+  lua_ls = {
+    Lua = {
+      workspace = {
+        checkThirdParty = false,
+      },
+    },
+  },
 
   eslint = true,
   gdscript = true,
@@ -250,6 +256,7 @@ local servers = {
   vimls = true,
   yamlls = true,
   ocamllsp = {
+    -- cmd = { "/home/tjdevries/git/ocaml-lsp/_build/default/ocaml-lsp-server/bin/main.exe" },
     get_language_id = function(_, ftype)
       return ftype
     end,
@@ -284,6 +291,9 @@ local servers = {
     },
     init_options = {
       clangdFileStatus = true,
+    },
+    filetypes = {
+      "c",
     },
   },
 
@@ -335,6 +345,9 @@ local servers = {
   cssls = true,
   perlnavigator = true,
 
+  -- nix language server
+  nil_ls = true,
+
   tsserver = {
     init_options = ts_util.init_options,
     cmd = { "typescript-language-server", "--stdio" },
@@ -356,28 +369,28 @@ local servers = {
   },
 }
 
-if vim.fn.executable "llmsp" == 1 and vim.env.SRC_ACCESS_TOKEN then
-  vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
-    pattern = { "*" },
-    callback = function()
-      vim.lsp.start {
-        name = "llmsp",
-        cmd = { "llmsp" },
-        root_dir = vim.fs.dirname(vim.fs.find({ "go.mod", ".git" }, { upward = true })[1]),
-        capabilities = updated_capabilities,
-        on_attach = custom_attach,
-        settings = {
-          llmsp = {
-            sourcegraph = {
-              url = vim.env.SRC_ENDPOINT,
-              accessToken = vim.env.SRC_ACCESS_TOKEN,
-            },
-          },
-        },
-      }
-    end,
-  })
-end
+-- if vim.fn.executable "llmsp" == 1 and vim.env.SRC_ACCESS_TOKEN then
+--   vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+--     pattern = { "*" },
+--     callback = function()
+--       vim.lsp.start {
+--         name = "llmsp",
+--         cmd = { "llmsp" },
+--         root_dir = vim.fs.dirname(vim.fs.find({ "go.mod", ".git" }, { upward = true })[1]),
+--         capabilities = updated_capabilities,
+--         on_attach = custom_attach,
+--         settings = {
+--           llmsp = {
+--             sourcegraph = {
+--               url = vim.env.SRC_ENDPOINT,
+--               accessToken = vim.env.SRC_ACCESS_TOKEN,
+--             },
+--           },
+--         },
+--       }
+--     end,
+--   })
+-- end
 
 -- Can remove later if not installed (TODO: enable for not linux)
 if vim.fn.executable "tree-sitter-grammar-lsp-linux" == 1 then
@@ -462,7 +475,7 @@ require("null-ls").setup {
 }
 
 local has_metals = pcall(require, "metals")
-if has_metals then
+if has_metals and false then
   local metals_config = require("metals").bare_config()
   metals_config.on_attach = custom_attach
 

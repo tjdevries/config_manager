@@ -71,10 +71,17 @@ Group.new("@property", c.blue)
 Group.new("@punctuation.bracket.rapper", c.gray3, nil, s.none)
 Group.new("@rapper_argument", c.red, nil, s.italic)
 Group.new("@rapper_return", c.orange:light(), nil, s.italic)
+Group.new("@constructor.ocaml", c.orange:light(), nil, s.none)
+Group.new("constant", c.orange, nil, s.none)
 
--- Group.new("@function.call.lua"
-vim.cmd [[highlight link @function.call.lua LuaFunctionCall]]
+Group.new("@keyword", c.violet, nil, s.none)
+Group.new("@keyword.faded", g.nontext.fg:light(), nil, s.none)
+-- Group.new("@keyword.faded", c.green)
+
+Group.new("Function", c.yellow, nil, s.none)
+
 vim.cmd [[
+  hi link @function.call.lua LuaFunctionCall
   hi link @lsp.type.variable.lua variable
   hi link @lsp.type.variable.ocaml variable
   hi link @lsp.type.variable.rust variable

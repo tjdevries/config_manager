@@ -21,6 +21,7 @@ return {
   { dir = "~/plugins/monkey.nvim" },
   { dir = "~/plugins/vim9jit" },
   { dir = "~/plugins/sg.nvim" },
+  { dir = "~/plugins/sponge-bob.nvim" },
   { "tjdevries/colorbuddy.nvim", dev = false },
   { "tjdevries/gruvbuddy.nvim", dev = false },
   { "tjdevries/cyclist.vim" },

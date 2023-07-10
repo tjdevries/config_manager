@@ -1,3 +1,6 @@
+-- Save the local require here
+local require = require
+
 local ok, plenary_reload = pcall(require, "plenary.reload")
 local reloader = require
 if ok then

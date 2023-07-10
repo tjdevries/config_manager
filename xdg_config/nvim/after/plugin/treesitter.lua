@@ -204,6 +204,7 @@ local _ = require("nvim-treesitter.configs").setup {
 
 require("treesitter-context").setup { enable = true }
 vim.treesitter.query.set("lua", "context", "")
+vim.treesitter.query.set("ocaml", "context", "")
 
 local read_query = function(filename)
   return table.concat(vim.fn.readfile(vim.fn.expand(filename)), "\n")

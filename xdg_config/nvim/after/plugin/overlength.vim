@@ -43,3 +43,5 @@ call overlength#set_overlength('rust', 140)
 
 " Some of my own "made up" filetypes
 call overlength#set_overlength('lookitt', 0)
+
+call overlength#disable()
