@@ -17,6 +17,7 @@ return {
   { "nvim-lua/plenary.nvim", dev = false },
   { dir = "~/plugins/streamer-tools" },
   { dir = "~/plugins/ocaml.nvim", config = true },
+  { dir = "~/plugins/train.nvim" },
 
   { dir = "~/plugins/monkey.nvim" },
   { dir = "~/plugins/vim9jit" },

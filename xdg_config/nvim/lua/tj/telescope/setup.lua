@@ -5,6 +5,7 @@ end
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local action_layout = require "telescope.actions.layout"
+local putils = require "telescope.previewers.utils"
 
 local set_prompt_to_entry_value = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
@@ -121,6 +122,26 @@ require("telescope").setup {
     history = {
       path = "~/.local/share/nvim/databases/telescope_history.sqlite3",
       limit = 100,
+    },
+
+    preview = {
+      filetype_hook = function(filepath, bufnr, opts)
+        if filepath:match "cody%-agent.js" then
+          putils.set_preview_message(bufnr, opts.winid, string.format "very compiled javascript", " ")
+          return false
+        end
+
+        return true
+      end,
+
+      -- 2) Truncate lines to preview window for too large files
+      -- filesize_hook = function(filepath, bufnr, opts)
+      --   local path = require("plenary.path"):new(filepath)
+      --   -- opts exposes winid
+      --   local height = vim.api.nvim_win_get_height(opts.winid)
+      --   local lines = vim.split(path:head(height), "[\r]?\n")
+      --   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+      -- end,
     },
   },
 
