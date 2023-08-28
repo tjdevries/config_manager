@@ -74,6 +74,15 @@ cmp.setup {
     -- ["<tab>"] = false,
     ["<tab>"] = cmp.config.disable,
 
+    -- Cody completion
+    ["<c-a>"] = cmp.mapping.complete {
+      config = {
+        sources = {
+          { name = "cody" },
+        },
+      },
+    },
+
     -- ["<tab>"] = cmp.mapping {
     --   i = cmp.config.disable,
     --   c = function(fallback)
@@ -114,6 +123,7 @@ cmp.setup {
   --        max_item_count
   --        (more?)
   sources = cmp.config.sources({
+    { name = "cody" },
     { name = "nvim_lua" },
     { name = "nvim_lsp" },
     { name = "luasnip" },
@@ -174,6 +184,7 @@ cmp.setup {
         gh_issues = "[issues]",
         tn = "[TabNine]",
         eruby = "[erb]",
+        cody = "[cody]",
       },
     },
   },

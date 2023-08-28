@@ -89,3 +89,9 @@ vim.cmd [[
   hi link @punctuation.bracket.rapper @text.literal
   hi link @normal Normal
 ]]
+
+Group.new("Normal", c.superwhite, c.gray0)
+
+-- vim.defer_fn(function()
+--   loadfile(vim.api.nvim_get_runtime_file("lua/colorbuddy/plugins/init.lua", false)[1])()
+-- end, 10)
