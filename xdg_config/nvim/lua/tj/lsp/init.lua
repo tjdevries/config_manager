@@ -20,8 +20,6 @@ local nmap = require("tj.keymap").nmap
 local autocmd = require("tj.auto").autocmd
 local autocmd_clear = vim.api.nvim_clear_autocmds
 
-local is_mac = vim.fn.has "macunix" == 1
-
 local telescope_mapper = require "tj.telescope.mappings"
 local handlers = require "tj.lsp.handlers"
 
@@ -35,27 +33,9 @@ end
 
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
 local augroup_codelens = vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
-local augroup_format = vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
-local augroup_semantic = vim.api.nvim_create_augroup("custom-lsp-semantic", { clear = true })
-
-local autocmd_format = function(async, filter)
-  vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    buffer = 0,
-    callback = function()
-      vim.lsp.buf.format { async = async, filter = filter }
-    end,
-  })
-end
 
 local filetype_attach = setmetatable({
-  clojure_lsp = function()
-    autocmd_format(false)
-  end,
-
   ocaml = function()
-    autocmd_format(false)
-
     -- Display type information
     autocmd_clear { group = augroup_codelens, buffer = 0 }
     autocmd {
@@ -73,49 +53,11 @@ local filetype_attach = setmetatable({
     )
   end,
 
-  ruby = function()
-    autocmd_format(false)
-  end,
-
-  go = function()
-    autocmd_format(false)
-  end,
-
-  scss = function()
-    autocmd_format(false)
-  end,
-
-  css = function()
-    autocmd_format(false)
-  end,
-
   rust = function()
     telescope_mapper("<space>wf", "lsp_workspace_symbols", {
       ignore_filename = true,
       query = "#",
     }, true)
-
-    autocmd_format(false)
-  end,
-
-  racket = function()
-    autocmd_format(false)
-  end,
-
-  typescript = function()
-    autocmd_format(false, function(client)
-      return client.name ~= "tsserver"
-    end)
-  end,
-
-  javascript = function()
-    autocmd_format(false, function(client)
-      return client.name ~= "tsserver"
-    end)
-  end,
-
-  python = function()
-    autocmd_format(false)
   end,
 }, {
   __index = function()
@@ -351,7 +293,7 @@ local servers = {
   -- nix language server
   nil_ls = true,
 
-  eslint = true,
+  -- eslint = true,
   tsserver = {
     init_options = ts_util.init_options,
     cmd = { "typescript-language-server", "--stdio" },
@@ -466,17 +408,36 @@ end
 -- end
 --]]
 
-require("null-ls").setup {
-  sources = {
-    -- require("null-ls").builtins.formatting.stylua,
-    -- require("null-ls").builtins.diagnostics.eslint,
-    -- require("null-ls").builtins.completion.spell,
-    -- require("null-ls").builtins.diagnostics.selene,
-    require("null-ls").builtins.formatting.prettierd,
-    require("null-ls").builtins.formatting.isort,
-    require("null-ls").builtins.formatting.black,
+-- Only run stylua when we can find a root dir
+require("conform.formatters.stylua").require_cwd = true
+
+require("conform").setup {
+  formatters_by_ft = {
+    lua = { "stylua" },
+    python = { "isort", "black" },
+    typescript = { { "prettierd", "prettier" } },
+    javascript = { { "prettierd", "prettier" } },
   },
 }
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    require("conform").format { bufnr = args.buf, lsp_fallback = true }
+  end,
+})
+
+-- require("null-ls").setup {
+--   sources = {
+--     -- require("null-ls").builtins.formatting.stylua,
+--     -- require("null-ls").builtins.diagnostics.eslint,
+--     -- require("null-ls").builtins.completion.spell,
+--     -- require("null-ls").builtins.diagnostics.selene,
+--     require("null-ls").builtins.formatting.prettierd,
+--     require("null-ls").builtins.formatting.isort,
+--     require("null-ls").builtins.formatting.black,
+--   },
+-- }
 
 local has_metals = pcall(require, "metals")
 if has_metals and false then

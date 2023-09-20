@@ -20,8 +20,11 @@ if not ok then
   return
 end
 
+local node_executable = vim.fn.expand "~/.asdf/installs/nodejs/20.4.0/bin/node" --[[@as string]]
 require("sg").setup {
   on_attach = require("tj.lsp").on_attach,
+  enable_cody = true,
+  node_executable = node_executable,
 }
 
 if true then

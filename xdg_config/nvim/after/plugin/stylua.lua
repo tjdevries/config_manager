@@ -3,7 +3,7 @@
 --
 -- Otherwise doesn't do anything.
 
-if vim.fn.executable "stylua" == 0 then
+if vim.fn.executable "stylua" == 0 or true then
   return
 end
 
