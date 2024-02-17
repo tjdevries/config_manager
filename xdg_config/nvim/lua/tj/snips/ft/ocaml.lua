@@ -119,3 +119,11 @@ end]],
 
   s("expect", fmt('let%expect_test "{}" =\n  {}\n  [%expect {{||}}]\n', { i(1), i(0) })),
 })
+
+local riot_loggers = {}
+for _, name in ipairs { "error", "warn", "info", "debug", "trace" } do
+  -- info (fun f -> f "i(1)"))i(0)
+  table.insert(riot_loggers, s(name, fmt(string.format('%s (fun f -> f "{}"){}', name), { i(1), i(0) })))
+end
+
+ls.add_snippets("ocaml", riot_loggers)

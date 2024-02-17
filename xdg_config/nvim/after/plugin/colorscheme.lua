@@ -88,6 +88,8 @@ vim.cmd [[
   hi link @lsp.type.namespace @namespace
   hi link @punctuation.bracket.rapper @text.literal
   hi link @normal Normal
+  hi link @tag.attribute.html type
+  hi link @tag.delimiter.html @namespace
 ]]
 
 Group.new("Normal", c.superwhite, c.gray0)

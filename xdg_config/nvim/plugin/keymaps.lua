@@ -100,3 +100,7 @@ vim.keymap.set("n", "<Left>", function()
   pcall(vim.cmd, [[checktime]])
   vim.api.nvim_feedkeys("gT", "n", true)
 end)
+
+vim.keymap.set("n", ",p", function()
+  R("tj.php").artisan()
+end)

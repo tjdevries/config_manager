@@ -126,7 +126,7 @@ local custom_attach = function(client, bufnr)
     end
   end
 
-  if filetype == "typescript" or filetype == "lua" then
+  if filetype == "typescript" or filetype == "lua" or filetype == "clojure" then
     client.server_capabilities.semanticTokensProvider = nil
   end
 
@@ -144,40 +144,17 @@ updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport
 
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 
-local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "nightly", "rust-analyzer" }
-local has_rt, rt = pcall(require, "rust-tools")
-if has_rt then
-  local extension_path = vim.fn.expand "~/.vscode/extensions/sadge-vscode/extension/"
-  local codelldb_path = extension_path .. "adapter/codelldb"
-  local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-
-  rt.setup {
-    server = {
-      cmd = rust_analyzer_cmd,
-      capabilities = updated_capabilities,
-      on_attach = custom_attach,
-    },
-    dap = {
-      adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-    },
-    tools = {
-      inlay_hints = {
-        auto = false,
-      },
-    },
-  }
-else
-  rust_analyzer = {
-    cmd = rust_analyzer_cmd,
-    settings = {
-      ["rust-analyzer"] = {
-        checkOnSave = {
-          command = "clippy",
-        },
-      },
-    },
-  }
-end
+-- local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "1.73", "rust-analyzer" }
+local rust_analyzer = {
+  cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+  -- settings = {
+  --   ["rust-analyzer"] = {
+  --     checkOnSave = {
+  --       command = "clippy",
+  --     },
+  --   },
+  -- },
+}
 
 local servers = {
   -- Also uses `shellcheck` and `explainshell`
@@ -190,6 +167,24 @@ local servers = {
     },
   },
 
+  -- phpactor = {
+  --   filetypes = {
+  --     "blade",
+  --   },
+  -- },
+
+  tailwindcss = true,
+  intelephense = {
+    -- filetypes = { "blade", "php" },
+    settings = {
+      intelephense = {
+        format = {
+          -- braces = "allman",
+        },
+      },
+    },
+  },
+
   gdscript = true,
   -- graphql = true,
   html = true,
@@ -197,7 +192,7 @@ local servers = {
   vimls = true,
   yamlls = true,
   ocamllsp = {
-    -- cmd = { "/home/tjdevries/git/ocaml-lsp/_build/default/ocaml-lsp-server/bin/main.exe" },
+    cmd = { "/home/tjdevries/git/ocaml-lsp/_build/default/ocaml-lsp-server/bin/main.exe" },
     settings = {
       codelens = { enable = true },
     },
@@ -207,7 +202,11 @@ local servers = {
     end,
   },
 
-  clojure_lsp = true,
+  clojure_lsp = {
+    settings = {
+      ["semantic-tokens?"] = false,
+    },
+  },
 
   -- Enable jsonls with json schemas
   jsonls = {
@@ -244,6 +243,7 @@ local servers = {
 
   svelte = true,
 
+  templ = true,
   gopls = {
     -- root_dir = function(fname)
     --   local Path = require "plenary.path"
@@ -417,6 +417,9 @@ require("conform").setup {
     python = { "isort", "black" },
     typescript = { { "prettierd", "prettier" } },
     javascript = { { "prettierd", "prettier" } },
+    -- php = { "pint" },
+    -- blade = { "prettierd" },
+    blade = { "blade-formatter" },
   },
 }
 

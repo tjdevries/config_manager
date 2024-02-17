@@ -34,6 +34,7 @@ vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
 local cmp = require "cmp"
 
+---@diagnostic disable-next-line: missing-fields
 cmp.setup {
   mapping = {
     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
@@ -171,10 +172,15 @@ cmp.setup {
     end,
   },
 
+  ---@diagnostic disable-next-line: missing-fields
   formatting = {
     -- Youtube: How to set up nice formatting for your sources.
     format = lspkind.cmp_format {
-      with_text = true,
+      mode = "symbol_text",
+      -- TODO: Think about this, except it's not centered :'(
+      -- symbol_map = {
+      --   Cody = "",
+      -- },
       menu = {
         buffer = "[buf]",
         nvim_lsp = "[LSP]",
@@ -184,7 +190,6 @@ cmp.setup {
         gh_issues = "[issues]",
         tn = "[TabNine]",
         eruby = "[erb]",
-        cody = "[cody]",
       },
     },
   },

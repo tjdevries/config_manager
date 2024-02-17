@@ -1,19 +1,19 @@
 package main
 
-func main() error {
-	return nil
+func main() {}
+
+type MyStruct struct {
+	name string
 }
 
-type MyStruct interface{}
+func getSomeValue(val string) (MyStruct, error, error) {
+}
 
-func AnotherExample() (*MyStruct, error, bool) {
-	val, err := f()
+func AnotherExample() (*MyStruct, error, int, bool) {
+	myVal, err := getSomeValue("wow")
 	if err != nil {
-		return nil, errors.Wrap(err, "f"), false
-	}
-	val, err := f()
-	if err != nil {
-		return nil, errors.Wrap(err, "f"), false
+		return nil, err, 0, false
 	}
 
+	return &myVal, nil, 0, true
 }

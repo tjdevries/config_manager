@@ -62,8 +62,10 @@ local swap_next, swap_prev = (function()
   return n, p
 end)()
 
+---@diagnostic disable-next-line: missing-fields
 local _ = require("nvim-treesitter.configs").setup {
   ensure_installed = {
+    "php",
     "go",
     "html",
     "javascript",
@@ -84,6 +86,12 @@ local _ = require("nvim-treesitter.configs").setup {
 
   highlight = {
     enable = true,
+    additional_vim_regex_highlighting = { "php" },
+  },
+
+  indent = {
+    enable = false,
+    disable = { "lua" },
   },
 
   refactor = {
@@ -114,19 +122,6 @@ local _ = require("nvim-treesitter.configs").setup {
       node_incremental = "<M-w>", -- increment to the upper named parent
       node_decremental = "<M-C-w>", -- decrement to the previous node
       scope_incremental = "<M-e>", -- increment to the upper scope (as defined in locals.scm)
-    },
-  },
-
-  context_commentstring = {
-    enable = true,
-
-    -- With Comment.nvim, we don't need to run this on the autocmd.
-    -- Only run it in pre-hook
-    enable_autocmd = false,
-
-    config = {
-      c = "// %s",
-      lua = "-- %s",
     },
   },
 

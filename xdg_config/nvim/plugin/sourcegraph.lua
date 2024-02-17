@@ -25,6 +25,7 @@ require("sg").setup {
   on_attach = require("tj.lsp").on_attach,
   enable_cody = true,
   node_executable = node_executable,
+  -- auth_strategy = { "cody-app" },
 }
 
 if true then
