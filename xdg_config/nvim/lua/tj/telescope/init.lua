@@ -247,18 +247,13 @@ function M.grep_prompt()
   }
 end
 
-function M.grep_last_search(opts)
+function M.grep_open_files(opts)
   opts = opts or {}
-
-  -- \<getreg\>\C
-  -- -> Subs out the search things
-  local register = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", "")
-
+  opts.grep_open_files = true
   opts.path_display = { "shorten" }
-  opts.word_match = "-w"
-  opts.search = register
+  opts.prompt_title = "Live Grep in Open Files"
 
-  require("telescope.builtin").grep_string(opts)
+  require("telescope.builtin").live_grep(opts)
 end
 
 function M.oldfiles()

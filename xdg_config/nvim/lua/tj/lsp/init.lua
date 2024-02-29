@@ -185,10 +185,13 @@ local servers = {
     },
   },
 
+  pyright = true,
+  ruff_lsp = true,
+  -- pylyzer = true,
+
   gdscript = true,
   -- graphql = true,
   html = true,
-  pyright = true,
   vimls = true,
   yamlls = true,
   ocamllsp = {
@@ -414,7 +417,6 @@ require("conform.formatters.stylua").require_cwd = true
 require("conform").setup {
   formatters_by_ft = {
     lua = { "stylua" },
-    python = { "isort", "black" },
     typescript = { { "prettierd", "prettier" } },
     javascript = { { "prettierd", "prettier" } },
     -- php = { "pint" },

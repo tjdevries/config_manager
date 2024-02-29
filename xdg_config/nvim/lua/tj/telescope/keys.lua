@@ -16,7 +16,7 @@ map_tele("<space>gw", "grep_string", {
   layout_strategy = "vertical",
 })
 
-map_tele("<space>f/", "grep_last_search", {
+map_tele("<space>f/", "grep_open_files", {
   layout_strategy = "vertical",
 })
 

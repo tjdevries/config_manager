@@ -11,4 +11,5 @@ local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("markdown", {
   s("t", fmt("- [{}] {}", { c(2, { t " ", t "-", t "x" }), i(1, "task") })),
+  s("stop", fmt("<!-- stop -->", {})),
 })
