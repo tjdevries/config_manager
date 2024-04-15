@@ -28,6 +28,29 @@ require("sg").setup {
   -- auth_strategy = { "cody-app" },
 }
 
+vim.keymap.set({ "n", "i" }, "<M-a>", function()
+  require("sg.cody.complete")._preview_completions {
+    {
+      data = {
+        id = "568ea94b-30d9-4c9b-be9f-509d78299eb2",
+        insertText = '\tif true {\n\t\treturn log.New(os.DevNull, "[educationalsp]", log.Ldate|log.Ltime|log.Lshort)\n\t}\n',
+        range = {
+          ["end"] = {
+            character = 1,
+            line = 164,
+          },
+          start = {
+            character = 0,
+            line = 164,
+          },
+        },
+      },
+      menu = "[cody]",
+      word = 'return log.New(os.DevNull, "[educationalsp]", log.Ldate|log.Ltime|log.Lshort',
+    },
+  }
+end)
+
 if true then
   return
 end

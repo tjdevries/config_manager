@@ -1,0 +1,31 @@
+return {
+  "rktjmp/lush.nvim",
+  "rebelot/kanagawa.nvim",
+  "eemed/sitruuna.vim",
+  "folke/tokyonight.nvim",
+  "maxmx03/solarized.nvim",
+  "nelstrom/vim-blackboard",
+  "wolandark/notepad-vim",
+  "dundargoc/fakedonalds.nvim",
+  "jeffkreeftmeijer/vim-dim",
+  "jesseleite/nvim-noirbuddy",
+  "SebastianZaha/nvim-solar-paper",
+  "utensils/colors.vim",
+  -- "Scysta/pink-panic.nvim",
+  "tckmn/hotdog.vim",
+  "Shatur/neovim-ayu",
+  "projekt0n/caret.nvim",
+  "vim-scripts/MountainDew.vim",
+  "bringsrain/strawberry",
+  "mcchrish/zenbones.nvim",
+  "Mofiqul/vscode.nvim",
+  { "rose-pine/neovim", name = "rose-pine" },
+  "NLKNguyen/papercolor-theme",
+  { "catppuccin/nvim", name = "catppuccin" },
+  {
+    "chriskempson/base16-vim",
+    config = function()
+      vim.g.base16colorspace = 256
+    end,
+  },
+}

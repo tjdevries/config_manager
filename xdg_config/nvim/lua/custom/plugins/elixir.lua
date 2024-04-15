@@ -1,5 +1,6 @@
 return {
   "elixir-tools/elixir-tools.nvim",
+  enabled = false,
   version = "*",
   event = { "BufReadPre", "BufNewFile" },
   config = function()

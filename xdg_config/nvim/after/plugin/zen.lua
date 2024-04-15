@@ -15,6 +15,9 @@ require("zen-mode").setup {
       cursorline = false,
     },
   },
+  plugins = {
+    twilight = { enabled = false },
+  },
 }
 
 require("twilight").setup {

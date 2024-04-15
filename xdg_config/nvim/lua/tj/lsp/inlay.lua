@@ -2,6 +2,10 @@ if not pcall(require, "inlay-hints") then
   return false
 end
 
+if true then
+  return true
+end
+
 require("inlay-hints").setup {
   -- renderer to use
   -- possible options are dynamic, eol, virtline and custom

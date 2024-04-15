@@ -33,6 +33,11 @@ lspkind.init {
 vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
 local cmp = require "cmp"
+-- if true then
+--   require "sg.cody.complete"
+--   vim.keymap.set("i", "<c-space>", "<C-R>=v:lua.require'sg.cody.complete'.builtin_complete()<CR>")
+--   return
+-- end
 
 ---@diagnostic disable-next-line: missing-fields
 cmp.setup {

@@ -1,14 +1,6 @@
-local neodev = vim.F.npcall(require, "neodev")
-if neodev then
-  neodev.setup {
-    override = function(_, library)
-      library.enabled = true
-      library.plugins = true
-    end,
-    lspconfig = true,
-    pathStrict = true,
-  }
-end
+require("neodev").setup {}
+
+vim.lsp.set_log_level(vim.lsp.log_levels.DEBUG)
 
 local lspconfig = vim.F.npcall(require, "lspconfig")
 if not lspconfig then
@@ -173,7 +165,32 @@ local servers = {
   --   },
   -- },
 
-  tailwindcss = true,
+  tailwindcss = {
+    init_options = {
+      userLanguages = {
+        elixir = "phoenix-heex",
+        eruby = "erb",
+        heex = "phoenix-heex",
+      },
+    },
+    settings = {
+      tailwindCSS = {
+        experimental = {
+          classRegex = {
+            [[class: "([^"]*)]],
+          },
+        },
+        -- filetypes_include = { "heex" },
+        -- init_options = {
+        --   userLanguages = {
+        --     elixir = "html-eex",
+        --     eelixir = "html-eex",
+        --     heex = "html-eex",
+        --   },
+        -- },
+      },
+    },
+  },
   intelephense = {
     -- filetypes = { "blade", "php" },
     settings = {
@@ -186,7 +203,7 @@ local servers = {
   },
 
   pyright = true,
-  ruff_lsp = true,
+  -- ruff_lsp = true,
   -- pylyzer = true,
 
   gdscript = true,
@@ -195,10 +212,12 @@ local servers = {
   vimls = true,
   yamlls = true,
   ocamllsp = {
-    cmd = { "/home/tjdevries/git/ocaml-lsp/_build/default/ocaml-lsp-server/bin/main.exe" },
+    -- cmd = { "/home/tjdevries/git/ocaml-lsp/_build/default/ocaml-lsp-server/bin/main.exe" },
     settings = {
       codelens = { enable = true },
     },
+
+    filetypes = { "ocaml" },
 
     get_language_id = function(_, ftype)
       return ftype
@@ -245,6 +264,13 @@ local servers = {
   },
 
   svelte = true,
+
+  -- Elixir
+  -- elixirls = true,
+  lexical = {
+    cmd = { "/home/tjdevries/.local/share/nvim/mason/bin/lexical", "server" },
+    root_dir = require("lspconfig.util").root_pattern { "mix.exs" },
+  },
 
   templ = true,
   gopls = {
@@ -359,7 +385,7 @@ end
 
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "jsonls" },
+  ensure_installed = { "lua_ls", "jsonls", "pyright" },
 }
 
 local setup_server = function(server, config)

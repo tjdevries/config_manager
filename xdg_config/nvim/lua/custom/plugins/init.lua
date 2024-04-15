@@ -15,6 +15,7 @@
 
 return {
   { "nvim-lua/plenary.nvim", dev = false },
+  { dir = "~/plugins/misery.nvim" },
   { dir = "~/plugins/streamer-tools" },
   { dir = "~/plugins/ocaml.nvim", config = true },
   { dir = "~/plugins/templ.nvim" },
@@ -26,9 +27,7 @@ return {
   { dir = "~/plugins/sg.nvim" },
   { dir = "~/plugins/sponge-bob.nvim" },
   { dir = "~/plugins/colorbuddy.nvim" },
-  { dir = "~/plugins/gruvbuddy.nvim" },
-  -- { "tjdevries/colorbuddy.nvim", dev = false },
-  -- { "tjdevries/gruvbuddy.nvim", dev = false },
+
   { "tjdevries/cyclist.vim" },
   { "tjdevries/express_line.nvim", dev = false },
   { "tjdevries/overlength.vim" },
@@ -68,4 +67,6 @@ return {
   },
 
   "projekt0n/github-nvim-theme",
+
+  "elixir-editors/vim-elixir",
 }
