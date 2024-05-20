@@ -4,3 +4,6 @@
 [submodule "xdg_config/awesome/awesome-wm-widgets"]
 	path = xdg_config/awesome/awesome-wm-widgets
 	url = https://github.com/streetturtle/awesome-wm-widgets
+[submodule "xdg_config/nvim"]
+	path = xdg_config/nvim
+	url = https://github.com/tjdevries/config.nvim
