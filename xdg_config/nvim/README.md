@@ -1,3 +1,0 @@
-# Education IS IMPORTANT!
-
-Neovim

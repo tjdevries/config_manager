@@ -1,3 +1,0 @@
-starting LSP server�
-got message: Content-Length: 3487
-got message: 
